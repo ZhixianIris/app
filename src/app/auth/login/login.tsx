@@ -1,7 +1,6 @@
 import FormLayout, {
   FormField,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { useFormik } from 'formik'
 import React, { useState, useEffect } from 'react'
 import { AlertTriangle, Info, Lock, Mail, Shield, X, Clock, Send, CheckCircle2 } from 'lucide-react'
@@ -16,6 +15,8 @@ import AuthLayout from '@components/Auth/AuthLayout'
 import TurnstileWidget, { useTurnstileRequired, verifyTurnstileToken, type TurnstileWidgetHandle } from '@components/Auth/TurnstileWidget'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 import { getAllowedAuthMethods } from '@services/auth/authMethods'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 interface LoginClientProps {
   org: any
@@ -733,7 +734,7 @@ const LoginClient = (props: LoginClientProps) => {
               <FormLayout onSubmit={formik.handleSubmit}>
                 <FormField name="email">
                   <div className="flex items-center space-x-2 mb-1.5">
-                    <Form.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.email')}</Form.Label>
+                    <Field.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.email')}</Field.Label>
                     {formik.touched.email && formik.errors.email && (
                       <span className="text-red-500 text-xs flex items-center space-x-1">
                         <Info size={11} />
@@ -741,20 +742,18 @@ const LoginClient = (props: LoginClientProps) => {
                       </span>
                     )}
                   </div>
-                  <Form.Control asChild>
-                    <input
+                                                                  <Field.Control render={<input
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.email}
                       type="email"
                       className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm"
-                    />
-                  </Form.Control>
+                    />} />
                 </FormField>
 
                 <FormField name="password">
                   <div className="flex items-center space-x-2 mb-1.5">
-                    <Form.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.password')}</Form.Label>
+                    <Field.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.password')}</Field.Label>
                     {formik.touched.password && formik.errors.password && (
                       <span className="text-red-500 text-xs flex items-center space-x-1">
                         <Info size={11} />
@@ -768,16 +767,14 @@ const LoginClient = (props: LoginClientProps) => {
                       {t('auth.forgot_password')}
                     </Link>
                   </div>
-                  <Form.Control asChild>
-                    <input
+                                                                  <Field.Control render={<input
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                       value={formik.values.password}
                       type="password"
                       autoComplete="current-password"
                       className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm"
-                    />
-                  </Form.Control>
+                    />} />
                 </FormField>
 
                 <TurnstileWidget
@@ -786,8 +783,7 @@ const LoginClient = (props: LoginClientProps) => {
                   className="mt-2 flex justify-center"
                 />
 
-                <Form.Submit asChild>
-                  <button
+                                                            <button type="submit"
                     disabled={isSubmitting || (turnstileRequired && !turnstileToken)}
                     className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none mt-2 transition-all disabled:opacity-50"
                   >
@@ -800,7 +796,6 @@ const LoginClient = (props: LoginClientProps) => {
                       t('auth.login')
                     )}
                   </button>
-                </Form.Submit>
               </FormLayout>
               )}
 

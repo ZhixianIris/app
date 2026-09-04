@@ -12,7 +12,6 @@ import {
   PencilSimple,
   CircleNotch,
 } from '@phosphor-icons/react'
-import { SlashIcon, DividerVerticalIcon } from '@radix-ui/react-icons'
 import PlaygroundPreview from './PlaygroundPreview'
 import PlaygroundChatPanel from './PlaygroundChatPanel'
 import PlaygroundOptionsModal from './PlaygroundOptionsModal'
@@ -21,6 +20,7 @@ import { queryKeys } from '@/lib/query/keys'
 import { startPlaygroundSession, iteratePlayground } from '@services/playgrounds/generator'
 import { updatePlayground, Playground } from '@services/playgrounds/playgrounds'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { Slash, SeparatorVertical } from "lucide-react";
 
 interface Course {
   course_uuid: string
@@ -285,7 +285,7 @@ export default function PlaygroundEditor({
           <EditorLearnHouseLogo />
         </Link>
 
-        <SlashIcon style={{ color: '#d1d5db', flexShrink: 0 }} />
+        <Slash style={{ color: '#d1d5db', flexShrink: 0 }} />
 
         {/* Back */}
         <Link
@@ -296,7 +296,7 @@ export default function PlaygroundEditor({
           <span>Playgrounds</span>
         </Link>
 
-        <SlashIcon style={{ color: '#d1d5db', flexShrink: 0 }} />
+        <Slash style={{ color: '#d1d5db', flexShrink: 0 }} />
 
         {/* Editable title */}
         <div className="flex-1 flex items-center gap-1.5 min-w-0 group">
@@ -353,7 +353,7 @@ export default function PlaygroundEditor({
             Options
           </button>
 
-          <DividerVerticalIcon style={{ marginTop: 'auto', marginBottom: 'auto', color: 'grey', opacity: 0.5 }} />
+          <SeparatorVertical style={{ marginTop: 'auto', marginBottom: 'auto', color: 'grey', opacity: 0.5 }} />
 
           {/* Save */}
           <button

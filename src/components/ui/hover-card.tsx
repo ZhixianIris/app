@@ -1,19 +1,21 @@
 import * as React from "react"
-import * as HoverCardPrimitive from "@radix-ui/react-hover-card"
+import { PreviewCard } from "@base-ui/react/preview-card"
 
 import { cn } from "@/lib/utils"
 
+// Base UI has no dedicated hover-card primitive; PreviewCard is its
+// open-on-hover popup with delay handling, which is what a hover card is.
 function HoverCard({
   ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Root>) {
-  return <HoverCardPrimitive.Root data-slot="hover-card" {...props} />
+}: React.ComponentProps<typeof PreviewCard.Root>) {
+  return <PreviewCard.Root data-slot="hover-card" {...props} />
 }
 
 function HoverCardTrigger({
   ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Trigger>) {
+}: React.ComponentProps<typeof PreviewCard.Trigger>) {
   return (
-    <HoverCardPrimitive.Trigger data-slot="hover-card-trigger" {...props} />
+    <PreviewCard.Trigger data-slot="hover-card-trigger" {...props} />
   )
 }
 
@@ -22,21 +24,31 @@ function HoverCardContent({
   align = "center",
   sideOffset = 4,
   ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Content>) {
+}: React.ComponentProps<typeof PreviewCard.Popup> & {
+  align?: "start" | "center" | "end"
+  sideOffset?: number
+}) {
   return (
-    <HoverCardPrimitive.Portal data-slot="hover-card-portal">
-      <HoverCardPrimitive.Content
-        data-slot="hover-card-content"
-        align={align}
-        sideOffset={sideOffset}
-        className={cn(
-          "bg-popover text-popover-foreground data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 w-64 origin-(--radix-hover-card-content-transform-origin) rounded-md border p-4 shadow-md outline-hidden",
-          className
-        )}
-        style={{ zIndex: 'var(--z-popover)' }}
-        {...props}
-      />
-    </HoverCardPrimitive.Portal>
+    <PreviewCard.Portal data-slot="hover-card-portal">
+      <PreviewCard.Positioner align={align} sideOffset={sideOffset}>
+        <PreviewCard.Popup
+          data-slot="hover-card-content"
+          className={cn(
+            "bg-popover text-popover-foreground w-64 origin-(--transform-origin) rounded-md border p-4 shadow-md outline-hidden",
+            "transition-[opacity,transform] duration-150 ease-out",
+            "data-[starting-style]:opacity-0 data-[starting-style]:scale-95",
+            "data-[ending-style]:opacity-0 data-[ending-style]:scale-95",
+            "data-[side=bottom]:data-[starting-style]:-translate-y-2 data-[side=left]:data-[starting-style]:translate-x-2 " +
+            "data-[side=right]:data-[starting-style]:-translate-x-2 data-[side=top]:data-[starting-style]:translate-y-2 " +
+            "data-[side=bottom]:data-[ending-style]:-translate-y-2 data-[side=left]:data-[ending-style]:translate-x-2 " +
+            "data-[side=right]:data-[ending-style]:-translate-x-2 data-[side=top]:data-[ending-style]:translate-y-2",
+            className
+          )}
+          style={{ zIndex: 'var(--z-popover)' }}
+          {...props}
+        />
+      </PreviewCard.Positioner>
+    </PreviewCard.Portal>
   )
 }
 

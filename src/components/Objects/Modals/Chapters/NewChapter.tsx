@@ -6,11 +6,11 @@ import FormLayout, {
   FormLabel,
   ButtonBlack,
 } from '@components/Objects/StyledElements/Form/Form'
-import { FormMessage } from '@radix-ui/react-form'
-import * as Form from '@radix-ui/react-form'
 import React, { useState } from 'react'
 import BarLoader from 'react-spinners/BarLoader'
 import { useTranslation } from 'react-i18next'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 function NewChapterModal({ submitChapter, closeModal, course }: any) {
   const { t } = useTranslation()
@@ -50,9 +50,7 @@ function NewChapterModal({ submitChapter, closeModal, course }: any) {
             {t('dashboard.courses.structure.modals.new_chapter.form.name_required')}
           </FormMessage>
         </Flex>
-        <Form.Control asChild>
-          <Input onChange={handleChapterNameChange} type="text" required />
-        </Form.Control>
+                    <Field.Control render={<Input onChange={handleChapterNameChange} type="text" required />} />
       </FormField>
       <FormField name="chapter-desc">
         <Flex className="items-baseline justify-between">
@@ -61,14 +59,11 @@ function NewChapterModal({ submitChapter, closeModal, course }: any) {
             {t('dashboard.courses.structure.modals.new_chapter.form.description_required')}
           </FormMessage>
         </Flex>
-        <Form.Control asChild>
-          <Textarea onChange={handleChapterDescriptionChange} required />
-        </Form.Control>
+                    <Field.Control render={<Textarea onChange={handleChapterDescriptionChange} required />} />
       </FormField>
 
       <Flex className="mt-6 justify-end">
-        <Form.Submit asChild>
-          <ButtonBlack type="submit" className="mt-2.5">
+                    <ButtonBlack type="submit" className="mt-2.5">
             {isSubmitting ? (
               <BarLoader
                 cssOverride={{ borderRadius: 60 }}
@@ -79,7 +74,6 @@ function NewChapterModal({ submitChapter, closeModal, course }: any) {
               t('dashboard.courses.structure.modals.new_chapter.form.submit')
             )}
           </ButtonBlack>
-        </Form.Submit>
       </Flex>
     </FormLayout>
   )

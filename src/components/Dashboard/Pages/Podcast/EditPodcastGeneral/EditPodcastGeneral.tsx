@@ -19,7 +19,8 @@ import FormLayout, {
   Input,
   Textarea,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 interface EditPodcastGeneralProps {
   orgslug: string
@@ -224,13 +225,11 @@ function EditPodcastGeneral({ orgslug }: EditPodcastGeneralProps) {
                   label={t('podcasts.modals.create.form.name_label')}
                   message={formik.errors.name as string}
                 />
-                <Form.Control asChild>
-                  <Input
+                                            <Field.Control render={<Input
                     onChange={formik.handleChange}
                     value={formik.values.name}
                     placeholder={t('podcasts.modals.create.form.name_placeholder')}
-                  />
-                </Form.Control>
+                  />} />
               </FormField>
 
               {/* Description */}
@@ -239,14 +238,12 @@ function EditPodcastGeneral({ orgslug }: EditPodcastGeneralProps) {
                   label={t('podcasts.modals.create.form.description_label')}
                   message={formik.errors.description as string}
                 />
-                <Form.Control asChild>
-                  <Textarea
+                                            <Field.Control render={<Textarea
                     onChange={formik.handleChange}
                     value={formik.values.description}
                     placeholder={t('podcasts.modals.create.form.description_placeholder')}
                     rows={3}
-                  />
-                </Form.Control>
+                  />} />
               </FormField>
 
               {/* About */}
@@ -255,14 +252,12 @@ function EditPodcastGeneral({ orgslug }: EditPodcastGeneralProps) {
                   label={t('podcasts.dashboard.form.about')}
                   message={formik.errors.about as string}
                 />
-                <Form.Control asChild>
-                  <Textarea
+                                            <Field.Control render={<Textarea
                     onChange={formik.handleChange}
                     value={formik.values.about}
                     placeholder={t('podcasts.dashboard.form.about_placeholder')}
                     rows={5}
-                  />
-                </Form.Control>
+                  />} />
               </FormField>
 
               {/* Tags */}
@@ -271,13 +266,11 @@ function EditPodcastGeneral({ orgslug }: EditPodcastGeneralProps) {
                   label={t('podcasts.tags')}
                   message={formik.errors.tags as string}
                 />
-                <Form.Control asChild>
-                  <Input
+                                            <Field.Control render={<Input
                     onChange={formik.handleChange}
                     value={formik.values.tags}
                     placeholder={t('podcasts.dashboard.form.tags_placeholder')}
-                  />
-                </Form.Control>
+                  />} />
                 <p className="mt-1 text-xs text-gray-500">
                   {t('podcasts.dashboard.form.tags_hint')}
                 </p>

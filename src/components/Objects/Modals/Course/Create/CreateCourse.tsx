@@ -5,7 +5,6 @@ import FormLayout, {
   FormField,
   FormLabelAndMessage,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { createNewCourse } from '@services/courses/courses'
 import { createChapter } from '@services/courses/chapters'
 import { getOrganizationContextInfoWithoutCredentials } from '@services/organizations/orgs'
@@ -26,6 +25,8 @@ import { useTranslation } from "react-i18next"
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
 import { useNavigate } from "react-router-dom";
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 const _validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -228,14 +229,12 @@ function CreateCourseModal({ closeModal, orgslug }: any) {
           label={t('courses.course_name')}
           message={formik.errors.name}
         />
-        <Form.Control asChild>
-          <Input
+                    <Field.Control render={<Input
             onChange={formik.handleChange}
             value={formik.values.name}
             type="text"
             required
-          />
-        </Form.Control>
+          />} />
       </FormField>
 
       <FormField name="description">
@@ -243,13 +242,11 @@ function CreateCourseModal({ closeModal, orgslug }: any) {
           label={t('library.description')}
           message={formik.errors.description}
         />
-        <Form.Control asChild>
-          <Textarea
+                    <Field.Control render={<Textarea
             onChange={formik.handleChange}
             value={formik.values.description}
             required
-          />
-        </Form.Control>
+          />} />
       </FormField>
 
       <FormField name="thumbnail">

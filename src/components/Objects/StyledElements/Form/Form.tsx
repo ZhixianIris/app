@@ -1,6 +1,7 @@
 import React from 'react'
-import * as Form from '@radix-ui/react-form'
 import { Info } from 'lucide-react'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 interface FormLayoutProps {
   children: React.ReactNode
@@ -10,9 +11,9 @@ interface FormLayoutProps {
 
 const FormLayout = ({ children, onSubmit, className }: FormLayoutProps) => {
   return (
-    <Form.Root onSubmit={onSubmit} className={className}>
+    <Form onSubmit={onSubmit} className={className}>
       {children}
-    </Form.Root>
+    </Form>
   )
 }
 
@@ -31,30 +32,30 @@ export const FormLabelAndMessage = (props: {
   </div>
 )
 
-export const FormRoot = React.forwardRef<HTMLFormElement, React.ComponentPropsWithoutRef<typeof Form.Root>>(
+export const FormRoot = React.forwardRef<HTMLFormElement, React.ComponentPropsWithoutRef<typeof Form>>(
   ({ className, ...props }, ref) => (
-    <Form.Root ref={ref} className={`m-[7px] ${className || ''}`} {...props} />
+    <Form ref={ref} className={`m-[7px] ${className || ''}`} {...props} />
   )
 )
 FormRoot.displayName = 'FormRoot'
 
-export const FormField = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof Form.Field>>(
+export const FormField = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof Field>>(
   ({ className, ...props }, ref) => (
-    <Form.Field ref={ref} className={`grid mb-2.5 ${className || ''}`} {...props} />
+    <Field ref={ref} className={`grid mb-2.5 ${className || ''}`} {...props} />
   )
 )
 FormField.displayName = 'FormField'
 
-export const FormLabel = React.forwardRef<HTMLLabelElement, React.ComponentPropsWithoutRef<typeof Form.Label>>(
+export const FormLabel = React.forwardRef<HTMLLabelElement, React.ComponentPropsWithoutRef<typeof Field.Label>>(
   ({ className, ...props }, ref) => (
-    <Form.Label ref={ref} className={`font-medium leading-[35px] text-black ${className || ''}`} {...props} />
+    <Field.Label ref={ref} className={`font-medium leading-[35px] text-black ${className || ''}`} {...props} />
   )
 )
 FormLabel.displayName = 'FormLabel'
 
-export const FormMessage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWithoutRef<typeof Form.Message>>(
+export const FormMessage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWithoutRef<typeof Field.Error>>(
   ({ className, ...props }, ref) => (
-    <Form.Message ref={ref} className={`text-[13px] text-white opacity-80 ${className || ''}`} {...props} />
+    <Field.Error ref={ref} className={`text-[13px] text-white opacity-80 ${className || ''}`} {...props} />
   )
 )
 FormMessage.displayName = 'FormMessage'

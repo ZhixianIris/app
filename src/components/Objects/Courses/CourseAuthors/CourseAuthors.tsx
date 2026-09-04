@@ -16,7 +16,6 @@ import toast from 'react-hot-toast'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import * as Form from '@radix-ui/react-form'
 import FormLayout, {
   FormField,
   FormLabelAndMessage,
@@ -26,6 +25,8 @@ import FormLayout, {
 import { useFormik } from 'formik'
 import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 dayjs.extend(relativeTime)
 
@@ -256,31 +257,27 @@ const NewUpdateForm = ({ setSelectedView }: { setSelectedView: (view: string) =>
             label={t('courses.update_title')}
             message={formik.errors.title}
           />
-          <Form.Control asChild>
-            <Input
+                          <Field.Control render={<Input
               onChange={formik.handleChange}
               value={formik.values.title}
               type="text"
               required
               placeholder={t('courses.update_title_placeholder')}
               className="bg-white border-neutral-200 focus:border-neutral-300 focus:ring-neutral-200"
-            />
-          </Form.Control>
+            />} />
         </FormField>
         <FormField name="content">
           <FormLabelAndMessage
             label={t('courses.update_content')}
             message={formik.errors.content}
           />
-          <Form.Control asChild>
-            <Textarea
+                          <Field.Control render={<Textarea
               onChange={formik.handleChange}
               value={formik.values.content}
               required
               placeholder={t('courses.update_content_placeholder')}
               className="bg-white h-[120px] border-neutral-200 focus:border-neutral-300 focus:ring-neutral-200 resize-none"
-            />
-          </Form.Control>
+            />} />
         </FormField>
         <div className="flex justify-end space-x-2 pt-2">
           <button

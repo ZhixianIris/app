@@ -2,7 +2,6 @@ import React from 'react'
 import FormLayout, {
     FormField,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { AlertTriangle, ArrowLeft, CheckCircle, Info, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useFormik } from 'formik'
@@ -12,6 +11,8 @@ import { useTranslation } from 'react-i18next'
 import AuthLayout from '@components/Auth/AuthLayout'
 import TurnstileWidget, { useTurnstileRequired, verifyTurnstileToken, type TurnstileWidgetHandle } from '@components/Auth/TurnstileWidget'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 const validate = (values: any, t: any) => {
     const errors: any = {}
@@ -118,7 +119,7 @@ function ForgotPasswordClient({ org }: ForgotPasswordClientProps) {
                             <FormLayout onSubmit={formik.handleSubmit}>
                                 <FormField name="email">
                                     <div className="flex items-center space-x-2 mb-1.5">
-                                        <Form.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.email')}</Form.Label>
+                                        <Field.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.email')}</Field.Label>
                                         {formik.errors.email && (
                                             <div className="text-red-500 text-xs flex items-center space-x-1">
                                                 <Info size={11} />
@@ -126,15 +127,13 @@ function ForgotPasswordClient({ org }: ForgotPasswordClientProps) {
                                             </div>
                                         )}
                                     </div>
-                                    <Form.Control asChild>
-                                        <input
+                                                                    <Field.Control render={<input
                                             onChange={formik.handleChange}
                                             value={formik.values.email}
                                             type="email"
                                             required
                                             className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm"
-                                        />
-                                    </Form.Control>
+                                        />} />
                                 </FormField>
 
                                 <TurnstileWidget
@@ -143,8 +142,7 @@ function ForgotPasswordClient({ org }: ForgotPasswordClientProps) {
                                     className="mt-2 flex justify-center"
                                 />
 
-                                <Form.Submit asChild>
-                                    <button
+                                                            <button type="submit"
                                         disabled={isSubmitting || (turnstileRequired && !turnstileToken)}
                                         className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none mt-2 transition-all disabled:opacity-50"
                                     >
@@ -157,7 +155,6 @@ function ForgotPasswordClient({ org }: ForgotPasswordClientProps) {
                                             t('auth.send_reset_link')
                                         )}
                                     </button>
-                                </Form.Submit>
                             </FormLayout>
                         </div>
 

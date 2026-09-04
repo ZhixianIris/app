@@ -5,7 +5,6 @@ import FormLayout, {
   FormLabelAndMessage,
   ButtonBlack,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { createMedia } from '@services/media/media-resource'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
@@ -15,6 +14,8 @@ import { BarLoader } from 'react-spinners'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 type Props = {
   folderUuid?: string
@@ -116,17 +117,13 @@ function UploadMediaModal({ folderUuid, closeModal, onChanged }: Props) {
 
       <FormField name="name">
         <FormLabelAndMessage label={t('media.name')} />
-        <Form.Control asChild>
-          <Input value={name} onChange={(e) => setName(e.target.value)} type="text" required />
-        </Form.Control>
+                    <Field.Control render={<Input value={name} onChange={(e) => setName(e.target.value)} type="text" required />} />
       </FormField>
 
       {mode === 'EMBED' ? (
         <FormField name="url">
           <FormLabelAndMessage label={t('media.url')} />
-          <Form.Control asChild>
-            <Input value={url} onChange={(e) => setUrl(e.target.value)} type="url" placeholder="https://" />
-          </Form.Control>
+                          <Field.Control render={<Input value={url} onChange={(e) => setUrl(e.target.value)} type="url" placeholder="https://" />} />
         </FormField>
       ) : (
         <FormField name="file">
@@ -168,9 +165,7 @@ function UploadMediaModal({ folderUuid, closeModal, onChanged }: Props) {
 
       <FormField name="description">
         <FormLabelAndMessage label={t('media.description')} />
-        <Form.Control asChild>
-          <Textarea value={description} onChange={(e) => setDescription(e.target.value)} />
-        </Form.Control>
+                    <Field.Control render={<Textarea value={description} onChange={(e) => setDescription(e.target.value)} />} />
       </FormField>
 
       <FormField name="public">

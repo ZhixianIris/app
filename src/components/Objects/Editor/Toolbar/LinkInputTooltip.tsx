@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { CheckIcon, Cross2Icon } from '@radix-ui/react-icons'
+import { Check, X } from "lucide-react";
 
 interface LinkInputTooltipProps {
   onSave: (url: string) => void
@@ -43,14 +43,14 @@ const LinkInputTooltip: React.FC<LinkInputTooltipProps> = ({ onSave, onCancel, c
             disabled={!url}
             className="flex items-center justify-center p-1 border-none rounded cursor-pointer bg-gray-300/25 transition-colors hover:bg-gray-300/50 disabled:opacity-50 disabled:cursor-not-allowed text-[#4CAF50]"
           >
-            <CheckIcon />
+            <Check />
           </button>
           <button
             type="button"
             onClick={onCancel}
             className="flex items-center justify-center p-1 border-none rounded cursor-pointer bg-gray-300/25 transition-colors hover:bg-gray-300/50 text-[#F44336]"
           >
-            <Cross2Icon />
+            <X />
           </button>
         </div>
       </form>

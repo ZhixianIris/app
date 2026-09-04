@@ -6,8 +6,7 @@ import FormLayout, {
   FormField,
   FormLabel,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
-import { FormMessage } from '@radix-ui/react-form'
+import { Field } from '@base-ui/react/field'
 import { updateUserRole } from '@services/organizations/orgs'
 import { apiFetch } from '@services/utils/ts/requests'
 import { getAPIUrl } from '@services/config/config'
@@ -17,6 +16,8 @@ import { BarLoader } from 'react-spinners'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 interface Props {
   user: any
@@ -87,12 +88,11 @@ function RolesUpdate(props: Props) {
           )}
           <Flex className="items-baseline justify-between">
             <FormLabel>Roles</FormLabel>
-            <FormMessage match="valueMissing">
+            <Field.Error match="valueMissing">
               Please choose a role for the user
-            </FormMessage>
+            </Field.Error>
           </Flex>
-          <Form.Control asChild>
-            <select
+                          <Field.Control render={<select
               onChange={handleAssignedRole}
               defaultValue={assignedRole}
               className="border border-gray-300 rounded-md p-2"
@@ -111,13 +111,11 @@ function RolesUpdate(props: Props) {
                   ))}
                 </>
               )}
-            </select>
-          </Form.Control>
+            </select>} />
         </FormField>
         <div className="h-full"></div>
         <Flex className="mt-6 justify-end">
-          <Form.Submit asChild>
-            <ButtonBlack type="submit" className="mt-2.5">
+                          <ButtonBlack type="submit" className="mt-2.5">
               {isSubmitting ? (
                 <BarLoader
                   cssOverride={{ borderRadius: 60 }}
@@ -128,7 +126,6 @@ function RolesUpdate(props: Props) {
                 'Update user role'
               )}
             </ButtonBlack>
-          </Form.Submit>
         </Flex>
       </FormLayout>
     </div>

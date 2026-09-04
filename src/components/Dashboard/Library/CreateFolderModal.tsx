@@ -5,7 +5,6 @@ import FormLayout, {
   FormLabelAndMessage,
   ButtonBlack,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { createFolder, updateFolderThumbnail } from '@services/folders/folders'
 import FolderAppearance from '@components/Dashboard/Library/FolderAppearance'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -18,6 +17,8 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 type Props = {
   orgslug: string
@@ -90,16 +91,12 @@ function CreateFolderModal({ parentFolderUuid, closeModal, onChanged }: Props) {
     <FormLayout onSubmit={formik.handleSubmit}>
       <FormField name="name">
         <FormLabelAndMessage label={t('library.folder_name')} message={formik.errors.name} />
-        <Form.Control asChild>
-          <Input onChange={formik.handleChange} value={formik.values.name} type="text" required />
-        </Form.Control>
+                    <Field.Control render={<Input onChange={formik.handleChange} value={formik.values.name} type="text" required />} />
       </FormField>
 
       <FormField name="description">
         <FormLabelAndMessage label={t('library.description')} message={formik.errors.description} />
-        <Form.Control asChild>
-          <Textarea onChange={formik.handleChange} value={formik.values.description} />
-        </Form.Control>
+                    <Field.Control render={<Textarea onChange={formik.handleChange} value={formik.values.description} />} />
       </FormField>
 
       <FormField name="public">

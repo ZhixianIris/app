@@ -1,9 +1,10 @@
 import React from 'react'
-import * as Form from '@radix-ui/react-form'
 import { Info } from 'lucide-react'
 import { FormField } from '@components/Objects/StyledElements/Form/Form'
 import { useTranslation } from 'react-i18next'
 import type { SignupFieldItem } from '@services/settings/org'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 const INPUT_CLASS =
   'box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm'
@@ -122,9 +123,9 @@ export default function CustomSignupFields({
           <FormField key={field.key} name={name}>
             {field.type !== 'checkbox' && (
               <div className="flex items-center space-x-2 mb-1.5">
-                <Form.Label className="grow text-[13px] font-semibold text-black/70">
+                <Field.Label className="grow text-[13px] font-semibold text-black/70">
                   {field.required ? label : `${label} (${t('common.optional')})`}
-                </Form.Label>
+                </Field.Label>
                 {error && (
                   <span className="text-red-500 text-xs flex items-center space-x-1">
                     <Info size={11} />
@@ -135,8 +136,7 @@ export default function CustomSignupFields({
             )}
 
             {field.type === 'textarea' && (
-              <Form.Control asChild>
-                <textarea
+                                  <Field.Control render={<textarea
                   name={name}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -144,13 +144,11 @@ export default function CustomSignupFields({
                   placeholder={field.placeholder || ''}
                   maxLength={field.max_length ?? undefined}
                   className={TEXTAREA_CLASS}
-                />
-              </Form.Control>
+                />} />
             )}
 
             {field.type === 'select' && (
-              <Form.Control asChild>
-                <select
+                                  <Field.Control render={<select
                   name={name}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -165,22 +163,19 @@ export default function CustomSignupFields({
                       {option}
                     </option>
                   ))}
-                </select>
-              </Form.Control>
+                </select>} />
             )}
 
             {field.type === 'checkbox' && (
               <label className="flex items-start gap-2.5 cursor-pointer">
-                <Form.Control asChild>
-                  <input
+                                        <Field.Control render={<input
                     name={name}
                     type="checkbox"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     checked={!!value}
                     className="mt-0.5 h-4 w-4 rounded border-neutral-300 accent-black"
-                  />
-                </Form.Control>
+                  />} />
                 <span className="text-[13px] text-black/70 leading-snug">
                   {label}
                   {error && (
@@ -191,8 +186,7 @@ export default function CustomSignupFields({
             )}
 
             {(field.type === 'text' || field.type === 'number' || field.type === 'date') && (
-              <Form.Control asChild>
-                <input
+                                  <Field.Control render={<input
                   name={name}
                   type={field.type === 'text' ? 'text' : field.type}
                   onChange={formik.handleChange}
@@ -203,8 +197,7 @@ export default function CustomSignupFields({
                   min={field.type === 'number' ? field.min_value ?? undefined : undefined}
                   max={field.type === 'number' ? field.max_value ?? undefined : undefined}
                   className={INPUT_CLASS}
-                />
-              </Form.Control>
+                />} />
             )}
 
             {field.help_text && (

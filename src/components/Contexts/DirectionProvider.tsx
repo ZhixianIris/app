@@ -1,9 +1,9 @@
 import React from 'react'
-import { DirectionProvider as RadixDirectionProvider } from '@radix-ui/react-direction'
+import { DirectionProvider as BaseDirectionProvider } from '@base-ui/react/direction-provider'
 import { useDirection } from '@hooks/useDirection'
 
 /**
- * Tells every Radix primitive which way the UI runs.
+ * Tells every Base UI primitive which way the UI runs.
  *
  * Without this, `align="end"` on a dropdown means "align right" literally, and
  * arrow-key navigation in tabs and menus moves the wrong way in RTL. With it,
@@ -13,5 +13,5 @@ import { useDirection } from '@hooks/useDirection'
 export default function DirectionProvider({ children }: { children: React.ReactNode }) {
   const { dir } = useDirection()
 
-  return <RadixDirectionProvider dir={dir}>{children}</RadixDirectionProvider>
+  return <BaseDirectionProvider dir={dir}>{children}</BaseDirectionProvider>
 }

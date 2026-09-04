@@ -2,7 +2,6 @@ import { PencilLine, Rss, TentTree } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { motion } from 'motion/react'
 import { useFormik } from 'formik'
-import * as Form from '@radix-ui/react-form'
 import FormLayout, {
   FormField,
   FormLabelAndMessage,
@@ -23,6 +22,8 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useTranslation } from 'react-i18next'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 dayjs.extend(relativeTime);
 
@@ -170,29 +171,25 @@ const NewUpdateForm = ({ setSelectedView }: any) => {
               label={t('courses.update_title')}
               message={formik.errors.title}
             />
-            <Form.Control asChild>
-              <Input
+                                <Field.Control render={<Input
                 style={{ backgroundColor: 'white' }}
                 onChange={formik.handleChange}
                 value={formik.values.title}
                 type="text"
                 required
-              />
-            </Form.Control>
+              />} />
           </FormField>
           <FormField name="content">
             <FormLabelAndMessage
               label={t('courses.update_content')}
               message={formik.errors.content}
             />
-            <Form.Control asChild>
-              <Textarea
+                                <Field.Control render={<Textarea
                 style={{ backgroundColor: 'white', height: '100px' }}
                 onChange={formik.handleChange}
                 value={formik.values.content}
                 required
-              />
-            </Form.Control>
+              />} />
           </FormField>
           <div className='flex justify-end py-2'>
             <button onClick={() => setSelectedView('list')} className='text-gray-500 px-4 py-2 rounded-md text-sm font-bold antialiased'>{t('common.cancel')}</button>

@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { dirMultiplier, directionForLanguage } from '@/lib/direction'
 import { useFormik } from 'formik'
-import * as Form from '@radix-ui/react-form'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import toast from 'react-hot-toast'
 import {
@@ -66,6 +65,8 @@ import {
 import { fetchPrices } from '../billing/_lib/billingClient'
 import PricingCards from './_components/PricingCards'
 import PlanSummaryCard from './_components/PlanSummaryCard'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 // ── Constants ───────────────────────────────────────────────────────────────
 
@@ -454,7 +455,7 @@ function StepUsageOrg({
 
 const FormLabelAndMessage = ({ label, message }: { label: string; message?: string }) => (
   <div className="flex items-center justify-between mb-2">
-    <Form.Label className="text-[13px] font-semibold text-black/50">{label}</Form.Label>
+    <Field.Label className="text-[13px] font-semibold text-black/50">{label}</Field.Label>
     {message && (
       <div className="flex items-center gap-1 text-red-500/80 text-[11px] font-medium">
         <Info size={9} />
@@ -552,31 +553,28 @@ function CreateOrgForm({
             <span className="text-[13px] font-medium">{error}</span>
           </div>
         )}
-        <Form.Root onSubmit={formik.handleSubmit} className="space-y-5">
-          <Form.Field name="name">
+        <Form onSubmit={formik.handleSubmit} className="space-y-5">
+          <Field name="name">
             <FormLabelAndMessage
               label={t('hub_new.createOrg.fields.name', { defaultValue: 'Organization name' })}
               message={formik.errors.name === 'test_hint' ? undefined : (formik.errors.name as string)}
             />
-            <Form.Control asChild>
-              <input
+                                <Field.Control render={<input
                 className={inputCls}
                 onChange={handleNameChange}
                 value={formik.values.name}
                 type="text"
                 placeholder={t('hub_new.createOrg.placeholders.name', { defaultValue: 'Acme Academy' })}
                 required
-              />
-            </Form.Control>
+              />} />
             {formik.errors.name === 'test_hint' && <TestHint t={t} />}
-          </Form.Field>
+          </Field>
 
-          <Form.Field name="description">
+          <Field name="description">
             <FormLabelAndMessage
               label={t('hub_new.createOrg.fields.description', { defaultValue: 'Description (optional)' })}
             />
-            <Form.Control asChild>
-              <input
+                                <Field.Control render={<input
                 className={inputCls}
                 onChange={formik.handleChange}
                 value={formik.values.description}
@@ -584,35 +582,31 @@ function CreateOrgForm({
                 placeholder={t('hub_new.createOrg.placeholders.description', {
                   defaultValue: 'What is your organization about?',
                 })}
-              />
-            </Form.Control>
-          </Form.Field>
+              />} />
+          </Field>
 
-          <Form.Field name="slug">
+          <Field name="slug">
             <FormLabelAndMessage
               label={t('hub_new.createOrg.fields.slug', { defaultValue: 'Address' })}
               message={formik.errors.slug === 'test_hint' ? undefined : (formik.errors.slug as string)}
             />
             <div className="flex items-center rounded-xl overflow-hidden nice-shadow focus-within:ring-2 focus-within:ring-black/[0.06] transition-all">
-              <Form.Control asChild>
-                <input
+                                      <Field.Control render={<input
                   className="flex-1 bg-white text-[14px] text-black/80 px-4 py-3 focus:outline-none placeholder:text-black/20"
                   onChange={handleSlugChange}
                   value={formik.values.slug}
                   placeholder="your-org"
                   type="text"
                   required
-                />
-              </Form.Control>
+                />} />
               <span className="px-4 py-3 bg-gray-50 text-black/25 border-s border-gray-100 shrink-0 text-[13px] font-medium select-none">
                 .learnhouse.io
               </span>
             </div>
             {formik.errors.slug === 'test_hint' && <TestHint t={t} />}
-          </Form.Field>
+          </Field>
 
-          <Form.Submit asChild>
-            <motion.button
+                          <motion.button type="submit"
               disabled={hasErrors || submitting}
               whileTap={hasErrors || submitting ? {} : { scale: 0.98 }}
               className={`w-full flex items-center justify-center gap-2 text-[14px] font-semibold py-3 rounded-xl transition-colors mt-1 ${
@@ -635,8 +629,7 @@ function CreateOrgForm({
                 </>
               )}
             </motion.button>
-          </Form.Submit>
-        </Form.Root>
+        </Form>
       </div>
       {planId && (
         <PlanSummaryCard

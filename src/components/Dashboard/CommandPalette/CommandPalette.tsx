@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Command } from 'cmdk'
-import * as DialogPrimitive from '@radix-ui/react-dialog'
+import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'
 import {
   BookOpen,
   User as UserIcon,
@@ -176,22 +176,23 @@ export default function CommandPalette() {
     )
   }
 
+  const searchInputRef = React.useRef<HTMLInputElement>(null)
+
   return (
     <DialogPrimitive.Root open={open} onOpenChange={setOpen}>
       <DialogPrimitive.Portal>
-        <DialogPrimitive.Overlay
-          className="fixed inset-0 bg-black/40 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:duration-100 data-[state=closed]:duration-75 ease-out"
-          style={{ zIndex: 'var(--z-modal-backdrop)' as any }}
+        <DialogPrimitive.Backdrop
+          className="fixed inset-0 bg-black/40 transition-opacity duration-100 ease-out data-[starting-style]:opacity-0 data-[ending-style]:opacity-0"
+          style={{ zIndex: 'var(--z-modal-backdrop)' as unknown as string }}
         />
-        <DialogPrimitive.Content
+        <DialogPrimitive.Viewport
+          className="fixed inset-0"
+          style={{ zIndex: 'var(--z-modal)' as unknown as string }}
+        >
+        <DialogPrimitive.Popup
           aria-label={t('dashboard.search.placeholder')}
-          className="fixed left-1/2 top-[10%] flex w-[94vw] max-w-[760px] -translate-x-1/2 flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-black/85 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=open]:fade-in-0 data-[state=closed]:fade-out-0 data-[state=open]:zoom-in-95 data-[state=closed]:zoom-out-95 data-[state=open]:slide-in-from-top-2 data-[state=closed]:slide-out-to-top-2 data-[state=open]:duration-150 data-[state=closed]:duration-100 ease-out"
-          style={{ zIndex: 'var(--z-modal)' as any }}
-          onOpenAutoFocus={(e) => {
-            e.preventDefault()
-            const input = (e.currentTarget as HTMLElement).querySelector('input')
-            if (input) (input as HTMLInputElement).focus()
-          }}
+          initialFocus={searchInputRef}
+          className="fixed left-1/2 top-[10%] flex w-[94vw] max-w-[760px] -translate-x-1/2 flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-black/85 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] backdrop-blur-2xl backdrop-saturate-150 transition-[opacity,transform] duration-150 ease-out data-[starting-style]:opacity-0 data-[starting-style]:scale-95 data-[starting-style]:-translate-y-2 data-[ending-style]:opacity-0 data-[ending-style]:scale-95 data-[ending-style]:-translate-y-2"
         >
           {/* Top rim highlight + soft top glow */}
           <span
@@ -233,6 +234,7 @@ export default function CommandPalette() {
                   )}
                 </div>
                 <Command.Input
+                  ref={searchInputRef}
                   value={query}
                   onValueChange={setQuery}
                   placeholder={t('dashboard.search.placeholder')}
@@ -297,7 +299,8 @@ export default function CommandPalette() {
               </span>
             </div>
           </Command>
-        </DialogPrimitive.Content>
+        </DialogPrimitive.Popup>
+        </DialogPrimitive.Viewport>
       </DialogPrimitive.Portal>
     </DialogPrimitive.Root>
   )

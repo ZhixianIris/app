@@ -7,7 +7,6 @@ import {
 import { useFormik } from 'formik';
 import { AlertTriangle, Award, FileText, Settings } from 'lucide-react';
 import CertificatePreview from './CertificatePreview';
-import * as Form from '@radix-ui/react-form';
 import React, { useEffect, useState, useRef } from 'react';
 import { useCourseFieldSync, useCourse } from '@components/Contexts/CourseContext';
 import { useLHSession } from '@components/Contexts/LHSessionContext';
@@ -28,6 +27,8 @@ import { queryKeys } from '@/lib/query/keys';
 import { getCourseCertifications } from '@services/courses/certifications';
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 type EditCourseCertificationProps = {
   orgslug: string
@@ -329,7 +330,7 @@ function EditCourseCertification(_props: EditCourseCertificationProps) {
               <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
                 {/* Form Section */}
                 <div className="lg:col-span-3">
-                  <Form.Root className="space-y-6">
+                  <Form className="space-y-6">
                     {/* Basic Information Section */}
                     <div className="flex flex-col bg-gray-50 -space-y-1 px-3 sm:px-5 py-3 rounded-md mb-3">
                       <h3 className="font-bold text-md text-gray-800 flex items-center gap-2">
@@ -348,23 +349,20 @@ function EditCourseCertification(_props: EditCourseCertificationProps) {
                           label={t('dashboard.courses.certification.form.certification_name_label')} 
                           message={formik.errors.certification_name} 
                         />
-                        <Form.Control asChild>
-                          <Input
+                                                                    <Field.Control render={<Input
                             style={{ backgroundColor: 'white' }}
                             onChange={formik.handleChange}
                             value={formik.values.certification_name}
                             type="text"
                             placeholder={t('dashboard.courses.certification.form.certification_name_placeholder')}
                             required
-                          />
-                        </Form.Control>
+                          />} />
                       </FormField>
 
                       {/* Certification Type */}
                       <FormField name="certification_type">
                         <FormLabelAndMessage label={t('dashboard.courses.certification.form.certification_type_label')} />
-                        <Form.Control asChild>
-                          <CustomSelect
+                                                                    <Field.Control render={<CustomSelect
                             value={formik.values.certification_type}
                             onValueChange={(value) => {
                               if (!value) return;
@@ -387,8 +385,7 @@ function EditCourseCertification(_props: EditCourseCertificationProps) {
                               <CustomSelectItem value="workshop">{t('dashboard.courses.certification.types.workshop')}</CustomSelectItem>
                               <CustomSelectItem value="specialization">{t('dashboard.courses.certification.types.specialization')}</CustomSelectItem>
                             </CustomSelectContent>
-                          </CustomSelect>
-                        </Form.Control>
+                          </CustomSelect>} />
                       </FormField>
                     </div>
 
@@ -398,15 +395,13 @@ function EditCourseCertification(_props: EditCourseCertificationProps) {
                         label={t('dashboard.courses.certification.form.certification_description_label')} 
                         message={formik.errors.certification_description} 
                       />
-                      <Form.Control asChild>
-                        <Textarea
+                                                              <Field.Control render={<Textarea
                           style={{ backgroundColor: 'white', height: '120px', minHeight: '120px' }}
                           onChange={formik.handleChange}
                           value={formik.values.certification_description}
                           placeholder={t('dashboard.courses.certification.form.certification_description_placeholder')}
                           required
-                        />
-                      </Form.Control>
+                        />} />
                     </FormField>
 
                     {/* Certificate Design Section */}
@@ -423,8 +418,7 @@ function EditCourseCertification(_props: EditCourseCertificationProps) {
                     {/* Pattern Selection */}
                     <FormField name="certificate_pattern">
                       <FormLabelAndMessage label={t('dashboard.courses.certification.form.certificate_pattern_label')} />
-                      <Form.Control asChild>
-                        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
+                                                              <Field.Control render={<div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
                           {['royal', 'tech', 'nature', 'geometric', 'vintage', 'waves', 'minimal', 'professional', 'academic', 'modern'].map((patternValue) => (
                             <div
                               key={patternValue}
@@ -441,24 +435,21 @@ function EditCourseCertification(_props: EditCourseCertificationProps) {
                               </div>
                             </div>
                           ))}
-                        </div>
-                      </Form.Control>
+                        </div>} />
                     </FormField>
 
                     {/* Custom Instructor */}
                     <FormField name="certificate_instructor">
                       <FormLabelAndMessage label={t('dashboard.courses.certification.form.certificate_instructor_label')} />
-                      <Form.Control asChild>
-                        <Input
+                                                              <Field.Control render={<Input
                           style={{ backgroundColor: 'white' }}
                           onChange={formik.handleChange}
                           value={formik.values.certificate_instructor}
                           type="text"
                           placeholder={t('dashboard.courses.certification.form.certificate_instructor_placeholder')}
-                        />
-                      </Form.Control>
+                        />} />
                     </FormField>
-                  </Form.Root>
+                  </Form>
                 </div>
 
                 {/* Preview Section */}

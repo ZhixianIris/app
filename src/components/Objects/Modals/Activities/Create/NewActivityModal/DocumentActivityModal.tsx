@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import * as Form from '@radix-ui/react-form'
 import BarLoader from 'react-spinners/BarLoader'
 import { FileText } from '@phosphor-icons/react'
 import { constructAcceptValue } from '@/lib/constants'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 const SUPPORTED_FILES = constructAcceptValue(['pdf'])
 
@@ -32,7 +33,7 @@ function DocumentPdfModal({ submitFileActivity, chapterId, course }: any) {
   }
 
   return (
-    <Form.Root onSubmit={handleSubmit} className="space-y-4">
+    <Form onSubmit={handleSubmit} className="space-y-4">
       <div
         className="relative flex items-center justify-center h-20 rounded-xl overflow-hidden"
         style={{
@@ -47,46 +48,41 @@ function DocumentPdfModal({ submitFileActivity, chapterId, course }: any) {
       </div>
 
       <div className="rounded-xl nice-shadow p-4 space-y-4">
-        <Form.Field name="documentpdf-activity-name" className="space-y-1.5">
-          <Form.Label className="text-sm font-medium text-gray-700">
+        <Field name="documentpdf-activity-name" className="space-y-1.5">
+          <Field.Label className="text-sm font-medium text-gray-700">
             Document name
-          </Form.Label>
-          <Form.Message match="valueMissing" className="text-xs text-red-500">
+          </Field.Label>
+          <Field.Error match="valueMissing" className="text-xs text-red-500">
             Please provide a name
-          </Form.Message>
-          <Form.Control asChild>
-            <input
+          </Field.Error>
+                          <Field.Control render={<input
               onChange={(e) => setName(e.target.value)}
               type="text"
               required
               placeholder="Enter a name..."
               className="w-full h-9 px-3 text-sm rounded-lg bg-gray-50 border border-gray-200 outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-200 transition-colors"
-            />
-          </Form.Control>
-        </Form.Field>
+            />} />
+        </Field>
 
-        <Form.Field name="documentpdf-activity-file" className="space-y-1.5">
-          <Form.Label className="text-sm font-medium text-gray-700">
+        <Field name="documentpdf-activity-file" className="space-y-1.5">
+          <Field.Label className="text-sm font-medium text-gray-700">
             PDF file
-          </Form.Label>
-          <Form.Message match="valueMissing" className="text-xs text-red-500">
+          </Field.Label>
+          <Field.Error match="valueMissing" className="text-xs text-red-500">
             Please provide a PDF file
-          </Form.Message>
-          <Form.Control asChild>
-            <input
+          </Field.Error>
+                          <Field.Control render={<input
               accept={SUPPORTED_FILES}
               type="file"
               onChange={(e: any) => setDocumentPdf(e.target.files[0])}
               required
               className="w-full text-sm text-gray-500 file:me-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 transition-colors"
-            />
-          </Form.Control>
-        </Form.Field>
+            />} />
+        </Field>
       </div>
 
       <div className="flex justify-end">
-        <Form.Submit asChild>
-          <button
+                    <button type="submit"
             type="submit"
             disabled={isSubmitting}
             className="inline-flex items-center justify-center h-9 px-5 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
@@ -101,9 +97,8 @@ function DocumentPdfModal({ submitFileActivity, chapterId, course }: any) {
               'Create activity'
             )}
           </button>
-        </Form.Submit>
       </div>
-    </Form.Root>
+    </Form>
   )
 }
 

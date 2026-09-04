@@ -3,7 +3,6 @@ import FormLayout, {
     FormLabelAndMessage,
     Input,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { useOrg } from '@components/Contexts/OrgContext'
 import React from 'react'
 import { updateUserGroup } from '@services/usergroups/usergroups'
@@ -13,6 +12,8 @@ import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useFormik } from 'formik'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 type EditUserGroupProps = {
     usergroup: {
@@ -68,34 +69,28 @@ function EditUserGroup(props: EditUserGroupProps) {
                     label={t('dashboard.users.usergroups.modals.edit.form.name')}
                     message={formik.errors.name}
                 />
-                <Form.Control asChild>
-                    <Input
+                                <Field.Control render={<Input
                         onChange={formik.handleChange}
                         value={formik.values.name}
                         type="name"
                         required
-                    />
-                </Form.Control>
+                    />} />
             </FormField>
             <FormField name="description">
                 <FormLabelAndMessage
                     label={t('dashboard.users.usergroups.modals.edit.form.description')}
                     message={formik.errors.description}
                 />
-                <Form.Control asChild>
-                    <Input
+                                <Field.Control render={<Input
                         onChange={formik.handleChange}
                         value={formik.values.description}
                         type="description"
-                    />
-                </Form.Control>
+                    />} />
             </FormField>
             <div className="flex py-4">
-                <Form.Submit asChild>
-                    <button className="w-full bg-black text-white font-bold text-center p-2 rounded-md shadow-md hover:cursor-pointer">
+                                <button type="submit" className="w-full bg-black text-white font-bold text-center p-2 rounded-md shadow-md hover:cursor-pointer">
                         {isSubmitting ? t('dashboard.users.usergroups.modals.edit.form.loading') : t('dashboard.users.usergroups.modals.edit.form.submit')}
                     </button>
-                </Form.Submit>
             </div>
         </FormLayout>
     )

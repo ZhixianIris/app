@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
-import * as Form from '@radix-ui/react-form'
 import BarLoader from 'react-spinners/BarLoader'
 import { Upload, CheckCircle2, ChevronRight, AlertCircle, FileArchive, ArrowLeft } from 'lucide-react'
 import { getAPIUrl } from '@services/config/config'
@@ -17,6 +16,8 @@ import { revalidateTags } from '@services/utils/ts/requests'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from "react-router-dom";
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 const SUPPORTED_FILES = constructAcceptValue(['zip'])
 
@@ -256,7 +257,7 @@ function ScormCourseImport({ orgId, orgslug, closeModal }: ScormCourseImportProp
       </div>
 
       {step === 'upload' && (
-        <Form.Root onSubmit={handleAnalyze}>
+        <Form onSubmit={handleAnalyze}>
           <div className="space-y-5">
             {/* File Upload Area */}
             <div
@@ -376,7 +377,7 @@ function ScormCourseImport({ orgId, orgslug, closeModal }: ScormCourseImportProp
               </Button>
             </div>
           </div>
-        </Form.Root>
+        </Form>
       )}
 
       {step === 'configure' && analysisResult && (

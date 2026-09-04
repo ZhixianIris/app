@@ -5,7 +5,6 @@ import FormLayout, {
   FormField,
   FormLabelAndMessage,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { createPodcast } from '@services/podcasts/podcasts'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
@@ -25,6 +24,8 @@ import AIImageButton from '@components/Objects/AI/AIImageButton'
 import FormTagInput from "@components/Objects/StyledElements/Form/TagInput"
 import { useTranslation } from "react-i18next"
 import { useNavigate } from "react-router-dom";
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 function CreatePodcastModal({ closeModal, orgslug }: any) {
   const { t } = useTranslation()
@@ -157,14 +158,12 @@ function CreatePodcastModal({ closeModal, orgslug }: any) {
           label={t('podcasts.podcast_name')}
           message={formik.errors.name}
         />
-        <Form.Control asChild>
-          <Input
+                    <Field.Control render={<Input
             onChange={formik.handleChange}
             value={formik.values.name}
             type="text"
             required
-          />
-        </Form.Control>
+          />} />
       </FormField>
 
       <FormField name="description">
@@ -172,12 +171,10 @@ function CreatePodcastModal({ closeModal, orgslug }: any) {
           label={t('library.description')}
           message={formik.errors.description}
         />
-        <Form.Control asChild>
-          <Textarea
+                    <Field.Control render={<Textarea
             onChange={formik.handleChange}
             value={formik.values.description}
-          />
-        </Form.Control>
+          />} />
       </FormField>
 
       <FormField name="thumbnail">

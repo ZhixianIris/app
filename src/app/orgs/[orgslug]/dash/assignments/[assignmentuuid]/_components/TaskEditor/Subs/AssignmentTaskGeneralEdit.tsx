@@ -3,7 +3,6 @@ import { useAssignmentsTask, useAssignmentsTaskDispatch } from '@components/Cont
 import { useLHSession } from '@components/Contexts/LHSessionContext';
 import { useOrg } from '@components/Contexts/OrgContext';
 import FormLayout, { FormField, FormLabelAndMessage, Input, Textarea } from '@components/Objects/StyledElements/Form/Form';
-import * as Form from '@radix-ui/react-form';
 import { getActivityByID } from '@services/courses/activities';
 import { updateAssignmentTask, updateReferenceFile } from '@services/courses/assignments';
 import { getTaskRefFileDir } from '@services/media/media';
@@ -14,6 +13,8 @@ import React, { useEffect } from 'react'
 import toast from 'react-hot-toast';
 import { constructAcceptValue } from '@/lib/constants';
 import { useTranslation } from 'react-i18next';
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 const SUPPORTED_FILES = constructAcceptValue(['pdf', 'docx', 'mp4', 'jpg', 'png', 'pptx', 'zip'])
 
@@ -55,34 +56,28 @@ export function AssignmentTaskGeneralEdit() {
         <FormLayout onSubmit={formik.handleSubmit}>
             <FormField name="title">
                 <FormLabelAndMessage label={t('dashboard.assignments.editor.task_editor.general.title')} message={formik.errors.title} />
-                <Form.Control asChild>
-                    <Input
+                                <Field.Control render={<Input
                         onChange={formik.handleChange}
                         value={formik.values.title}
                         type="text"
-                    />
-                </Form.Control>
+                    />} />
             </FormField>
 
             <FormField name="description">
                 <FormLabelAndMessage label={t('dashboard.assignments.editor.task_editor.general.description')} message={formik.errors.description} />
-                <Form.Control asChild>
-                    <Input
+                                <Field.Control render={<Input
                         onChange={formik.handleChange}
                         value={formik.values.description}
                         type="text"
-                    />
-                </Form.Control>
+                    />} />
             </FormField>
 
             <FormField name="hint">
                 <FormLabelAndMessage label={t('dashboard.assignments.editor.task_editor.general.hint')} message={formik.errors.hint} />
-                <Form.Control asChild>
-                    <Textarea
+                                <Field.Control render={<Textarea
                         onChange={formik.handleChange}
                         value={formik.values.hint}
-                    />
-                </Form.Control>
+                    />} />
             </FormField>
 
             <FormField name="hint">
@@ -94,20 +89,16 @@ export function AssignmentTaskGeneralEdit() {
                     </div>
 
                 </div>
-                <Form.Control asChild>
-                    <UpdateTaskRef />
-                </Form.Control>
+                                <Field.Control render={<UpdateTaskRef />} />
             </FormField>
 
             {/* Submit button */}
-            <Form.Submit asChild>
-                <button
+                        <button type="submit"
                     type="submit"
                     className="flex items-center justify-center w-full px-4 py-2 mt-4 font-semibold text-white bg-green-500 rounded-md hover:bg-green-600"
                 >
                     {t('dashboard.assignments.editor.task_editor.general.submit')}
                 </button>
-            </Form.Submit>
 
 
         </FormLayout>

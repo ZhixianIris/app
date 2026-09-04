@@ -6,7 +6,6 @@ import FormLayout, {
 } from '@components/Objects/StyledElements/Form/Form';
 import { useFormik } from 'formik';
 import { AlertTriangle } from 'lucide-react';
-import * as Form from '@radix-ui/react-form';
 import React, { useEffect, useRef, useMemo } from 'react';
 import { useCourseFieldSync } from '@components/Contexts/CourseContext';
 import {
@@ -17,6 +16,8 @@ import {
   CustomSelectValue,
 } from "../EditCourseGeneral/CustomSelect";
 import { useTranslation } from 'react-i18next';
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 type EditCourseSEOProps = {
   orgslug: string
@@ -255,16 +256,14 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                     />
                     <CharacterCounter current={formik.values.title.length} max={70} />
                   </div>
-                  <Form.Control asChild>
-                    <Input
+                                              <Field.Control render={<Input
                       style={{ backgroundColor: 'white' }}
                       onChange={formik.handleChange}
                       value={formik.values.title}
                       type="text"
                       placeholder={t('dashboard.courses.seo.form.title_placeholder')}
                       disabled={isSaving}
-                    />
-                  </Form.Control>
+                    />} />
                   <p className="text-xs text-gray-400 mt-1">
                     {t('dashboard.courses.seo.form.title_hint')}
                   </p>
@@ -278,15 +277,13 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                     />
                     <CharacterCounter current={formik.values.description.length} max={160} />
                   </div>
-                  <Form.Control asChild>
-                    <Textarea
+                                              <Field.Control render={<Textarea
                       style={{ backgroundColor: 'white', height: '80px', minHeight: '80px' }}
                       onChange={formik.handleChange}
                       value={formik.values.description}
                       placeholder={t('dashboard.courses.seo.form.description_placeholder')}
                       disabled={isSaving}
-                    />
-                  </Form.Control>
+                    />} />
                   <p className="text-xs text-gray-400 mt-1">
                     {t('dashboard.courses.seo.form.description_hint')}
                   </p>
@@ -297,16 +294,14 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                     label={t('dashboard.courses.seo.form.keywords_label')}
                     message={formik.errors.keywords}
                   />
-                  <Form.Control asChild>
-                    <Input
+                                              <Field.Control render={<Input
                       style={{ backgroundColor: 'white' }}
                       onChange={formik.handleChange}
                       value={formik.values.keywords}
                       type="text"
                       placeholder={t('dashboard.courses.seo.form.keywords_placeholder')}
                       disabled={isSaving}
-                    />
-                  </Form.Control>
+                    />} />
                   <p className="text-xs text-gray-400 mt-1">
                     {t('dashboard.courses.seo.form.keywords_hint')}
                   </p>
@@ -317,16 +312,14 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                     label={t('dashboard.courses.seo.form.canonical_url_label')}
                     message={formik.errors.canonical_url}
                   />
-                  <Form.Control asChild>
-                    <Input
+                                              <Field.Control render={<Input
                       style={{ backgroundColor: 'white' }}
                       onChange={formik.handleChange}
                       value={formik.values.canonical_url}
                       type="text"
                       placeholder={t('dashboard.courses.seo.form.canonical_url_placeholder')}
                       disabled={isSaving}
-                    />
-                  </Form.Control>
+                    />} />
                   <p className="text-xs text-gray-400 mt-1">
                     {t('dashboard.courses.seo.form.canonical_url_hint')}
                   </p>
@@ -354,16 +347,14 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                     />
                     <CharacterCounter current={formik.values.og_title.length} max={70} />
                   </div>
-                  <Form.Control asChild>
-                    <Input
+                                              <Field.Control render={<Input
                       style={{ backgroundColor: 'white' }}
                       onChange={formik.handleChange}
                       value={formik.values.og_title}
                       type="text"
                       placeholder={t('dashboard.courses.seo.form.og_title_placeholder')}
                       disabled={isSaving}
-                    />
-                  </Form.Control>
+                    />} />
                 </FormField>
 
                 <FormField name="og_description">
@@ -374,15 +365,13 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                     />
                     <CharacterCounter current={formik.values.og_description.length} max={200} />
                   </div>
-                  <Form.Control asChild>
-                    <Textarea
+                                              <Field.Control render={<Textarea
                       style={{ backgroundColor: 'white', height: '80px', minHeight: '80px' }}
                       onChange={formik.handleChange}
                       value={formik.values.og_description}
                       placeholder={t('dashboard.courses.seo.form.og_description_placeholder')}
                       disabled={isSaving}
-                    />
-                  </Form.Control>
+                    />} />
                 </FormField>
 
                 <FormField name="og_image">
@@ -390,16 +379,14 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                     label={t('dashboard.courses.seo.form.og_image_label')}
                     message={formik.errors.og_image}
                   />
-                  <Form.Control asChild>
-                    <Input
+                                              <Field.Control render={<Input
                       style={{ backgroundColor: 'white' }}
                       onChange={formik.handleChange}
                       value={formik.values.og_image}
                       type="text"
                       placeholder={t('dashboard.courses.seo.form.og_image_placeholder')}
                       disabled={isSaving}
-                    />
-                  </Form.Control>
+                    />} />
                   <p className="text-xs text-gray-400 mt-1">
                     {t('dashboard.courses.seo.form.og_image_hint')}
                   </p>
@@ -423,8 +410,7 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                   <FormLabelAndMessage
                     label={t('dashboard.courses.seo.form.twitter_card_label')}
                   />
-                  <Form.Control asChild>
-                    <CustomSelect
+                                              <Field.Control render={<CustomSelect
                       value={formik.values.twitter_card}
                       onValueChange={(value) => {
                         if (!value) return;
@@ -447,8 +433,7 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                           {t('dashboard.courses.seo.form.twitter_card_summary_large')}
                         </CustomSelectItem>
                       </CustomSelectContent>
-                    </CustomSelect>
-                  </Form.Control>
+                    </CustomSelect>} />
                 </FormField>
 
                 <FormField name="twitter_title">
@@ -459,16 +444,14 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                     />
                     <CharacterCounter current={formik.values.twitter_title.length} max={70} />
                   </div>
-                  <Form.Control asChild>
-                    <Input
+                                              <Field.Control render={<Input
                       style={{ backgroundColor: 'white' }}
                       onChange={formik.handleChange}
                       value={formik.values.twitter_title}
                       type="text"
                       placeholder={t('dashboard.courses.seo.form.twitter_title_placeholder')}
                       disabled={isSaving}
-                    />
-                  </Form.Control>
+                    />} />
                 </FormField>
 
                 <FormField name="twitter_description">
@@ -479,15 +462,13 @@ function EditCourseSEO(props: EditCourseSEOProps) {
                     />
                     <CharacterCounter current={formik.values.twitter_description.length} max={200} />
                   </div>
-                  <Form.Control asChild>
-                    <Textarea
+                                              <Field.Control render={<Textarea
                       style={{ backgroundColor: 'white', height: '80px', minHeight: '80px' }}
                       onChange={formik.handleChange}
                       value={formik.values.twitter_description}
                       placeholder={t('dashboard.courses.seo.form.twitter_description_placeholder')}
                       disabled={isSaving}
-                    />
-                  </Form.Control>
+                    />} />
                 </FormField>
               </div>
             </div>

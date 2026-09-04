@@ -7,7 +7,6 @@ const ToolbarButtons = lazy(
   () => import('./Toolbar/ToolbarButtons').then((m) => m.ToolbarButtons)
 )
 import { motion } from 'motion/react'
-import { DividerVerticalIcon, SlashIcon } from '@radix-ui/react-icons'
 import learnhouseAI_icon from 'public/learnhouse_ai_simple.png'
 import {
   AIEditorStateTypes,
@@ -25,7 +24,7 @@ import ImageBlock from './Extensions/Image/ImageBlock'
 import Youtube from '@tiptap/extension-youtube'
 import VideoBlock from './Extensions/Video/VideoBlock'
 import AudioBlock from './Extensions/Audio/AudioBlock'
-import { Eye, Monitor, History, AlertTriangle, RefreshCw, Loader2 } from 'lucide-react'
+import { Eye, Monitor, History, AlertTriangle, RefreshCw, Loader2, SeparatorVertical, Slash } from 'lucide-react'
 import MathEquationBlock from './Extensions/MathEquation/MathEquationBlock'
 import PDFBlock from './Extensions/PDF/PDFBlock'
 import H5PBlock from './Extensions/H5P/H5PBlock'
@@ -477,7 +476,7 @@ function Editor(props: EditorProps) {
                 </Link>
                 <div className="activity-editor-doc-name">
                   {' '}
-                  <b>{props.course.name}</b> <SlashIcon /> {props.activity.name}{' '}
+                  <b>{props.course.name}</b> <Slash /> {props.activity.name}{' '}
                 </div>
               </div>
               <div className="activity-editor-buttons-wrapper">
@@ -535,7 +534,7 @@ function Editor(props: EditorProps) {
                   )}
                 </div>
               </div>
-              <DividerVerticalIcon
+              <SeparatorVertical
                 style={{
                   marginTop: 'auto',
                   marginBottom: 'auto',
@@ -635,7 +634,7 @@ function Editor(props: EditorProps) {
                   </Link>
                 </ToolTip>
               </div>
-              <DividerVerticalIcon
+              <SeparatorVertical
                 style={{
                   marginTop: 'auto',
                   marginBottom: 'auto',

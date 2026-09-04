@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import FormLayout, {
   FormField,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { AlertTriangle, Info, Mail, User } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { signUpWithInviteCode } from '@services/auth/auth'
@@ -20,6 +19,8 @@ import CustomSignupFields, {
   validateCustomFields,
 } from '@components/Auth/CustomSignupFields'
 import { readSignupFields, type SignupFieldItem } from '@services/settings/org'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 const validate = (values: any, t: any, customFields: SignupFieldItem[]) => {
   const errors: any = {}
@@ -210,7 +211,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
         <FormLayout onSubmit={formik.handleSubmit}>
           <FormField name="email">
             <div className="flex items-center space-x-2 mb-1.5">
-              <Form.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.email')}</Form.Label>
+              <Field.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.email')}</Field.Label>
               {formik.touched.email && formik.errors.email && (
                 <span className="text-red-500 text-xs flex items-center space-x-1">
                   <Info size={11} />
@@ -218,22 +219,20 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
                 </span>
               )}
             </div>
-            <Form.Control asChild>
-              <input
+                                <Field.Control render={<input
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
                 type="email"
                 required
                 className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm"
-              />
-            </Form.Control>
+              />} />
           </FormField>
 
           <div className="flex flex-row space-x-2">
             <FormField name="first_name">
               <div className="flex items-center space-x-2 mb-1.5">
-                <Form.Label className="grow text-[13px] font-semibold text-black/70">{t('user.first_name')}</Form.Label>
+                <Field.Label className="grow text-[13px] font-semibold text-black/70">{t('user.first_name')}</Field.Label>
                 {formik.touched.first_name && formik.errors.first_name && (
                   <span className="text-red-500 text-xs flex items-center space-x-1">
                     <Info size={11} />
@@ -241,19 +240,17 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
                   </span>
                 )}
               </div>
-              <Form.Control asChild>
-                <input
+                                      <Field.Control render={<input
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.first_name}
                   type="text"
                   className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm"
-                />
-              </Form.Control>
+                />} />
             </FormField>
             <FormField name="last_name">
               <div className="flex items-center space-x-2 mb-1.5">
-                <Form.Label className="grow text-[13px] font-semibold text-black/70">{t('user.last_name')}</Form.Label>
+                <Field.Label className="grow text-[13px] font-semibold text-black/70">{t('user.last_name')}</Field.Label>
                 {formik.touched.last_name && formik.errors.last_name && (
                   <span className="text-red-500 text-xs flex items-center space-x-1">
                     <Info size={11} />
@@ -261,21 +258,19 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
                   </span>
                 )}
               </div>
-              <Form.Control asChild>
-                <input
+                                      <Field.Control render={<input
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   value={formik.values.last_name}
                   type="text"
                   className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm"
-                />
-              </Form.Control>
+                />} />
             </FormField>
           </div>
 
           <FormField name="password">
             <div className="flex items-center space-x-2 mb-1.5">
-              <Form.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.password')}</Form.Label>
+              <Field.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.password')}</Field.Label>
               {formik.touched.password && formik.errors.password && (
                 <span className="text-red-500 text-xs flex items-center space-x-1">
                   <Info size={11} />
@@ -283,8 +278,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
                 </span>
               )}
             </div>
-            <Form.Control asChild>
-              <input
+                                <Field.Control render={<input
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
@@ -292,14 +286,13 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
                 autoComplete="new-password"
                 required
                 className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm"
-              />
-            </Form.Control>
+              />} />
             <PasswordStrengthIndicator password={formik.values.password} />
           </FormField>
 
           <FormField name="username">
             <div className="flex items-center space-x-2 mb-1.5">
-              <Form.Label className="grow text-[13px] font-semibold text-black/70">{t('user.username')}</Form.Label>
+              <Field.Label className="grow text-[13px] font-semibold text-black/70">{t('user.username')}</Field.Label>
               {formik.touched.username && formik.errors.username && (
                 <span className="text-red-500 text-xs flex items-center space-x-1">
                   <Info size={11} />
@@ -307,31 +300,27 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
                 </span>
               )}
             </div>
-            <Form.Control asChild>
-              <input
+                                <Field.Control render={<input
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.username}
                 type="text"
                 required
                 className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm"
-              />
-            </Form.Control>
+              />} />
           </FormField>
 
           <FormField name="bio">
             <div className="flex items-center space-x-2 mb-1.5">
-              <Form.Label className="grow text-[13px] font-semibold text-black/70">{`${t('user.bio')} (${t('common.optional')})`}</Form.Label>
+              <Field.Label className="grow text-[13px] font-semibold text-black/70">{`${t('user.bio')} (${t('common.optional')})`}</Field.Label>
             </div>
-            <Form.Control asChild>
-              <textarea
+                                <Field.Control render={<textarea
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.bio}
                 placeholder={t('user.bio_placeholder')}
                 className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 py-3 border border-neutral-200 appearance-none focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm resize-none min-h-[80px]"
-              />
-            </Form.Control>
+              />} />
           </FormField>
 
           <CustomSignupFields fields={customFields} formik={formik} />
@@ -342,8 +331,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
             className="mt-2 flex justify-center"
           />
 
-          <Form.Submit asChild>
-            <button
+                          <button type="submit"
               disabled={isSubmitting || !!message || (turnstileRequired && !formik.values.turnstileToken)}
               className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none mt-2 transition-all disabled:opacity-50"
             >
@@ -356,7 +344,6 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
                 t('auth.create_account_and_join')
               )}
             </button>
-          </Form.Submit>
         </FormLayout>
 
         {/* Divider */}

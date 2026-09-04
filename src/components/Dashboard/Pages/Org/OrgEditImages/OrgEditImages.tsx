@@ -421,21 +421,21 @@ export default function OrgEditImages() {
         <TabsList className="grid w-full grid-cols-3 p-1 bg-gray-100 rounded-lg">
           <TabsTrigger 
             value="logo" 
-            className="data-[state=active]:bg-white data-[state=active]:shadow-xs transition-all flex items-center space-x-2"
+            className="data-active:bg-white data-active:shadow-xs transition-all flex items-center space-x-2"
           >
             <StarIcon size={16} />
             <span>{t('dashboard.organization.images.tabs.logo')}</span>
           </TabsTrigger>
           <TabsTrigger 
             value="thumbnail"
-            className="data-[state=active]:bg-white data-[state=active]:shadow-xs transition-all flex items-center space-x-2"
+            className="data-active:bg-white data-active:shadow-xs transition-all flex items-center space-x-2"
           >
             <ImageIcon size={16} />
             <span>{t('dashboard.organization.images.tabs.thumbnail')}</span>
           </TabsTrigger>
           <TabsTrigger 
             value="previews"
-            className="data-[state=active]:bg-white data-[state=active]:shadow-xs transition-all flex items-center space-x-2"
+            className="data-active:bg-white data-active:shadow-xs transition-all flex items-center space-x-2"
           >
             <Images size={16} />
             <span>{t('dashboard.organization.images.tabs.previews')}</span>

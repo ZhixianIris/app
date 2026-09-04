@@ -1,5 +1,4 @@
 import React from 'react'
-import * as Form from '@radix-ui/react-form'
 import { BarLoader } from 'react-spinners'
 import { Backpack } from '@phosphor-icons/react'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -26,6 +25,8 @@ import {
   RotateCcw,
   Infinity as InfinityIcon,
 } from 'lucide-react'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 function NewAssignment({ submitActivity: _submitActivity, chapterId, course, closeModal }: any) {
   const { t } = useTranslation()
@@ -124,7 +125,7 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
     'w-full h-9 px-3 text-sm rounded-lg bg-gray-50 border border-gray-200 outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-200 transition-colors'
 
   return (
-    <Form.Root onSubmit={handleSubmit} className="space-y-4">
+    <Form onSubmit={handleSubmit} className="space-y-4">
       <div
         className="relative flex items-center justify-center h-20 rounded-xl overflow-hidden"
         style={{
@@ -140,53 +141,49 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
 
       {/* Basic info */}
       <div className="rounded-xl nice-shadow p-4 space-y-4">
-        <Form.Field name="assignment-activity-title" className="space-y-1.5">
-          <Form.Label className="text-sm font-medium text-gray-700">
+        <Field name="assignment-activity-title" className="space-y-1.5">
+          <Field.Label className="text-sm font-medium text-gray-700">
             {t('dashboard.assignments.modals.create.form.title_label')}
-          </Form.Label>
-          <Form.Message match="valueMissing" className="text-xs text-red-500">
+          </Field.Label>
+          <Field.Error match="valueMissing" className="text-xs text-red-500">
             {t('dashboard.assignments.modals.create.form.title_required')}
-          </Form.Message>
-          <Form.Control asChild>
-            <input
+          </Field.Error>
+                          <Field.Control render={<input
               onChange={(e) => setActivityName(e.target.value)}
               type="text"
               required
               className={inputClass}
-            />
-          </Form.Control>
-        </Form.Field>
+            />} />
+        </Field>
 
-        <Form.Field
+        <Field
           name="assignment-activity-description"
           className="space-y-1.5"
         >
-          <Form.Label className="text-sm font-medium text-gray-700">
+          <Field.Label className="text-sm font-medium text-gray-700">
             {t('dashboard.assignments.modals.create.form.description_label')}
-          </Form.Label>
-          <Form.Message match="valueMissing" className="text-xs text-red-500">
+          </Field.Label>
+          <Field.Error match="valueMissing" className="text-xs text-red-500">
             {t('dashboard.assignments.modals.create.form.description_required')}
-          </Form.Message>
-          <Form.Control asChild>
-            <textarea
+          </Field.Error>
+                          <Field.Control render={<textarea
               onChange={(e) => setActivityDescription(e.target.value)}
               required
               rows={3}
               className="w-full px-3 py-2 text-sm rounded-lg bg-gray-50 border border-gray-200 outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-200 transition-colors resize-none"
-            />
-          </Form.Control>
-        </Form.Field>
+            />} />
+        </Field>
 
         {/* Optional: a self-paced course has no date that means anything to a
             learner who enrolled today. */}
-        <Form.Field
+        <Field
           name="assignment-activity-due-date"
           className="space-y-1.5"
         >
           <div className="flex items-center justify-between">
-            <Form.Label className="text-sm font-medium text-gray-700">
+            <Field.Label className="text-sm font-medium text-gray-700">
               {t('dashboard.assignments.modals.create.form.due_date_label')}
-            </Form.Label>
+            </Field.Label>
             {dueDate && (
               <button
                 type="button"
@@ -197,18 +194,16 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
               </button>
             )}
           </div>
-          <Form.Control asChild>
-            <input
+                          <Field.Control render={<input
               onChange={(e) => setDueDate(e.target.value)}
               value={dueDate}
               type="date"
               className={inputClass}
-            />
-          </Form.Control>
+            />} />
           <p className="text-[10px] text-gray-400">
             {t('dashboard.assignments.modals.create.form.due_date_hint')}
           </p>
-        </Form.Field>
+        </Field>
       </div>
 
       {/* Grading type */}
@@ -343,8 +338,7 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
       </div>
 
       <div className="flex justify-end">
-        <Form.Submit asChild>
-          <button
+                    <button type="submit"
             type="submit"
             disabled={isSubmitting}
             className="inline-flex items-center justify-center h-9 px-5 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
@@ -359,9 +353,8 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
               t('dashboard.assignments.modals.create.form.submit')
             )}
           </button>
-        </Form.Submit>
       </div>
-    </Form.Root>
+    </Form>
   )
 }
 

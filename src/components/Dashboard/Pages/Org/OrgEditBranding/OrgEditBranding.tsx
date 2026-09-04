@@ -474,42 +474,42 @@ export default function OrgEditBranding() {
         <TabsList className="flex w-full p-1 bg-gray-100 rounded-lg gap-1 overflow-x-auto">
           <TabsTrigger
             value="logo"
-            className="flex-1 min-w-fit data-[state=active]:bg-white data-[state=active]:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
+            className="flex-1 min-w-fit data-active:bg-white data-active:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
           >
             <StarIcon size={14} />
             <span className="hidden sm:inline">{t('dashboard.organization.images.tabs.logo')}</span>
           </TabsTrigger>
           <TabsTrigger
             value="theme"
-            className="flex-1 min-w-fit data-[state=active]:bg-white data-[state=active]:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
+            className="flex-1 min-w-fit data-active:bg-white data-active:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
           >
             <Palette size={14} />
             <span className="hidden sm:inline">{t('dashboard.organization.branding.tabs.theme')}</span>
           </TabsTrigger>
           <TabsTrigger
             value="auth"
-            className="flex-1 min-w-fit data-[state=active]:bg-white data-[state=active]:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
+            className="flex-1 min-w-fit data-active:bg-white data-active:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
           >
             <LogIn size={14} />
             <span className="hidden sm:inline">{t('dashboard.organization.branding.tabs.auth')}</span>
           </TabsTrigger>
           <TabsTrigger
             value="social"
-            className="flex-1 min-w-fit data-[state=active]:bg-white data-[state=active]:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
+            className="flex-1 min-w-fit data-active:bg-white data-active:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
           >
             <Share2 size={14} />
             <span className="hidden sm:inline">{t('dashboard.organization.branding.tabs.social')}</span>
           </TabsTrigger>
           <TabsTrigger
             value="thumbnail"
-            className="flex-1 min-w-fit data-[state=active]:bg-white data-[state=active]:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
+            className="flex-1 min-w-fit data-active:bg-white data-active:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
           >
             <ImageIcon size={14} />
             <span className="hidden sm:inline">{t('dashboard.organization.images.tabs.thumbnail')}</span>
           </TabsTrigger>
           <TabsTrigger
             value="previews"
-            className="flex-1 min-w-fit data-[state=active]:bg-white data-[state=active]:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
+            className="flex-1 min-w-fit data-active:bg-white data-active:shadow-xs transition-all flex items-center justify-center space-x-2 px-3"
           >
             <Images size={14} />
             <span className="hidden sm:inline">{t('dashboard.organization.images.tabs.previews')}</span>

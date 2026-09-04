@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
-import * as Form from '@radix-ui/react-form'
 import BarLoader from 'react-spinners/BarLoader'
 import { Upload, Package, CheckCircle2, ChevronRight, AlertCircle } from 'lucide-react'
 import { getAPIUrl } from '@services/config/config'
@@ -17,6 +16,8 @@ import { queryKeys } from '@/lib/query/keys'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from "react-router-dom";
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 const SUPPORTED_FILES = constructAcceptValue(['zip'])
 
@@ -236,7 +237,7 @@ function ScormActivityModal({ course, closeModal, onImportComplete, chapterId }:
   return (
     <div className="space-y-5">
       {step === 'upload' && (
-        <Form.Root onSubmit={handleAnalyze} className="space-y-5">
+        <Form onSubmit={handleAnalyze} className="space-y-5">
           {/* Header */}
           <div className="flex items-center gap-3 pb-4 border-b border-gray-100">
             <div className="p-2.5 bg-sky-100 rounded-xl">
@@ -361,7 +362,7 @@ function ScormActivityModal({ course, closeModal, onImportComplete, chapterId }:
               )}
             </button>
           </div>
-        </Form.Root>
+        </Form>
       )}
 
       {step === 'assign' && analysisResult && (

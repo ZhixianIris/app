@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import * as Form from '@radix-ui/react-form'
 import BarLoader from 'react-spinners/BarLoader'
 import { PlayCircle, Upload, YoutubeLogo } from '@phosphor-icons/react'
 import { constructAcceptValue } from '@/lib/constants'
@@ -7,6 +6,8 @@ import CaptionsSettings, {
   type CaptionsValue,
   EMPTY_CAPTIONS,
 } from '@components/Objects/Activities/Video/CaptionsSettings'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 const SUPPORTED_FILES = constructAcceptValue(['mp4', 'webm'])
 
@@ -111,7 +112,7 @@ function VideoModal({
     : { minutes: 0, seconds: 0 }
 
   return (
-    <Form.Root onSubmit={handleSubmit} className="space-y-4">
+    <Form onSubmit={handleSubmit} className="space-y-4">
       <div
         className="relative flex items-center justify-center h-20 rounded-xl overflow-hidden"
         style={{
@@ -365,7 +366,7 @@ function VideoModal({
           )}
         </button>
       </div>
-    </Form.Root>
+    </Form>
   )
 }
 

@@ -1,4 +1,3 @@
-import { DividerVerticalIcon } from '@radix-ui/react-icons'
 import {
   ArrowCounterClockwise,
   ArrowClockwise,
@@ -45,6 +44,7 @@ import LinkInputTooltip from './LinkInputTooltip'
 import lrnaiIcon from 'public/lrnai_icon.png'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useTranslation } from 'react-i18next'
+import { SeparatorVertical } from "lucide-react";
 
 export const ToolbarButtons = React.memo(({ editor }: any) => {
   const { t } = useTranslation()
@@ -266,7 +266,7 @@ export const ToolbarButtons = React.memo(({ editor }: any) => {
           </div>
         )}
       </div>
-      <DividerVerticalIcon
+      <SeparatorVertical
         style={{ marginTop: 'auto', marginBottom: 'auto', color: 'grey' }}
       />
       <div className="relative inline-block shrink-0">

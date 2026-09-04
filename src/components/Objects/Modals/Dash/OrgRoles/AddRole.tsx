@@ -4,7 +4,6 @@ import FormLayout, {
     Input,
     Textarea,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { useOrg } from '@components/Contexts/OrgContext'
 import React from 'react'
 import { createRole } from '@services/roles/roles'
@@ -15,6 +14,8 @@ import { useFormik } from 'formik'
 import toast from 'react-hot-toast'
 import { Shield, BookOpen, Users, UserCheck, FolderOpen, Image, Building, FileText, Activity, Monitor, CheckSquare, Square } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 type AddRoleProps = {
     setCreateRoleModal: any
@@ -491,29 +492,25 @@ function AddRole(props: AddRoleProps) {
                     <div className="space-y-4 sm:space-y-6">
                         <FormField name="name">
                             <FormLabelAndMessage label={t('dashboard.users.roles.modals.create.form.role_name')} message={formik.errors.name} />
-                            <Form.Control asChild>
-                                <Input
+                                                        <Field.Control render={<Input
                                     onChange={formik.handleChange}
                                     value={formik.values.name}
                                     type="text"
                                     required
                                     placeholder={t('dashboard.users.roles.modals.create.form.role_name_placeholder')}
                                     className="w-full"
-                                />
-                            </Form.Control>
+                                />} />
                         </FormField>
 
                         <FormField name="description">
                             <FormLabelAndMessage label={t('dashboard.users.roles.modals.create.form.description')} message={formik.errors.description} />
-                            <Form.Control asChild>
-                                <Textarea
+                                                        <Field.Control render={<Textarea
                                     onChange={formik.handleChange}
                                     value={formik.values.description}
                                     required
                                     placeholder={t('dashboard.users.roles.modals.create.form.description_placeholder')}
                                     className="w-full"
-                                />
-                            </Form.Control>
+                                />} />
                         </FormField>
 
                         <div className="mt-6">
@@ -657,15 +654,13 @@ function AddRole(props: AddRoleProps) {
                     >
                         {t('common.cancel')}
                     </button>
-                    <Form.Submit asChild>
-                        <button
+                                        <button type="submit"
                             type="submit"
                             disabled={isSubmitting}
                             className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition-colors disabled:opacity-50 w-full sm:w-auto font-medium shadow-sm"
                         >
                             {isSubmitting ? t('dashboard.users.roles.modals.create.form.loading') : t('dashboard.users.roles.modals.create.form.submit')}
                         </button>
-                    </Form.Submit>
                 </div>
             </FormLayout>
         </div>

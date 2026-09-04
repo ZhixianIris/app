@@ -3,7 +3,6 @@ import { updateAssignment } from '@services/courses/assignments';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/keys';
 import toast from 'react-hot-toast';
-import * as Form from '@radix-ui/react-form';
 import { useFormik } from 'formik';
 import Modal from '@components/Objects/StyledElements/Modal/Modal';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +30,8 @@ import {
     Target,
     Infinity as InfinityIcon,
 } from 'lucide-react';
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 type GradingType = 'ALPHABET' | 'NUMERIC' | 'PERCENTAGE' | 'PASS_FAIL' | 'GPA_SCALE';
 
@@ -214,51 +215,47 @@ const EditAssignmentForm: React.FC<EditAssignmentFormProps> = ({
     });
 
     return (
-        <Form.Root onSubmit={formik.handleSubmit} className="space-y-5">
+        <Form onSubmit={formik.handleSubmit} className="space-y-5">
             {/* Basic info */}
-            <Form.Field name="title" className="space-y-1.5">
-                <Form.Label className={labelClass}>
+            <Field name="title" className="space-y-1.5">
+                <Field.Label className={labelClass}>
                     {t('dashboard.assignments.modals.edit.form.title_label')}
-                </Form.Label>
-                <Form.Message match="valueMissing" className={errorClass}>
+                </Field.Label>
+                <Field.Error match="valueMissing" className={errorClass}>
                     {t('dashboard.assignments.modals.edit.form.title_required')}
-                </Form.Message>
-                <Form.Control asChild>
-                    <input
+                </Field.Error>
+                                <Field.Control render={<input
                         onChange={formik.handleChange}
                         value={formik.values.title}
                         type="text"
                         required
                         className={inputClass}
-                    />
-                </Form.Control>
-            </Form.Field>
+                    />} />
+            </Field>
 
-            <Form.Field name="description" className="space-y-1.5">
-                <Form.Label className={labelClass}>
+            <Field name="description" className="space-y-1.5">
+                <Field.Label className={labelClass}>
                     {t('dashboard.assignments.modals.edit.form.description_label')}
-                </Form.Label>
-                <Form.Message match="valueMissing" className={errorClass}>
+                </Field.Label>
+                <Field.Error match="valueMissing" className={errorClass}>
                     {t('dashboard.assignments.modals.edit.form.description_required')}
-                </Form.Message>
-                <Form.Control asChild>
-                    <textarea
+                </Field.Error>
+                                <Field.Control render={<textarea
                         onChange={formik.handleChange}
                         value={formik.values.description}
                         required
                         rows={3}
                         className={textareaClass}
-                    />
-                </Form.Control>
-            </Form.Field>
+                    />} />
+            </Field>
 
             {/* Optional: a self-paced course has no date that means anything to
                 a learner who enrolled today. */}
-            <Form.Field name="due_date" className="space-y-1.5">
+            <Field name="due_date" className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                    <Form.Label className={labelClass}>
+                    <Field.Label className={labelClass}>
                         {t('dashboard.assignments.modals.edit.form.due_date_label')}
-                    </Form.Label>
+                    </Field.Label>
                     {formik.values.due_date && (
                         <button
                             type="button"
@@ -269,18 +266,16 @@ const EditAssignmentForm: React.FC<EditAssignmentFormProps> = ({
                         </button>
                     )}
                 </div>
-                <Form.Control asChild>
-                    <input
+                                <Field.Control render={<input
                         type="date"
                         onChange={formik.handleChange}
                         value={formik.values.due_date}
                         className={inputClass}
-                    />
-                </Form.Control>
+                    />} />
                 <p className="text-[10px] text-gray-400">
                     {t('dashboard.assignments.modals.edit.form.due_date_hint')}
                 </p>
-            </Form.Field>
+            </Field>
 
             {/* Grading type */}
             <div className="space-y-2">
@@ -396,17 +391,15 @@ const EditAssignmentForm: React.FC<EditAssignmentFormProps> = ({
                 >
                     {t('dashboard.assignments.modals.edit.form.cancel')}
                 </button>
-                <Form.Submit asChild>
-                    <button
+                                <button type="submit"
                         type="submit"
                         disabled={formik.isSubmitting}
                         className="inline-flex items-center justify-center h-9 px-5 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
                     >
                         {formik.isSubmitting ? t('dashboard.assignments.modals.edit.form.saving') : t('dashboard.assignments.modals.edit.form.save')}
                     </button>
-                </Form.Submit>
             </div>
-        </Form.Root>
+        </Form>
     );
 };
 

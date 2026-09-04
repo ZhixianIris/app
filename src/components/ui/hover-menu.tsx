@@ -1,5 +1,5 @@
 import * as React from "react"
-import * as Portal from "@radix-ui/react-portal"
+import { createPortal } from "react-dom"
 import { cn } from "@/lib/utils"
 
 interface HoverMenuProps {
@@ -88,8 +88,8 @@ const HoverMenu = React.forwardRef<HTMLDivElement, HoverMenuProps>(
         >
           {children}
         </div>
-        {shouldRenderPortal && (
-          <Portal.Root>
+        {shouldRenderPortal && createPortal(
+          <>
             <div
               ref={ref}
               onMouseEnter={handleMouseEnter}
@@ -110,7 +110,8 @@ const HoverMenu = React.forwardRef<HTMLDivElement, HoverMenuProps>(
               <div className="absolute -start-2 top-0 bottom-0 w-2" />
               {content}
             </div>
-          </Portal.Root>
+          </>,
+          document.body
         )}
       </>
     )

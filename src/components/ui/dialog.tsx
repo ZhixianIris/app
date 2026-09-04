@@ -1,80 +1,79 @@
 import * as React from "react"
-import * as DialogPrimitive from "@radix-ui/react-dialog"
-import { Cross2Icon } from "@radix-ui/react-icons"
+import { Dialog } from "@base-ui/react/dialog"
+import { X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const Dialog = DialogPrimitive.Root
+const DialogRoot = Dialog.Root
 
-const DialogTrigger = DialogPrimitive.Trigger
+const DialogTrigger = Dialog.Trigger
 
-const DialogPortal = DialogPrimitive.Portal
+const DialogPortal = Dialog.Portal
 
-const DialogClose = DialogPrimitive.Close
+const DialogClose = Dialog.Close
 
 const DialogOverlay = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
+  React.ElementRef<typeof Dialog.Backdrop>,
+  React.ComponentPropsWithoutRef<typeof Dialog.Backdrop>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Overlay
+  <Dialog.Backdrop
     ref={ref}
-    className={cn("lh-modal-overlay fixed inset-0 bg-black/40", className)}
+    className={cn(
+      "lh-modal-overlay fixed inset-0 bg-black/40",
+      "transition-opacity duration-200 data-[starting-style]:opacity-0 data-[ending-style]:opacity-0",
+      className
+    )}
     style={{ zIndex: 'var(--z-modal-backdrop)', willChange: 'opacity' }}
     {...props}
   />
 ))
-DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
+DialogOverlay.displayName = "DialogOverlay"
 
 const DialogContent = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
+  React.ElementRef<typeof Dialog.Popup>,
+  React.ComponentPropsWithoutRef<typeof Dialog.Popup>
 >(({ className, children, ...props }, ref) => (
-  // NOTE: Overlay and Content are rendered as direct, sibling children of
-  // DialogPortal. Radix wraps *each* child in <Presence> so it can defer
-  // unmount until the exit animation finishes. Wrapping them in a single
-  // outer <div> would collapse that into one Presence that sees no animation
-  // on itself → immediate unmount → no close animation.
   <DialogPortal>
     <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      // Centering uses the standalone `translate` CSS property (not `transform`)
-      // so the keyframes can animate `scale` and `opacity` independently
-      // without ever touching the centering translate. Keeps shrink-to-fit
-      // sizing (`w-auto`) working with `position: fixed`.
-      style={{
-        zIndex: 'var(--z-modal)' as any,
-        translate: '-50% -50%',
-        willChange: 'scale, opacity',
-        backfaceVisibility: 'hidden',
-        WebkitBackfaceVisibility: 'hidden',
-      }}
-      onKeyDown={(e) => {
-        // Prevent Radix from swallowing keystrokes (e.g. "D") inside form inputs
-        const target = e.target as HTMLElement
-        const tag = target.tagName
-        if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable) {
-          e.stopPropagation()
-        }
-      }}
-      className={cn(
-        "lh-modal-content fixed left-[50%] top-[50%] grid w-full max-w-lg gap-0 border border-gray-200/80 bg-white shadow-2xl shadow-black/10 rounded-2xl",
-        className
-      )}
-      {...props}
+    <Dialog.Viewport
+      className="fixed inset-0 grid place-items-center overflow-y-auto p-4"
+      style={{ zIndex: 'var(--z-modal)' as React.CSSProperties['zIndex'] }}
     >
-      {children}
-      <DialogPrimitive.Close
-        className="absolute end-4 top-4 p-1.5 rounded-lg bg-gray-100/80 text-gray-500 hover:bg-gray-200 hover:text-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:pointer-events-none"
-        aria-label="Close dialog"
+      <Dialog.Popup
+        ref={ref}
+        // The Viewport centers the popup via `grid place-items-center`, so the
+        // popup itself only carries sizing/shaping classes.
+        onKeyDown={(e: React.KeyboardEvent) => {
+          // Prevent the dialog from swallowing keystrokes (e.g. "D") inside
+          // form inputs
+          const target = e.target as HTMLElement
+          const tag = target.tagName
+          if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || target.isContentEditable) {
+            e.stopPropagation()
+          }
+        }}
+        className={cn(
+          "lh-modal-content grid w-full max-w-lg gap-0 border border-gray-200/80 bg-white shadow-2xl shadow-black/10 rounded-2xl",
+          "transition-[opacity,transform] duration-200 will-change-[transform,opacity] [backface-visibility:hidden]",
+          "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
+          "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",
+          className
+        )}
+        {...props}
       >
-        <Cross2Icon className="h-4 w-4" />
-        <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
-    </DialogPrimitive.Content>
+        {children}
+        <Dialog.Close
+          className="absolute end-4 top-4 p-1.5 rounded-lg bg-gray-100/80 text-gray-500 hover:bg-gray-200 hover:text-gray-700 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:pointer-events-none"
+          aria-label="Close dialog"
+        >
+          <X className="h-4 w-4" />
+          <span className="sr-only">Close</span>
+        </Dialog.Close>
+      </Dialog.Popup>
+    </Dialog.Viewport>
   </DialogPortal>
 ))
-DialogContent.displayName = DialogPrimitive.Content.displayName
+DialogContent.displayName = "DialogContent"
 
 const DialogHeader = ({
   className,
@@ -105,10 +104,10 @@ const DialogFooter = ({
 DialogFooter.displayName = "DialogFooter"
 
 const DialogTitle = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+  React.ElementRef<typeof Dialog.Title>,
+  React.ComponentPropsWithoutRef<typeof Dialog.Title>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title
+  <Dialog.Title
     ref={ref}
     className={cn(
       "text-lg font-semibold leading-tight tracking-tight text-gray-900",
@@ -117,22 +116,22 @@ const DialogTitle = React.forwardRef<
     {...props}
   />
 ))
-DialogTitle.displayName = DialogPrimitive.Title.displayName
+DialogTitle.displayName = "DialogTitle"
 
 const DialogDescription = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+  React.ElementRef<typeof Dialog.Description>,
+  React.ComponentPropsWithoutRef<typeof Dialog.Description>
 >(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description
+  <Dialog.Description
     ref={ref}
     className={cn("text-sm text-gray-500", className)}
     {...props}
   />
 ))
-DialogDescription.displayName = DialogPrimitive.Description.displayName
+DialogDescription.displayName = "DialogDescription"
 
 export {
-  Dialog,
+  DialogRoot as Dialog,
   DialogPortal,
   DialogOverlay,
   DialogTrigger,

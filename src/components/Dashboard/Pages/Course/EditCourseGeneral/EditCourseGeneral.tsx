@@ -6,7 +6,6 @@ import FormLayout, {
 } from '@components/Objects/StyledElements/Form/Form';
 import { useFormik } from 'formik';
 import { AlertTriangle } from 'lucide-react';
-import * as Form from '@radix-ui/react-form';
 import React, { useEffect, useState, useRef, useCallback, useMemo } from 'react';
 import ThumbnailUpdate from './ThumbnailUpdate';
 import { useCourseFieldSync } from '@components/Contexts/CourseContext';
@@ -20,6 +19,8 @@ import {
   CustomSelectValue,
 } from "./CustomSelect";
 import { useTranslation } from 'react-i18next';
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 type EditCourseStructureProps = {
   orgslug: string
@@ -237,74 +238,63 @@ function EditCourseGeneral(props: EditCourseStructureProps) {
             <div className="space-y-6">
               <FormField name="name">
                 <FormLabelAndMessage label={t('dashboard.courses.general.form.name_label')} message={formik.errors.name} />
-                <Form.Control asChild>
-                  <Input
+                                            <Field.Control render={<Input
                     style={{ backgroundColor: 'white' }}
                     onChange={formik.handleChange}
                     value={formik.values.name}
                     type="text"
                     required
                     disabled={isSaving}
-                  />
-                </Form.Control>
+                  />} />
               </FormField>
 
               <FormField name="description">
                 <FormLabelAndMessage label={t('dashboard.courses.general.form.description_label')} message={formik.errors.description} />
-                <Form.Control asChild>
-                  <Input
+                                            <Field.Control render={<Input
                     style={{ backgroundColor: 'white' }}
                     onChange={formik.handleChange}
                     value={formik.values.description}
                     type="text"
                     required
                     disabled={isSaving}
-                  />
-                </Form.Control>
+                  />} />
               </FormField>
 
               <FormField name="about">
                 <FormLabelAndMessage label={t('dashboard.courses.general.form.about_label')} message={formik.errors.about} />
-                <Form.Control asChild>
-                  <Textarea
+                                            <Field.Control render={<Textarea
                     style={{ backgroundColor: 'white', height: '200px', minHeight: '200px' }}
                     onChange={formik.handleChange}
                     value={formik.values.about}
                     required
                     disabled={isSaving}
-                  />
-                </Form.Control>
+                  />} />
               </FormField>
 
               <FormField name="learnings">
                 <FormLabelAndMessage label={t('dashboard.courses.general.form.learnings_label')} message={formik.touched.learnings ? formik.errors.learnings : undefined} />
-                <Form.Control asChild>
-                  <LearningItemsList
+                                            <Field.Control render={<LearningItemsList
                     value={formik.values.learnings}
                     onChange={(value) => {
                       formik.setFieldTouched('learnings', true, false)
                       formik.setFieldValue('learnings', value)
                     }}
                     error={formik.touched.learnings ? formik.errors.learnings : undefined}
-                  />
-                </Form.Control>
+                  />} />
               </FormField>
 
               <FormField name="tags">
                 <FormLabelAndMessage label={t('dashboard.courses.general.form.tags_label')} message={formik.errors.tags} />
-                <Form.Control asChild>
-                  <FormTagInput
+                                            <Field.Control render={<FormTagInput
                     placeholder={t('dashboard.courses.general.form.tags_placeholder')}
                     onChange={(value) => formik.setFieldValue('tags', value)}
                     value={formik.values.tags}
-                  />
-                </Form.Control>
+                  />} />
               </FormField>
 
               <FormField name="thumbnail_type">
                 <FormLabelAndMessage label={t('dashboard.courses.general.form.thumbnail_type_label')} />
-                <Form.Control asChild>
-                  <CustomSelect
+                                            <Field.Control render={<CustomSelect
                     value={formik.values.thumbnail_type}
                     onValueChange={(value) => {
                       if (!value) return;
@@ -324,15 +314,12 @@ function EditCourseGeneral(props: EditCourseStructureProps) {
                       <CustomSelectItem value="video">{t('dashboard.courses.general.form.thumbnail_type_video')}</CustomSelectItem>
                       <CustomSelectItem value="both">{t('dashboard.courses.general.form.thumbnail_type_both')}</CustomSelectItem>
                     </CustomSelectContent>
-                  </CustomSelect>
-                </Form.Control>
+                  </CustomSelect>} />
               </FormField>
 
               <FormField name="thumbnail">
                 <FormLabelAndMessage label={t('dashboard.courses.general.form.thumbnail_label')} />
-                <Form.Control asChild>
-                  <ThumbnailUpdate thumbnailType={formik.values.thumbnail_type} />
-                </Form.Control>
+                                            <Field.Control render={<ThumbnailUpdate thumbnailType={formik.values.thumbnail_type} />} />
               </FormField>
             </div>
           </FormLayout>

@@ -14,8 +14,9 @@ import AuthLayout from '@components/Auth/AuthLayout'
 import FormLayout, {
   FormField,
 } from '@components/Objects/StyledElements/Form/Form'
-import * as Form from '@radix-ui/react-form'
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { Form } from "@base-ui/react/form";
+import { Field } from "@base-ui/react/field";
 
 interface SignUpClientProps {
   org: any
@@ -326,22 +327,19 @@ const NoTokenScreen = ({ org }: NoTokenScreenProps) => {
             <FormLayout onSubmit={validateCode}>
               <FormField name="invite_code">
                 <div className="flex items-center space-x-2 mb-1.5">
-                  <Form.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.invite_code')}</Form.Label>
+                  <Field.Label className="grow text-[13px] font-semibold text-black/70">{t('auth.invite_code')}</Field.Label>
                 </div>
-                <Form.Control asChild>
-                  <input
+                                            <Field.Control render={<input
                     onChange={(e) => setInviteCode(e.target.value)}
                     value={inviteCode}
                     type="text"
                     placeholder={t('auth.enter_invite_code')}
                     required
                     className="box-border w-full bg-neutral-50 text-black rounded-lg px-4 border border-neutral-200 inline-flex h-[44px] appearance-none items-center focus:outline-none focus:ring-2 focus:ring-black/5 focus:border-neutral-400 transition-all placeholder:text-black/25 text-sm"
-                  />
-                </Form.Control>
+                  />} />
               </FormField>
 
-              <Form.Submit asChild>
-                <button
+                                      <button type="submit"
                   disabled={isSubmitting || !inviteCode.trim()}
                   className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none mt-2 transition-all disabled:opacity-50 gap-2"
                 >
@@ -354,7 +352,6 @@ const NoTokenScreen = ({ org }: NoTokenScreenProps) => {
                     </>
                   )}
                 </button>
-              </Form.Submit>
             </FormLayout>
           </div>
         </div>

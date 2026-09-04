@@ -19,11 +19,11 @@ import {
   CheckSquare,
   Headphones,
 } from '@phosphor-icons/react'
-import { DividerVerticalIcon } from '@radix-ui/react-icons'
-import * as Popover from '@radix-ui/react-popover'
+import { Popover } from '@base-ui/react/popover'
 import { cn } from '@/lib/utils'
 import type { Editor } from '@tiptap/core'
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip'
+import { SeparatorVertical } from "lucide-react";
 
 type ToolMode = 'select' | 'pan' | 'draw' | 'card' | 'youtube' | 'playground' | 'activity' | 'embed' | 'webpage' | 'sticker' | 'frame' | 'note' | 'todo' | 'podcast'
 
@@ -99,7 +99,7 @@ export default function BoardToolbar({
         </div>
       </Link>
 
-      <DividerVerticalIcon style={{ color: 'grey', opacity: '0.5' }} />
+      <SeparatorVertical style={{ color: 'grey', opacity: '0.5' }} />
 
       {/* Tool modes */}
       {tools.map(({ mode, icon: Icon, label, colorClass }) => {
@@ -111,32 +111,32 @@ export default function BoardToolbar({
               onOpenChange={setDrawPopoverOpen}
             >
               <ToolTip content={t(label)}>
-                <Popover.Trigger asChild>
-                  <div
-                    onClick={() => {
-                      onToolModeChange('draw')
-                      setDrawPopoverOpen(true)
-                    }}
-                    className={cn(
-                      'editor-tool-btn',
-                      toolMode === 'draw' ? 'is-active' : colorClass
-                    )}
-                  >
-                    <Icon size={15} weight="duotone" />
-                  </div>
-                </Popover.Trigger>
+                <Popover.Trigger
+                  render={
+                    <div
+                      onClick={() => {
+                        onToolModeChange('draw')
+                        setDrawPopoverOpen(true)
+                      }}
+                      className={cn(
+                        'editor-tool-btn',
+                        toolMode === 'draw' ? 'is-active' : colorClass
+                      )}
+                    >
+                      <Icon size={15} weight="duotone" />
+                    </div>
+                  }
+                />
               </ToolTip>
               <Popover.Portal>
-                <Popover.Content
-                  side="top"
-                  sideOffset={12}
-                  className="rounded-xl px-3 py-2.5 nice-shadow z-50"
+                <Popover.Positioner side="top" sideOffset={12}>
+                <Popover.Popup
+                  className="rounded-xl px-3 py-2.5 nice-shadow z-50 transition-[opacity,transform] duration-150 ease-out data-[starting-style]:opacity-0 data-[starting-style]:scale-95 data-[ending-style]:opacity-0 data-[ending-style]:scale-95"
                   style={{
                     background: 'rgba(255, 255, 255, 0.97)',
                     backdropFilter: 'blur(12px)',
                     WebkitBackdropFilter: 'blur(12px)',
                   }}
-                  onOpenAutoFocus={(e) => e.preventDefault()}
                 >
                   {/* Color palette */}
                   <div className="flex items-center gap-1.5 mb-2">
@@ -184,7 +184,8 @@ export default function BoardToolbar({
                     width={10}
                     height={5}
                   />
-                </Popover.Content>
+                </Popover.Popup>
+                </Popover.Positioner>
               </Popover.Portal>
             </Popover.Root>
           )
@@ -205,7 +206,7 @@ export default function BoardToolbar({
         )
       })}
 
-      <DividerVerticalIcon style={{ color: 'grey', opacity: '0.5' }} />
+      <SeparatorVertical style={{ color: 'grey', opacity: '0.5' }} />
 
       {/* Undo/Redo */}
       <ToolTip content={t('boards.toolbar.undo')}>
