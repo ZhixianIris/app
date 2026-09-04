@@ -1,6 +1,6 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
-import { extractIframeSrc, normalizeH5PUrl } from "../lib/media/h5pUrl.ts";
+import { extractIframeSrc, normalizeH5PUrl } from "../src/lib/media/h5pUrl.ts";
 
 describe("normalizeH5PUrl — H5P.com", () => {
   test("content page URL becomes its embed form", () => {

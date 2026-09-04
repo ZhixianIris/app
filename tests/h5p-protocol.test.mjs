@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import {
   clampHeight,
@@ -12,7 +12,7 @@ import {
   MAX_HEIGHT,
   MIN_HEIGHT,
   SIZE_MODES,
-} from "../lib/media/h5pProtocol.ts";
+} from "../src/lib/media/h5pProtocol.ts";
 
 describe("parseH5PMessage — the shapes H5P sends", () => {
   test("hello", () => {

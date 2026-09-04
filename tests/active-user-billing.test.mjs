@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import {
   completeMonthsBefore,
@@ -6,7 +6,7 @@ import {
   invoiceSubscriptionId,
   monthStartUnix,
   periodKey,
-} from "../services/billing/activeUserBillingUtils.ts";
+} from "../src/services/billing/activeUserBillingUtils.ts";
 
 describe("completeMonthsBefore", () => {
   test("returns the prior months oldest first, never the current one", () => {

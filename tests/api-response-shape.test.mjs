@@ -1,7 +1,7 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
-import { asArray, getResponseMetadata } from "../services/utils/ts/requests.ts";
-import { safePlay } from "../lib/media/safePlay.ts";
+import { asArray, getResponseMetadata } from "../src/services/utils/ts/requests.ts";
+import { safePlay } from "../src/lib/media/safePlay.ts";
 
 const response = (status, body, { throws = false } = {}) => ({
   status,

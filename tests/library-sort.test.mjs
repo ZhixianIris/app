@@ -1,6 +1,6 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
-import { sortLibrary } from "../lib/library/sort.ts";
+import { sortLibrary } from "../src/lib/library/sort.ts";
 
 // Content items carry their display fields under `.resource` — courses expose
 // `name`, some resources only a `title`.

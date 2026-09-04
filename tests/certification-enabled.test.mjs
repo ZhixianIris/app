@@ -1,8 +1,8 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import {
   getCourseCertificationStatus,
-} from "../lib/certifications/enabled.ts";
+} from "../src/lib/certifications/enabled.ts";
 
 describe("getCourseCertificationStatus", () => {
   test("reports enabled when the course has a certification row", () => {

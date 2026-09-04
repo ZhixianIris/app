@@ -1,11 +1,11 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import {
   inferQuizResponseType,
   resolveQuizGradingMode,
   resolveQuizResponseType,
   scoreQuizQuestion,
-} from "../lib/quiz/modes.ts";
+} from "../src/lib/quiz/modes.ts";
 
 // These mirror apps/api/src/services/courses/activities/quiz_modes.py. The
 // learner sees the grade this module computes (gradeFC's preview) and the

@@ -1,4 +1,4 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import {
   isActivityHlsReady,
@@ -6,7 +6,7 @@ import {
   resolveHlsThumbnails,
   resolveActivityCaptions,
   shouldSendHlsCredentials,
-} from "../components/Objects/Activities/Video/videoSource.ts";
+} from "../src/components/Objects/Activities/Video/videoSource.ts";
 
 describe("resolveActivityCaptions", () => {
   const ids = { orgUuid: "org_1", courseUuid: "course_1", activityUuid: "activity_1" };

@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'bun:test'
+import { describe, expect, test } from 'vitest'
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -16,7 +16,7 @@ describe('RTL language set', () => {
   // it exactly the kind of constant that drifts silently.
   test('dir-init.js matches RTL_LANGUAGES in lib/direction.ts', () => {
     const initSrc = read('public/dir-init.js')
-    const directionSrc = read('lib/direction.ts')
+    const directionSrc = read('src/lib/direction.ts')
 
     const initBlock = initSrc.match(/var RTL = \{([\s\S]*?)\}/)
     expect(initBlock).not.toBeNull()
@@ -31,7 +31,7 @@ describe('RTL language set', () => {
   })
 
   test('Arabic and Persian are RTL', () => {
-    const src = read('lib/direction.ts')
+    const src = read('src/lib/direction.ts')
     const setBlock = src.match(/RTL_LANGUAGES = new Set\(\[([\s\S]*?)\]\)/)[1]
     expect(setBlock).toContain("'ar'")
     expect(setBlock).toContain("'fa'")
@@ -39,7 +39,7 @@ describe('RTL language set', () => {
 })
 
 describe('language registry', () => {
-  const src = read('lib/languages.ts')
+  const src = read('src/lib/languages.ts')
   const entries = [...src.matchAll(/\{\s*code:\s*'([a-z]+)'[^}]*\}/g)]
 
   test('every language declares a direction', () => {
@@ -57,7 +57,7 @@ describe('language registry', () => {
   // A locale that loads but isn't in the registry can never be picked, and one
   // in the registry without a loader falls back to English with no warning.
   test('registry and lazy loaders agree', () => {
-    const i18nSrc = read('lib/i18n.ts')
+    const i18nSrc = read('src/lib/i18n.ts')
     // The type annotation contains `=>`, so match lazily up to the assignment.
     const loaderBlock = i18nSrc.match(/LOCALE_LOADERS[\s\S]*?=\s*\{([\s\S]*?)\n\}/)[1]
     const loaderCodes = [...loaderBlock.matchAll(/^\s*(\w+):/gm)].map((m) => m[1]).sort()
@@ -68,7 +68,7 @@ describe('language registry', () => {
 })
 
 describe('globals.css', () => {
-  const css = read('styles/globals.css')
+  const css = read('src/styles/globals.css')
   const lines = css.split('\n')
 
   const DIRECTIONAL = new RegExp(
@@ -108,11 +108,55 @@ describe('globals.css', () => {
   // build error, no lint error, the app just quietly stopped mirroring icons.
   // So assert against the COMPILED output, not the source.
   test('RTL rules survive compilation', async () => {
-    const { default: tailwind } = await import('@tailwindcss/postcss')
-    const { default: postcss } = await import('postcss')
+    // Tailwind 4 JS API (the Vite plugin wraps the same compiler).
+    const { compile } = await import('tailwindcss')
 
-    const result = await postcss([tailwind({ base: webRoot, optimize: { minify: true } })])
-      .process(css, { from: path.join(webRoot, 'styles/globals.css') })
+    // Tailwind's JS API emits unminified CSS; normalise whitespace so the
+    // assertions below behave like the minified production build.
+    const normalize = (cssText) => cssText.replace(/\s+/g, '')
+
+    const compiler = await compile(css, {
+      base: webRoot,
+      onDependency: () => {},
+      // The JS API requires explicit loaders for @import and @plugin.
+      loadModule: async (id, base) => {
+        const candidates = []
+        if (path.isAbsolute(id)) {
+          candidates.push(id)
+        } else {
+          candidates.push(path.join(base, id))
+          candidates.push(path.join(webRoot, 'node_modules', id))
+          candidates.push(path.join(webRoot, 'node_modules', `${id}.js`))
+          candidates.push(path.join(webRoot, 'node_modules', id, 'index.js'))
+          candidates.push(path.join(webRoot, 'node_modules', id, 'dist', 'index.js'))
+        }
+        for (const candidate of candidates) {
+          if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+            const mod = await import(`file://${candidate.split(path.sep).join('/')}`)
+            return { module: mod.default ?? mod, base: path.dirname(candidate), path: candidate }
+          }
+        }
+        throw new Error(`Cannot load module: ${id}`)
+      },
+      loadStylesheet: async (id, base) => {
+        const candidates = []
+        if (path.isAbsolute(id)) {
+          candidates.push(id)
+        } else {
+          candidates.push(path.join(base, id))
+          candidates.push(path.join(webRoot, 'node_modules', id))
+          candidates.push(path.join(webRoot, 'node_modules', `${id}.css`))
+          candidates.push(path.join(webRoot, 'node_modules', id, 'index.css'))
+        }
+        for (const candidate of candidates) {
+          if (fs.existsSync(candidate) && fs.statSync(candidate).isFile()) {
+            return { content: fs.readFileSync(candidate, 'utf8'), base: path.dirname(candidate), path: candidate }
+          }
+        }
+        throw new Error(`Cannot load stylesheet: ${id}`)
+      },
+    })
+    const result = { css: normalize(compiler.build([])) }
 
     for (const needle of [
       'lucide-chevron-right', // directional icon mirroring
@@ -137,8 +181,8 @@ describe('globals.css', () => {
 })
 
 describe('Arabic translations', () => {
-  const en = JSON.parse(read('locales/en.json'))
-  const ar = JSON.parse(read('locales/ar.json'))
+  const en = JSON.parse(read('src/locales/en.json'))
+  const ar = JSON.parse(read('src/locales/ar.json'))
 
   const flatten = (obj, prefix = '') =>
     Object.entries(obj).flatMap(([k, v]) =>

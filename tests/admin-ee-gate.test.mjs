@@ -5,14 +5,13 @@
 // during an API blip — precisely when they need the dashboard. If someone
 // later "hardens" this into a fail-closed check, these fail.
 
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 // `server-only` is a Next build-time alias rather than an installed package, so
 // it has to be stubbed before importing any module that declares it.
-import { mock } from "bun:test";
-mock.module("server-only", () => ({}));
+import { mock } from "vitest";
 
-const { isSuperadminSurfaceBlocked } = await import("../lib/eeGate.ts");
+const { isSuperadminSurfaceBlocked } = await import("../src/lib/eeGate.ts");
 
 describe("isSuperadminSurfaceBlocked", () => {
   test("blocks OSS", () => {

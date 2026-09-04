@@ -8,13 +8,13 @@
 //    which runs after the commit — so the denial surface painted for a frame on
 //    every load, admins included.
 
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
-import { classifyError } from "../lib/errors/classify.ts";
+import { classifyError } from "../src/lib/errors/classify.ts";
 
-const COMPONENT_DIR = join(import.meta.dir, "..", "components", "Security");
+const COMPONENT_DIR = join(import.meta.dirname, "..", "src", "components", "Security");
 const SOURCE = readFileSync(join(COMPONENT_DIR, "AdminAuthorization.tsx"), "utf8");
 
 // Mirrors the component's isAdminPath so the gate can be exercised directly.

@@ -1,11 +1,11 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 
 const DIR = join(
-  import.meta.dir,
-  "../components/Dashboard/Pages/Course/EditCourseStructure/DraggableElements",
+  import.meta.dirname,
+  "../src/components/Dashboard/Pages/Course/EditCourseStructure/DraggableElements",
 );
 
 /**

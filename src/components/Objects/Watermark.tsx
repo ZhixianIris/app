@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import lrnTextLogo from '@public/lrn-text.svg'
+const lrnTextLogo = '/lrn-text.svg'
 import React from 'react'
 import { useOrg } from '../Contexts/OrgContext'
 import { useTranslation } from 'react-i18next'

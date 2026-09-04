@@ -6,11 +6,11 @@
 // switch that would turn it back on never mounts again. On self-hosted there is
 // no other way out, so the escape hatch below is load-bearing.
 
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 import fs from "node:fs";
 import path from "node:path";
 
-import { resolveGateReason } from "../lib/features/gateReason.ts";
+import { resolveGateReason } from "../src/lib/features/gateReason.ts";
 
 describe("resolveGateReason — admin-disabled features", () => {
   test("blocks with the disabled reason by default", () => {
@@ -173,7 +173,7 @@ describe("resolveGateReason — the catalog fallback", () => {
 describe("Organization AI settings page", () => {
   const webRoot = path.resolve(import.meta.dirname, "..");
   const src = fs.readFileSync(
-    path.join(webRoot, "components/Dashboard/Pages/Org/OrgEditAI/OrgEditAI.tsx"),
+    path.join(webRoot, "src/components/Dashboard/Pages/Org/OrgEditAI/OrgEditAI.tsx"),
     "utf8"
   );
 
@@ -198,7 +198,7 @@ describe("Organization AI settings page", () => {
 describe("FeatureGate", () => {
   const webRoot = path.resolve(import.meta.dirname, "..");
   const src = fs.readFileSync(
-    path.join(webRoot, "components/Dashboard/Shared/FeatureGate/FeatureGate.tsx"),
+    path.join(webRoot, "src/components/Dashboard/Shared/FeatureGate/FeatureGate.tsx"),
     "utf8"
   );
 

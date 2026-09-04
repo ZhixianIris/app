@@ -1,11 +1,11 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import {
   createBeforeUnloadHandler,
   getEditorContentSnapshot,
   hasEditorContentChanged,
   shouldGuardNavigationClick,
-} from "../components/Objects/Editor/unsavedChangesGuard.ts";
+} from "../src/components/Objects/Editor/unsavedChangesGuard.ts";
 
 const ORIGIN = "https://app.example.com";
 const plainLeftClick = {

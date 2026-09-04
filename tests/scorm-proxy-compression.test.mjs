@@ -1,10 +1,10 @@
-import { describe, expect, test } from "bun:test";
+import { describe, expect, test } from "vitest";
 
 import {
   acceptsGzip,
   bodyWasDecoded,
   canRecompress,
-} from "../ee/services/scorm/proxyCompression.ts";
+} from "../src/ee/services/scorm/proxyCompression.ts";
 
 /**
  * The SCORM proxy carries every file of a package — hundreds of them — so the
