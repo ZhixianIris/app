@@ -91,8 +91,7 @@ export function ReactionButton({ discussionUuid, compact = false }: ReactionButt
       <TooltipProvider delayDuration={200}>
         {reactions.map((reaction) => (
           <Tooltip key={reaction.emoji}>
-            <TooltipTrigger asChild>
-              <button
+                            <TooltipTrigger render={<button
                 onClick={() => isAuthenticated && handleToggleReaction(reaction.emoji)}
                 disabled={isLoading || !isAuthenticated}
                 className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs transition-all ${
@@ -103,8 +102,7 @@ export function ReactionButton({ discussionUuid, compact = false }: ReactionButt
               >
                 <span className="text-sm">{reaction.emoji}</span>
                 <span className="font-medium">{reaction.count}</span>
-              </button>
-            </TooltipTrigger>
+              </button>} />
             <TooltipContent side="top" className="max-w-xs">
               <p className="text-xs">{getUserNames(reaction.users)}</p>
             </TooltipContent>
@@ -115,16 +113,14 @@ export function ReactionButton({ discussionUuid, compact = false }: ReactionButt
       {/* Add reaction button */}
       {isAuthenticated && (
         <Popover open={isPickerOpen} onOpenChange={setIsPickerOpen}>
-          <PopoverTrigger asChild>
-            <button
+                          <PopoverTrigger render={<button
               className={`inline-flex items-center justify-center rounded-full border border-dashed border-gray-300 text-gray-400 hover:border-gray-400 hover:text-gray-500 hover:bg-gray-50 transition-colors ${
                 compact ? 'w-7 h-7' : 'w-8 h-8'
               }`}
               title="Add reaction"
             >
               <SmilePlus size={compact ? 14 : 16} />
-            </button>
-          </PopoverTrigger>
+            </button>} />
           <PopoverContent
             className="w-auto p-2"
             align="start"

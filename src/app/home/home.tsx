@@ -125,14 +125,12 @@ function HomeClient() {
                   </div>
                 </div>
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button
+                                                  <DropdownMenuTrigger render={<button
                       aria-label={t('common.settings')}
                       className="p-2 rounded-lg text-black/40 hover:text-black hover:bg-black/[0.04] transition-colors"
                     >
                       <Settings size={16} />
-                    </button>
-                  </DropdownMenuTrigger>
+                    </button>} />
                   <DropdownMenuContent className="w-56" align="end">
                     <DropdownMenuLabel>
                       <div className="flex flex-col">
@@ -362,37 +360,31 @@ function OrgRow({ org, access_token }: { org: any; access_token: string }) {
 
       {/* Admin actions */}
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button
+                    <DropdownMenuTrigger render={<button
             aria-label={t('common.org_actions', { defaultValue: 'Organization actions' })}
             className="ms-1.5 p-2 rounded-lg text-black/30 hover:text-black hover:bg-black/[0.04] transition-colors flex-shrink-0"
           >
             <MoreVertical size={16} />
-          </button>
-        </DropdownMenuTrigger>
+          </button>} />
         <DropdownMenuContent className="w-52" align="end">
           {canManageOrg && (
-            <DropdownMenuItem asChild>
-              <Link to={`/billing?org=${org.slug}`} className="flex items-center space-x-2">
+                                <DropdownMenuItem render={<Link to={`/billing?org=${org.slug}`} className="flex items-center space-x-2">
                 <CreditCard size={14} />
                 <span>{t('common.manage_upgrade', { defaultValue: 'Manage / Upgrade' })}</span>
-              </Link>
-            </DropdownMenuItem>
+              </Link>} />
           )}
-          <DropdownMenuItem asChild>
-            <Link
+                          <DropdownMenuItem render={<Link
               to={getUriWithOrg(org.slug, '/dash/org/settings/general')}
               className="flex items-center space-x-2"
             >
               <Settings size={14} />
               <span>{t('common.settings', { defaultValue: 'Settings' })}</span>
-            </Link>
-          </DropdownMenuItem>
+            </Link>} />
           <DropdownMenuSeparator />
           {canManageOrg ? (
             // Admins can delete the whole organization.
             <DropdownMenuItem
-              onSelect={(e) => {
+              onClick={(e) => {
                 e.preventDefault()
                 setError(null)
                 setConfirmText('')
@@ -406,7 +398,7 @@ function OrgRow({ org, access_token }: { org: any; access_token: string }) {
           ) : (
             // Non-admin members can only leave the org (quit their membership).
             <DropdownMenuItem
-              onSelect={(e) => {
+              onClick={(e) => {
                 e.preventDefault()
                 setError(null)
                 setLeaveOpen(true)

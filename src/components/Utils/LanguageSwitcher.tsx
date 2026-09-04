@@ -23,13 +23,11 @@ const LanguageSwitcher = ({ primaryColor = '' }: { primaryColor?: string }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <button className={`flex items-center space-x-1.5 px-2.5 py-2 rounded-lg transition-colors text-sm font-bold outline-none ${colors.iconBtn}`}>
+              <DropdownMenuTrigger render={<button className={`flex items-center space-x-1.5 px-2.5 py-2 rounded-lg transition-colors text-sm font-bold outline-none ${colors.iconBtn}`}>
           <Languages size={16} strokeWidth={2.5} />
           <span suppressHydrationWarning>{currentLangCode}</span>
           <ChevronDown size={12} className="opacity-50" />
-        </button>
-      </DropdownMenuTrigger>
+        </button>} />
 
       <DropdownMenuContent
         className="min-w-[180px] z-dropdown"

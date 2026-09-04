@@ -973,11 +973,9 @@ export default function CreateNewOrgPage() {
             <div className="flex justify-end">
               {isAuthenticated && (
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <button aria-label="User menu" className="rounded-full">
+                                                  <DropdownMenuTrigger render={<button aria-label="User menu" className="rounded-full">
                       <UserAvatar border="border-2" rounded="rounded-full" width={34} />
-                    </button>
-                  </DropdownMenuTrigger>
+                    </button>} />
                   <DropdownMenuContent className="w-56" align="end">
                     <DropdownMenuLabel>
                       <div className="flex flex-col">

@@ -534,24 +534,17 @@ function BoardCardOptions({ board, orgslug, orgId, onDuplicate, onDelete }: {
         !isOpen ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
       }`}>
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-          <DropdownMenuTrigger asChild>
-            <button aria-label="Board actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
+                          <DropdownMenuTrigger render={<button aria-label="Board actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
               <MoreVertical size={18} className="text-gray-700" />
-            </button>
-          </DropdownMenuTrigger>
+            </button>} />
           <DropdownMenuContent align="end" className="w-52">
-            <DropdownMenuItem asChild>
-              <Link to={`/board/${board.board_uuid.replace('board_', '')}`} className="flex items-center cursor-pointer">
+                                <DropdownMenuItem render={<Link to={`/board/${board.board_uuid.replace('board_', '')}`} className="flex items-center cursor-pointer">
                 <Eye className="me-2 h-4 w-4" /> {t('boards.open_board')}
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link to={getUriWithOrg(orgslug, `/dash/boards/${board.board_uuid.replace('board_', '')}/general`)} className="flex items-center cursor-pointer">
+              </Link>} />
+                                <DropdownMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/boards/${board.board_uuid.replace('board_', '')}/general`)} className="flex items-center cursor-pointer">
                 <Settings2 className="me-2 h-4 w-4" /> {t('boards.settings')}
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <ConfirmationModal
+              </Link>} />
+                                <DropdownMenuItem render={<ConfirmationModal
                 confirmationButtonText={t('boards.duplicate_board')}
                 confirmationMessage={t('boards.duplicate_board_confirm')}
                 dialogTitle={t('boards.duplicate_board_title', { name: board.name })}
@@ -562,10 +555,8 @@ function BoardCardOptions({ board, orgslug, orgId, onDuplicate, onDelete }: {
                 }
                 functionToExecute={() => onDuplicate(board.board_uuid)}
                 status="info"
-              />
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <ConfirmationModal
+              />} />
+                                <DropdownMenuItem render={<ConfirmationModal
                 confirmationButtonText={t('boards.delete_board')}
                 confirmationMessage={t('boards.delete_board_confirm')}
                 dialogTitle={t('boards.delete_board_title', { name: board.name })}
@@ -576,8 +567,7 @@ function BoardCardOptions({ board, orgslug, orgId, onDuplicate, onDelete }: {
                 }
                 functionToExecute={() => onDelete(board.board_uuid)}
                 status="warning"
-              />
-            </DropdownMenuItem>
+              />} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

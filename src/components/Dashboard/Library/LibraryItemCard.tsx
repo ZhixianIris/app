@@ -141,39 +141,30 @@ export default function LibraryItemCard({ item, orgslug, onRemove }: Props) {
     <div className="group relative flex flex-col bg-white rounded-xl nice-shadow overflow-hidden w-full transition-all hover:bg-gray-50/40">
       <div className={`absolute top-2 end-2 z-20 transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
         <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-          <DropdownMenuTrigger asChild>
-            <button aria-label="Item actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
+                          <DropdownMenuTrigger render={<button aria-label="Item actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
               <DotsThreeVertical size={18} weight="bold" className="text-gray-700" />
-            </button>
-          </DropdownMenuTrigger>
+            </button>} />
           <DropdownMenuContent align="end" className="w-52">
             {type === 'media' && (
-              <DropdownMenuItem asChild>
-                <button
+                                      <DropdownMenuItem render={<button
                   onClick={() => setPreviewOpen(true)}
                   className="w-full text-start flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
                 >
                   <Eye className="me-2 h-4 w-4" /> {t('library.preview')}
-                </button>
-              </DropdownMenuItem>
+                </button>} />
             )}
             {downloadUrl && (
-              <DropdownMenuItem asChild>
-                <a href={downloadUrl} className="flex items-center cursor-pointer">
+                                      <DropdownMenuItem render={<a href={downloadUrl} className="flex items-center cursor-pointer">
                   <DownloadSimple className="me-2 h-4 w-4" /> {t('media.download')}
-                </a>
-              </DropdownMenuItem>
+                </a>} />
             )}
             {href && (
-              <DropdownMenuItem asChild>
-                <a href={href} target="_blank" rel="noopener noreferrer" className="flex items-center cursor-pointer">
+                                      <DropdownMenuItem render={<a href={href} target="_blank" rel="noopener noreferrer" className="flex items-center cursor-pointer">
                   <ArrowSquareOut className="me-2 h-4 w-4" /> {t('library.open')}
-                </a>
-              </DropdownMenuItem>
+                </a>} />
             )}
             {isUploadMedia && (
-              <DropdownMenuItem asChild>
-                <button
+                                      <DropdownMenuItem render={<button
                   onClick={() =>
                     shareMediaLink(
                       resource.media_uuid || item.resource_uuid,
@@ -185,18 +176,14 @@ export default function LibraryItemCard({ item, orgslug, onRemove }: Props) {
                   className="w-full text-start flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
                 >
                   <LinkSimple className="me-2 h-4 w-4" /> {t('library.copy_link')}
-                </button>
-              </DropdownMenuItem>
+                </button>} />
             )}
             {type === 'media' && (
-              <DropdownMenuItem asChild>
-                <button onClick={() => setAccessOpen(true)} className="w-full text-start flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors">
+                                      <DropdownMenuItem render={<button onClick={() => setAccessOpen(true)} className="w-full text-start flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors">
                   <Lock className="me-2 h-4 w-4" /> {t('library.manage_access')}
-                </button>
-              </DropdownMenuItem>
+                </button>} />
             )}
-            <DropdownMenuItem asChild>
-              <ConfirmationModal
+                                <DropdownMenuItem render={<ConfirmationModal
                 confirmationButtonText={t('library.remove_from_folder')}
                 confirmationMessage={t('library.remove_from_folder_confirm')}
                 dialogTitle={t('library.remove_from_folder')}
@@ -207,8 +194,7 @@ export default function LibraryItemCard({ item, orgslug, onRemove }: Props) {
                 }
                 functionToExecute={onRemove}
                 status="warning"
-              />
-            </DropdownMenuItem>
+              />} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

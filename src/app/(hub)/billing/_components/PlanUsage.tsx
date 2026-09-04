@@ -724,8 +724,7 @@ export default function PlanUsage({
           {disclaimerPack && (
             <div>
               <div className="px-6 py-5 space-y-4">
-                <DialogTitle asChild>
-                  <div className="flex items-center gap-3">
+                                            <DialogTitle render={<div className="flex items-center gap-3">
                     <div className={`p-2 rounded-xl ${disclaimerPack.type === 'ai_credits' ? 'bg-violet-50' : 'bg-emerald-50'}`}>
                       {disclaimerPack.type === 'ai_credits' ? (
                         <Zap size={18} className="text-violet-600" />
@@ -742,8 +741,7 @@ export default function PlanUsage({
                         {getPackPrice(disclaimerPack.id, packPrices)}/mo {t('billing.recurring_subscription', { defaultValue: 'recurring subscription' })}
                       </p>
                     </div>
-                  </div>
-                </DialogTitle>
+                  </div>} />
 
                 <div className="bg-black/[0.02] rounded-xl px-4 py-3 space-y-2.5">
                   <p className="text-[12px] font-semibold text-black/50">

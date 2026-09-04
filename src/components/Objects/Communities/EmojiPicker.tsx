@@ -39,8 +39,7 @@ export function EmojiPicker({ value, onChange, triggerClassName, disabled = fals
 
   return (
     <Popover open={disabled ? false : isOpen} onOpenChange={disabled ? undefined : setIsOpen}>
-      <PopoverTrigger asChild>
-        <button
+              <PopoverTrigger render={<button
           type="button"
           disabled={disabled}
           className={triggerClassName || `flex items-center justify-center w-12 h-12 rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400 transition-colors ${value ? 'border-solid border-gray-200 bg-gray-50' : ''}`}
@@ -58,8 +57,7 @@ export function EmojiPicker({ value, onChange, triggerClassName, disabled = fals
           ) : (
             <span className="text-xl text-gray-400">+</span>
           )}
-        </button>
-      </PopoverTrigger>
+        </button>} />
       <PopoverContent className="w-80 p-0" align="start" side="bottom" style={{ zIndex: 9999 }}>
         {/* Category tabs */}
         <div className="flex overflow-x-auto border-b border-gray-100 px-1 py-1 gap-1">

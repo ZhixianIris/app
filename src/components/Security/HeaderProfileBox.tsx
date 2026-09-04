@@ -184,8 +184,7 @@ export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string 
         <div className="flex items-center space-x-0">
           <div className="flex items-center space-x-3">
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button className={`cursor-pointer flex items-center space-x-3 rounded-lg p-2 transition-colors ${colors.profileHover}`}>
+                                      <DropdownMenuTrigger render={<button className={`cursor-pointer flex items-center space-x-3 rounded-lg p-2 transition-colors ${colors.profileHover}`}>
                   <UserAvatar border="border-2" rounded="rounded-lg" width={30} shadow={primaryColor ? '' : undefined} />
                   <div className="flex flex-col items-start space-y-0">
                     <div className="flex items-center space-x-2">
@@ -220,8 +219,7 @@ export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string 
                     <p className={`text-xs ${colors.profileMuted}`}>{session.data.user.email}</p>
                   </div>
                   <CaretDown aria-hidden="true" size={16} weight="fill" className={colors.profileMuted} />
-                </button>
-              </DropdownMenuTrigger>
+                </button>} />
               <DropdownMenuContent className="w-56" align="end">
                 <DropdownMenuLabel>
                   <div className="flex items-center space-x-2">
@@ -234,40 +232,30 @@ export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string 
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {rights?.dashboard?.action_access && (
-                  <DropdownMenuItem asChild>
-                    <Link to="/dash" className="flex items-center space-x-2">
+                                                  <DropdownMenuItem render={<Link to="/dash" className="flex items-center space-x-2">
                       <Shield size={16} weight="fill" />
                       <span>{t('common.dashboard')}</span>
-                    </Link>
-                  </DropdownMenuItem>
+                    </Link>} />
                 )}
-                <DropdownMenuItem asChild>
-                  <Link to="/account/general" className="flex items-center space-x-2">
+                                            <DropdownMenuItem render={<Link to="/account/general" className="flex items-center space-x-2">
                     <User size={16} weight="fill" />
                     <span>{t('user.user_settings')}</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <Link to={getUriWithOrg(org?.slug, '/account/purchases')} className="flex items-center space-x-2">
+                  </Link>} />
+                                            <DropdownMenuItem render={<Link to={getUriWithOrg(org?.slug, '/account/purchases')} className="flex items-center space-x-2">
                     <ShoppingBag size={16} weight="fill" />
                     <span>{t('account.purchases')}</span>
-                  </Link>
-                </DropdownMenuItem>
+                  </Link>} />
                 {multiOrg && (
                   <>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild>
-                      <Link to={getMainDomainUri('/home')} className="flex items-center space-x-2">
+                                                        <DropdownMenuItem render={<Link to={getMainDomainUri('/home')} className="flex items-center space-x-2">
                         <House size={16} weight="fill" />
                         <span>{t('common.home', { defaultValue: 'Home' })}</span>
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link to={getMainDomainUri(`/billing?org=${org?.slug ?? ''}`)} className="flex items-center space-x-2">
+                      </Link>} />
+                                                        <DropdownMenuItem render={<Link to={getMainDomainUri(`/billing?org=${org?.slug ?? ''}`)} className="flex items-center space-x-2">
                         <CreditCard size={16} weight="fill" />
                         <span>{t('common.billing', { defaultValue: 'Billing' })}</span>
-                      </Link>
-                    </DropdownMenuItem>
+                      </Link>} />
                     <DropdownMenuSub>
                       <DropdownMenuSubTrigger className="flex items-center gap-2 space-x-2">
                         <Buildings size={16} weight="fill" />
@@ -276,8 +264,7 @@ export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string 
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent className="max-h-72 overflow-auto">
                           {myOrgs.map((o: any) => (
-                            <DropdownMenuItem key={o.id} asChild>
-                              <Link to={getUriWithOrg(o.slug, '/')} className="flex items-center space-x-2">
+                                                        <DropdownMenuItem render={<Link to={getUriWithOrg(o.slug, '/')} className="flex items-center space-x-2">
                                 {o.logo_image ? (
                                   <img src={getOrgLogoMediaDirectory(o.org_uuid, o.logo_image)} alt="" className="w-5 h-5 rounded object-cover shrink-0 ring-1 ring-inset ring-black/5" />
                                 ) : (
@@ -285,16 +272,13 @@ export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string 
                                 )}
                                 <span className="truncate flex-1">{o.name}</span>
                                 {o.id === org?.id && <Check size={14} weight="bold" className="text-green-600 shrink-0" />}
-                              </Link>
-                            </DropdownMenuItem>
+                              </Link>} key={o.id} />
                           ))}
                           {myOrgs.length > 0 && <DropdownMenuSeparator />}
-                          <DropdownMenuItem asChild>
-                            <Link to={getMainDomainUri('/new')} className="flex items-center space-x-2 font-semibold">
+                                                                          <DropdownMenuItem render={<Link to={getMainDomainUri('/new')} className="flex items-center space-x-2 font-semibold">
                               <Plus size={16} weight="bold" />
                               <span>{t('common.create_organization', { defaultValue: 'Create organization' })}</span>
-                            </Link>
-                          </DropdownMenuItem>
+                            </Link>} />
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>

@@ -320,11 +320,9 @@ function EpisodeRow({
       </div>
 
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-white transition-colors">
+                    <DropdownMenuTrigger render={<button className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-white transition-colors">
             <MoreVertical size={18} />
-          </button>
-        </DropdownMenuTrigger>
+          </button>} />
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={onEdit} className="cursor-pointer">
             <Pencil size={14} className="me-2" />
@@ -333,8 +331,7 @@ function EpisodeRow({
           <DropdownMenuItem onClick={onTogglePublished} className="cursor-pointer">
             {episode.published ? t('podcasts.dashboard.episodes.unpublish') : t('podcasts.dashboard.episodes.publish')}
           </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <ConfirmationModal
+                          <DropdownMenuItem render={<ConfirmationModal
               confirmationButtonText={t('podcasts.dashboard.episodes.delete')}
               confirmationMessage={t('podcasts.dashboard.episodes.delete_confirm')}
               dialogTitle={t('podcasts.dashboard.episodes.delete_title')}
@@ -346,8 +343,7 @@ function EpisodeRow({
               }
               functionToExecute={onDelete}
               status="warning"
-            />
-          </DropdownMenuItem>
+            />} />
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

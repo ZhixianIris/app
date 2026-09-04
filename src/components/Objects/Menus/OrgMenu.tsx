@@ -182,15 +182,13 @@ export const OrgMenu = (props: any) => {
               <div className="hidden md:flex">
                 <TooltipProvider delayDuration={0}>
                   <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Link
+                                                        <TooltipTrigger render={<Link
                         to={getUriWithOrg(orgslug, '/trail')}
                         className={`p-2 rounded-lg transition-colors ${colors.iconBtn}`}
                         aria-label={t('courses.progress')}
                       >
                         <Signpost size={20} weight="fill" />
-                      </Link>
-                    </TooltipTrigger>
+                      </Link>} />
                     <TooltipContent side="bottom" className="text-xs">
                       {t('courses.progress')}
                     </TooltipContent>
@@ -204,15 +202,13 @@ export const OrgMenu = (props: any) => {
                 <div className="hidden md:flex">
                   <TooltipProvider delayDuration={0}>
                     <Tooltip>
-                      <TooltipTrigger asChild>
-                        <Link
+                                                              <TooltipTrigger render={<Link
                           to={getUriWithOrg(orgslug, '/boards')}
                           className={`p-2 rounded-lg transition-colors ${colors.iconBtn}`}
                           aria-label="Boards"
                         >
                           <ChalkboardSimple size={20} weight="fill" />
-                        </Link>
-                      </TooltipTrigger>
+                        </Link>} />
                       <TooltipContent side="bottom" className="text-xs">
                         Boards
                       </TooltipContent>
@@ -242,17 +238,12 @@ export const OrgMenu = (props: any) => {
                 <DropdownMenu>
                   <TooltipProvider delayDuration={0}>
                     <Tooltip>
-                      <TooltipTrigger asChild>
-                        <DropdownMenuTrigger asChild>
-                          <button
+                                                              <TooltipTrigger render={                                        <DropdownMenuTrigger render={<button
                             className={`p-2 rounded-lg transition-colors ${colors.iconBtn}`}
                             aria-label={t('common.dashboard')}
                           >
                             <SquaresFour size={20} weight="fill" />
-                          </button>
-                        </DropdownMenuTrigger>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom" className="text-xs">
+                          </button>} />} />ontent side="bottom" className="text-xs">
                         {t('common.dashboard')}
                       </TooltipContent>
                     </Tooltip>
@@ -266,16 +257,14 @@ export const OrgMenu = (props: any) => {
                     {visibleDashboardItems.map((item) => {
                       const IconComponent = item.icon
                       return (
-                        <DropdownMenuItem key={item.id} asChild>
-                          <Link
+                                                <DropdownMenuItem render={<Link
                             to={item.href}
                             className="flex items-center gap-2"
                             onClick={() => track(AnalyticsEvent.DashboardEntered, { source: 'org_menu' })}
                           >
                             <IconComponent size={16} weight="fill" />
                             <span>{t(item.labelKey)}</span>
-                          </Link>
-                        </DropdownMenuItem>
+                          </Link>} key={item.id} />
                       )
                     })}
                   </DropdownMenuContent>
@@ -289,17 +278,12 @@ export const OrgMenu = (props: any) => {
                 <DropdownMenu>
                   <TooltipProvider delayDuration={0}>
                     <Tooltip>
-                      <TooltipTrigger asChild>
-                        <DropdownMenuTrigger asChild>
-                          <button
+                                                              <TooltipTrigger render={                                    <DropdownMenuTrigger render={<button
                             className={`p-2 rounded-lg transition-colors ${colors.iconBtn}`}
                             aria-label={t('common.help')}
                           >
                             <Question size={20} weight="fill" />
-                          </button>
-                        </DropdownMenuTrigger>
-                      </TooltipTrigger>
-                      <TooltipContent side="bottom" className="text-xs">
+                          </button>} />} />ontent side="bottom" className="text-xs">
                         {t('common.help')}
                       </TooltipContent>
                     </Tooltip>
@@ -310,8 +294,7 @@ export const OrgMenu = (props: any) => {
                       <span>{t('common.help')}</span>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem asChild>
-                      <a
+                                                        <DropdownMenuItem render={<a
                         href="https://docs.learnhouse.app"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -319,10 +302,8 @@ export const OrgMenu = (props: any) => {
                       >
                         <Book size={16} weight="fill" />
                         <span>{t('common.help_menu.documentation')}</span>
-                      </a>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <a
+                      </a>} />
+                                                        <DropdownMenuItem render={<a
                         href="https://learnhouse.app"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -330,10 +311,8 @@ export const OrgMenu = (props: any) => {
                       >
                         <Globe size={16} weight="fill" />
                         <span>{t('common.help_menu.website')}</span>
-                      </a>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <a
+                      </a>} />
+                                                        <DropdownMenuItem render={<a
                         href="https://discord.gg/learnhouse"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -341,8 +320,7 @@ export const OrgMenu = (props: any) => {
                       >
                         <DiscordIcon size={16} />
                         <span>{t('common.help_menu.discord')}</span>
-                      </a>
-                    </DropdownMenuItem>
+                      </a>} />
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
                       onClick={() => setFeedbackModalOpen(true)}
@@ -453,9 +431,7 @@ const CopilotMenuButton = ({
     <DropdownMenu onOpenChange={setIsOpen}>
       <TooltipProvider delayDuration={0}>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <DropdownMenuTrigger asChild>
-              <button
+                          <TooltipTrigger render={                <DropdownMenuTrigger render={<button
                 className="relative p-2 rounded-lg transition-colors hover:bg-violet-500/10"
                 aria-label="Copilot"
               >
@@ -464,10 +440,7 @@ const CopilotMenuButton = ({
                 {isBubbleMode && bubbleOpen && (
                   <span className="absolute top-1.5 end-1.5 w-2 h-2 rounded-full bg-violet-500 ring-2 ring-white dark:ring-neutral-900" />
                 )}
-              </button>
-            </DropdownMenuTrigger>
-          </TooltipTrigger>
-          <TooltipContent side="bottom" className="text-xs">
+              </button>} />} />tom" className="text-xs">
             Copilot
           </TooltipContent>
         </Tooltip>
@@ -486,19 +459,17 @@ const CopilotMenuButton = ({
               isBubbleMode ? (
                 <DropdownMenuItem
                   key={s.aichat_uuid}
-                  onSelect={() => onOpenBubble(s.aichat_uuid)}
+                  onClick={() => onOpenBubble(s.aichat_uuid)}
                   className="flex items-center gap-2 cursor-pointer"
                 >
                   <ChatCircleDots size={14} weight="fill" className="shrink-0 text-neutral-400" />
                   <span className="truncate text-sm">{s.title || 'Untitled'}</span>
                 </DropdownMenuItem>
               ) : (
-                <DropdownMenuItem key={s.aichat_uuid} asChild>
-                  <Link to={getUriWithOrg(orgslug, `/copilot?chat=${s.aichat_uuid}`)} className="flex items-center gap-2">
+                                        <DropdownMenuItem render={<Link to={getUriWithOrg(orgslug, `/copilot?chat=${s.aichat_uuid}`)} className="flex items-center gap-2">
                     <ChatCircleDots size={14} weight="fill" className="shrink-0 text-neutral-400" />
                     <span className="truncate text-sm">{s.title || 'Untitled'}</span>
-                  </Link>
-                </DropdownMenuItem>
+                  </Link>} key={s.aichat_uuid} />
               )
             ))}
             <DropdownMenuSeparator />
@@ -512,19 +483,17 @@ const CopilotMenuButton = ({
         {/* Primary action */}
         {isBubbleMode ? (
           <DropdownMenuItem
-            onSelect={() => onOpenBubble()}
+            onClick={() => onOpenBubble()}
             className="flex items-center gap-2 font-medium cursor-pointer"
           >
             <ChatCircle size={14} weight="fill" className="text-violet-500" />
             <span>{recentSessions.length > 0 ? 'New conversation' : 'Start a conversation'}</span>
           </DropdownMenuItem>
         ) : (
-          <DropdownMenuItem asChild>
-            <Link to={getUriWithOrg(orgslug, '/copilot')} className="flex items-center gap-2 font-medium">
+                              <DropdownMenuItem render={<Link to={getUriWithOrg(orgslug, '/copilot')} className="flex items-center gap-2 font-medium">
               <ChatCircle size={14} weight="fill" className="text-violet-500" />
               <span>{recentSessions.length > 0 ? 'View all conversations' : 'Start a conversation'}</span>
-            </Link>
-          </DropdownMenuItem>
+            </Link>} />
         )}
 
         <DropdownMenuSeparator />

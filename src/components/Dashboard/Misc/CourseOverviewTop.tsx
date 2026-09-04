@@ -227,8 +227,7 @@ export function CourseOverviewTop({
               <div className="w-px self-stretch bg-neutral-200/80" />
               <TooltipProvider delayDuration={200}>
                 <Tooltip>
-                  <TooltipTrigger asChild>
-                    <button
+                                                  <TooltipTrigger render={<button
                       onClick={indexCourseForAI}
                       disabled={isIndexing}
                       aria-label={isIndexing ? 'Indexing course' : isIndexed ? 'Course indexed' : 'Index course for AI'}
@@ -248,8 +247,7 @@ export function CourseOverviewTop({
                       <span className="hidden sm:inline">
                         {isIndexing ? 'Indexing...' : isIndexed ? 'Indexed' : 'Index for AI'}
                       </span>
-                    </button>
-                  </TooltipTrigger>
+                    </button>} />
                   <TooltipContent side="bottom" className="max-w-xs text-xs">
                     <p>Indexes this course's content so the AI Copilot can search and reference it when answering questions. Content is automatically re-indexed when activities are updated.</p>
                   </TooltipContent>

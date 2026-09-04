@@ -75,22 +75,17 @@ function MediaThumbnail({ media, orgslug, org_id, isDashboard = false, onChanged
         >
           <div className={`absolute top-2 end-2 z-20 transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
             <DropdownMenu open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-              <DropdownMenuTrigger asChild>
-                <button aria-label="Media actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
+                                      <DropdownMenuTrigger render={<button aria-label="Media actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
                   <MoreVertical size={18} className="text-gray-700" />
-                </button>
-              </DropdownMenuTrigger>
+                </button>} />
               <DropdownMenuContent align="end" className="w-52">
-                <DropdownMenuItem asChild>
-                  <button
+                                            <DropdownMenuItem render={<button
                     onClick={() => setAccessOpen(true)}
                     className="w-full text-start flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
                   >
                     <Lock className="me-2 h-4 w-4" /> {t('library.manage_access')}
-                  </button>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <ConfirmationModal
+                  </button>} />
+                                            <DropdownMenuItem render={<ConfirmationModal
                     confirmationButtonText={t('media.delete_media')}
                     confirmationMessage={t('media.delete_media_confirm')}
                     dialogTitle={t('media.delete_media_title', { name: media.name })}
@@ -101,8 +96,7 @@ function MediaThumbnail({ media, orgslug, org_id, isDashboard = false, onChanged
                     }
                     functionToExecute={handleDelete}
                     status="warning"
-                  />
-                </DropdownMenuItem>
+                  />} />
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

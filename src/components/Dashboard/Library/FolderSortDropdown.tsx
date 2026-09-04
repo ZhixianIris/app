@@ -38,14 +38,12 @@ export function FolderSortDropdown({ value, onChange }: FolderSortDropdownProps)
     // modal={false} avoids Radix's body scroll-lock, which otherwise removes the
     // page scrollbar on open and shifts the whole layout sideways.
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-1.5 px-3 py-2 h-8 text-xs bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors">
+              <DropdownMenuTrigger render={<button className="flex items-center gap-1.5 px-3 py-2 h-8 text-xs bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-100 transition-colors">
           <CurrentIcon size={14} className="text-gray-400" />
           <span className="text-gray-500">{t('library.sort.sort_by', { defaultValue: 'Sort by' })}</span>
           <span className="font-medium text-gray-700">{currentOption.label}</span>
           <ChevronDown size={12} className="text-gray-400" />
-        </button>
-      </DropdownMenuTrigger>
+        </button>} />
       <DropdownMenuContent align="end" className="w-44">
         {sortOptions.map((option) => {
           const Icon = option.icon

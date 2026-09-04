@@ -20,7 +20,7 @@ type EditCourseAccessProps = {
     course_uuid?: string
 }
 
-// forwardRef so Radix Dialog.Trigger asChild can pass onClick/ref through
+// forwardRef so the dialog trigger's render prop can pass onClick/ref through
 type AccessCardProps = {
     icon: React.ElementType
     title: string

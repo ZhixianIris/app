@@ -111,14 +111,11 @@ function TrailCourseCard(props: TrailCourseCardProps) {
       {/* Dropdown Menu */}
       <div className="absolute top-2 end-2 z-20">
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
+                          <DropdownMenuTrigger render={<button className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
               <MoreVertical size={18} className="text-gray-700" />
-            </button>
-          </DropdownMenuTrigger>
+            </button>} />
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem asChild>
-              <ConfirmationModal
+                                <DropdownMenuItem render={<ConfirmationModal
                 confirmationMessage={t('courses.quit_course_confirm')}
                 confirmationButtonText={t('courses.quit_course')}
                 dialogTitle={t('courses.quit_course_title')}
@@ -129,8 +126,7 @@ function TrailCourseCard(props: TrailCourseCardProps) {
                 }
                 functionToExecute={() => quitCourse(course.course_uuid)}
                 status="warning"
-              />
-            </DropdownMenuItem>
+              />} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

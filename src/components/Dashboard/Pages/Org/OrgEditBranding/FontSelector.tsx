@@ -98,8 +98,7 @@ export default function FontSelector({ value, onChange }: FontSelectorProps) {
 
         <div className="flex items-center gap-2">
           <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-              <Button
+                                <PopoverTrigger render={<Button
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
@@ -112,8 +111,7 @@ export default function FontSelector({ value, onChange }: FontSelectorProps) {
                   {displayValue}
                 </span>
                 <ChevronsUpDown className="ms-2 h-4 w-4 shrink-0 opacity-50" />
-              </Button>
-            </PopoverTrigger>
+              </Button>} />
             <PopoverContent className="w-72 p-0" align="start">
               <div className="p-2 border-b">
                 <Input

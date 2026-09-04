@@ -142,20 +142,27 @@ const HoverMenuContent = React.forwardRef<HTMLDivElement, HoverMenuContentProps>
 HoverMenuContent.displayName = "HoverMenuContent"
 
 interface HoverMenuItemProps {
-  children: React.ReactNode
+  children?: React.ReactNode
   className?: string
   onClick?: () => void
-  asChild?: boolean
+  // Base UI composition: replaces the item <div> with this element, merging
+  // the item's class and click handler onto it.
+  render?: React.ReactElement
 }
 
 const HoverMenuItem = React.forwardRef<HTMLDivElement, HoverMenuItemProps>(
-  ({ children, className, onClick, asChild }, ref) => {
-    if (asChild) {
-      return (
-        <div ref={ref} className={cn("hover-menu-item", className)}>
-          {children}
-        </div>
-      )
+  ({ children, className, onClick, render }, ref) => {
+    if (render) {
+      const element = render as React.ReactElement<{
+        className?: string
+        onClick?: () => void
+        ref?: React.Ref<HTMLElement>
+      }>
+      return React.cloneElement(element, {
+        className: cn("hover-menu-item", element.props.className, className),
+        onClick,
+        ref: ref as React.Ref<HTMLElement>,
+      })
     }
 
     return (

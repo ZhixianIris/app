@@ -118,11 +118,9 @@ export function DiscussionDetail({
 
           {isAuthor && (
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button aria-label="Discussion detail" className="flex-shrink-0 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                                      <DropdownMenuTrigger render={<button aria-label="Discussion detail" className="flex-shrink-0 p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
                   <MoreVertical size={18} />
-                </button>
-              </DropdownMenuTrigger>
+                </button>} />
               <DropdownMenuContent align="end" className="w-44">
                 {onEdit && (
                   <DropdownMenuItem onClick={onEdit}>
@@ -130,8 +128,7 @@ export function DiscussionDetail({
                     {t('communities.discussion_detail.edit')}
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuItem asChild>
-                  <ConfirmationModal
+                                            <DropdownMenuItem render={<ConfirmationModal
                     confirmationMessage={t('communities.discussion_detail.delete_confirm')}
                     confirmationButtonText={t('communities.discussion_detail.delete_button')}
                     dialogTitle={t('communities.discussion_detail.delete_title')}
@@ -142,8 +139,7 @@ export function DiscussionDetail({
                     }
                     functionToExecute={handleDelete}
                     status="warning"
-                  />
-                </DropdownMenuItem>
+                  />} />
               </DropdownMenuContent>
             </DropdownMenu>
           )}

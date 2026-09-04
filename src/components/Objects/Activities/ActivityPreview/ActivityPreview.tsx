@@ -570,7 +570,7 @@ export function ActivityPreviewHoverCard({
         if (open) setHasOpened(true)
       }}
     >
-      <HoverCardTrigger asChild>{children}</HoverCardTrigger>
+              <HoverCardTrigger render={{children}} />
       <HoverCardContent
         align="start"
         side="right"

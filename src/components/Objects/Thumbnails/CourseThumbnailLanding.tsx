@@ -68,24 +68,17 @@ const AdminEditOptions: React.FC<AdminEditOptionsProps> = ({ course, orgslug, de
     >
       <div className="absolute top-2 end-2 z-20">
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button className="p-1 bg-white rounded-full hover:bg-gray-100 transition-colors shadow-md">
+                          <DropdownMenuTrigger render={<button className="p-1 bg-white rounded-full hover:bg-gray-100 transition-colors shadow-md">
               <MoreVertical size={20} className="text-gray-700" />
-            </button>
-          </DropdownMenuTrigger>
+            </button>} />
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem asChild>
-              <Link to={getUriWithOrg(orgslug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`)}>
+                                <DropdownMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`)}>
                 <FilePenLine className="me-2 h-4 w-4" /> {t('courses.edit_content')}
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link to={getUriWithOrg(orgslug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/general`)}>
+              </Link>} />
+                                <DropdownMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/general`)}>
                 <Settings2 className="me-2 h-4 w-4" /> {t('common.settings')}
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <ConfirmationModal
+              </Link>} />
+                                <DropdownMenuItem render={<ConfirmationModal
                 confirmationButtonText={t('courses.delete_course')}
                 confirmationMessage={t('courses.delete_course_confirm')}
                 dialogTitle={t('courses.delete_course_title', { name: course.name })}
@@ -96,8 +89,7 @@ const AdminEditOptions: React.FC<AdminEditOptionsProps> = ({ course, orgslug, de
                 }
                 functionToExecute={deleteCourse}
                 status="warning"
-              />
-            </DropdownMenuItem>
+              />} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

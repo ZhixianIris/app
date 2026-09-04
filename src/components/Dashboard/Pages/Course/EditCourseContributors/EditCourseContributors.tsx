@@ -251,16 +251,14 @@ function EditCourseContributors(_props: EditCourseContributorsProps) {
 
     const RoleDropdown = ({ contributor }: { contributor: Contributor }) => (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button
+                        <DropdownMenuTrigger render={<Button
                     variant="outline"
                     className="w-[200px] justify-between"
                     disabled={contributor.authorship === 'CREATOR'}
                 >
                     {t(`dashboard.courses.contributors.roles.${contributor.authorship.toLowerCase()}`)}
                     <ChevronDown className="ms-2 h-4 w-4 text-muted-foreground" />
-                </Button>
-            </DropdownMenuTrigger>
+                </Button>} />
             <DropdownMenuContent align="end" className="w-[200px]">
                 {['CONTRIBUTOR', 'MAINTAINER', 'REPORTER'].map((role) => (
                     <DropdownMenuItem
@@ -278,16 +276,14 @@ function EditCourseContributors(_props: EditCourseContributorsProps) {
 
     const StatusDropdown = ({ contributor }: { contributor: Contributor }) => (
         <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Button
+                        <DropdownMenuTrigger render={<Button
                     variant="outline"
                     className={`w-[200px] justify-between ${getStatusStyle(contributor.authorship_status)}`}
                     disabled={contributor.authorship === 'CREATOR'}
                 >
                     {t(`dashboard.courses.contributors.statuses.${contributor.authorship_status.toLowerCase()}`)}
                     <ChevronDown className="ms-2 h-4 w-4" />
-                </Button>
-            </DropdownMenuTrigger>
+                </Button>} />
             <DropdownMenuContent align="end" className="w-[200px]">
                 {['ACTIVE', 'INACTIVE', 'PENDING'].map((status) => (
                     <DropdownMenuItem

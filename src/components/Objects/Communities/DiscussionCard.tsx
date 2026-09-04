@@ -303,14 +303,12 @@ export function DiscussionCard({
           {/* Actions Menu */}
           {showActions && (
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <button
+                                      <DropdownMenuTrigger render={<button
                   className="p-1 hover:bg-gray-100 rounded transition-colors"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <MoreVertical size={16} className="text-gray-400" />
-                </button>
-              </DropdownMenuTrigger>
+                </button>} />
               <DropdownMenuContent align="end" className="w-44">
                 {canManage && (
                   <>

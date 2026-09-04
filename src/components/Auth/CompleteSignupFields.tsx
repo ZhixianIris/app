@@ -106,8 +106,7 @@ export default function CompleteSignupFields() {
     <Dialog open onOpenChange={(o) => !o && setDismissed(true)}>
       <DialogContent className="max-w-md p-0">
         <div className="px-6 py-6 space-y-4">
-          <DialogTitle asChild>
-            <div>
+                          <DialogTitle render={<div>
               <p className="text-[17px] font-bold text-black">
                 {t('auth.complete_profile.title', {
                   defaultValue: 'Complete your profile',
@@ -119,8 +118,7 @@ export default function CompleteSignupFields() {
                   org: org?.name ?? '',
                 })}
               </p>
-            </div>
-          </DialogTitle>
+            </div>} />
 
           <div className="space-y-3.5">
             {fields.map((field) => {

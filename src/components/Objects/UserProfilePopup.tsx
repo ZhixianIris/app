@@ -89,9 +89,7 @@ const UserProfilePopup = ({ children, userId }: UserProfilePopupProps) => {
 
   return (
     <HoverCard openDelay={100} closeDelay={150} onOpenChange={(open) => { if (open && !hasOpened) setHasOpened(true) }}>
-      <HoverCardTrigger asChild>
-        {children}
-      </HoverCardTrigger>
+              <HoverCardTrigger render={{children}} />
       <HoverCardContent className="w-96 bg-white/95 backdrop-blur-md p-0 nice-shadow">
         {!isAuthenticated ? (
           <div className="px-5 py-4 text-sm text-gray-600">

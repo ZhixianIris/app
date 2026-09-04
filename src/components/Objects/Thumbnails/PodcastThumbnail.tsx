@@ -223,24 +223,17 @@ const AdminEditOptions = ({ podcast, orgSlug, deletePodcast, isDashboard = false
         isDashboard && !isOpen ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
       }`}>
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-          <DropdownMenuTrigger asChild>
-            <button aria-label="Podcast actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
+                          <DropdownMenuTrigger render={<button aria-label="Podcast actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
               <MoreVertical size={18} className="text-gray-700" />
-            </button>
-          </DropdownMenuTrigger>
+            </button>} />
           <DropdownMenuContent align="end" className="w-52">
-            <DropdownMenuItem asChild>
-              <Link to={getUriWithOrg(orgSlug, `/dash/podcasts/podcast/${removePodcastPrefix(podcast.podcast_uuid)}/content`)} className="flex items-center cursor-pointer">
+                                <DropdownMenuItem render={<Link to={getUriWithOrg(orgSlug, `/dash/podcasts/podcast/${removePodcastPrefix(podcast.podcast_uuid)}/content`)} className="flex items-center cursor-pointer">
                 <FilePenLine className="me-2 h-4 w-4" /> {t('podcasts.edit_content')}
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link to={getUriWithOrg(orgSlug, `/dash/podcasts/podcast/${removePodcastPrefix(podcast.podcast_uuid)}/general`)} className="flex items-center cursor-pointer">
+              </Link>} />
+                                <DropdownMenuItem render={<Link to={getUriWithOrg(orgSlug, `/dash/podcasts/podcast/${removePodcastPrefix(podcast.podcast_uuid)}/general`)} className="flex items-center cursor-pointer">
                 <Settings2 className="me-2 h-4 w-4" /> {t('common.settings')}
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <ConfirmationModal
+              </Link>} />
+                                <DropdownMenuItem render={<ConfirmationModal
                 confirmationButtonText={t('podcasts.delete_podcast')}
                 confirmationMessage={t('podcasts.delete_podcast_confirm')}
                 dialogTitle={t('podcasts.delete_podcast_title', { name: podcast.name })}
@@ -251,8 +244,7 @@ const AdminEditOptions = ({ podcast, orgSlug, deletePodcast, isDashboard = false
                 }
                 functionToExecute={deletePodcast}
                 status="warning"
-              />
-            </DropdownMenuItem>
+              />} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

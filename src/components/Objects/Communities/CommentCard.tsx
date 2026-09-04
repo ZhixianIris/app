@@ -215,11 +215,9 @@ export function CommentCard({ comment, canManage = false, onDeleted, onUpdated }
       {showMenu && !isEditing && (
         <div className={`flex-shrink-0 transition-opacity ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button aria-label="Comment actions" className="p-1 hover:bg-gray-100 rounded transition-colors">
+                                <DropdownMenuTrigger render={<button aria-label="Comment actions" className="p-1 hover:bg-gray-100 rounded transition-colors">
                 <MoreHorizontal size={16} className="text-gray-400" />
-              </button>
-            </DropdownMenuTrigger>
+              </button>} />
             <DropdownMenuContent align="end" className="w-36">
               {isAuthor && (
                 <DropdownMenuItem onClick={() => setIsEditing(true)}>

@@ -143,32 +143,25 @@ const CommunityAdminEditsArea = (props: any) => {
     >
       <div className="absolute top-2 end-2 z-20">
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button aria-label="Community actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
+                          <DropdownMenuTrigger render={<button aria-label="Community actions" className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
               <MoreVertical size={18} className="text-gray-700" />
-            </button>
-          </DropdownMenuTrigger>
+            </button>} />
           <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem asChild>
-              <Link
+                                <DropdownMenuItem render={<Link
                 to={getUriWithOrg(props.orgslug, `/dash/communities/${removeCommunityPrefix(props.community_uuid)}/general`)}
                 className="flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
               >
                 <ExternalLink className="me-2 h-4 w-4" /> {t('dashboard.courses.communities.card.open_settings')}
-              </Link>
-            </DropdownMenuItem>
+              </Link>} />
             {props.onEdit && (
-              <DropdownMenuItem asChild>
-                <button
+                                      <DropdownMenuItem render={<button
                   onClick={props.onEdit}
                   className="w-full text-start flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
                 >
                   <Edit className="me-2 h-4 w-4" /> {t('dashboard.courses.communities.card.quick_edit')}
-                </button>
-              </DropdownMenuItem>
+                </button>} />
             )}
-            <DropdownMenuItem asChild>
-              <ConfirmationModal
+                                <DropdownMenuItem render={<ConfirmationModal
                 confirmationMessage={t('dashboard.courses.communities.modals.delete.message')}
                 confirmationButtonText={t('dashboard.courses.communities.modals.delete.button')}
                 dialogTitle={t('dashboard.courses.communities.modals.delete.title', { name: props.community.name })}
@@ -179,8 +172,7 @@ const CommunityAdminEditsArea = (props: any) => {
                 }
                 functionToExecute={deleteCommunityUI}
                 status="warning"
-              />
-            </DropdownMenuItem>
+              />} />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

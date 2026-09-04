@@ -150,16 +150,14 @@ export default function LockPopover({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <button
+              <PopoverTrigger render={<button
           type="button"
           disabled={disabled}
           title={t(trigger.titleKey, trigger.titleFallback)}
           className={`h-7 w-7 flex items-center justify-center rounded-md transition-colors ${trigger.className} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         >
           <TriggerIcon size={14} />
-        </button>
-      </PopoverTrigger>
+        </button>} />
       <PopoverContent align="end" sideOffset={6} className="w-[300px] p-0 shadow-md shadow-gray-300/25 ring-1 ring-neutral-200/70 rounded-xl overflow-hidden border-0 bg-white">
         <div className="px-4 py-3 border-b border-gray-100">
           <div className="text-[11px] uppercase tracking-wide text-gray-400 font-semibold">

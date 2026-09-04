@@ -467,11 +467,9 @@ function ActivityElement(props: ActivitiyElementProps) {
                 resourceNoun="activity"
               />
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="h-7 w-7 flex items-center justify-center rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
+                                                <DropdownMenuTrigger render={<button className="h-7 w-7 flex items-center justify-center rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors">
                     <MoreVertical size={16} />
-                  </button>
-                </DropdownMenuTrigger>
+                  </button>} />
                 <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuItem onClick={() => setSelectedActivity(props.activity.id)}>
                     <Pencil size={14} />

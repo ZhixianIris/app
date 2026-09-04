@@ -305,24 +305,17 @@ const AdminEditOptions = ({ course, orgSlug, deleteCourse, cloneCourse, exportCo
         isDashboard && !isOpen ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
       }`}>
         <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-          <DropdownMenuTrigger asChild>
-            <button aria-label="Course actions"className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
+                          <DropdownMenuTrigger render={<button aria-label="Course actions"className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md">
               <MoreVertical size={18} className="text-gray-700" />
-            </button>
-          </DropdownMenuTrigger>
+            </button>} />
           <DropdownMenuContent align="end" className="w-52">
-            <DropdownMenuItem asChild>
-              <Link to={getUriWithOrg(orgSlug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`)} className="flex items-center cursor-pointer">
+                                <DropdownMenuItem render={<Link to={getUriWithOrg(orgSlug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`)} className="flex items-center cursor-pointer">
                 <FilePenLine className="me-2 h-4 w-4" /> {t('courses.edit_content')}
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link to={getUriWithOrg(orgSlug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/general`)} className="flex items-center cursor-pointer">
+              </Link>} />
+                                <DropdownMenuItem render={<Link to={getUriWithOrg(orgSlug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/general`)} className="flex items-center cursor-pointer">
                 <Settings2 className="me-2 h-4 w-4" /> {t('common.settings')}
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <ConfirmationModal
+              </Link>} />
+                                <DropdownMenuItem render={<ConfirmationModal
                 confirmationButtonText={t('courses.clone_course')}
                 confirmationMessage={t('courses.clone_course_confirm')}
                 dialogTitle={t('courses.clone_course_title', { name: course.name })}
@@ -333,26 +326,20 @@ const AdminEditOptions = ({ course, orgSlug, deleteCourse, cloneCourse, exportCo
                 }
                 functionToExecute={cloneCourse}
                 status="info"
-              />
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <button
+              />} />
+                                <DropdownMenuItem render={<button
                 onClick={exportCourse}
                 className="w-full text-start flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
               >
                 <Download className="me-2 h-4 w-4" /> {t('courses.export_course')}
-              </button>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <button
+              </button>} />
+                                <DropdownMenuItem render={<button
                 onClick={() => setAccessOpen(true)}
                 className="w-full text-start flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
               >
                 <Lock className="me-2 h-4 w-4" /> {t('library.manage_access')}
-              </button>
-            </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <ConfirmationModal
+              </button>} />
+                                <DropdownMenuItem render={<ConfirmationModal
                 confirmationButtonText={t('courses.delete_course')}
                 confirmationMessage={t('courses.delete_course_confirm')}
                 dialogTitle={t('courses.delete_course_title', { name: course.name })}
@@ -363,8 +350,7 @@ const AdminEditOptions = ({ course, orgSlug, deleteCourse, cloneCourse, exportCo
                 }
                 functionToExecute={deleteCourse}
                 status="warning"
-              />
-            </DropdownMenuItem>
+              />} />
           </DropdownMenuContent>
         </DropdownMenu>
 

@@ -772,8 +772,7 @@ export default function OrgEditBranding() {
                                   setVideoDialogOpen(open);
                                   if (!open) resetVideoDialog();
                                 }}>
-                                  <DialogTrigger asChild>
-                                    <button
+                                                                                          <DialogTrigger render={<button
                                       className={cn(
                                         `w-full ${PREVIEW_HEIGHT}`,
                                         "border-2 border-dashed border-gray-200 rounded-xl",
@@ -785,8 +784,7 @@ export default function OrgEditBranding() {
                                         <Plus size={20} className="text-blue-500" />
                                       </div>
                                       <span className="text-sm font-medium text-gray-600">{t('dashboard.organization.images.add_preview')}</span>
-                                    </button>
-                                  </DialogTrigger>
+                                    </button>} />
                                   <DialogContent className="sm:max-w-[600px]">
                                     <DialogHeader>
                                       <DialogTitle>{t('dashboard.organization.images.video_modal.title')}</DialogTitle>

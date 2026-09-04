@@ -90,8 +90,7 @@ export function PlaygroundReactionButton({ playgroundUuid }: PlaygroundReactionB
             const existing = reactions.find((r) => r.emoji === emoji)
             return (
               <Tooltip key={emoji}>
-                <TooltipTrigger asChild>
-                  <button
+                                    <TooltipTrigger render={<button
                     onClick={() => handleToggle(emoji)}
                     disabled={isLoading || !isAuthenticated}
                     className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
@@ -104,8 +103,7 @@ export function PlaygroundReactionButton({ playgroundUuid }: PlaygroundReactionB
                     {existing && existing.count > 0 && (
                       <span className="font-semibold">{existing.count}</span>
                     )}
-                  </button>
-                </TooltipTrigger>
+                  </button>} />
                 {existing && existing.users.length > 0 && (
                   <TooltipContent side="top" className="max-w-xs">
                     <p className="text-xs">{getUserNames(existing.users)}</p>
@@ -118,14 +116,12 @@ export function PlaygroundReactionButton({ playgroundUuid }: PlaygroundReactionB
           {/* More emoji picker */}
           {isAuthenticated && (
             <Popover open={isPickerOpen} onOpenChange={setIsPickerOpen}>
-              <PopoverTrigger asChild>
-                <button
+                                      <PopoverTrigger render={<button
                   className="inline-flex items-center justify-center w-8 h-8 rounded-full border border-dashed border-gray-300 text-gray-400 hover:border-gray-400 hover:text-gray-500 hover:bg-gray-50 transition-colors"
                   title="More reactions"
                 >
                   <SmilePlus size={15} />
-                </button>
-              </PopoverTrigger>
+                </button>} />
               <PopoverContent
                 className="w-auto p-2"
                 align="start"
@@ -159,8 +155,7 @@ export function PlaygroundReactionButton({ playgroundUuid }: PlaygroundReactionB
           <div className="flex items-center gap-1.5 flex-wrap">
             {extraReactions.map((reaction) => (
               <Tooltip key={reaction.emoji}>
-                <TooltipTrigger asChild>
-                  <button
+                                    <TooltipTrigger render={<button
                     onClick={() => isAuthenticated && handleToggle(reaction.emoji)}
                     disabled={isLoading || !isAuthenticated}
                     className={`inline-flex items-center gap-1 px-2.5 py-1.5 rounded-full text-xs font-medium transition-all border ${
@@ -171,8 +166,7 @@ export function PlaygroundReactionButton({ playgroundUuid }: PlaygroundReactionB
                   >
                     <span className="text-base leading-none">{reaction.emoji}</span>
                     <span className="font-semibold">{reaction.count}</span>
-                  </button>
-                </TooltipTrigger>
+                  </button>} />
                 <TooltipContent side="top" className="max-w-xs">
                   <p className="text-xs">{getUserNames(reaction.users)}</p>
                 </TooltipContent>
