@@ -2,7 +2,9 @@ import React, { Suspense, lazy } from 'react'
 import {
   createBrowserRouter,
   isRouteErrorResponse,
+  Navigate,
   Outlet,
+  useLocation,
   useRouteError,
 } from 'react-router-dom'
 
@@ -77,6 +79,36 @@ const EditorLoading = lazy(() => import('./editor/course/[courseid]/activity/[ac
 const DashAnalyticsLoading = lazy(() => import('./orgs/[orgslug]/dash/analytics/loading'))
 const DashCoursesLoading = lazy(() => import('./orgs/[orgslug]/dash/courses/loading'))
 const DashCourseSubpageLoading = lazy(() => import('./orgs/[orgslug]/dash/courses/course/[courseuuid]/[subpage]/loading'))
+
+
+// ---------------------------------------------------------------------
+// Tenant path rewriting (the SPA equivalent of the upstream edge proxy).
+//
+// The proxy rewrote bare auth paths to /auth/* and prefixed every other
+// unmatched path with /orgs/{org} using the app_org cookie. We reproduce
+// both behaviors client-side so legacy URLs keep working.
+// ---------------------------------------------------------------------
+function getOrgSlugCookie(): string | null {
+  try {
+    const match = document.cookie.match(/(?:^|; )app_org=([^;]*)/)
+    return match ? decodeURIComponent(match[1]) : null
+  } catch {
+    return null
+  }
+}
+
+function TenantCatchAll() {
+  const location = useLocation()
+  const orgslug = getOrgSlugCookie()
+  if (orgslug) {
+    return <Navigate to={`/orgs/${orgslug}${location.pathname}${location.search}`} replace />
+  }
+  return <NotFound />
+}
+
+function AuthAlias({ to }: { to: string }) {
+  return <Navigate to={to} replace />
+}
 
 export const router = createBrowserRouter([
   {
@@ -269,7 +301,16 @@ export const router = createBrowserRouter([
         ],
       },
 
-      { path: '*', element: <NotFound /> },
+      // Bare auth paths (the proxy used to rewrite these to /auth/*)
+      { path: 'login', element: <AuthAlias to="/auth/login" /> },
+      { path: 'signup', element: <AuthAlias to="/auth/signup" /> },
+      { path: 'forgot', element: <AuthAlias to="/auth/forgot" /> },
+      { path: 'reset', element: <AuthAlias to="/auth/reset" /> },
+      { path: 'verify-email', element: <AuthAlias to="/auth/verify-email" /> },
+
+      // Tenant catch-all: prefix unmatched paths with /orgs/{org} like the
+      // upstream proxy did; without an org cookie this is a 404.
+      { path: '*', element: <TenantCatchAll /> },
     ],
   },
 ])

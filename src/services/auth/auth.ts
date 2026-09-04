@@ -219,7 +219,7 @@ interface NewAccountBody {
   turnstileToken?: string | null
 }
 
-// Signup goes through the same-origin gateway (app/api/signup/route.ts), which
+// Signup goes through the signup endpoint, which
 // verifies Turnstile + rejects disposable emails server-side, forwards to the
 // backend user-create endpoint, then syncs the Loops marketing contact. The
 // gateway mirrors the backend's status + JSON, so callers keep reading

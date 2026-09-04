@@ -538,7 +538,7 @@
      NEW call site as a fresh bug — mirror them in CSS.
 
      lucide emits a `lucide-<name>` class on every icon, so it can be targeted
-     by name. Libraries that don't (phosphor, @radix-ui/react-icons) opt in
+     by name. Libraries that don't (phosphor icons) opt in
      with `data-dir-flip`.
 
      Uses `scale:` rather than `transform: scaleX(-1)` because Tailwind v4
