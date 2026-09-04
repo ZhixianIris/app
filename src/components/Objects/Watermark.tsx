@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-const lrnTextLogo = '/lrn-text.svg'
 import React from 'react'
 import { useOrg } from '../Contexts/OrgContext'
 import { useTranslation } from 'react-i18next'
@@ -26,7 +25,7 @@ function Watermark() {
         <div className='fixed bottom-8 end-8 z-50'>
             <Link to={`https://www.example.com/?source=in-app`} className="flex items-center cursor-pointer bg-white/80 backdrop-blur-lg text-gray-700 rounded-2xl p-2 light-shadow text-xs px-5 font-semibold space-x-2">
                 <p>{t('common.made_with')}</p>
-                <img src={lrnTextLogo} alt="logo" width={95}  />
+                <span className="font-bold tracking-tight" style={{ fontFamily: 'var(--font-default)' }}>Learning Web</span>
             </Link>
         </div>
     )

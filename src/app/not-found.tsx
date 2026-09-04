@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-const learningWebIcon = '/black_logo.png'
+
 
 export default function NotFound() {
   return (
@@ -9,14 +9,12 @@ export default function NotFound() {
     {/* The nx-* classes here were left over from a Nextra template and never
         existed in this project's Tailwind build, so they rendered nothing.
         Only pb-20 was ever doing anything. */}
-    <div className="pb-20">
-        <img
-          width={270}
-          height={100}
-          src={learningWebIcon}
-          alt="logo" 
-        />
-        </div>
+    <div className="pb-20 flex items-center justify-center gap-3">
+        <img src="/lrn.svg" alt="App logo" width={64} height={32} style={{ height: 'auto' }} />
+        <span className="text-4xl font-bold tracking-tight text-black" style={{ fontFamily: 'var(--font-default)' }}>
+          Learning Web
+        </span>
+      </div>
       <div className="space-y-6 text-center">
         <h1 className="text-8xl leading-7 font-bold text-black drop-shadow-md">
           404!

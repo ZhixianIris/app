@@ -528,12 +528,14 @@ const CopilotMenuButton = ({
 
 const AppLogo = ({ logoFilter }: { logoFilter: string }) => {
   return (
-    <img
-      src="/lrn-text.svg"
-      alt="Learning Web logo"
-      width={133}
-      height={40}
-      style={{ height: 'auto', filter: logoFilter }} 
-    />
+    <span className="inline-flex items-center gap-2">
+      <img src="/lrn-dash.svg" alt="" width={32} height={32} style={{ height: 'auto', filter: logoFilter }} />
+      <span
+        className="text-xl font-bold tracking-tight"
+        style={{ fontFamily: 'var(--font-default)', filter: logoFilter }}
+      >
+        Learning Web
+      </span>
+    </span>
   )
 }
