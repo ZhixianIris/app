@@ -2,7 +2,7 @@ import React, { createContext, useContext } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { Podcast, PodcastEpisode, PodcastMeta, getPodcastMeta } from '@services/podcasts/podcasts'
-import { useLHSession } from './LHSessionContext'
+import { useAppSession } from './AppSessionContext'
 
 interface PodcastContextType {
   podcast: Podcast | null
@@ -23,7 +23,7 @@ export function PodcastProvider({
   children: React.ReactNode
   podcastuuid: string
 }) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useOrg } from '@components/Contexts/OrgContext';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/keys';
 import toast from 'react-hot-toast';
@@ -26,7 +26,7 @@ function resourceLabel(uuid: string) {
 
 function OfferResourcesPanel({ offerId, offerName }: OfferResourcesPanelProps) {
   const org = useOrg() as any;
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const token = session?.data?.tokens?.access_token;
   const queryClient = useQueryClient();
   const [showPicker, setShowPicker] = useState(false);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg, useOrgMembership } from '@components/Contexts/OrgContext'
 import { getUriWithOrg } from '@services/config/config'
 import { getOffersByResource } from '@services/payments/offers'
@@ -11,7 +11,7 @@ import { getUserAvatarMediaDirectory } from '@services/media/media'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { Link, useNavigate } from 'react-router-dom'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useTranslation } from 'react-i18next'
 import { formatCurrency } from '@/lib/format'
 
@@ -130,11 +130,11 @@ const MultipleAuthors = ({ authors }: { authors: Author[] }) => {
 
 const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseActionsMobileProps) => {
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const { isUserPartOfTheOrg } = useOrgMembership()
   const org = useOrg() as any
   const queryClient = useQueryClient()
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
   const [isActionLoading, setIsActionLoading] = useState(false)
   // Clean up course UUID by removing 'course_' prefix if it exists
   const cleanCourseUuid = course.course_uuid?.replace('course_', '');

@@ -6,7 +6,7 @@ import { deleteCourseFromBackend } from '@services/courses/courses'
 import { getCourseThumbnailMediaDirectory, getUserAvatarMediaDirectory } from '@services/media/media'
 import { revalidateTags } from '@services/utils/ts/requests'
 import { BookMinus, FilePenLine, Settings2, MoreVertical } from 'lucide-react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Link, useNavigate } from 'react-router-dom'
 import React from 'react'
 import toast from 'react-hot-toast'
@@ -101,7 +101,7 @@ const CourseThumbnailLanding: React.FC<PropsType> = ({ course, orgslug, customLi
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const queryClient = useQueryClient()
 
   const activeAuthors = course.authors?.filter(author => author.authorship_status === 'ACTIVE') || []

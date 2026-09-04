@@ -14,7 +14,7 @@ import {
 } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getAPIUrl } from '@services/config/config'
 import { OrgUsageResponse, getOrgUsage } from '@services/orgs/usage'
 import { apiFetch } from '@services/utils/ts/requests'
@@ -60,7 +60,7 @@ const METER_ICONS: Record<string, React.ComponentType<any>> = {
 export default function UsageOverview() {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 

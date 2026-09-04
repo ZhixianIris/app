@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, ChevronRight, CreditCard, TentTree } from 'lucide-react'
 import { Toaster, toast } from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import UserAvatar from '@components/Objects/UserAvatar'
 import { getAPIUrl } from '@services/config/config'
 import { getOrgLogoMediaDirectory } from '@services/media/media'
@@ -135,7 +135,7 @@ function OrgSubscriptionRow({ org, enabled }: { org: any; enabled: boolean }) {
 
 function SubscriptionsClient() {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const navigate = useNavigate()
 
   const access_token = session?.data?.tokens?.access_token

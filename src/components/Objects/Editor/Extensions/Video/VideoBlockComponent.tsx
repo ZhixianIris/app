@@ -11,11 +11,11 @@ import { getVideoBlockStreamUrl, getVideoBlockHlsMasterUrl, getVideoBlockHlsThum
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useCourse } from '@components/Contexts/CourseContext'
 import { useEditorProvider } from '@components/Contexts/Editor/EditorContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { constructAcceptValue } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
-import LearnHousePlayer from '@components/Objects/Activities/Video/LearnHousePlayer'
+import MediaPlayer from '@components/Objects/Activities/Video/MediaPlayer'
 import { useTranslation } from 'react-i18next'
 
 const SUPPORTED_FILES = constructAcceptValue(['webm', 'mp4'])
@@ -105,7 +105,7 @@ function VideoBlockComponent(props: ExtendedNodeViewProps) {
   const org = useOrg() as Organization | null
   const course = useCourse() as Course | null
   const editorState = useEditorProvider() as EditorState
-  const session = useLHSession() as Session
+  const session = useAppSession() as Session
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const uploadZoneRef = React.useRef<HTMLDivElement>(null)
 
@@ -315,7 +315,7 @@ function VideoBlockComponent(props: ExtendedNodeViewProps) {
               }}
             >
               <div className="relative group w-full aspect-video overflow-hidden rounded-lg bg-black">
-                <LearnHousePlayer {...playerProps} />
+                <MediaPlayer {...playerProps} />
                 <div className="absolute top-2 end-2 z-40 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
                     onClick={handleExpand}
@@ -338,7 +338,7 @@ function VideoBlockComponent(props: ExtendedNodeViewProps) {
           minHeight="lg"
           dialogContent={
             <div className="w-full aspect-video overflow-hidden rounded-lg bg-black">
-              <LearnHousePlayer
+              <MediaPlayer
                 key={isModalOpen ? videoUrl : undefined}
                 {...playerProps}
                 details={{ autoplay: true }}
@@ -479,7 +479,7 @@ function VideoBlockComponent(props: ExtendedNodeViewProps) {
                       <CircleNotch weight="duotone" className="w-8 h-8 animate-spin text-white" />
                     </div>
                   )}
-                  <LearnHousePlayer {...playerProps} />
+                  <MediaPlayer {...playerProps} />
                   <div className="absolute top-2 end-2 z-40 flex gap-1">
                     <button
                       onClick={handleExpand}
@@ -505,7 +505,7 @@ function VideoBlockComponent(props: ExtendedNodeViewProps) {
           minHeight="lg"
           dialogContent={
             <div className="w-full aspect-video overflow-hidden rounded-lg bg-black">
-              <LearnHousePlayer
+              <MediaPlayer
                 key={isModalOpen ? videoUrl : undefined}
                 {...playerProps}
                 details={{ autoplay: true }}

@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { UploadCloud, Image as ImageIcon, ArrowBigUpDash } from 'lucide-react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { updateBoardThumbnail } from '@services/boards/boards'
 import { getBoardThumbnailMediaDirectory } from '@services/media/media'
 import UnsplashImagePicker from '@components/Dashboard/Pages/Course/EditCourseGeneral/UnsplashImagePicker'
@@ -24,7 +24,7 @@ interface BoardThumbnailTabProps {
 function BoardThumbnailTab({ board, boardUuid, orgUuid, boardKey: _boardKey }: BoardThumbnailTabProps) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
 

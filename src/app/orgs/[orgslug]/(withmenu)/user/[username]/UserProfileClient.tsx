@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
 import { getCoursesByUser } from '@services/users/users'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import CourseThumbnailLanding from '@components/Objects/Thumbnails/CourseThumbnailLanding'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from '@tanstack/react-query'
@@ -72,7 +72,7 @@ const ImageModal: React.FC<{
 
 function UserProfileClient({ userData, profile }: UserProfileClientProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const [selectedImage, setSelectedImage] = React.useState<{ url: string; caption?: string } | null>(null);
 

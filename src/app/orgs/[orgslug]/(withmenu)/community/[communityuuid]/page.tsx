@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getCommunity } from '@services/communities/communities'
 import { getDiscussions, DiscussionWithAuthor } from '@services/communities/discussions'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import CommunityClient from './community'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 import NotFound from '@app/not-found'
@@ -10,7 +10,7 @@ import NotFound from '@app/not-found'
 const CommunityPage = () => {
   const params = useParams() as { orgslug: string; communityuuid: string }
   const { orgslug, communityuuid } = params
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const communityUuid = `community_${communityuuid}`
 

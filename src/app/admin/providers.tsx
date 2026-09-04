@@ -1,5 +1,5 @@
 import { SessionProvider } from '@components/Contexts/AuthContext'
-import LHSessionProvider, { SessionGate } from '@components/Contexts/LHSessionContext'
+import AppSessionProvider, { SessionGate } from '@components/Contexts/AppSessionContext'
 import React from 'react'
 
 export default function AdminProviders({
@@ -9,11 +9,11 @@ export default function AdminProviders({
 }) {
   return (
     <SessionProvider>
-      <LHSessionProvider>
+      <AppSessionProvider>
         <SessionGate>
           {children}
         </SessionGate>
-      </LHSessionProvider>
+      </AppSessionProvider>
     </SessionProvider>
   )
 }

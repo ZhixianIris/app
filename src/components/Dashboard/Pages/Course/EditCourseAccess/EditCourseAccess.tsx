@@ -6,14 +6,14 @@ import { getAPIUrl } from '@services/config/config'
 import { unLinkResourcesToUserGroup } from '@services/usergroups/usergroups'
 import { apiFetch } from '@services/utils/ts/requests'
 import { Check, Globe, SquareUserRound, Users, X } from 'lucide-react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import React, { useEffect, useState, useRef, useCallback } from 'react'
 import toast from 'react-hot-toast'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 type EditCourseAccessProps = {
     orgslug: string
@@ -89,8 +89,8 @@ function SkeletonCard() {
 
 function EditCourseAccess(_props: EditCourseAccessProps) {
     const { t } = useTranslation()
-    const { track } = useLHAnalytics('dashboard')
-    const session = useLHSession() as any;
+    const { track } = useAppAnalytics('dashboard')
+    const session = useAppSession() as any;
     const access_token = session?.data?.tokens?.access_token;
     const org = useOrg() as any;
 
@@ -237,7 +237,7 @@ function UserGroupsSection({ usergroups }: { usergroups: any[] }) {
     const { t } = useTranslation()
     const course = useCourse() as any;
     const [userGroupModal, setUserGroupModal] = useState(false);
-    const session = useLHSession() as any;
+    const session = useAppSession() as any;
     const access_token = session?.data?.tokens?.access_token;
     const org = useOrg() as any;
     const queryClient = useQueryClient();

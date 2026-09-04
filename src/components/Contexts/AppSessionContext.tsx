@@ -9,7 +9,7 @@ export const SessionContext = createContext<UseSessionReturn | null>(null)
  * children receive session data (including loading state) and decide
  * how to handle it themselves.
  */
-function LHSessionProvider({ children }: { children: React.ReactNode }) {
+function AppSessionProvider({ children }: { children: React.ReactNode }) {
     const session = useSession();
 
     return (
@@ -34,8 +34,8 @@ export function SessionGate({ children, fallback }: { children: React.ReactNode;
     return <>{children}</>
 }
 
-export function useLHSession() {
+export function useAppSession() {
     return useContext(SessionContext)
 }
 
-export default LHSessionProvider
+export default AppSessionProvider

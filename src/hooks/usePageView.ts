@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useLHAnalytics } from '@services/analytics'
+import { useAppAnalytics } from '@services/analytics'
 import { useLocation } from "react-router-dom";
 
 function getDeviceType(): string {
@@ -23,7 +23,7 @@ export function usePageView() {
   const pathname = useLocation().pathname
   // trackPageView emits the backend page_view only; PostHog's native $pageview
   // is fired by PostHogPageView, so this never double-counts in PostHog.
-  const { trackPageView } = useLHAnalytics()
+  const { trackPageView } = useAppAnalytics()
 
   useEffect(() => {
     if (!pathname) return

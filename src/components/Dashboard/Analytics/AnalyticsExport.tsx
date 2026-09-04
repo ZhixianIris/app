@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { DownloadSimple, CaretDown } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
 import { getAPIUrl } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 
 type ExportFormat = 'json' | 'csv'
@@ -19,7 +19,7 @@ export default function ExportAnalyticsButton({
   courseId,
 }: ExportAnalyticsButtonProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { toast } from 'react-hot-toast'
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
@@ -117,7 +117,7 @@ const ALLOWED_API_TAGS = [
 ]
 
 const APIDocumentation: React.FC = () => {
-  const _session = useLHSession() as any
+  const _session = useAppSession() as any
   const org = useOrg() as any
   const [spec, setSpec] = useState<OpenAPISpec | null>(null)
   const [loading, setLoading] = useState(true)
@@ -545,7 +545,7 @@ const APIDocumentation: React.FC = () => {
             type="password"
             value={apiToken}
             onChange={(e) => setApiToken(e.target.value)}
-            placeholder="Enter your API token (lh_...)"
+            placeholder="Enter your API token (app_...)"
             className="font-mono"
           />
           <p className="text-xs text-gray-500 mt-1">

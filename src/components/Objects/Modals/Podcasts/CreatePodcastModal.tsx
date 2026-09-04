@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { createPodcast } from '@services/podcasts/podcasts'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { revalidateTags } from '@services/utils/ts/requests'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import { Loader2 } from 'lucide-react'
@@ -29,10 +29,10 @@ export function CreatePodcastModal({
   orgSlug,
 }: CreatePodcastModalProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
   const { handlePlanLimit } = useUpgradeModal()
   const [isSubmitting, setIsSubmitting] = useState(false)
 

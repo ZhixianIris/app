@@ -1,4 +1,4 @@
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import AddUserGroup from '@components/Objects/Modals/Dash/OrgUserGroups/AddUserGroup'
 import EditUserGroup from '@components/Objects/Modals/Dash/OrgUserGroups/EditUserGroup'
@@ -21,7 +21,7 @@ import { Badge } from '@components/ui/badge'
 function OrgUserGroups() {
     const { t } = useTranslation()
     const org = useOrg() as any
-    const session = useLHSession() as any
+    const session = useAppSession() as any
     const access_token = session?.data?.tokens?.access_token;
     const queryClient = useQueryClient()
     const [userGroupManagementModal, setUserGroupManagementModal] = React.useState(false)

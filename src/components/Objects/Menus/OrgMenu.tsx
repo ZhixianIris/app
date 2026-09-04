@@ -8,7 +8,7 @@ import { fetchRAGChatSessions, RAGChatSession } from '@services/ai/ai'
 import { HeaderProfileBox } from '@components/Security/HeaderProfileBox'
 import MenuLinks from './OrgMenuLinks'
 import { getOrgLogoMediaDirectory } from '@services/media/media'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { SearchBar } from '@components/Objects/Search/SearchBar'
 import { useTranslation } from 'react-i18next'
@@ -44,11 +44,11 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@components/ui/tooltip'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 export const OrgMenu = (props: any) => {
   const orgslug = props.orgslug
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const _access_token = session?.data?.tokens?.access_token;
   const org = useOrg() as any;
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
@@ -58,7 +58,7 @@ export const OrgMenu = (props: any) => {
   const { rights } = useAdminStatus()
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false)
   const { isVisible: isJoinBannerVisible } = useJoinBannerVisible()
-  const { track } = useLHAnalytics()
+  const { track } = useAppAnalytics()
 
   // Copilot bubble state
   const [bubbleOpen, setBubbleOpen] = useState(false)
@@ -156,12 +156,12 @@ export const OrgMenu = (props: any) => {
                   {org?.logo_image ? (
                     <img
                       src={`${getOrgLogoMediaDirectory(org.org_uuid, org?.logo_image)}`}
-                      alt="Learnhouse"
+                      alt="App"
                       style={{ width: 'auto', height: '100%' }}
                       className="rounded-md"
                     />
                   ) : (
-                    <LearnHouseLogo logoFilter={colors.logoFilter} />
+                    <AppLogo logoFilter={colors.logoFilter} />
                   )}
                 </div>
               </Link>
@@ -297,7 +297,7 @@ export const OrgMenu = (props: any) => {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                                                         <DropdownMenuItem render={<a
-                        href="https://docs.learnhouse.app"
+                        href="https://docs.example.com"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2"
@@ -306,7 +306,7 @@ export const OrgMenu = (props: any) => {
                         <span>{t('common.help_menu.documentation')}</span>
                       </a>} />
                                                         <DropdownMenuItem render={<a
-                        href="https://learnhouse.app"
+                        href="/"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2"
@@ -315,7 +315,7 @@ export const OrgMenu = (props: any) => {
                         <span>{t('common.help_menu.website')}</span>
                       </a>} />
                                                         <DropdownMenuItem render={<a
-                        href="https://discord.gg/learnhouse"
+                        href="https://discord.gg/learning-web"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-2"
@@ -415,7 +415,7 @@ const CopilotMenuButton = ({
   bubbleOpen: boolean
   onOpenBubble: (_sessionUuid?: string) => void
 }) => {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const [isOpen, setIsOpen] = useState(false)
 
@@ -526,11 +526,11 @@ const CopilotMenuButton = ({
   )
 }
 
-const LearnHouseLogo = ({ logoFilter }: { logoFilter: string }) => {
+const AppLogo = ({ logoFilter }: { logoFilter: string }) => {
   return (
     <img
       src="/lrn-text.svg"
-      alt="LearnHouse logo"
+      alt="Learning Web logo"
       width={133}
       height={40}
       style={{ height: 'auto', filter: logoFilter }} 

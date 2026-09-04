@@ -10,7 +10,7 @@ import {
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useTranslation } from 'react-i18next'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getAPIUrl } from '@services/config/config'
 import { OrgUsageResponse, orgUsageFetcher } from '@services/orgs/usage'
@@ -32,7 +32,7 @@ const PLAN_COLORS: Record<string, { bg: string; text: string }> = {
 
 export default function DashboardHome() {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
 
   const token = session?.data?.tokens?.access_token

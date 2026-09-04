@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { trackEvent } from '@services/analytics/analytics'
 
 export function useAnalytics() {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken: string | undefined = session?.data?.tokens?.access_token
 
   const track = useCallback(

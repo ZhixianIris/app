@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Community, getCommunity } from '@services/communities/communities'
 
 interface CommunityState {
@@ -25,7 +25,7 @@ interface CommunityProviderProps {
 }
 
 export function CommunityProvider({ children, communityuuid }: CommunityProviderProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   // Add community_ prefix if not present

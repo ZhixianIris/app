@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import toast from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { updateCommunity, Community } from '@services/communities/communities'
 import { revalidateTags } from '@services/utils/ts/requests'
@@ -35,7 +35,7 @@ export function EditCommunityModal({
   community,
   orgSlug,
 }: EditCommunityModalProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const navigate = useNavigate()
   const queryClient = useQueryClient()

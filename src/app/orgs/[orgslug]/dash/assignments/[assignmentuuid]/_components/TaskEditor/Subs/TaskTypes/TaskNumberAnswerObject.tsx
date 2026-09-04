@@ -4,7 +4,7 @@ import {
   useAssignmentsTask,
   useAssignmentsTaskDispatch,
 } from '@components/Contexts/Assignments/AssignmentsTaskContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import AssignmentBoxUI from '@components/Objects/Activities/Assignment/AssignmentBoxUI'
 import {
   getAssignmentTask,
@@ -79,7 +79,7 @@ function TaskNumberAnswerObject({
   onGraded,
 }: TaskNumberAnswerObjectProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const assignmentTaskState = useAssignmentsTask() as any
   const assignmentTaskStateHook = useAssignmentsTaskDispatch() as any

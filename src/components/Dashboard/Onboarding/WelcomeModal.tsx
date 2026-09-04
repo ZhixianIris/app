@@ -15,7 +15,7 @@ import {
 } from '@phosphor-icons/react'
 import WelcomeGlobe from './WelcomeGlobe'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -101,7 +101,7 @@ const FEATURES = [
 export default function WelcomeModal() {
   const { welcomeSeen, markWelcomeSeen, dismissed } = useOnboarding()
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const [step, setStep] = useState<'welcome' | 'features'>('welcome')
   const [isMobile, setIsMobile] = useState(false)
 
@@ -147,7 +147,7 @@ export default function WelcomeModal() {
                   <div className="px-10 pt-10 pb-2 text-center">
                     <motion.img
                       src="/lrn-dash.svg"
-                      alt="LearnHouse"
+                      alt="Learning Web"
                       className="h-12 w-12 mx-auto mb-5"
                       style={{ filter: 'brightness(0)' }}
                       initial={{ opacity: 0, y: 10 }}

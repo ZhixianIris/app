@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useOrg } from '@components/Contexts/OrgContext';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import {
   getPaymentConfigs,
   initializePaymentConfig,
@@ -23,7 +23,7 @@ import { queryKeys } from '@/lib/query/keys';
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal';
 import { Button } from '@components/ui/button';
 import { getMainDomainUri } from '@services/config/config';
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics';
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics';
 import { SiStripe } from '@icons-pack/react-simple-icons';
 
 // ---------------------------------------------------------------------------
@@ -59,7 +59,7 @@ const PAYMENT_PROVIDERS: PaymentProviderDef[] = [
 // ---------------------------------------------------------------------------
 const PaymentsConfigurationPage: React.FC = () => {
   const org = useOrg() as any;
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const queryClient = useQueryClient();
 
@@ -142,7 +142,7 @@ interface ProviderCardProps {
 
 const ProviderCard: React.FC<ProviderCardProps> = ({ provider, config, orgId, accessToken }) => {
   const queryClient = useQueryClient();
-  const { track } = useLHAnalytics('dashboard');
+  const { track } = useAppAnalytics('dashboard');
   const [isConnecting, setIsConnecting] = useState(false);
   const [disconnectError, setDisconnectError] = useState<{ count: number } | null>(null);
   const isConnected = !!(config?.provider_specific_id && config?.active);

@@ -2,7 +2,7 @@ import React from 'react'
 import { X, Clock, User, RotateCcw, Eye, Loader2 } from 'lucide-react'
 import { useActivityVersions, ActivityVersion } from '@components/Hooks/useActivityVersioning'
 import { restoreActivityVersion } from '@services/courses/activities'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { toast } from 'react-hot-toast'
 import { motion, AnimatePresence } from 'motion/react'
 import EditorPreview from '../EditorPreview'
@@ -30,7 +30,7 @@ function VersionHistoryPanel({
   const { t } = useTranslation()
   // Drawer enters from the inline end — '100%' is a physical offset.
   const { x: dx } = useDirection()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const { versions, isLoading, error } = useActivityVersions(activityUuid, 20, isOpen)
   const [restoringVersion, setRestoringVersion] = React.useState<number | null>(null)

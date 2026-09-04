@@ -8,7 +8,7 @@ import { getActivityBlockMediaDirectory } from '@services/media/media'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useCourse } from '@components/Contexts/CourseContext'
 import { useEditorProvider } from '@components/Contexts/Editor/EditorContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { constructAcceptValue } from '@/lib/constants';
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,7 @@ import UnsplashImagePicker, { UnsplashPhotoMeta } from '@components/Dashboard/Pa
 import AIImageButton from '@components/Objects/AI/AIImageButton'
 
 const SUPPORTED_FILES = constructAcceptValue(['jpg', 'png', 'webp', 'gif'])
-const UNSPLASH_UTM = '?utm_source=LearnHouse&utm_medium=referral'
+const UNSPLASH_UTM = '?utm_source=Learning Web&utm_medium=referral'
 const withUtm = (url?: string | null) => (url ? `${url}${UNSPLASH_UTM}` : '')
 
 function ImageBlockComponent(props: any) {
@@ -24,7 +24,7 @@ function ImageBlockComponent(props: any) {
   const org = useOrg() as any
   const course = useCourse() as any
   const editorState = useEditorProvider() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token;
   const fileInputRef = React.useRef<HTMLInputElement>(null)
 

@@ -8,8 +8,8 @@ import { safeExternalUrl } from '@components/Dashboard/Library/resourceLink'
 import InlineAudioPlayer from '@components/Objects/Media/InlineAudioPlayer'
 
 // video.js touches window on import; keep it out of the server bundle.
-const LearnHousePlayer = lazy(
-  () => import('@components/Objects/Activities/Video/LearnHousePlayer')
+const MediaPlayer = lazy(
+  () => import('@components/Objects/Activities/Video/MediaPlayer')
 )
 
 /*
@@ -144,7 +144,7 @@ export default function MediaViewer({
   if (kind === 'video') {
     return (
       <div className={`w-full ${maxHeightClass} bg-black rounded-xl overflow-hidden`}>
-        <LearnHousePlayer src={fileUrl} />
+        <MediaPlayer src={fileUrl} />
       </div>
     )
   }

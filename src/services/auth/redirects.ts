@@ -7,11 +7,11 @@ function readCookie(name: string): string | null {
   return m ? decodeURIComponent(m[1]) : null
 }
 
-// The configured org top-domain (e.g. "learnhouse.io"), so we can allow safe
+// The configured org top-domain (e.g. "example.com"), so we can allow safe
 // redirects to org subdomains while still blocking external origins.
 function topDomain(): string | null {
   const t =
-    readCookie('LH_top_domain') ||
+    readCookie('app_top_domain') ||
     getConfig('VITE_APP_TOP_DOMAIN') ||
     getConfig('VITE_APP_DOMAIN') ||
     ''
@@ -21,7 +21,7 @@ function topDomain(): string | null {
 /**
  * Returns `target` only when it is SAFE to navigate to, otherwise `fallback`.
  * Safe = a relative path, or an http(s) URL on the same host or a subdomain of
- * the configured org top-domain (e.g. *.learnhouse.io). Blocks external origins,
+ * the configured org top-domain (e.g. *.example.com). Blocks external origins,
  * protocol-relative `//evil.com`, and `javascript:`/`data:` schemes — closing
  * the open-redirect holes on attacker-supplied callbackUrl / returnOrigin.
  */

@@ -17,7 +17,7 @@ import { queryKeys } from '@/lib/query/keys'
 import { revalidateTags } from '@services/utils/ts/requests'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import { deleteActivity, updateActivity } from '@services/courses/activities'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useCourse } from '@components/Contexts/CourseContext'
 
 interface ModifiedActivityInterface {
@@ -27,7 +27,7 @@ interface ModifiedActivityInterface {
 
 function Activity(props: any) {
   const navigate = useNavigate()
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id
   const [modifiedActivity, setModifiedActivity] = React.useState<

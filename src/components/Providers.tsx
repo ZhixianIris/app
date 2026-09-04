@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import '../lib/i18n'
 import { SessionProvider } from '@components/Contexts/AuthContext'
-import LHSessionProvider from '@components/Contexts/LHSessionContext'
+import AppSessionProvider from '@components/Contexts/AppSessionContext'
 import AuthFetchInterceptor from '@components/Contexts/AuthFetchInterceptor'
 import PostHogProvider from '@components/Contexts/PostHogProvider'
 import I18nProvider from '@components/Contexts/I18nContext'
@@ -19,7 +19,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <SessionProvider refetchInterval={600000}>
         <AuthFetchInterceptor />
-        <LHSessionProvider>
+        <AppSessionProvider>
           <PostHogProvider>
             <I18nProvider>
               {/* Inside I18nProvider so it re-renders when the language changes. */}
@@ -31,7 +31,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
               </DirectionProvider>
             </I18nProvider>
           </PostHogProvider>
-        </LHSessionProvider>
+        </AppSessionProvider>
       </SessionProvider>
       {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>

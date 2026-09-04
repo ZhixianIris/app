@@ -4,7 +4,7 @@ import { Label } from '@components/ui/label'
 import BarLoader from 'react-spinners/BarLoader'
 import { Upload, Package, CheckCircle2, ChevronRight, AlertCircle } from 'lucide-react'
 import { getAPIUrl } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import {
   uploadScormPackage,
   formatMB,
@@ -68,7 +68,7 @@ interface ScormActivityModalProps {
 
 function ScormActivityModal({ course, closeModal, onImportComplete, chapterId }: ScormActivityModalProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id

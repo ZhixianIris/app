@@ -19,14 +19,14 @@ import {
   Type,
   Box,
 } from 'lucide-react'
-const learnhouseAI_icon = '/learnhouse_ai_simple.png'
-const learnhouseAI_logo_black = '/learnhouse_ai_black_logo.png'
+const learningWebAI_icon = '/ai_simple.png'
+const learningWebAI_logo_black = '/ai_black_logo.png'
 import {
   AIEditorStateTypes,
   useAIEditor,
   useAIEditorDispatch,
 } from '@components/Contexts/AI/AIEditorContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import {
   startEditorAIChatSessionStream,
   sendEditorAIChatMessageStream,
@@ -35,7 +35,7 @@ import {
 import UserAvatar from '@components/Objects/UserAvatar'
 import { useTranslation } from 'react-i18next'
 import { useDirection } from '@hooks/useDirection'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import AIMarkdownRenderer from '@components/Objects/Activities/AI/AIMarkdownRenderer'
 import { setAIHighlight, clearAIHighlight } from '../Extensions/AISelectionHighlight/AISelectionHighlight'
 
@@ -55,8 +55,8 @@ function AIEditorSidePanel(props: AIEditorSidePanelProps) {
   const { t } = useTranslation()
   // Panel slides in from the inline end; the offset is physical pixels.
   const { x: dx } = useDirection()
-  const { track } = useLHAnalytics('editor')
-  const session = useLHSession() as any
+  const { track } = useAppAnalytics('editor')
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const aiEditorState = useAIEditor() as AIEditorStateTypes
   const dispatchAIEditor = useAIEditorDispatch() as any
@@ -1025,7 +1025,7 @@ function AIEditorSidePanel(props: AIEditorSidePanelProps) {
                 isInputDisabled ? 'animate-pulse' : ''
               }`}
               width={24}
-              src={learnhouseAI_icon}
+              src={learningWebAI_icon}
               alt="" 
             />
             <span className="text-sm font-semibold text-white/80">
@@ -1447,7 +1447,7 @@ function AIEditorMessageComponent({
 }
 
 const AIEditorSidePanelPlaceholder = (props: { sendMessage: (_msg: string) => void }) => {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const aiEditorState = useAIEditor() as AIEditorStateTypes
   const { t } = useTranslation()
 
@@ -1485,7 +1485,7 @@ const AIEditorSidePanelPlaceholder = (props: { sendMessage: (_msg: string) => vo
             <img
               width={80}
               className="mx-auto"
-              src={learnhouseAI_logo_black}
+              src={learningWebAI_logo_black}
               alt="" 
             />
             <p className="pt-3 text-lg font-semibold text-white/70 flex flex-col justify-center items-center">

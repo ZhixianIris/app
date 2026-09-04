@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
 import { getFolderById } from '@services/folders/folders'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import FolderView from './client'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 
 function FolderPage() {
   const { orgslug, folderid } = useParams() as { orgslug: string; folderid: string }
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [orgId, setOrgId] = useState<number | null>(null)

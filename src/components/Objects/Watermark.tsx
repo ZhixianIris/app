@@ -24,7 +24,7 @@ function Watermark() {
 
     return (
         <div className='fixed bottom-8 end-8 z-50'>
-            <Link to={`https://www.learnhouse.app/?source=in-app`} className="flex items-center cursor-pointer bg-white/80 backdrop-blur-lg text-gray-700 rounded-2xl p-2 light-shadow text-xs px-5 font-semibold space-x-2">
+            <Link to={`https://www.example.com/?source=in-app`} className="flex items-center cursor-pointer bg-white/80 backdrop-blur-lg text-gray-700 rounded-2xl p-2 light-shadow text-xs px-5 font-semibold space-x-2">
                 <p>{t('common.made_with')}</p>
                 <img src={lrnTextLogo} alt="logo" width={95}  />
             </Link>

@@ -7,7 +7,7 @@ import { getUriWithOrg } from '@services/config/config'
 import { getCourseThumbnailMediaDirectory } from '@services/media/media'
 import { ShoppingBag, RefreshCcw, SquareCheck, ArrowRight, Sparkles, BookOpen, Mic, Puzzle } from 'lucide-react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics'
 
 interface Resource {
   resource_uuid: string
@@ -96,7 +96,7 @@ function OfferCard({ offer, orgslug, orgUuid, position }: { offer: Offer; orgslu
   const isSubscription = offer.offer_type === 'subscription'
   const benefits = offer.benefits ? offer.benefits.split(',').map(b => b.trim()).filter(Boolean) : []
   const resources = offer.included_resources ?? []
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
 
   return (
     <Link

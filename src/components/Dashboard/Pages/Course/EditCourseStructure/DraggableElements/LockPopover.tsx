@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover'
 import { Globe, Lock, LockOpen, Shield, Users, Plus, X, Loader2, Check } from 'lucide-react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getUserGroups } from '@services/usergroups/usergroups'
 import { asArray } from '@services/utils/ts/requests'
@@ -75,7 +75,7 @@ export default function LockPopover({
   disabled,
 }: LockPopoverProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const access_token = session?.data?.tokens?.access_token
   const org_id = org?.id

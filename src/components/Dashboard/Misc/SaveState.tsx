@@ -11,11 +11,11 @@ import { Check, SaveAllIcon, Loader2, AlertCircle } from 'lucide-react'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { updateCourse } from '@services/courses/courses'
 import { updateCertification } from '@services/courses/certifications'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useNavigate } from "react-router-dom";
 
 interface SaveResult {
@@ -26,10 +26,10 @@ interface SaveResult {
 
 function SaveState(props: { orgslug: string }) {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const queryClient = useQueryClient()
   const course = useCourse() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const navigate = useNavigate()
   const dispatchCourse = useCourseDispatch() as any

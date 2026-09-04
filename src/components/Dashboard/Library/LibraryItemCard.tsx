@@ -1,5 +1,5 @@
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import ManageAccessPopover from '@components/Dashboard/Library/ManageAccessPopover'
@@ -78,7 +78,7 @@ type Props = {
 export default function LibraryItemCard({ item, orgslug, onRemove }: Props) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const [accessOpen, setAccessOpen] = React.useState(false)

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 const lrnaiIcon = '/lrnai_icon.png'
 import AICoursePreview from './AICoursePreview'
 import AICourseChat from './AICourseChat'
@@ -37,7 +37,7 @@ function AICourseCreationModal({
   accessToken,
 }: AICourseCreationModalProps) {
   const { t, i18n } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const navigate = useNavigate()
 
   const [sessionUuid, setSessionUuid] = React.useState<string | null>(null)

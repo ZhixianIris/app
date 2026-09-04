@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-const learnhouseIcon = '/learnhouse_bigicon_1.png'
+const learningWebIcon = '/app_bigicon_1.png'
 import { getOrgLogoMediaDirectory, getOrgAuthBackgroundMediaDirectory } from '@services/media/media'
 import { getUriWithOrg } from '@services/config/config'
 
@@ -17,7 +17,7 @@ export default function AuthMobileHeader({ org }: AuthMobileHeaderProps) {
     unsplash_photographer_url = '',
     unsplash_photo_url = '',
   } = authBranding
-  const UNSPLASH_UTM = '?utm_source=LearnHouse&utm_medium=referral'
+  const UNSPLASH_UTM = '?utm_source=Learning Web&utm_medium=referral'
   const withUtm = (url: string) => (url ? `${url}${UNSPLASH_UTM}` : '')
 
   const getBackgroundStyle = (): React.CSSProperties => {
@@ -68,8 +68,8 @@ export default function AuthMobileHeader({ org }: AuthMobileHeaderProps) {
             <img
               width={40}
               height={40}
-              src={learnhouseIcon}
-              alt="LearnHouse"
+              src={learningWebIcon}
+              alt="Learning Web"
               className="object-contain" 
             />
           )}
@@ -77,7 +77,7 @@ export default function AuthMobileHeader({ org }: AuthMobileHeaderProps) {
       </Link>
 
       <span className="relative z-10 font-semibold text-white text-lg truncate">
-        {org?.name || 'LearnHouse'}
+        {org?.name || 'Learning Web'}
       </span>
 
       {/* Unsplash attribution (required by Unsplash API guidelines) */}

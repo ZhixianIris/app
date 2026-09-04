@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getUriWithOrg } from '@services/config/config'
 import { getUserEnrollments, getBillingPortalSession } from '@services/payments/offers'
 import {
@@ -9,7 +9,7 @@ import {
   ExternalLink, Loader2, CalendarDays, BadgeCheck
 } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { meaningfulMessage } from '@lib/errors/classify'
 import { useTranslation } from 'react-i18next'
 import { formatCurrency, formatDate } from '@/lib/format'
@@ -104,10 +104,10 @@ function EnrollmentCard({ enrollment, orgslug, onManageBilling, billingLoading }
 }
 
 function AccountPurchases({ orgId, orgslug }: AccountPurchasesProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const [billingLoading, setBillingLoading] = useState(false)
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
 
   const { data: enrollmentsResult, isLoading, error } = useQuery({
     queryKey: ['payments', orgId, 'enrollments', 'mine'],

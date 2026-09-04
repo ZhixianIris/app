@@ -8,7 +8,7 @@ import { Label } from "@components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/ui/select"
 import { Button } from "@components/ui/button"
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { updateOrgLanding, uploadLandingContent } from '@services/organizations/orgs'
 import { getOrgLandingMediaDirectory } from '@services/media/media'
 import { getOrgCourses } from '@services/courses/courses'
@@ -124,7 +124,7 @@ const GRADIENT_DIRECTIONS = {
 const OrgEditLanding = () => {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
   const SECTION_TYPES = getSectionTypes(t)
@@ -1132,7 +1132,7 @@ interface ImageUploaderProps {
 const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUploaded, className, buttonText = "Upload Image", id }) => {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const [isUploading, setIsUploading] = React.useState(false)
   const inputId = `imageUpload-${id}`
@@ -1542,7 +1542,7 @@ const FeaturedCoursesEditor: React.FC<{
 }> = ({ section, onChange }) => {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const { data: courses } = useQuery({

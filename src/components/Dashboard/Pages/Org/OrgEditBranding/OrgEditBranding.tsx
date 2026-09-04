@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { UploadCloud, Info, Plus, X, GripVertical, Images, StarIcon, ImageIcon, Share2, Link as LinkIcon, Palette, LogIn } from 'lucide-react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getOrgLogoMediaDirectory, getOrgPreviewMediaDirectory, getOrgThumbnailMediaDirectory, getOrgFaviconMediaDirectory } from '@services/media/media'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs"
 import { toast } from 'react-hot-toast'
@@ -55,7 +55,7 @@ interface OrganizationValues {
 export default function OrgEditBranding() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const queryClient = useQueryClient()

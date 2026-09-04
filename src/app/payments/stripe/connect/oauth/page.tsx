@@ -1,11 +1,11 @@
 import React, { Suspense, useEffect, useState } from 'react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Check, Loader2, AlertTriangle } from 'lucide-react'
 import { motion } from 'motion/react'
 import toast from 'react-hot-toast'
 import { verifyStripeConnection } from '@services/payments/providers/stripe'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
-const learnhouseIcon = '/learnhouse_bigicon_1.png'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
+const learningWebIcon = '/app_bigicon_1.png'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useSearchParams } from "react-router-dom";
 
@@ -13,10 +13,10 @@ function StripeConnectCallbackInner() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const [status, setStatus] = useState<'processing' | 'success' | 'error'>('processing')
   const [message, setMessage] = useState('')
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
 
   useEffect(() => {
     const verifyConnection = async () => {
@@ -70,7 +70,7 @@ function StripeConnectCallbackInner() {
           <img
             width={50}
             height={50}
-            src={learnhouseIcon}
+            src={learningWebIcon}
             alt="" 
           />
         </div>

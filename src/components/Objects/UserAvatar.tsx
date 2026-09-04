@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { getUriWithOrg } from '@services/config/config'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import UserProfilePopup from './UserProfilePopup'
 import { getUserByUsername, getUser } from '@services/users/users'
 import { useParams } from "react-router-dom";
@@ -22,7 +22,7 @@ type UserAvatarProps = {
 }
 
 function UserAvatar(props: UserAvatarProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const params = useParams() as any
   const [userData, setUserData] = useState<any>(null)

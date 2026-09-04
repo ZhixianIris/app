@@ -1,4 +1,4 @@
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { useOrg } from '@components/Contexts/OrgContext';
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import { getUriWithOrg } from '@services/config/config';
@@ -67,7 +67,7 @@ const GRADING_TYPE_BADGE: Record<string, { icon: React.ReactNode; labelKey: stri
 
 function AssignmentsHome() {
   const { t } = useTranslation()
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const org = useOrg() as any;
   const queryClient = useQueryClient();

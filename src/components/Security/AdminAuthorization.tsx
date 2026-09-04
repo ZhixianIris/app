@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import useAdminStatus from '@components/Hooks/useAdminStatus';
 import PageLoading from '@components/Objects/Loaders/PageLoading';
 import { getUriWithOrg } from '@services/config/config';
@@ -17,7 +17,7 @@ type AuthorizationProps = {
 const ADMIN_PATH_PREFIX = '/dash';
 
 const AdminAuthorization: React.FC<AuthorizationProps> = ({ children, authorizationMode }) => {
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const org = useOrg() as any;
   const pathname = useLocation().pathname;
   const navigate = useNavigate();

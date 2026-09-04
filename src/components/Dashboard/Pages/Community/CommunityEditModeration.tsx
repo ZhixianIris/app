@@ -16,7 +16,7 @@ import {
   SmilePlus,
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useCommunity, useCommunityDispatch } from '@components/Contexts/CommunityContext'
 import {
@@ -93,7 +93,7 @@ type ToggleKey = 'block_links' | 'require_email_verified' | 'disable_reactions'
 const CommunityEditModeration: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const communityState = useCommunity()
   const dispatch = useCommunityDispatch()

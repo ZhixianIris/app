@@ -1,6 +1,6 @@
 import React from 'react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { toast } from 'react-hot-toast'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
@@ -13,7 +13,7 @@ import { Switch } from '@components/ui/switch'
 import { ShieldAlert, BrainCircuit, MessageCircle, Pencil, Sparkles, Info } from 'lucide-react'
 const OrgEditAI: React.FC = () => {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const queryClient = useQueryClient()
@@ -89,8 +89,8 @@ const OrgEditAI: React.FC = () => {
         {/* Header */}
         <div className="flex items-center gap-3">
           <img
-            src="/learnhouse_ai_simple_colored.png"
-            alt="LearnHouse AI"
+            src="/ai_simple_colored.png"
+            alt="Learning Web AI"
             width={28}
             height={28} 
           />

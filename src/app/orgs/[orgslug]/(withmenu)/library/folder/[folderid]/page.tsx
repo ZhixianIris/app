@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import FolderClient from './FolderClient'
 import { getFolderById } from '@services/folders/folders'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 import NotFound from '@app/not-found'
 
@@ -24,7 +24,7 @@ async function fetchFolderForViewer(folderid: string, access_token?: string) {
 const FolderPage = () => {
   const params = useParams() as { orgslug: string; folderid: string }
   const { orgslug, folderid } = params
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [folderFound, setFolderFound] = useState<boolean | null>(null)

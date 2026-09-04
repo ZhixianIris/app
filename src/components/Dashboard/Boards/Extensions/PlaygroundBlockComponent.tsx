@@ -20,7 +20,7 @@ import {
   iterateBoardsPlayground,
 } from '@services/boards/playground'
 import { useDragResize } from './useDragResize'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
@@ -106,7 +106,7 @@ export default function PlaygroundBlockComponent({
   getPos,
 }: any) {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const { blockUuid, x, y, width, height, htmlContent, sessionUuid, iterationCount } = node.attrs
 
   const iframeRef = useRef<HTMLIFrameElement>(null)

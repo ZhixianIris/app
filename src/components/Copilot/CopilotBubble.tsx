@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import {
   startRAGChatStream,
   sendRAGChatStream,
@@ -37,7 +37,7 @@ import {
   groupSessionsByDate,
 } from '@/app/orgs/[orgslug]/(withmenu)/copilot/copilot'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useLocation } from "react-router-dom";
 
 type ChatMessage = {
@@ -71,11 +71,11 @@ export default function CopilotBubble(props: CopilotBubbleProps) {
 }
 
 function BubbleInner({ orgslug, open, onOpenChange, sessionToLoad }: CopilotBubbleProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const accessToken = session?.data?.tokens?.access_token
   const pathname = useLocation().pathname
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
 
   const [showSessions, setShowSessions] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([])

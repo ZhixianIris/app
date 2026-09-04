@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { UserPlus, Trash2, Search, Check, User, Users } from 'lucide-react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getAPIUrl } from '@services/config/config'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
@@ -14,7 +14,7 @@ import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import UserAvatar from '@components/Objects/UserAvatar'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 interface BoardMembersTabProps {
   boardUuid: string
@@ -23,7 +23,7 @@ interface BoardMembersTabProps {
 
 function BoardMembersTab({ boardUuid, orgId }: BoardMembersTabProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
 
@@ -203,7 +203,7 @@ function AddBoardMember({ boardUuid, orgId, accessToken, setModalOpen }: {
   setModalOpen: (_open: boolean) => void
 }) {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const queryClient = useQueryClient()
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedUserIds, setSelectedUserIds] = useState<Set<number>>(new Set())

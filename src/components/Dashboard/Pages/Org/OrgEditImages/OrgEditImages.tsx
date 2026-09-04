@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { UploadCloud, Info, Plus, X, GripVertical, Images, StarIcon, ImageIcon } from 'lucide-react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getOrgLogoMediaDirectory, getOrgPreviewMediaDirectory, getOrgThumbnailMediaDirectory } from '@services/media/media'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@components/ui/tabs"
 import { toast } from 'react-hot-toast'
@@ -44,7 +44,7 @@ const DIALOG_ICON_SIZE = 'w-16 h-16'
 export default function OrgEditImages() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const queryClient = useQueryClient()

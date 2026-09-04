@@ -5,7 +5,7 @@ import { queryKeys } from '@/lib/query/keys'
 import { getAPIUrl, getDeploymentMode } from '@services/config/config'
 import { getOrgLogoMediaDirectory, getUserAvatarMediaDirectory } from '@services/media/media'
 import { apiFetch } from '@services/utils/ts/requests'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { Buildings, Globe, User, CaretLeft, CaretRight, BookOpen, MagnifyingGlass, ArrowSquareOut, Plus } from '@phosphor-icons/react'
 import CreateOrganizationModal from '@components/Admin/CreateOrganizationModal'
@@ -64,7 +64,7 @@ function getFrontendDomain(): string {
   return (
     document.cookie
       .split('; ')
-      .find((c) => c.startsWith('LH_frontend_domain='))
+      .find((c) => c.startsWith('app_frontend_domain='))
       ?.split('=')[1] || 'localhost:3000'
   )
 }
@@ -188,7 +188,7 @@ function ImgWithFallback({
 }
 
 export default function OrganizationList() {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()

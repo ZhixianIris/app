@@ -17,7 +17,7 @@ import { useCommunityRights } from '@components/Hooks/useCommunityRights'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getUriWithOrg } from '@services/config/config'
 import { getCourseById } from '@services/courses/courses'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import dayjs from 'dayjs'
@@ -39,7 +39,7 @@ export function CommunitySidebar({
   const { t } = useTranslation()
   const { canManageCommunity, canCreateDiscussion } = useCommunityRights(community.community_uuid)
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
 
   // Fetch linked course if community has a course_id

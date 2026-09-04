@@ -4,7 +4,7 @@ import { removeCourse } from '@services/courses/activity'
 import { getCourseMetadata } from '@services/courses/courses'
 import { getCourseThumbnailMediaDirectory } from '@services/media/media'
 import { revalidateTags } from '@services/utils/ts/requests'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getUserCertificates } from '@services/courses/certifications'
 import { useCourseCertification } from '@components/Hooks/useCourseCertification'
 import { Link, useNavigate } from 'react-router-dom'
@@ -30,7 +30,7 @@ interface TrailCourseCardProps {
 function TrailCourseCard(props: TrailCourseCardProps) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const courseid = props.course.course_uuid.replace('course_', '')
   const course = props.course

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { getUserByUsername } from '@services/users/users'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import UserProfileClient from './UserProfileClient'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 
 const UserPage = () => {
   const { username } = useParams() as { username: string }
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [userData, setUserData] = useState<any>(null)

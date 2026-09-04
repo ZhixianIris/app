@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { SmilePlus } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import {
   getPlaygroundReactions,
   togglePlaygroundReaction,
@@ -32,7 +32,7 @@ interface PlaygroundReactionButtonProps {
 }
 
 export function PlaygroundReactionButton({ playgroundUuid }: PlaygroundReactionButtonProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const isAuthenticated = session?.status === 'authenticated'
 

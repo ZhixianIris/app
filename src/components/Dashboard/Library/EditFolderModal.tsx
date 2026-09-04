@@ -9,7 +9,7 @@ import { updateFolder, updateFolderThumbnail } from '@services/folders/folders'
 import FolderAppearance from '@components/Dashboard/Library/FolderAppearance'
 import { getFolderThumbnailMediaDirectory } from '@services/media/media'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Globe, Lock } from 'lucide-react'
 import React from 'react'
 import { BarLoader } from 'react-spinners'
@@ -30,7 +30,7 @@ type Props = {
 function EditFolderModal({ folder, closeModal, onChanged }: Props) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [color, setColor] = React.useState(folder?.color || 'violet')

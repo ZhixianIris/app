@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Plus, Trash2, Shield, AlertTriangle, Loader2 } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Community, updateCommunity } from '@services/communities/communities'
 import { revalidateTags } from '@services/utils/ts/requests'
 import {
@@ -25,7 +25,7 @@ export function ModerationSettingsModal({
   community,
   orgSlug,
 }: ModerationSettingsModalProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const navigate = useNavigate()
   const accessToken = session?.data?.tokens?.access_token
   const inputRef = useRef<HTMLInputElement>(null)

@@ -36,7 +36,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@components/ui/dropdown-menu'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import UserAvatar from '@components/Objects/UserAvatar'
 
@@ -103,7 +103,7 @@ export function DiscussionCard({
   onDiscussionDelete,
 }: DiscussionCardProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const currentUserId = session?.data?.user?.id
 

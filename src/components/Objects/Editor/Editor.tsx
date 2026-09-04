@@ -7,14 +7,14 @@ const ToolbarButtons = lazy(
   () => import('./Toolbar/ToolbarButtons').then((m) => ({ default: m.ToolbarButtons }))
 )
 import { motion } from 'motion/react'
-const learnhouseAI_icon = '/learnhouse_ai_simple.png'
+const learningWebAI_icon = '/ai_simple.png'
 import {
   AIEditorStateTypes,
   useAIEditor,
   useAIEditorDispatch,
 } from '@components/Contexts/AI/AIEditorContext'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 // Extensions
 import InfoCallout from './Extensions/Callout/Info/InfoCallout'
@@ -101,7 +101,7 @@ interface EditorProps {
 
 function Editor(props: EditorProps) {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('editor')
+  const { track } = useAppAnalytics('editor')
   const dispatchAIEditor = useAIEditorDispatch() as any
   const aiEditorState = useAIEditor() as AIEditorStateTypes
   const is_ai_feature_enabled = useGetAIFeatures({ feature: 'editor' })
@@ -461,7 +461,7 @@ function Editor(props: EditorProps) {
             <div className="activity-editor-doc-section">
               <div className="activity-editor-info-wrapper">
                 <Link to="/">
-                  <EditorLearnHouseLogo />
+                  <EditorAppLogo />
                 </Link>
                 <Link target="_blank" to={`/course/${course_uuid}`}>
                   <img
@@ -509,7 +509,7 @@ function Editor(props: EditorProps) {
                         <img
                           className=""
                           width={20}
-                          src={learnhouseAI_icon}
+                          src={learningWebAI_icon}
                           alt="" 
                         />
                       </i>{' '}
@@ -524,7 +524,7 @@ function Editor(props: EditorProps) {
                         <img
                           className="opacity-50 grayscale"
                           width={20}
-                          src={learnhouseAI_icon}
+                          src={learningWebAI_icon}
                           alt="" 
                         />
                       </i>
@@ -701,7 +701,7 @@ const logoAnimations = [
   },
 ]
 
-const EditorLearnHouseLogo = () => {
+const EditorAppLogo = () => {
   const [animation] = React.useState(
     () => logoAnimations[Math.floor(Math.random() * logoAnimations.length)]
   )
@@ -715,7 +715,7 @@ const EditorLearnHouseLogo = () => {
       >
         <img
           src="/lrn.svg"
-          alt="LearnHouse"
+          alt="Learning Web"
           width={14}
           height={14}
           className="invert" 

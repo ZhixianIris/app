@@ -6,7 +6,7 @@ import FormLayout, {
   FormLabelAndMessage,
 } from '@components/Objects/StyledElements/Form/Form'
 import { createPodcast } from '@services/podcasts/podcasts'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
 import { getOrganizationContextInfoWithoutCredentials } from '@services/organizations/orgs'
 import React, { useEffect } from 'react'
@@ -14,7 +14,7 @@ import { BarLoader } from 'react-spinners'
 import { revalidateTags } from '@services/utils/ts/requests'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import toast from 'react-hot-toast'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -30,9 +30,9 @@ import { Field } from "@base-ui/react/field";
 function CreatePodcastModal({ closeModal, orgslug }: any) {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const queryClient = useQueryClient()
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
   const { handlePlanLimit } = useUpgradeModal()
   const [orgId, setOrgId] = React.useState(null) as any
   const [showUnsplashPicker, setShowUnsplashPicker] = React.useState(false)

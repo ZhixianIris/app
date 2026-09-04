@@ -49,7 +49,7 @@ import { Link, useLocation } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import UserAvatar from '../../Objects/UserAvatar'
 import AdminAuthorization from '@components/Security/AdminAuthorization'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getUriWithOrg, getAPIUrl, getMainDomainUri, isMultiOrgModeEnabled } from '@services/config/config'
 import { useTranslation } from 'react-i18next'
 import { changeLanguage } from '@/lib/i18n'
@@ -79,7 +79,7 @@ import PlanBadge from '@components/Dashboard/Shared/PlanRestricted/PlanBadge'
 import { usePlan } from '@components/Hooks/usePlan'
 import { planMeetsRequirement } from '@services/plans/plans'
 import useAdminStatus from '@components/Hooks/useAdminStatus'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import OnboardingSidebarBox from '@components/Dashboard/Onboarding/OnboardingSidebarBox'
 import { useOnboarding } from '@components/Hooks/useOnboarding'
 
@@ -105,9 +105,9 @@ const UPGRADE_STARS: {
 
 function DashLeftMenu() {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const { t, i18n } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const pathname = useLocation().pathname || ''
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [upgradeHovered, setUpgradeHovered] = useState(false)
@@ -259,7 +259,7 @@ function DashLeftMenu() {
           ) : (
             <img
               src="/lrn-dash.svg"
-              alt="Learnhouse logo"
+              alt="App logo"
               className="h-8 w-8"
             />
           )}
@@ -1049,7 +1049,7 @@ function DashLeftMenu() {
                 </HoverMenuLabel>
                 <HoverMenuSeparator />
                                     <HoverMenuItem render={<a
-                    href="https://docs.learnhouse.app"
+                    href="https://docs.example.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors"
@@ -1058,7 +1058,7 @@ function DashLeftMenu() {
                     <span>{t('common.help_menu.documentation')}</span>
                   </a>} />
                                     <HoverMenuItem render={<a
-                    href="https://learnhouse.app"
+                    href="/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors"
@@ -1067,7 +1067,7 @@ function DashLeftMenu() {
                     <span>{t('common.help_menu.website')}</span>
                   </a>} />
                                     <HoverMenuItem render={<a
-                    href="https://discord.gg/learnhouse"
+                    href="https://discord.gg/learning-web"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors"

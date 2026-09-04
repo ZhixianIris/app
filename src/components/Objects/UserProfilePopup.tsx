@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card"
 import { MapPin, Building2, Globe, Briefcase, GraduationCap, Link, Users, Calendar, Lightbulb, Loader2, ExternalLink } from 'lucide-react'
 import { getUser } from '@services/users/users'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useNavigate } from "react-router-dom";
@@ -41,7 +41,7 @@ const ICON_MAP = {
 } as const
 
 const UserProfilePopup = ({ children, userId }: UserProfilePopupProps) => {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = Boolean(access_token)
   const navigate = useNavigate()

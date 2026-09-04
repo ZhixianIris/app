@@ -1,6 +1,6 @@
 import React from 'react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import useAdminStatus from '@components/Hooks/useAdminStatus'
 import { toast } from 'react-hot-toast'
 import { AlertTriangle, Trash2, Users, Eraser, Loader2 } from 'lucide-react'
@@ -15,7 +15,7 @@ import {
 
 const OrgEditDangerZone: React.FC = () => {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const { canManageOrg } = useAdminStatus()

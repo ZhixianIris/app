@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { User, Lock, ShoppingBag, Settings } from 'lucide-react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import UserAvatar from '@components/Objects/UserAvatar'
 import { getUriWithOrg } from '@services/config/config'
 
@@ -20,7 +20,7 @@ const NAV_ITEMS = [
 
 export function AccountSidebar({ orgslug, currentSubpage }: AccountSidebarProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const user = session?.data?.user
 
   return (

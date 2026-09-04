@@ -1,0 +1,22 @@
+NOTICE
+======
+
+This software is a derivative work of the upstream project
+"LearnHouse" (https://github.com/learnhouse/learnhouse), which is
+licensed under the GNU Affero General Public License v3.0 (AGPL-3.0).
+
+Portions Copyright (c) the original upstream authors and contributors.
+The upstream work is Copyright its respective owners and is licensed
+under AGPL-3.0; this derivative work is distributed under the same
+license (see the LICENSE file).
+
+Modifications relative to the upstream work include, without limitation:
+porting the web client from Next.js to a standalone Vite + React Router
+single-page application, replacing the Radix UI primitives with Base UI
+(https://base-ui.com), removing server-side route handlers, and renaming
+brand assets and identifiers.
+
+AGPL-3.0 requires that modified versions carry prominent notices of
+change, keep the license and copyright intact, and, for software
+interacting with users over a network, offer the corresponding source
+of the version being served.

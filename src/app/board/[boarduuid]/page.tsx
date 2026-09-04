@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import BoardCanvasClient from './client'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 
 function BoardEditorPage() {
   const { boarduuid } = useParams() as { boarduuid: string }
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [orgslug, setOrgslug] = useState('')

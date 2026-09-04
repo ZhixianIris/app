@@ -11,7 +11,7 @@ import {
 } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { apiFetch } from '@services/utils/ts/requests'
 import { getAPIUrl } from '@services/config/config'
 import { getCommunities } from '@services/communities/communities'
@@ -22,7 +22,7 @@ import { getOrgPodcasts } from '@services/podcasts/podcasts'
 export default function ContentOverview() {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgslug = org?.slug
   const orgId = org?.id

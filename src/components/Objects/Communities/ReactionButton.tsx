@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { SmilePlus } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import {
   getReactions,
   toggleReaction,
@@ -18,7 +18,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@components/ui/tooltip'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 // Common emojis for reactions
 const REACTION_EMOJIS = ['👍', '❤️', '🎉', '🚀', '👀', '💯', '🔥', '💡', '👏', '🙌']
@@ -29,10 +29,10 @@ interface ReactionButtonProps {
 }
 
 export function ReactionButton({ discussionUuid, compact = false }: ReactionButtonProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const isAuthenticated = session?.status === 'authenticated'
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
 
   const [reactions, setReactions] = useState<ReactionSummary[]>([])
   const [isLoading, setIsLoading] = useState(false)

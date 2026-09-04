@@ -7,7 +7,7 @@ import { getUriWithOrg, getAbsoluteUriWithOrg } from '@services/config/config';
 import { getCourseThumbnailMediaDirectory } from '@services/media/media';
 import { useWindowSize } from 'usehooks-ts';
 import { useOrg } from '@components/Contexts/OrgContext';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { getUserCertificates } from '@services/courses/certifications';
 import { useCourseCertification } from '@components/Hooks/useCourseCertification';
 import CertificatePreview from '@components/Dashboard/Pages/Course/EditCourseCertification/CertificatePreview';
@@ -38,7 +38,7 @@ const CourseEndView: React.FC<CourseEndViewProps> = ({
   const { t, i18n } = useTranslation();
   const { width, height } = useWindowSize();
   const org = useOrg() as any;
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const [userCertificate, setUserCertificate] = useState<any>(null);
   const [isLoadingCertificate, setIsLoadingCertificate] = useState(false);
   const [certificateError, setCertificateError] = useState<string | null>(null);

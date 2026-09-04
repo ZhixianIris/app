@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
 import { getPublicOffer } from '@services/payments/offers'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import OfferDetailClient from './offer-detail'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 
 export default function OfferPage() {
   const { orgslug, offerid } = useParams() as { orgslug: string; offerid: string }
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token ?? null
 
   const [org, setOrg] = useState<any>(null)

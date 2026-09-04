@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getPodcastMeta, PodcastMeta } from '@services/podcasts/podcasts'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import PodcastClient from './podcast'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 import NotFound from '@app/not-found'
 
 export default function PodcastPage() {
   const { orgslug, podcastuuid } = useParams() as { orgslug: string; podcastuuid: string }
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [org, setOrg] = useState<any>(null)

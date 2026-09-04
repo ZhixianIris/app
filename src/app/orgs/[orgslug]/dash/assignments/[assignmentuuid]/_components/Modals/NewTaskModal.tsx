@@ -1,5 +1,5 @@
 import { useAssignmentsTaskDispatch } from '@components/Contexts/Assignments/AssignmentsTaskContext';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { createAssignmentTask } from '@services/courses/assignments'
 import {
   Code,
@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/keys';
 import { useTranslation } from 'react-i18next';
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics';
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics';
 
 // Light color themes for each task type. `stripeRgb` is used to build the
 // repeating-linear-gradient pattern that gives each card its subtle wallpaper
@@ -95,11 +95,11 @@ const TASK_TYPES: TaskTypeConfig[] = [
 
 function NewTaskModal({ closeModal, assignment_uuid }: any) {
   const { t } = useTranslation()
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const assignmentTaskStateHook = useAssignmentsTaskDispatch() as any
   const queryClient = useQueryClient()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
 
   function showReminderToast() {
     // Check if the reminder has already been shown using sessionStorage

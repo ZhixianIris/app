@@ -1,4 +1,4 @@
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { updatePassword } from '@services/settings/password'
 import { Formik, Form } from 'formik'
 import React from 'react'
@@ -60,7 +60,7 @@ const BACKUP_CODES_LOW_THRESHOLD = 3
 
 function TwoFactorAuthSection() {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [status, setStatus] = React.useState<MfaStatus | null>(null)
@@ -225,7 +225,7 @@ function TwoFactorAuthSection() {
 
   const downloadBackupCodes = () => {
     const header = t('user.settings.security.mfa.codes_file_header', {
-      defaultValue: 'LearnHouse two-factor backup codes. Each code can be used once.',
+      defaultValue: 'Learning Web two-factor backup codes. Each code can be used once.',
     })
     const blob = new Blob([`${header}\n\n${backupCodes.join('\n')}\n`], {
       type: 'text/plain;charset=utf-8',
@@ -233,7 +233,7 @@ function TwoFactorAuthSection() {
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = 'learnhouse-backup-codes.txt'
+    link.download = 'learning-web-backup-codes.txt'
     document.body.appendChild(link)
     link.click()
     link.remove()
@@ -1047,7 +1047,7 @@ function TwoFactorAuthSection() {
 }
 
 function AccountSecurity() {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token;
   const { t } = useTranslation();
 

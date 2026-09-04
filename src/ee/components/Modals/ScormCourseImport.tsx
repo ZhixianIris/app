@@ -5,7 +5,7 @@ import { Label } from '@components/ui/label'
 import BarLoader from 'react-spinners/BarLoader'
 import { Upload, CheckCircle2, ChevronRight, AlertCircle, FileArchive, ArrowLeft } from 'lucide-react'
 import { getAPIUrl } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { constructAcceptValue } from '@/lib/constants'
 import {
   uploadScormPackage,
@@ -51,7 +51,7 @@ interface ScormCourseImportProps {
 
 function ScormCourseImport({ orgId, orgslug, closeModal }: ScormCourseImportProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const navigate = useNavigate()
 

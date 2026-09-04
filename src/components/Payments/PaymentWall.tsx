@@ -4,7 +4,7 @@ import { Button } from '@components/ui/button';
 import { Link } from 'react-router-dom';
 import { useOrg } from '@components/Contexts/OrgContext';
 import { getUriWithOrg } from '@services/config/config';
-import { useLHAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics';
+import { useAppAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics';
 import { useTranslation } from 'react-i18next';
 import { formatCurrency } from '@/lib/format';
 
@@ -36,7 +36,7 @@ function PaymentWall({ offer, resourceName, resourceThumbnail, orgslug }: Paymen
   const { i18n } = useTranslation();
   const org = useOrg() as any;
   const slug = orgslug ?? org?.slug;
-  const { track } = useLHAnalytics('learner');
+  const { track } = useAppAnalytics('learner');
 
   useTrackView(
     AnalyticsEvent.PaywallViewed,

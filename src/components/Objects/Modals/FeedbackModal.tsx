@@ -18,7 +18,7 @@ import {
   DialogTitle,
 } from '@components/ui/dialog'
 import { cn } from '@/lib/utils'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useTranslation } from 'react-i18next'
 import { getAPIUrl } from '@services/config/config'
 
@@ -38,7 +38,7 @@ export function FeedbackModal({
   userEmail,
 }: FeedbackModalProps) {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics()
+  const { track } = useAppAnalytics()
   const [feedbackMessage, setFeedbackMessage] = useState('')
   const [feedbackSubmitting, setFeedbackSubmitting] = useState(false)
   const [feedbackSubmitted, setFeedbackSubmitted] = useState(false)

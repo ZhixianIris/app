@@ -1,5 +1,5 @@
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import { getUriWithOrg } from '@services/config/config'
@@ -123,7 +123,7 @@ function CommunityCard(props: PropsType) {
 const CommunityAdminEditsArea = (props: any) => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const queryClient = useQueryClient()
 
   const deleteCommunityUI = async () => {

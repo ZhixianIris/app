@@ -12,17 +12,17 @@ let lastGroupedOrg: string | null = null
 
 /**
  * The ONE analytics hook. A single `track()` fans every event out to:
- *   1. the existing LearnHouse backend (token-gated; anonymous no-op by design), and
+ *   1. the existing Learning Web backend (token-gated; anonymous no-op by design), and
  *   2. PostHog (captures anonymous users too — unlocks logged-out funnels).
  *
  * Standard props (org/plan/surface/locale/role/…) are injected automatically;
  * call-sites pass only event-specific properties.
  *
  * Usage:
- *   const { track } = useLHAnalytics('learner')
+ *   const { track } = useAppAnalytics('learner')
  *   track(AnalyticsEvent.CourseStarted, { course_uuid, total_activities })
  */
-export function useLHAnalytics(surface?: string) {
+export function useAppAnalytics(surface?: string) {
   const posthog = usePostHog()
   const { track: backendTrack } = useAnalytics()
   const standard = useStandardProps(surface)

@@ -1,6 +1,6 @@
 import { useAssignments } from '@components/Contexts/Assignments/AssignmentContext';
 import { useAssignmentsTask, useAssignmentsTaskDispatch } from '@components/Contexts/Assignments/AssignmentsTaskContext';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { useOrg } from '@components/Contexts/OrgContext';
 import FormLayout, { FormField, FormLabelAndMessage, Input, Textarea } from '@components/Objects/StyledElements/Form/Form';
 import { getActivityByID } from '@services/courses/activities';
@@ -20,7 +20,7 @@ const SUPPORTED_FILES = constructAcceptValue(['pdf', 'docx', 'mp4', 'jpg', 'png'
 
 export function AssignmentTaskGeneralEdit() {
     const { t } = useTranslation()
-    const session = useLHSession() as any;
+    const session = useAppSession() as any;
     const access_token = session?.data?.tokens?.access_token;
     const assignmentTaskState = useAssignmentsTask() as any
     const assignmentTaskStateHook = useAssignmentsTaskDispatch() as any
@@ -106,7 +106,7 @@ export function AssignmentTaskGeneralEdit() {
 
 function UpdateTaskRef() {
     const { t } = useTranslation()
-    const session = useLHSession() as any;
+    const session = useAppSession() as any;
     const org = useOrg() as any;
     const access_token = session?.data?.tokens?.access_token;
     const assignmentTaskState = useAssignmentsTask() as any

@@ -2,7 +2,7 @@
 //
 // AuthFooter   — the "By continuing, you agree to … Terms of Service and
 //                Privacy Policy." line shown under the auth forms.
-// CopyrightFooter — the "© {year} LearnHouse, Inc." line for app surfaces
+// CopyrightFooter — the "© {year} Learning Web, Inc." line for app surfaces
 //                (the apex /home hub, the onboarding page, …).
 //
 // Legal pages live on the marketing/platform site, so links resolve via
@@ -12,15 +12,15 @@ import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getPlatformUrl } from '@services/config/config'
 
-const TERMS_URL = getPlatformUrl('/terms') || 'https://www.learnhouse.io/terms'
-const PRIVACY_URL = getPlatformUrl('/privacy') || 'https://www.learnhouse.io/privacy'
+const TERMS_URL = getPlatformUrl('/terms') || 'https://www.example.com/terms'
+const PRIVACY_URL = getPlatformUrl('/privacy') || 'https://www.example.com/privacy'
 
 export function AuthFooter({ className = '' }: { className?: string }) {
   const { t } = useTranslation()
   return (
     <div className={`pb-8 pt-6 text-center px-6 ${className}`}>
       <p className="text-[13px] text-black/30 font-medium">
-        {t('auth.terms_text', { defaultValue: "By continuing, you agree to LearnHouse's" })}{' '}
+        {t('auth.terms_text', { defaultValue: "By continuing, you agree to Learning Web's" })}{' '}
         <Link
           to={TERMS_URL}
           target="_blank"
@@ -61,7 +61,7 @@ export function CopyrightFooter({
     <footer className={`w-full py-6 px-6 ${className}`}>
       <div className="flex flex-col sm:flex-row items-center justify-center gap-x-5 gap-y-2 text-[13px] font-medium">
         <p className={base}>
-          {t('common.copyright', { defaultValue: '© {{year}} LearnHouse, Inc.', year })}
+          {t('common.copyright', { defaultValue: '© {{year}} Learning Web, Inc.', year })}
         </p>
         <nav className="flex items-center gap-x-5">
           <Link

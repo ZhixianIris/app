@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getAPIUrl } from '@services/config/config'
 import { apiFetch, RequestBodyWithAuthHeader } from '@services/utils/ts/requests'
 import { Dialog, DialogContent, DialogTitle } from '@components/ui/dialog'
@@ -25,7 +25,7 @@ const INPUT =
 export default function CompleteSignupFields() {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = session?.status === 'authenticated'
   const orgId = org?.id

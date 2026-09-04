@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useOrg } from '@components/Contexts/OrgContext';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/keys';
 import { getOffers, updateOffer, archiveOffer } from '@services/payments/offers';
@@ -34,7 +34,7 @@ const editValidationSchema = Yup.object().shape({
 
 function PaymentsOffersPage() {
   const org = useOrg() as any;
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const queryClient = useQueryClient();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [editingOfferId, setEditingOfferId] = useState<string | null>(null);
@@ -247,7 +247,7 @@ const EditOfferForm = ({
   onCancel: () => void;
 }) => {
   const org = useOrg() as any;
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const queryClient = useQueryClient();
   const [currencies, setCurrencies] = useState<{ code: string; name: string }[]>([]);
 

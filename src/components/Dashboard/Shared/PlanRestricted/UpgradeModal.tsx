@@ -22,7 +22,7 @@ import { getUpgradeUrl } from '@services/config/config'
 import { usePlan } from '@components/Hooks/usePlan'
 import PlanBadge from './PlanBadge'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -62,7 +62,7 @@ export default function UpgradeModal({ open, onClose, source = 'free_plan_banner
   const standardUrl = getUpgradeUrl(orgSlug, 'standard')
   const proUrl = getUpgradeUrl(orgSlug, 'pro')
   const currentPlan = usePlan()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
 
   useEffect(() => {
     if (open) {

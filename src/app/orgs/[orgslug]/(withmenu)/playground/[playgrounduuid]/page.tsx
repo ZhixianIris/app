@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getPlayground } from '@services/playgrounds/playgrounds'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import PlaygroundViewClient from './view'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 import NotFound from '@app/not-found'
 
 export default function PlaygroundViewPage() {
   const { orgslug, playgrounduuid } = useParams() as { orgslug: string; playgrounduuid: string }
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [playground, setPlayground] = useState<any>(null)

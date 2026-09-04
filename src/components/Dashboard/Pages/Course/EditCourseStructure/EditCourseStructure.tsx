@@ -13,9 +13,9 @@ import {
 import { Hexagon } from 'lucide-react'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import NewChapterModal from '@components/Objects/Modals/Chapters/NewChapter'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useNavigate } from "react-router-dom";
 
 type EditCourseStructureProps = {
@@ -40,9 +40,9 @@ export type OrderPayload =
 
 const EditCourseStructure = (props: EditCourseStructureProps) => {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const navigate = useNavigate()
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id

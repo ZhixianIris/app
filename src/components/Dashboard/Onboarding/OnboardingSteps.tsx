@@ -18,7 +18,7 @@ import {
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getUriWithOrg } from '@services/config/config'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 // Shared easing — the same curve used across all onboarding animations.
 export const ease = [0.25, 0.1, 0.25, 1] as const
@@ -41,7 +41,7 @@ const STEP_ICON: Record<string, { icon: React.ElementType; color: string }> = {
 export default function OnboardingSteps() {
   const { steps, completeStep, dismiss } = useOnboarding()
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const org = useOrg() as any
   const orgSlug = org?.slug || ''
 

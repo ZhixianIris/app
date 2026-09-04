@@ -7,13 +7,13 @@ import {
   Users,
 } from '@phosphor-icons/react'
 import { signOut } from '@components/Contexts/AuthContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
 import { Link } from 'react-router-dom'
 import React from 'react'
 
 function AdminTopMenu() {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
 
   async function logOutUI() {
     await signOut({ redirect: true, callbackUrl: '/admin/login' })
@@ -39,7 +39,7 @@ function AdminTopMenu() {
       >
         {/* Logo */}
         <Link className="flex items-center gap-2 transition-opacity hover:opacity-70 shrink-0" to="/admin">
-          <img src="/lrn-dash.svg" alt="Learnhouse logo" className="h-7 w-7" />
+          <img src="/lrn-dash.svg" alt="App logo" className="h-7 w-7" />
           <span className="font-semibold text-sm text-white">Admin</span>
           <span className="text-[9px] font-medium uppercase tracking-wider text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded">
             Superadmin

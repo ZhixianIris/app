@@ -10,8 +10,8 @@ import {
   ArrowLeft, RefreshCcw, SquareCheck, Sparkles, BookOpen,
   Mic, Puzzle, AlertCircle, Loader2, ShoppingBag
 } from 'lucide-react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
-import { useLHAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
+import { useAppAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics'
 import { meaningfulMessage } from '@lib/errors/classify'
 import toast from 'react-hot-toast'
 
@@ -98,11 +98,11 @@ function ResourceCard({ resource, orgslug }: { resource: Resource; orgslug: stri
 
 export default function OfferDetailClient({ orgslug, orgId, offerUuid, offer, access_token }: OfferDetailClientProps) {
   const { i18n } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token ?? access_token
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
 
   useTrackView(
     AnalyticsEvent.OfferViewed,

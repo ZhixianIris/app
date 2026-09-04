@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import ReactMarkdown from 'react-markdown'
@@ -19,7 +19,7 @@ import { getUriWithOrg } from '@services/config/config'
 import { getOrgCourses } from '@services/courses/courses'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import {
   PaperPlaneRight,
   CaretDown,
@@ -85,12 +85,12 @@ export function groupSessionsByDate(sessions: RAGChatSession[]) {
 }
 
 export function CopilotChat({ orgslug }: CopilotProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const accessToken = session?.data?.tokens?.access_token
   const [searchParams] = useSearchParams()
   const initialChatUuid = searchParams.get('chat')
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
 
   // All messages including the current streaming one (appended live)
   const [messages, setMessages] = useState<ChatMessage[]>([])

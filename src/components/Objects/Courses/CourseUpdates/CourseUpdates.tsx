@@ -20,7 +20,7 @@ import toast from 'react-hot-toast'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useTranslation } from 'react-i18next'
 import { Form } from "@base-ui/react/form";
 import { Field } from "@base-ui/react/field";
@@ -30,7 +30,7 @@ dayjs.extend(relativeTime);
 function CourseUpdates() {
   const { t } = useTranslation();
   const course = useCourse() as any;
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const { data: updates } = useQuery({
     queryKey: queryKeys.courses.updates(course?.courseStructure?.course_uuid ?? ''),
@@ -111,7 +111,7 @@ const NewUpdateForm = ({ setSelectedView }: any) => {
   const { t } = useTranslation()
   const org = useOrg() as any;
   const course = useCourse() as any;
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const queryClient = useQueryClient();
 
   const validate = (values: any) => {
@@ -205,7 +205,7 @@ const UpdatesListView = () => {
   const { t } = useTranslation()
   const course = useCourse() as any;
   const adminStatus = useAdminStatus() ;
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const { data: updates } = useQuery({
     queryKey: queryKeys.courses.updates(course?.courseStructure?.course_uuid ?? ''),
@@ -243,7 +243,7 @@ const UpdatesListView = () => {
 
 const DeleteUpdateButton = ({ update }: any) => {
   const { t } = useTranslation()
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const course = useCourse() as any;
   const org = useOrg() as any;
   const queryClient = useQueryClient();

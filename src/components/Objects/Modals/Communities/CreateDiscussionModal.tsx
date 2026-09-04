@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { createDiscussion, DISCUSSION_LABELS } from '@services/communities/discussions'
 import { useMutateDiscussions } from '@components/Hooks/useDiscussions'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import { DiscussionEditor } from '@components/Objects/Communities/DiscussionEditor'
 import { EmojiPicker } from '@components/Objects/Communities/EmojiPicker'
 import { Loader2, AlertCircle, MessageSquare, HelpCircle, Lightbulb, Megaphone, Star, Check } from 'lucide-react'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useNavigate } from "react-router-dom";
 
 interface CreateDiscussionModalProps {
@@ -41,10 +41,10 @@ export function CreateDiscussionModal({
   orgSlug: _orgSlug,
 }: CreateDiscussionModalProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const navigate = useNavigate()
   const mutateDiscussions = useMutateDiscussions()
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [title, setTitle] = useState('')

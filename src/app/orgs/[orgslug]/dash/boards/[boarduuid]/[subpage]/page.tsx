@@ -4,7 +4,7 @@ import { motion } from 'motion/react'
 import { Info, Globe, Users, Image as ImageIcon, Eye } from 'lucide-react'
 import { ChalkboardSimple } from '@phosphor-icons/react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getUriWithOrg } from '@services/config/config'
 import { getBoardThumbnailMediaDirectory } from '@services/media/media'
 import { useQuery } from '@tanstack/react-query'
@@ -24,7 +24,7 @@ export type BoardSettingsParams = {
 function BoardSettingsPage(props: { params: Promise<BoardSettingsParams> }) {
   const params = useParams() as { orgslug: string; boarduuid: string; subpage: string }
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const boardUuid = params.boarduuid.startsWith('board_')

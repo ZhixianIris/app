@@ -1,7 +1,7 @@
 import { getAPIUrl } from '@services/config/config'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import {
   DiscussionWithAuthor,
   DiscussionSortBy,
@@ -26,7 +26,7 @@ export function getDiscussionsKey(options: UseDiscussionsOptions) {
 }
 
 export function useDiscussions(options: UseDiscussionsOptions) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const { communityUuid, sortBy = 'recent', page = 1, limit = 10, label } = options
   const queryClient = useQueryClient()

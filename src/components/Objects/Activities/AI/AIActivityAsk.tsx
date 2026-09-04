@@ -1,4 +1,4 @@
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import {
   sendActivityAIChatMessageStream,
   startActivityAIChatSessionStream,
@@ -7,8 +7,8 @@ import {
 import { AlertTriangle, BadgeInfo, NotebookTabs, Maximize2, Minimize2, PanelRightOpen, PanelRightClose, PanelTop } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { FlaskConical, MessageCircle, X } from 'lucide-react'
-const learnhouseAI_icon = '/learnhouse_ai_simple.png'
-const learnhouseAI_logo_black = '/learnhouse_ai_black_logo.png'
+const learningWebAI_icon = '/ai_simple.png'
+const learningWebAI_logo_black = '/ai_black_logo.png'
 import React, { useEffect, useRef } from 'react'
 import {
   AIChatBotStateTypes,
@@ -64,7 +64,7 @@ function AIActivityAsk(props: AIActivityAskProps) {
               <img
                 className="outline outline-1 outline-neutral-200/20 rounded-md"
                 width={20}
-                src={learnhouseAI_icon}
+                src={learningWebAI_icon}
                 alt="" 
               />
             </i>{' '}
@@ -88,7 +88,7 @@ type ActivityChatMessageBoxProps = {
 
 function ActivityChatMessageBox(props: ActivityChatMessageBoxProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token;
   const aiChatBotState = useAIChatBot() as AIChatBotStateTypes
   const dispatchAIChatBot = useAIChatBotDispatch() as any
@@ -331,7 +331,7 @@ function ActivityChatMessageBox(props: ActivityChatMessageBoxProps) {
                     className={`outline outline-1 outline-neutral-200/20 rounded-lg ${isInputDisabled ? 'animate-pulse' : ''
                       }`}
                     width={24}
-                    src={learnhouseAI_icon}
+                    src={learningWebAI_icon}
                     alt="" 
                   />
                   <span className="text-sm font-semibold text-white/70">
@@ -602,7 +602,7 @@ const AIMessagePlaceHolder = (props: {
   sendMessage: any
   isFullscreen?: boolean
 }) => {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const aiChatBotState = useAIChatBot() as AIChatBotStateTypes
   const { t } = useTranslation()
 
@@ -626,7 +626,7 @@ const AIMessagePlaceHolder = (props: {
             <img
               width={100}
               className="mx-auto"
-              src={learnhouseAI_logo_black}
+              src={learningWebAI_logo_black}
               alt="" 
             />
             <p className="pt-3 text-2xl font-semibold text-white/70 flex justify-center space-x-2 items-center">
@@ -706,7 +706,7 @@ type AISidePanelProps = {
 // Inline sticky side panel that sits next to content
 function AISidePanelInline(props: AISidePanelProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const aiChatBotState = useAIChatBot() as AIChatBotStateTypes
   const dispatchAIChatBot = useAIChatBotDispatch() as any
@@ -931,7 +931,7 @@ function AISidePanelInline(props: AISidePanelProps) {
               <img
                 className={`outline outline-1 outline-neutral-200/20 rounded-lg ${isInputDisabled ? 'animate-pulse' : ''}`}
                 width={24}
-                src={learnhouseAI_icon}
+                src={learningWebAI_icon}
                 alt="" 
               />
               <span className="text-sm font-semibold text-white/70">AI</span>
@@ -1148,7 +1148,7 @@ const AISidePanelPlaceholder = (props: {
   activity_uuid: string
   sendMessage: any
 }) => {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const aiChatBotState = useAIChatBot() as AIChatBotStateTypes
   const { t } = useTranslation()
 
@@ -1171,7 +1171,7 @@ const AISidePanelPlaceholder = (props: {
             <img
               width={80}
               className="mx-auto"
-              src={learnhouseAI_logo_black}
+              src={learningWebAI_logo_black}
               alt="" 
             />
             <p className="pt-3 text-lg font-semibold text-white/70 flex flex-col justify-center items-center">

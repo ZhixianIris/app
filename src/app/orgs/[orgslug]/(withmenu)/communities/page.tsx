@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
 import { getCommunities } from '@services/communities/communities'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import CommunitiesClient from './communities'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 
 const CommunitiesPage = () => {
   const { orgslug } = useParams() as { orgslug: string }
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [orgId, setOrgId] = useState<number | null>(null)

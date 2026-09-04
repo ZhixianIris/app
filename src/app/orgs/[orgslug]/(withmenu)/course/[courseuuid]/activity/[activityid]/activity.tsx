@@ -6,7 +6,7 @@ import AuthenticatedClientElement from '@components/Security/AuthenticatedClient
 import { getCourseThumbnailMediaDirectory, getUserAvatarMediaDirectory } from '@services/media/media'
 import { useOrg, useOrgMembership } from '@components/Contexts/OrgContext'
 import { CourseProvider } from '@components/Contexts/CourseContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import React, { useEffect, useRef, useMemo, lazy, Suspense } from 'react'
 import { getAssignmentFromActivityUUID, getFinalGrade, retryAssignmentSubmission, submitAssignmentForGrading } from '@services/courses/assignments'
 import { AssignmentProvider } from '@components/Contexts/Assignments/AssignmentContext'
@@ -39,7 +39,7 @@ import UserAvatar from '@components/Objects/UserAvatar'
 import { useTranslation } from 'react-i18next'
 import { useDirection } from '@hooks/useDirection'
 import { formatDate } from '@/lib/format'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 const ReactConfetti = lazy(() => import('react-confetti'))
 
@@ -170,7 +170,7 @@ function ActivityActions({ activity, activityid, course, orgslug, assignment, sh
 
   const { t: _t } = useTranslation();
   const _org = useOrg() as any;
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const _access_token = session?.data?.tokens?.access_token;
 
 
@@ -243,7 +243,7 @@ function ActivityClient(props: ActivityClientProps) {
 
   const { data: course, isLoading: courseLoading } = useCourseMeta(courseuuid)
   const { data: activity, isLoading: activityLoading } = useActivity(activityid)
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const pathname = useLocation().pathname
   const access_token = session?.data?.tokens?.access_token;
   const [bgColor, setBgColor] = React.useState('bg-white nice-shadow')
@@ -254,7 +254,7 @@ function ActivityClient(props: ActivityClientProps) {
   const { contributorStatus } = useContributorStatus(courseuuid);
   const navigate = useNavigate();
 
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
   const activityStartTime = useRef(Date.now())
 
   // Track activity view on mount, time_on_activity on unmount
@@ -1067,11 +1067,11 @@ export function MarkStatus(props: {
 }) {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const org = useOrg() as any;
   const { isUserPartOfTheOrg } = useOrgMembership();
   const queryClient = useQueryClient();
-  const { track } = useLHAnalytics('learner');
+  const { track } = useAppAnalytics('learner');
   const _isMobile = useMediaQuery('(max-width: 768px)')
   const [isLoading, setIsLoading] = React.useState(false);
   const [showMarkedTooltip, setShowMarkedTooltip] = React.useState(false);
@@ -1483,7 +1483,7 @@ function AssignmentTools(props: {
 }) {
   const { t } = useTranslation();
   const submission = useAssignmentSubmission() as any
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const queryClient = useQueryClient();
   const dirtyTasks = useAssignmentDirtyTasks();
   const [gradeData, setGradeData] = React.useState<any>(null);

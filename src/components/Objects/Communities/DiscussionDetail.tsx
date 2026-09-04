@@ -12,7 +12,7 @@ import { DiscussionWithAuthor, DiscussionAuthor, deleteDiscussion, getLabelInfo 
 import { getUserAvatarMediaDirectory } from '@services/media/media'
 import { CommentSection } from './CommentSection'
 import { DiscussionContent } from './DiscussionContent'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import {
   DropdownMenu,
@@ -72,7 +72,7 @@ export function DiscussionDetail({
   onEdit,
 }: DiscussionDetailProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const navigate = useNavigate()
   const communityId = communityUuid.replace('community_', '')
   const accessToken = session?.data?.tokens?.access_token

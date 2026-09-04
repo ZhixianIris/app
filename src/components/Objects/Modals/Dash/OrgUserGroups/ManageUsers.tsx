@@ -1,9 +1,9 @@
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getAPIUrl } from '@services/config/config'
 import { linkUsersToUserGroup, unlinkUsersFromUserGroup } from '@services/usergroups/usergroups'
 import { apiFetch } from '@services/utils/ts/requests'
-import LearnHouseSpinner from '@components/Objects/Loaders/LearnHouseSpinner'
+import AppSpinner from '@components/Objects/Loaders/AppSpinner'
 import { Search, Check, Plus, Minus, ChevronLeft, ChevronRight, Users } from 'lucide-react'
 import React, { useState, useMemo, useEffect, useCallback } from 'react'
 import toast from 'react-hot-toast'
@@ -25,7 +25,7 @@ type FilterTab = 'all' | 'in_group' | 'not_in_group'
 function ManageUsers(props: ManageUsersProps) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
 
@@ -323,7 +323,7 @@ function ManageUsers(props: ManageUsersProps) {
           <>
           {isPageTransitioning && (
             <div className="absolute inset-0 bg-white/60 z-10 flex items-center justify-center rounded-lg">
-              <LearnHouseSpinner size={24} />
+              <AppSpinner size={24} />
             </div>
           )}
           {orgUsers.map((user: any) => {

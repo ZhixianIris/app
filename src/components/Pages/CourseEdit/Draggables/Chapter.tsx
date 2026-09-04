@@ -8,7 +8,7 @@ import { updateChapter } from '@services/courses/chapters'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { revalidateTags } from '@services/utils/ts/requests'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useCourse } from '@components/Contexts/CourseContext'
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,7 @@ interface ModifiedChapterInterface {
 
 function Chapter(props: any) {
   const navigate = useNavigate()
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id
   const [modifiedChapter, setModifiedChapter] = React.useState<

@@ -1,7 +1,7 @@
 import React from 'react'
 import YouTube from 'react-youtube'
 import { useOrg } from '@components/Contexts/OrgContext'
-import LearnHousePlayer from './LearnHousePlayer'
+import MediaPlayer from './MediaPlayer'
 import {
   isActivityHlsReady,
   resolveActivityVideoSource,
@@ -108,7 +108,7 @@ function VideoActivity({ activity, course, orgUuid }: VideoActivityProps) {
                     activityUuid: activity.activity_uuid,
                   })
                   return src ? (
-                    <LearnHousePlayer
+                    <MediaPlayer
                       key={src}
                       src={src}
                       isHls={isHls}

@@ -3,12 +3,12 @@ import { apiFetch } from '@services/utils/ts/requests'
 import React, { createContext, useContext, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 
 export const AssignmentContext = createContext({})
 
 export function AssignmentProvider({ children, assignment_uuid }: { children: React.ReactNode, assignment_uuid: string }) {
-    const session = useLHSession() as any
+    const session = useAppSession() as any
     const accessToken = session?.data?.tokens?.access_token
 
     const { data: assignment, error: assignmentError } = useQuery({

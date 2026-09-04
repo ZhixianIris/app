@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { ShieldAlert, ShieldCheck, X, LogOut, ArrowRight, LogIn } from 'lucide-react'
 import { useOrgMembership } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { signOut } from '@components/Contexts/AuthContext'
 import { getAPIUrl, getUriWithOrg, getUriWithoutOrg } from '@services/config/config'
 import { RequestBodyWithAuthHeader } from '@services/utils/ts/requests'
@@ -109,7 +109,7 @@ async function getOrgMFACompliance(
 
 /** Cached per org, for the lifetime of the session. */
 function useOrgMFACompliance(org_id?: number) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   return useQuery<OrgPolicyState>({
@@ -125,7 +125,7 @@ function useOrgMFACompliance(org_id?: number) {
   })
 }
 
-const dismissKey = (org_id: number) => `lh_mfa_policy_banner_dismissed_${org_id}`
+const dismissKey = (org_id: number) => `app_mfa_policy_banner_dismissed_${org_id}`
 
 function CountdownBanner({
   orgName,
@@ -230,7 +230,7 @@ function BlockingInterstitial({
   orgslug: string
 }) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const email = session?.data?.user?.email
 
   return (
@@ -307,7 +307,7 @@ function BlockingInterstitial({
 }
 
 // This org's policy refused the current session (wrong auth method, or a central
-// learnhouse.io session that isn't bound to this org). Send the user to THIS
+// example.com session that isn't bound to this org). Send the user to THIS
 // org's own login page — never a global logout, since they may belong to other
 // orgs that are perfectly happy with their session.
 function OrgAuthMethodBanner({

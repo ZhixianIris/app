@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik'
 import { updateOrganization } from '@services/settings/org'
 import { revalidateTags } from '@services/utils/ts/requests'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { toast } from 'react-hot-toast'
 import { Input } from "@components/ui/input"
 import { Button } from "@components/ui/button"
@@ -35,7 +35,7 @@ interface OrganizationValues {
 
 export default function OrgEditSocials() {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const queryClient = useQueryClient()

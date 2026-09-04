@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { getAPIUrl } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 
 function fetcher(url: string, token: string) {
@@ -21,7 +21,7 @@ export function useAnalyticsPipe(
   refreshInterval = 0
 ) {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 
@@ -44,7 +44,7 @@ export function useAnalyticsDetail(
   refreshInterval = 0
 ) {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 
@@ -66,7 +66,7 @@ export function useAnalyticsDbQuery(
   extraParams: Record<string, string> = {}
 ) {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 
@@ -84,7 +84,7 @@ export function useAnalyticsDbQuery(
 
 export function usePlanInfo() {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 
@@ -98,7 +98,7 @@ export function usePlanInfo() {
 }
 
 export function useAnalyticsStatus() {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
 
   return useQuery({
@@ -116,7 +116,7 @@ export function useCoursePipe(
   refreshInterval = 0
 ) {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 
@@ -144,7 +144,7 @@ export function useCourseAnalyticsDetail(
   refreshInterval = 0
 ) {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 

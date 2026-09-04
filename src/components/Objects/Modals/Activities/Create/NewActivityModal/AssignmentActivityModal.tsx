@@ -5,11 +5,11 @@ import { useOrg } from '@components/Contexts/OrgContext'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { createAssignment } from '@services/courses/assignments'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { createActivity, deleteActivity } from '@services/courses/activities'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
 import { getErrorMessage } from '@services/utils/ts/errorMessage'
 import {
@@ -31,9 +31,9 @@ import { Field } from "@base-ui/react/field";
 function NewAssignment({ submitActivity: _submitActivity, chapterId, course, closeModal }: any) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const queryClient = useQueryClient()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const { handlePlanLimit } = useUpgradeModal()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id
   const _withUnpublishedActivities = course

@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useQuery } from '@tanstack/react-query'
 import { getUserEnrollments } from '@services/payments/offers'
 import CourseThumbnail from '@components/Objects/Thumbnails/CourseThumbnail'
@@ -12,7 +12,7 @@ interface AccountMyCoursesProps {
 }
 
 function AccountMyCourses({ orgId, orgslug }: AccountMyCoursesProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const { t } = useTranslation()
 

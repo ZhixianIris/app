@@ -6,7 +6,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '@components/ui/hover-card'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useCourse } from '@components/Contexts/CourseContext'
 import { getActivity } from '@services/courses/activities'
@@ -492,7 +492,7 @@ export default function ActivityPreview({
   autoFetch = true,
   className,
 }: ActivityPreviewProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken: string | undefined = session?.data?.tokens?.access_token
 
   const hasInlineContent =

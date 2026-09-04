@@ -31,7 +31,7 @@ import { Link, useLocation } from 'react-router-dom'
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import UserAvatar from '../../Objects/UserAvatar'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getUriWithOrg, getDeploymentMode } from '@services/config/config'
 import { useTranslation } from 'react-i18next'
 import { changeLanguage } from '@/lib/i18n'
@@ -45,7 +45,7 @@ import { useCommandPalette } from '@components/Dashboard/CommandPalette/CommandP
 
 function DashMobileMenu() {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const { t, i18n } = useTranslation()
   const pathname = useLocation().pathname || ''
   const plan = usePlan()
@@ -91,7 +91,7 @@ function DashMobileMenu() {
           className="flex items-center gap-0.5 px-1.5 py-1.5 bg-[#111113]/90 backdrop-blur-xl rounded-full"
           style={{ boxShadow: '0 4px 16px rgba(0,0,0,0.3)' }}
         >
-          {/* LearnHouse logo — links to home */}
+          {/* Learning Web logo — links to home */}
           <Link
             to="/dash"
             className="flex items-center justify-center px-2.5 py-2.5 rounded-full transition-all duration-200"
@@ -99,7 +99,7 @@ function DashMobileMenu() {
           >
             <img
               src="/lrn-dash.svg"
-              alt="LearnHouse"
+              alt="Learning Web"
               className="h-[18px] w-[18px] opacity-60 hover:opacity-90 transition-opacity"
               style={{ filter: 'brightness(0) invert(1)' }}
             />
@@ -195,7 +195,7 @@ function DashMobileMenu() {
                   />
                 ) : (
                   <div className="h-7 w-7 flex items-center justify-center bg-white/[0.06] rounded-lg">
-                    <img src="/lrn-dash.svg" alt="LearnHouse" className="h-4 w-4" style={{ filter: 'brightness(0) invert(1)' }} />
+                    <img src="/lrn-dash.svg" alt="Learning Web" className="h-4 w-4" style={{ filter: 'brightness(0) invert(1)' }} />
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
@@ -258,13 +258,13 @@ function DashMobileMenu() {
                   </div>
                 )}
 
-                <a href="https://docs.learnhouse.app" target="_blank" rel="noopener noreferrer"
+                <a href="https://docs.example.com" target="_blank" rel="noopener noreferrer"
                   className="flex items-center w-full rounded-lg px-2.5 py-2 gap-2.5 text-white/40 hover:text-white/80 hover:bg-white/[0.05] transition-all"
                 >
                   <Book size={15} weight="fill" />
                   <span className="text-sm font-medium">{t('common.help_menu.documentation')}</span>
                 </a>
-                <a href="https://discord.gg/learnhouse" target="_blank" rel="noopener noreferrer"
+                <a href="https://discord.gg/learning-web" target="_blank" rel="noopener noreferrer"
                   className="flex items-center w-full rounded-lg px-2.5 py-2 gap-2.5 text-white/40 hover:text-white/80 hover:bg-white/[0.05] transition-all"
                 >
                   <DiscordIcon size={15} />

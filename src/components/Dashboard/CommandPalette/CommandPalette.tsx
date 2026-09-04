@@ -22,7 +22,7 @@ import {
 import { useOrgMembership } from '@components/Contexts/OrgContext'
 import { isFeatureAvailable } from '@services/plans/plans'
 import { normalizeForSearch } from '@/lib/search/normalize'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useNavigate } from "react-router-dom";
 
 const CONTENT_TYPE_ICON: Record<ContentResultType, SearchMeta['icon']> = {
@@ -84,7 +84,7 @@ export default function CommandPalette() {
   const { t } = useTranslation()
   const { open, setOpen } = useCommandPalette()
   const navigate = useNavigate()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const [query, setQuery] = useState('')
 
   const pages = usePagesFiltered()

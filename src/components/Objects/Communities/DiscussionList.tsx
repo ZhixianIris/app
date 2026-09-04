@@ -11,13 +11,13 @@ import {
   DiscussionWithAuthor,
 } from '@services/communities/discussions'
 import toast from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrgMembership } from '@components/Contexts/OrgContext'
 import { useCommunityRights } from '@components/Hooks/useCommunityRights'
 import { useDiscussions, useMutateDiscussions } from '@components/Hooks/useDiscussions'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import { searchMatchesAny } from '@/lib/search/normalize'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 interface DiscussionListProps {
   communityUuid: string
@@ -33,13 +33,13 @@ export function DiscussionList({
   initialDiscussions = [],
 }: DiscussionListProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const { isUserPartOfTheOrg } = useOrgMembership()
   const { canCreateDiscussion: hasCreatePermission, canManageCommunity } = useCommunityRights(communityUuid)
   const canCreateDiscussion = hasCreatePermission && isUserPartOfTheOrg
   const accessToken = session?.data?.tokens?.access_token
   const mutateDiscussions = useMutateDiscussions()
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
 
   const [sortBy, setSortBy] = useState<DiscussionSortBy>('recent')
   const [searchQuery, setSearchQuery] = useState('')

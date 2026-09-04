@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-const learnhouseIcon = '/black_logo.png'
+const learningWebIcon = '/black_logo.png'
 
 export default function NotFound() {
   return (
@@ -13,7 +13,7 @@ export default function NotFound() {
         <img
           width={270}
           height={100}
-          src={learnhouseIcon}
+          src={learningWebIcon}
           alt="logo" 
         />
         </div>

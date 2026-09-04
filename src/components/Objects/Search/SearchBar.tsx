@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Search, ArrowRight, Sparkles, BookCopy, Folder, ArrowUpRight, TextSearch, ScanSearch, Users } from 'lucide-react';
 import { searchOrgContent } from '@services/search/search';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { Link } from 'react-router-dom';
 import { getCourseThumbnailMediaDirectory, getUserAvatarMediaDirectory } from '@services/media/media';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -10,7 +10,7 @@ import { getUriWithOrg } from '@services/config/config';
 import { removeCoursePrefix } from '../Thumbnails/CourseThumbnail';
 import UserAvatar from '../UserAvatar';
 import { useTranslation } from 'react-i18next';
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics';
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics';
 import { getMenuColorClasses } from '@services/utils/ts/colorUtils';
 
 interface User {
@@ -103,7 +103,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   const { t } = useTranslation();
   const org = useOrg() as any;
-  const { track } = useLHAnalytics('learner');
+  const { track } = useAppAnalytics('learner');
   const colors = getMenuColorClasses(primaryColor);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResults>({
@@ -114,7 +114,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   // Debounce the search query value

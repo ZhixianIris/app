@@ -1,4 +1,4 @@
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import Toast from '@components/Objects/StyledElements/Toast/Toast'
@@ -28,7 +28,7 @@ import toast from 'react-hot-toast'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
 
 const ITEMS_PER_PAGE = 10
@@ -51,7 +51,7 @@ const invitedUsersKey = (orgId: number) => ['org', orgId, 'invitedUsers'] as con
 function OrgUsersAdd() {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
   const [isLoading, setIsLoading] = useState(false)
@@ -63,7 +63,7 @@ function OrgUsersAdd() {
   const [page, setPage] = useState(1)
   // A free org that hits its member limit gets the shared upgrade paywall.
   const { handlePlanLimit } = useUpgradeModal()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
 
   const { data: invites } = useQuery({
     queryKey: queryKeys.org.inviteCodes(org?.id),

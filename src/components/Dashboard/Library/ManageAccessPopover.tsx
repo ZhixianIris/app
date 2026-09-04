@@ -1,4 +1,4 @@
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import { getAPIUrl, getUriWithOrg } from '@services/config/config'
@@ -13,7 +13,7 @@ import { updateCourse, getCourse } from '@services/courses/courses'
 import { apiFetch } from '@services/utils/ts/requests'
 import { Check, Globe, Info, SquareUserRound, Users, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -102,10 +102,10 @@ function LinkUserGroup({
 }) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const { data } = useSWR(
     org?.id ? ['usergroups', org.id] : null,
     () => getUserGroups(org.id, access_token)
@@ -182,7 +182,7 @@ function LinkUserGroup({
 
 function ManageAccessPopover({ resource_uuid, resourceType }: Props) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
 
@@ -203,7 +203,7 @@ function ManageAccessPopover({ resource_uuid, resourceType }: Props) {
     }
   )
 
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const [isClientPublic, setIsClientPublic] = useState<boolean | undefined>(undefined)
   const [isSaving, setIsSaving] = useState(false)
 
@@ -329,7 +329,7 @@ function UserGroupsSection({
   mutateGroups: () => void
 }) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const [linkModal, setLinkModal] = useState(false)

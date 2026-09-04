@@ -1,7 +1,7 @@
 import { getCourseRights } from '@services/courses/courses'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 
 export interface CourseRights {
   course_uuid: string
@@ -37,7 +37,7 @@ export interface CourseRights {
 }
 
 export function useCourseRights(courseuuid: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const { data: rights, error, isLoading } = useQuery<CourseRights>({

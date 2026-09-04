@@ -14,13 +14,13 @@ import { getOrganizationContextInfoWithoutCredentials } from '@services/organiza
 import { revalidateTags } from '@services/utils/ts/requests'
 import { Layers } from 'lucide-react'
 import { ArrowLeft } from '@phosphor-icons/react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import React, { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@lib/query/keys'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useNavigate } from "react-router-dom";
 
 type NewActivityButtonProps = {
@@ -33,12 +33,12 @@ type NewActivityButtonProps = {
 
 function NewActivityButton(props: NewActivityButtonProps) {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const [newActivityModal, setNewActivityModal] = React.useState(false)
   const [selectedView, setSelectedView] = React.useState('home')
   const navigate = useNavigate()
   const course = useCourse() as any
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const queryClient = useQueryClient()
   const { addTask, updateTask } = useBackgroundTasks()

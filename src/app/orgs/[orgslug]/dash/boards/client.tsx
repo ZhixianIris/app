@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { Search, X, Users, Globe, Lock, MoreVertical, Settings2, Eye, Trash2, CheckSquare, Square, Copy } from 'lucide-react'
 import { ChalkboardSimple } from '@phosphor-icons/react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getUriWithOrg } from '@services/config/config'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
@@ -23,7 +23,7 @@ import {
 } from "@components/ui/dropdown-menu"
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import { searchMatchesAny } from '@/lib/search/normalize'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import CatalogPagination, { useCatalogPagination } from '@components/Objects/Catalog/CatalogPagination'
 
 interface BoardListClientProps {
@@ -37,7 +37,7 @@ function CreateBoardForm({ onCreated, orgId, accessToken }: {
   accessToken: string
 }) {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
 
@@ -95,7 +95,7 @@ function CreateBoardForm({ onCreated, orgId, accessToken }: {
 export default function BoardListClient({ org_id, orgslug }: BoardListClientProps) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
 

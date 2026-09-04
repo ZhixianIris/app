@@ -10,7 +10,7 @@ import {
   getFeatureMeta,
 } from '@services/features/featureMetadata'
 import PlanBadge from '@components/Dashboard/Shared/PlanRestricted/PlanBadge'
-import { useLHAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics'
 
 export interface FeatureGateProps {
   /** Feature key (drives icon, copy, upsell tier — see featureMetadata.ts). */
@@ -111,7 +111,7 @@ function UpgradeCard({
 
   // Impression: fires once per mount everywhere a feature is gated by plan —
   // distinguishes "feature locked behind upgrade" across the whole app.
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   useTrackView(
     AnalyticsEvent.FeatureGateUpgradeShown,
     { feature, required_plan: meta.upsellPlan, current_plan: currentPlan },

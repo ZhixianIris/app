@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Crown, Shield, User, Users, SignOut, CaretDown, Globe, Check, ShoppingBag, House, Buildings, Plus, CreditCard } from '@phosphor-icons/react'
 import UserAvatar from '@components/Objects/UserAvatar'
 import useAdminStatus from '@components/Hooks/useAdminStatus'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getUriWithOrg, getMainDomainUri, isMultiOrgModeEnabled } from '@services/config/config'
 import { getOrgLogoMediaDirectory } from '@services/media/media'
@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next'
 import { changeLanguage } from '@/lib/i18n'
 import { AVAILABLE_LANGUAGES } from '@/lib/languages'
 import LanguageSwitcher from '@components/Utils/LanguageSwitcher'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { getMenuColorClasses } from '@services/utils/ts/colorUtils'
 
 interface RoleInfo {
@@ -43,11 +43,11 @@ interface CustomRoleInfo {
 }
 
 export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string }) => {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const { userRoles, rights } = useAdminStatus()
   const org = useOrg() as any
   const { t, i18n } = useTranslation()
-  const { track } = useLHAnalytics()
+  const { track } = useAppAnalytics()
   const colors = getMenuColorClasses(primaryColor)
 
   // The user's organizations (deduped) from the session roles — used by the

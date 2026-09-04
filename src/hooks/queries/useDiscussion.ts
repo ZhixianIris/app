@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { queryKeys } from '@lib/query/keys'
 import {
   getDiscussions,
@@ -14,7 +14,7 @@ export function useDiscussions(
   sort: DiscussionSortBy = 'recent',
   page = 1
 ) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({
@@ -26,7 +26,7 @@ export function useDiscussions(
 }
 
 export function useDiscussion(discussionUuid: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({
@@ -38,7 +38,7 @@ export function useDiscussion(discussionUuid: string) {
 }
 
 export function useDiscussionComments(discussionUuid: string, page = 1) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({
@@ -50,7 +50,7 @@ export function useDiscussionComments(discussionUuid: string, page = 1) {
 }
 
 export function useDiscussionReactions(discussionUuid: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({

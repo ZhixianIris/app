@@ -31,7 +31,7 @@ export interface BgTask {
 type NewTask = Omit<BgTask, 'createdAt' | 'progress' | 'status' | 'id'> &
   Partial<Pick<BgTask, 'id' | 'progress' | 'status' | 'indeterminate'>>
 
-const STORAGE_KEY = 'lh_bg_tasks'
+const STORAGE_KEY = 'app_bg_tasks'
 
 type Action =
   | { type: 'hydrate'; tasks: BgTask[] }

@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import GeneralWrapperStyled from '@components/Objects/StyledElements/Wrappers/GeneralWrapper'
 import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { queryKeys } from '@/lib/query/keys'
 import { sortLibrary } from '@lib/library/sort'
@@ -24,7 +24,7 @@ function FolderClient({
   folderid: string
 }) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const access_token = session?.data?.tokens?.access_token
   const folderUuid = `folder_${folderid}`

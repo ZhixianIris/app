@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { UploadCloud, Info, Image as ImageIcon, Palette, Sun, Moon } from 'lucide-react'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getOrgLogoMediaDirectory, getOrgAuthBackgroundMediaDirectory } from '@services/media/media'
 import { toast } from 'react-hot-toast'
 import { constructAcceptValue } from '@/lib/constants'
@@ -27,14 +27,14 @@ type TextColor = 'light' | 'dark'
 export default function AuthBrandingTab() {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const queryClient = useQueryClient()
 
   const existingConfig = org?.config?.config?.customization?.auth_branding || org?.config?.config?.general?.auth_branding || {}
 
-  // Check if org has enterprise plan - hide LearnHouse branding for enterprise users
+  // Check if org has enterprise plan - hide Learning Web branding for enterprise users
   // In OSS mode, always show branding regardless of plan
   const plan = usePlan()
   const isEnterprise = plan === 'enterprise'

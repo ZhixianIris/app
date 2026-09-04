@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ type SuperadminAuthorizationProps = {
 const SuperadminAuthorization: React.FC<SuperadminAuthorizationProps> = ({
   children,
 }) => {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const navigate = useNavigate()
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [isChecking, setIsChecking] = useState(true)

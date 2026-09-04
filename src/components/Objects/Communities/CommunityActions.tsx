@@ -2,7 +2,7 @@ import React from 'react'
 import { Users, MessageCircle, Plus, Globe, Lock, Settings } from 'lucide-react'
 import { Community } from '@services/communities/communities'
 import { useCommunityRights } from '@components/Hooks/useCommunityRights'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 
 interface CommunityActionsProps {
   community: Community
@@ -17,7 +17,7 @@ export function CommunityActions({
   onEdit,
   onCreateDiscussion,
 }: CommunityActionsProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const { canManageCommunity, canCreateDiscussion } = useCommunityRights(community.community_uuid)
 
   const renderStatsSection = () => {

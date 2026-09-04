@@ -4,7 +4,7 @@ import * as Yup from 'yup'
 import { updateOrganization } from '@services/settings/org'
 import { revalidateTags } from '@services/utils/ts/requests'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { toast } from 'react-hot-toast'
 import { Button } from "@components/ui/button"
 import { Label } from "@components/ui/label"
@@ -41,7 +41,7 @@ const getValidationSchema = (t: any) => Yup.object().shape({
 const OrgEditOther: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const queryClient = useQueryClient()

@@ -43,7 +43,7 @@ import {
 import { Extension } from '@tiptap/core'
 import { BoardYjsProvider } from './BoardYjsContext'
 import { BoardSelectionProvider } from './BoardSelectionContext'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 
 interface BoardCanvasProps {
@@ -97,7 +97,7 @@ function BoardEditorInner({
   ydoc: Y.Doc
   provider: HocuspocusProvider
 }) {
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const [toolMode, setToolMode] = useState<'select' | 'pan' | 'draw' | 'card' | 'youtube' | 'playground' | 'activity' | 'embed' | 'webpage' | 'sticker' | 'frame' | 'note' | 'todo' | 'podcast'>('select')
   const [zoom, setZoom] = useState(() =>
     typeof window !== 'undefined' && window.innerWidth <= 768 ? 0.6 : 1

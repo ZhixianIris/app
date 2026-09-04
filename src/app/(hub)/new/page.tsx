@@ -37,12 +37,12 @@ import {
   SignOut as LogOut,
 } from '@phosphor-icons/react'
 
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { signOut } from '@components/Contexts/AuthContext'
 import UserAvatar from '@components/Objects/UserAvatar'
 import DemoEntryCard from '@components/Objects/Demo/DemoEntryCard'
 import { createNewOrganization } from '@services/organizations/orgs'
-import { useLHAnalytics } from '@services/analytics/useLHAnalytics'
+import { useAppAnalytics } from '@services/analytics/useAppAnalytics'
 import { AnalyticsEvent } from '@services/analytics/events'
 import { getAPIUrl, getUriWithOrg } from '@services/config/config'
 import { apiFetch } from '@services/utils/ts/requests'
@@ -73,7 +73,7 @@ import { Field } from "@base-ui/react/field";
 type UseType = 'personal' | 'organization' | null
 type Step = 'use-type' | 'usage' | 'choose-plan' | 'create-org' | 'success'
 
-const RESERVED_SLUGS = ['learnhouse', 'graphicmade', 'sweave', 'cname']
+const RESERVED_SLUGS = ['learning-web', 'graphicmade', 'sweave', 'cname']
 const RESTRICTED_WORDS = ['sex', 'test']
 
 const STEP_NUMBER: Record<Step, number> = {
@@ -600,7 +600,7 @@ function CreateOrgForm({
                   required
                 />} />
               <span className="px-4 py-3 bg-gray-50 text-black/25 border-s border-gray-100 shrink-0 text-[13px] font-medium select-none">
-                .learnhouse.io
+                .example.com
               </span>
             </div>
             {formik.errors.slug === 'test_hint' && <TestHint t={t} />}
@@ -716,11 +716,11 @@ export default function CreateNewOrgPage() {
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = session?.status === 'authenticated'
   const isLoading = session?.status === 'loading'
-  const { track } = useLHAnalytics('hub')
+  const { track } = useAppAnalytics('hub')
 
   useEffect(() => {
     track(AnalyticsEvent.OnboardingStarted)
@@ -967,7 +967,7 @@ export default function CreateNewOrgPage() {
             <div className="flex justify-center">
               <Link to="/home">
                 { }
-                <img src="/lrn.svg" alt="LearnHouse" width={40} height={40} className="opacity-90" />
+                <img src="/lrn.svg" alt="Learning Web" width={40} height={40} className="opacity-90" />
               </Link>
             </div>
             <div className="flex justify-end">

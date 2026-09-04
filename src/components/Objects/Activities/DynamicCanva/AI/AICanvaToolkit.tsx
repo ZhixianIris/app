@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { Editor } from '@tiptap/core'
-const learnhouseAI_icon = '/learnhouse_ai_simple.png'
+const learningWebAI_icon = '/ai_simple.png'
 import { BookOpen, FormInput, Languages, MoreVertical } from 'lucide-react'
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip'
 import {
@@ -14,7 +14,7 @@ import {
   startActivityAIChatSession,
 } from '@services/ai/ai'
 import useGetAIFeatures from '../../../../Hooks/useGetAIFeatures'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useLocation } from "react-router-dom";
 
 type AICanvaToolkitProps = {
@@ -153,7 +153,7 @@ function AICanvaToolkit(props: AICanvaToolkitProps) {
           <img
             className="outline-1 outline-neutral-200/10 rounded-lg"
             width={24}
-            src={learnhouseAI_icon}
+            src={learningWebAI_icon}
             alt="" 
           />
           <div>AI</div>
@@ -196,7 +196,7 @@ function AIActionButton(props: {
   label: string
   activity: any
 }) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token;
   const dispatchAIChatBot = useAIChatBotDispatch() as any
   const aiChatBotState = useAIChatBot() as AIChatBotStateTypes

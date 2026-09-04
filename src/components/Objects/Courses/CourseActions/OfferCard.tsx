@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, RefreshCcw, SquareCheck, Sparkles, ChevronDown, ChevronUp } from 'lucide-react'
 import { getUriWithOrg } from '@services/config/config'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useTranslation } from 'react-i18next'
 import { formatCurrency } from '@/lib/format'
 
@@ -23,7 +23,7 @@ interface OfferCardProps {
 
 export function OfferCard({ offer, orgslug }: OfferCardProps) {
   const { i18n } = useTranslation()
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
   const [expanded, setExpanded] = useState(false)
   const isSubscription = offer.offer_type === 'subscription'
   const benefits: string[] = offer.benefits

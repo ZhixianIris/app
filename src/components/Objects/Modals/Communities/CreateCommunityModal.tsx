@@ -3,14 +3,14 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { createCommunity } from '@services/communities/communities'
 import { revalidateTags } from '@services/utils/ts/requests'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import { Loader2 } from 'lucide-react'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { getErrorMessage } from '@services/utils/ts/errorMessage'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
 import { useNavigate } from "react-router-dom";
@@ -29,10 +29,10 @@ export function CreateCommunityModal({
   orgSlug,
 }: CreateCommunityModalProps) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
   const { handlePlanLimit } = useUpgradeModal()
   const [isSubmitting, setIsSubmitting] = useState(false)
 

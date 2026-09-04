@@ -22,7 +22,7 @@ import React, { useEffect, lazy } from 'react'
 import { AssignmentProvider, useAssignments } from '@components/Contexts/Assignments/AssignmentContext';
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip';
 import { updateAssignment } from '@services/courses/assignments';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/keys';
 import toast from 'react-hot-toast';
@@ -33,7 +33,7 @@ import AssignmentEditorSubPage from './subpages/AssignmentEditorSubPage';
 import { useMediaQuery } from 'usehooks-ts';
 import EditAssignmentModal from '@components/Objects/Modals/Activities/Assignments/EditAssignmentModal';
 import { useTranslation } from 'react-i18next';
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics';
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics';
 const AssignmentSubmissionsSubPage = lazy(() => import('./subpages/AssignmentSubmissionsSubPage'))
 const AssignmentAnalyticsSubPage = lazy(() => import('./subpages/AssignmentAnalyticsSubPage'))
 
@@ -43,7 +43,7 @@ function AssignmentEdit() {
     const [searchParams] = useSearchParams()
     const [selectedSubPage, setSelectedSubPage] = React.useState(searchParams.get('subpage') || 'editor')
     const isMobile = useMediaQuery('(max-width: 767px)')
-    const { track } = useLHAnalytics('dashboard')
+    const { track } = useAppAnalytics('dashboard')
 
     useEffect(() => {
         if (selectedSubPage === 'submissions') {
@@ -156,10 +156,10 @@ function BrdCmpx() {
 function PublishingState() {
     const { t } = useTranslation()
     const assignment = useAssignments() as any;
-    const session = useLHSession() as any;
+    const session = useAppSession() as any;
     const access_token = session?.data?.tokens?.access_token;
     const queryClient = useQueryClient();
-    const { track } = useLHAnalytics('dashboard');
+    const { track } = useAppAnalytics('dashboard');
     const [isEditModalOpen, setIsEditModalOpen] = React.useState(false);
 
     async function updateAssignmentPublishState(assignmentUUID: string) {

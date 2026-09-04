@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { queryKeys } from '@lib/query/keys'
 import { getOrgPodcasts, getPodcast } from '@services/podcasts/podcasts'
 import { getEpisodes } from '@services/podcasts/episodes'
 
 export function usePodcasts(orgSlug: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({
@@ -17,7 +17,7 @@ export function usePodcasts(orgSlug: string) {
 }
 
 export function usePodcast(podcastUuid: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({
@@ -29,7 +29,7 @@ export function usePodcast(podcastUuid: string) {
 }
 
 export function usePodcastEpisodes(podcastUuid: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({

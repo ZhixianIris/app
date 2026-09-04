@@ -29,7 +29,7 @@ import { deleteAssignmentUsingActivityUUID } from '@services/courses/assignments
 import { revalidateTags } from '@services/utils/ts/requests'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@lib/query/keys'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useCourse, useCourseDispatch } from '@components/Contexts/CourseContext'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -53,7 +53,7 @@ interface ModifiedChapterInterface {
 function ChapterElement(props: ChapterElementProps) {
   const { t } = useTranslation()
   const activities = props.chapter.activities || []
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const [modifiedChapter, setModifiedChapter] = React.useState<
     ModifiedChapterInterface | undefined

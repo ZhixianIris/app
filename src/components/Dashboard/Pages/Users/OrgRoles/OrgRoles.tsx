@@ -1,4 +1,4 @@
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import AddRole from '@components/Objects/Modals/Dash/OrgRoles/AddRole'
 import EditRole from '@components/Objects/Modals/Dash/OrgRoles/EditRole'
@@ -21,7 +21,7 @@ import { usePlan } from '@components/Hooks/usePlan'
 function OrgRoles() {
     const { t } = useTranslation()
     const org = useOrg() as any
-    const session = useLHSession() as any
+    const session = useAppSession() as any
     const access_token = session?.data?.tokens?.access_token;
     const queryClient = useQueryClient()
     const currentPlan = usePlan()

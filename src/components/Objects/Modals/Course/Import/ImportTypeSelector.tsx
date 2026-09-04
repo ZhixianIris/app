@@ -6,7 +6,7 @@ import { PlanLevel } from '@services/plans/plans'
 import { useOrg } from '@components/Contexts/OrgContext'
 
 interface ImportTypeSelectorProps {
-  onSelectType: (type: 'scorm' | 'learnhouse') => void
+  onSelectType: (type: 'scorm' | 'learning-web') => void
   currentPlan: PlanLevel
 }
 
@@ -47,19 +47,19 @@ function ImportTypeSelector({ onSelectType, currentPlan }: ImportTypeSelectorPro
           </p>
         </button>
 
-        {/* LearnHouse Import Option */}
+        {/* Learning Web Import Option */}
         <button
-          onClick={() => onSelectType('learnhouse')}
+          onClick={() => onSelectType('learning-web')}
           className="group flex flex-col items-center p-6 rounded-xl border-2 border-gray-200 bg-white hover:border-black hover:shadow-lg transition-all duration-200"
         >
           <div className="w-14 h-14 rounded-full bg-blue-50 flex items-center justify-center mb-4 group-hover:bg-blue-100 transition-colors">
             <FileArchive size={28} className="text-blue-600" />
           </div>
           <h3 className="font-semibold text-gray-900 mb-1">
-            {t('courses.import.learnhouse_courses')}
+            {t('courses.import.learningWeb_courses')}
           </h3>
           <p className="text-sm text-gray-500 text-center">
-            {t('courses.import.learnhouse_description')}
+            {t('courses.import.learningWeb_description')}
           </p>
         </button>
       </div>

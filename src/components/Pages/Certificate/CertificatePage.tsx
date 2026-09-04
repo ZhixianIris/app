@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { useOrg } from '@components/Contexts/OrgContext';
 import { getUserCertificates } from '@services/courses/certifications';
 import CertificatePreview from '@components/Dashboard/Pages/Course/EditCourseCertification/CertificatePreview';
 import { ArrowLeft, Download, Share2, Copy, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { getUriWithOrg } from '@services/config/config';
-import { useLHAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics';
+import { useAppAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics';
 import {
   CERTIFICATE_CAPTURE_WIDTH,
   certificateFileName,
@@ -21,14 +21,14 @@ interface CertificatePageProps {
 }
 
 const CertificatePage: React.FC<CertificatePageProps> = ({ orgslug, courseid, qrCodeLink }) => {
-  const session = useLHSession() as any;
+  const session = useAppSession() as any;
   const org = useOrg() as any;
   const [userCertificate, setUserCertificate] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [linkCopied, setLinkCopied] = useState(false);
   const certificateCaptureRef = useRef<HTMLDivElement>(null);
-  const { track } = useLHAnalytics('learner');
+  const { track } = useAppAnalytics('learner');
 
   useTrackView(AnalyticsEvent.CertificateViewed, {}, !!userCertificate);
 

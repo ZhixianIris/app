@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react'
 import { UploadCloud, Image as ImageIcon, ArrowBigUpDash } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useCommunity, useCommunityDispatch } from '@components/Contexts/CommunityContext'
 import { updateCommunityThumbnail } from '@services/communities/communities'
@@ -23,7 +23,7 @@ type ValidImageMimeType = (typeof VALID_IMAGE_MIME_TYPES)[number]
 const CommunityEditThumbnail: React.FC = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const communityState = useCommunity()
   const _dispatch = useCommunityDispatch()

@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { getPlayground } from '@services/playgrounds/playgrounds'
 import { getOrgCourses } from '@services/courses/courses'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import PlaygroundEditor from '@components/Playground/PlaygroundEditor'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 import NotFound from '@app/not-found'
 
 export default function EditPlaygroundPage() {
   const { playgrounduuid } = useParams() as { playgrounduuid: string }
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [playground, setPlayground] = useState<any>(null)

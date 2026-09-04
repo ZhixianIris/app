@@ -2,7 +2,7 @@ import React, { Suspense, useEffect, useRef } from 'react'
 import posthog from 'posthog-js'
 import { PostHogProvider as PHProvider, usePostHog } from 'posthog-js/react'
 import { getPOSTHOG_KEY_VAL } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useLocation, useSearchParams } from "react-router-dom";
 
 let initialized = false
@@ -77,7 +77,7 @@ function PostHogPageView() {
  */
 function PostHogIdentify() {
   const posthogClient = usePostHog()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const status = session?.status
   const user = session?.data?.user
   const identifiedRef = useRef<string | null>(null)

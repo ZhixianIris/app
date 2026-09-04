@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { getAPIUrl } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 
 function fetcher(url: string, token: string) {
@@ -18,7 +18,7 @@ const STALE_TIME = 60_000
 /** Full per-student dossier: connections, progress, assignments, community, certs, behavior. */
 export function useUserDossier(userId: number | null, days = 365) {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 
@@ -37,7 +37,7 @@ export function useUserDossier(userId: number | null, days = 365) {
 /** Lightweight summary rows for the user list + multi-select comparison. */
 export function useUsersAuditSummary(userIds: number[], days = 365) {
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 

@@ -3,7 +3,7 @@ import { useAssignmentDirtyTasks } from '@components/Contexts/Assignments/Assign
 import { useAutoSave, type SaveResult } from './useAutoSave'
 import { BookPlus, BookUser, Check, Code2, EllipsisVertical, FileUp, ListTodo, Loader2, MessageSquare, Save, TriangleAlert, Type } from 'lucide-react'
 import React from 'react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useTranslation } from 'react-i18next'
 
 // Options passed to a task's submitFC. `silent` suppresses user-facing toasts
@@ -47,7 +47,7 @@ function AssignmentBoxUI({ type, view, currentPoints, currentFeedback, maxPoints
     const [manualGrade, setManualGrade] = React.useState<string>('')
     const [manualFeedback, setManualFeedback] = React.useState<string>('')
     const submission = useAssignmentSubmission() as any
-    const session = useLHSession() as any
+    const session = useAppSession() as any
 
     // The student can save/draft answers until they SUBMIT for grading or are
     // GRADED. A retry flips the row back to PENDING, which re-enables saving.

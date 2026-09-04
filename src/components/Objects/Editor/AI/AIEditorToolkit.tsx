@@ -1,5 +1,5 @@
 import React from 'react'
-const learnhouseAI_icon = '/learnhouse_ai_simple.png'
+const learningWebAI_icon = '/ai_simple.png'
 import { motion, AnimatePresence } from 'motion/react'
 import {
   AlertTriangle,
@@ -23,7 +23,7 @@ import {
   startActivityAIChatSession,
 } from '@services/ai/ai'
 import useGetAIFeatures from '@components/Hooks/useGetAIFeatures'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 
 type AIEditorToolkitProps = {
   editor: Editor
@@ -93,7 +93,7 @@ function AIEditorToolkit(props: AIEditorToolkitProps) {
                           <img
                             className="outline outline-1 outline-neutral-200/20 rounded-lg"
                             width={24}
-                            src={learnhouseAI_icon}
+                            src={learningWebAI_icon}
                             alt="" 
                           />
                           <div className="flex items-center">
@@ -141,7 +141,7 @@ function AIEditorToolkit(props: AIEditorToolkitProps) {
 const UserFeedbackModal = (props: AIEditorToolkitProps) => {
   const dispatchAIEditor = useAIEditorDispatch() as any
   const aiEditorState = useAIEditor() as AIEditorStateTypes
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token;
 
   const handleChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -452,7 +452,7 @@ const UserFeedbackModal = (props: AIEditorToolkitProps) => {
           <img
             className="outline outline-1 outline-neutral-200/20 rounded-lg"
             width={24}
-            src={learnhouseAI_icon}
+            src={learningWebAI_icon}
             alt="" 
           />
         </div>

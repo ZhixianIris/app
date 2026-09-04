@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { getAPIUrl, getDeploymentMode } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { X, Buildings } from '@phosphor-icons/react'
 import { useNavigate } from "react-router-dom";
 
@@ -22,7 +22,7 @@ export default function CreateOrganizationModal({
   open: boolean
   onClose: () => void
 }) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
   const navigate = useNavigate()

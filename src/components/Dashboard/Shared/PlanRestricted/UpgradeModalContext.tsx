@@ -1,7 +1,7 @@
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import UpgradeModal from '@components/Dashboard/Shared/PlanRestricted/UpgradeModal'
 import { isPlanLimitError } from '@services/utils/ts/errorMessage'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 interface ShowUpgradeOptions {
   /** Analytics attribution for where the prompt was triggered from. */
@@ -34,7 +34,7 @@ const UpgradeModalContext = createContext<UpgradeModalContextValue | null>(null)
 export function UpgradeModalProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false)
   const [source, setSource] = useState<string>('free_plan_banner')
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
 
   const showUpgrade = useCallback(
     (options?: ShowUpgradeOptions) => {

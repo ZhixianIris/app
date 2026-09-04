@@ -5,7 +5,7 @@ import { queryKeys } from '@/lib/query/keys'
 import { useTranslation } from 'react-i18next'
 import { formatDate } from '@/lib/format'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { getAPIUrl } from '@services/config/config'
 import { apiFetch } from '@services/utils/ts/requests'
 import { Users, ShieldCheck, Clock, EnvelopeSimple } from '@phosphor-icons/react'
@@ -13,7 +13,7 @@ import { Users, ShieldCheck, Clock, EnvelopeSimple } from '@phosphor-icons/react
 export default function RecentMembers() {
   const { t, i18n } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
 

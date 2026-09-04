@@ -8,7 +8,7 @@ import { Community } from '@services/communities/communities'
 import { DiscussionWithAuthor } from '@services/communities/discussions'
 import { MessageCircle } from 'lucide-react'
 import { getUriWithOrg } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useTrackView, AnalyticsEvent } from '@services/analytics'
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,7 @@ const DiscussionPageClient = ({
   orgslug,
 }: DiscussionPageClientProps) => {
   const navigate = useNavigate()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const [discussion, setDiscussion] = useState(initialDiscussion)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 

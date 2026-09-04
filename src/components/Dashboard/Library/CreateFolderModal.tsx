@@ -8,7 +8,7 @@ import FormLayout, {
 import { createFolder, updateFolderThumbnail } from '@services/folders/folders'
 import FolderAppearance from '@components/Dashboard/Library/FolderAppearance'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Globe, Lock } from 'lucide-react'
 import React from 'react'
 import { BarLoader } from 'react-spinners'
@@ -16,7 +16,7 @@ import toast from 'react-hot-toast'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { Form } from "@base-ui/react/form";
 import { Field } from "@base-ui/react/field";
 
@@ -30,9 +30,9 @@ type Props = {
 function CreateFolderModal({ parentFolderUuid, closeModal, onChanged }: Props) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
 
   const [color, setColor] = React.useState('violet')
   const [file, setFile] = React.useState<File | null>(null)

@@ -12,13 +12,13 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@compo
 import { useTranslation } from 'react-i18next'
 import { updateCourse } from '@services/courses/courses'
 import { getAPIUrl } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { revalidateTags } from '@services/utils/ts/requests'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import toast from 'react-hot-toast'
 import { useState, useCallback } from 'react'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 export function CourseOverviewTop({
   params,
@@ -26,11 +26,11 @@ export function CourseOverviewTop({
   params: CourseOverviewParams
 }) {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const course = useCourse() as any
   const dispatchCourse = useCourseDispatch() as any
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const queryClient = useQueryClient()
   const [isPublishing, setIsPublishing] = useState(false)
   const [isIndexing, setIsIndexing] = useState(false)

@@ -5,7 +5,7 @@ import { Link, useParams } from 'react-router-dom'
 import { getUriWithOrg } from '@services/config/config'
 import { Settings, Users, Gem, CreditCard, Layers, ShoppingBag, ExternalLink } from 'lucide-react'
 import { SiStripe } from '@icons-pack/react-simple-icons'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import PaymentsConfigurationPage from '@components/Dashboard/Pages/Payments/PaymentsConfigurationPage'
 import PaymentsCustomersPage from '@components/Dashboard/Pages/Payments/PaymentsCustomersPage'
@@ -22,7 +22,7 @@ export type PaymentsParams = {
 
 function PaymentsPage(props: { params: Promise<PaymentsParams> }) {
   const params = useParams() as { subpage: string; orgslug: string };
-  const _session = useLHSession() as any
+  const _session = useAppSession() as any
   const org = useOrg() as any
   const subpage = params.subpage || 'overview'
   const getPageTitle = () => {

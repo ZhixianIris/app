@@ -8,7 +8,7 @@ import {
   getCourseThumbnailMediaDirectory,
 } from '@services/media/media'
 import { apiFetch } from '@services/utils/ts/requests'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 import { Link, useNavigate, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import {
@@ -104,7 +104,7 @@ function getFrontendDomain(): string {
   return (
     document.cookie
       .split('; ')
-      .find((c) => c.startsWith('LH_frontend_domain='))
+      .find((c) => c.startsWith('app_frontend_domain='))
       ?.split('=')[1] || 'localhost:3000'
   )
 }
@@ -112,7 +112,7 @@ function getFrontendDomain(): string {
 export default function OrgDetailPage() {
   const params = useParams()
   const orgId = params.orgId as string
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const { searchParams, updateParams } = useUrlParams()
 

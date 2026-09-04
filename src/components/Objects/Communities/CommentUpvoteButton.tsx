@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from 'react'
 import { ChevronUp } from 'lucide-react'
 import toast from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrgMembership } from '@components/Contexts/OrgContext'
 import { upvoteComment, removeCommentUpvote } from '@services/communities/discussions'
 import { cn } from '@/lib/utils'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 interface CommentUpvoteButtonProps {
   commentUuid: string
@@ -20,9 +20,9 @@ export function CommentUpvoteButton({
   initialHasVoted,
   onVoteChange,
 }: CommentUpvoteButtonProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const { isUserPartOfTheOrg } = useOrgMembership()
-  const { track } = useLHAnalytics('learner')
+  const { track } = useAppAnalytics('learner')
   const [voteCount, setVoteCount] = useState(initialVoteCount)
   const [hasVoted, setHasVoted] = useState(initialHasVoted)
   const [isLoading, setIsLoading] = useState(false)

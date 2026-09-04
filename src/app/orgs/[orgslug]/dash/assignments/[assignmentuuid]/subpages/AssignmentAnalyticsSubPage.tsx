@@ -1,4 +1,4 @@
-import { useLHSession } from '@components/Contexts/LHSessionContext';
+import { useAppSession } from '@components/Contexts/AppSessionContext';
 import { useAssignments } from '@components/Contexts/Assignments/AssignmentContext';
 import UserAvatar from '@components/Objects/UserAvatar';
 import { getAPIUrl } from '@services/config/config';
@@ -98,7 +98,7 @@ const GRADE_BUCKETS = [
 
 function AssignmentAnalyticsSubPage({ assignment_uuid }: { assignment_uuid: string }) {
     const { t } = useTranslation();
-    const session = useLHSession() as any;
+    const session = useAppSession() as any;
     const access_token = session?.data?.tokens?.access_token;
     const assignment = useAssignments() as any;
     const assignmentObj = assignment?.assignment_object;

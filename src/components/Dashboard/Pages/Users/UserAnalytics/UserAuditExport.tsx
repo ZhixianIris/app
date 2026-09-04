@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Download, ChevronDown } from 'lucide-react'
 import { getAPIUrl } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { fullName, fmtDateTime, fmtDate, fmtDuration } from './format'
 
@@ -175,7 +175,7 @@ async function buildPdf(dossiers: any[]) {
 
 export default function UserAuditExport({ userIds, days = 365, defaultDossier, label }: Props) {
   const { t } = useTranslation()
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id

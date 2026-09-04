@@ -4,7 +4,7 @@ import { queryKeys } from '@/lib/query/keys'
 import { getAPIUrl } from '@services/config/config'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
 import { apiFetch } from '@services/utils/ts/requests'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import {
   User,
   CaretLeft,
@@ -116,7 +116,7 @@ function OrgListTooltip({ orgs }: { orgs: OrgMembership[] }) {
 }
 
 export default function UserList() {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const [searchParams] = useSearchParams()
   const navigate = useNavigate()

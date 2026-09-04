@@ -19,7 +19,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { startPlaygroundSession, iteratePlayground } from '@services/playgrounds/generator'
 import { updatePlayground, Playground } from '@services/playgrounds/playgrounds'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { Slash, SeparatorVertical } from "lucide-react";
 
 interface Course {
@@ -54,7 +54,7 @@ const logoAnimations: { initial: TargetAndTransition; animate: TargetAndTransiti
   },
 ]
 
-const EditorLearnHouseLogo = () => {
+const EditorAppLogo = () => {
   const [animation] = useState(
     () => logoAnimations[Math.floor(Math.random() * logoAnimations.length)]
   )
@@ -65,7 +65,7 @@ const EditorLearnHouseLogo = () => {
         animate={animation.animate}
         transition={animation.transition}
       >
-        <img src="/lrn.svg" alt="LearnHouse" width={14} height={14} className="invert"  />
+        <img src="/lrn.svg" alt="Learning Web" width={14} height={14} className="invert"  />
       </motion.div>
     </div>
   )
@@ -78,7 +78,7 @@ export default function PlaygroundEditor({
   orgCourses = [],
 }: PlaygroundEditorProps) {
   const queryClient = useQueryClient()
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
   const [playground, setPlayground] = useState(initialPlayground)
   const [title, setTitle] = useState(initialPlayground.name)
   const [html, setHtml] = useState<string>(initialPlayground.html_content || '')
@@ -282,7 +282,7 @@ export default function PlaygroundEditor({
       >
         {/* Logo */}
         <Link to="/">
-          <EditorLearnHouseLogo />
+          <EditorAppLogo />
         </Link>
 
         <Slash style={{ color: '#d1d5db', flexShrink: 0 }} />

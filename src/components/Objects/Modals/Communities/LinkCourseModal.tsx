@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import toast from 'react-hot-toast'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { linkCommunityToCourse, unlinkCommunityFromCourse, Community } from '@services/communities/communities'
 import { getOrgCourses } from '@services/courses/courses'
@@ -30,7 +30,7 @@ export function LinkCourseModal({
   community,
   orgSlug,
 }: LinkCourseModalProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const org = useOrg() as any
   const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)

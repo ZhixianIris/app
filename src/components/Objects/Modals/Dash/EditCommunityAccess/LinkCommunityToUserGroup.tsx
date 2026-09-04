@@ -1,5 +1,5 @@
 import { useCommunity } from '@components/Contexts/CommunityContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getUriWithOrg } from '@services/config/config'
 import { getUserGroups, linkResourcesToUserGroup } from '@services/usergroups/usergroups'
@@ -20,7 +20,7 @@ function LinkCommunityToUserGroup(props: LinkCommunityToUserGroupProps) {
   const communityState = useCommunity()
   const community = communityState?.community
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
 

@@ -5,7 +5,7 @@ import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
 const lrnaiIcon = '/lrnai_icon.png'
 import { useEditorProvider } from '@components/Contexts/Editor/EditorContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useCourse } from '@components/Contexts/CourseContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { cn } from '@/lib/utils'
@@ -55,7 +55,7 @@ function MagicBlockComponent(props: ExtendedNodeViewProps) {
   const { t } = useTranslation()
   const { node, extension, updateAttributes } = props
   const editorState = useEditorProvider() as EditorState
-  const session = useLHSession() as Session
+  const session = useAppSession() as Session
   const course = useCourse() as Course | null
   const orgContext = useOrg() as any
 

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { getAPIUrl } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Key, X } from '@phosphor-icons/react'
 import type { CreatedToken } from '@components/Admin/SuperadminAPITokens/TokenCreatedDialog'
 
@@ -15,7 +15,7 @@ export default function CreateTokenModal({
   onClose: () => void
   onCreated: (_token: CreatedToken) => void
 }) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
 

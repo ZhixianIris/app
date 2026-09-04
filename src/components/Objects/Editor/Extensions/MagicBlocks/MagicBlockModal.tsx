@@ -13,7 +13,7 @@ import {
 } from '@services/ai/magicblocks'
 const lrnaiIcon = '/lrnai_icon.png'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 
 interface MagicBlockModalProps {
   isOpen: boolean
@@ -45,7 +45,7 @@ function MagicBlockModal({
   initialMessages = [],
 }: MagicBlockModalProps) {
   const { t } = useTranslation()
-  const { track } = useLHAnalytics('editor')
+  const { track } = useAppAnalytics('editor')
   const [sessionUuid, setSessionUuid] = React.useState<string | null>(initialSessionUuid)
   const [messages, setMessages] = React.useState<MagicBlockMessage[]>(initialMessages)
   const [iterationCount, setIterationCount] = React.useState(initialIterationCount)

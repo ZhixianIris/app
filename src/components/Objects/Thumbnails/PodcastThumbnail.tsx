@@ -4,10 +4,10 @@ import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationMo
 import { getUriWithOrg } from '@services/config/config'
 import { deletePodcast, removePodcastPrefix } from '@services/podcasts/podcasts'
 import { getPodcastThumbnailMediaDirectory, getUserAvatarMediaDirectory } from '@services/media/media'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useQueryClient } from '@tanstack/react-query'
 import { Trash2, FilePenLine, Settings2, MoreVertical, Play, Headphones } from 'lucide-react'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import toast from 'react-hot-toast'
@@ -55,9 +55,9 @@ type PropsType = {
 function PodcastThumbnail({ podcast, orgslug, customLink, isDashboard = false }: PropsType) {
   const { t, i18n } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const queryClient = useQueryClient()
-  const { track } = useLHAnalytics(isDashboard ? 'dashboard' : 'learner')
+  const { track } = useAppAnalytics(isDashboard ? 'dashboard' : 'learner')
 
   const handleCardOpen = () => {
     track(AnalyticsEvent.PodcastCardOpened, {

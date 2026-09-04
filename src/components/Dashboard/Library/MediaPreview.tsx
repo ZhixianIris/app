@@ -1,7 +1,7 @@
 import React from 'react'
 import { getMediaFileDirectory } from '@services/media/media-resource'
 import { getAPIUrl } from '@services/config/config'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import {
   LinkSimple,
   FilePdf,
@@ -121,7 +121,7 @@ function UploadVideoPreview({ src }: { src: string }) {
  * server-side) first, then a screenshot service, then a clean link/video tile.
  */
 function EmbedPreview({ url, video }: { url: string; video?: boolean }) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const [og, setOg] = React.useState<string | null | undefined>(undefined)
   const [ogFailed, setOgFailed] = React.useState(false)

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import AccountClient from '@components/Objects/Account/AccountClient'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 
@@ -11,7 +11,7 @@ const AccountSubPage = () => {
   const params = useParams() as { orgslug: string; subpage: string }
   const orgslug = params.orgslug ?? ''
   const subpage = params.subpage ?? ''
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [org, setOrg] = useState<any>(null)

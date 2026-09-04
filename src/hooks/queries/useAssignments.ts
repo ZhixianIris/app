@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { queryKeys } from '@lib/query/keys'
 import { getAPIUrl } from '@services/config/config'
 import { apiFetch } from '@services/utils/ts/requests'
 
 export function useAssignments(orgSlug: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({
@@ -21,7 +21,7 @@ export function useAssignments(orgSlug: string) {
 }
 
 export function useAssignmentSubmission(assignmentUuid: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({
@@ -37,7 +37,7 @@ export function useAssignmentSubmission(assignmentUuid: string) {
 }
 
 export function useAssignmentTaskSubmission(assignmentUuid: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({
@@ -53,7 +53,7 @@ export function useAssignmentTaskSubmission(assignmentUuid: string) {
 }
 
 export function useAllSubmissions(assignmentUuid: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({
@@ -69,7 +69,7 @@ export function useAllSubmissions(assignmentUuid: string) {
 }
 
 export function useAssignmentAnalytics(assignmentUuid: string) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const accessToken = session?.data?.tokens?.access_token as string | undefined
 
   return useQuery({

@@ -12,7 +12,7 @@ import {
   updateExternalVideoActivity,
   updateVideoCaptions,
 } from '@services/courses/activities'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import toast from 'react-hot-toast'
 import { mutate } from 'swr'
 
@@ -33,7 +33,7 @@ interface EditVideoActivityModalProps {
 }
 
 function EditVideoActivityModal({ activity, onClose }: EditVideoActivityModalProps) {
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const isYouTube = activity.activity_sub_type === 'SUBTYPE_VIDEO_YOUTUBE'
 

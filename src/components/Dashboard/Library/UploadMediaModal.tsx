@@ -7,13 +7,13 @@ import FormLayout, {
 } from '@components/Objects/StyledElements/Form/Form'
 import { createMedia } from '@services/media/media-resource'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { UploadCloud, Link as LinkIcon, FileUp } from 'lucide-react'
 import React from 'react'
 import { BarLoader } from 'react-spinners'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import { Form } from "@base-ui/react/form";
 import { Field } from "@base-ui/react/field";
 
@@ -27,9 +27,9 @@ type Props = {
 function UploadMediaModal({ folderUuid, closeModal, onChanged }: Props) {
   const { t } = useTranslation()
   const org = useOrg() as any
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
 
   const [mode, setMode] = React.useState<'UPLOAD' | 'EMBED'>('UPLOAD')
   const [name, setName] = React.useState('')

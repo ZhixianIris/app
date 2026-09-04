@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
 import { getOrgFolders } from '@services/folders/folders'
-import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useAppSession } from '@components/Contexts/AppSessionContext'
 import LibraryHome from './client'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 
 function LibraryPage() {
   const { orgslug } = useParams() as { orgslug: string }
-  const session = useLHSession() as any
+  const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
   const [orgId, setOrgId] = useState<number | null>(null)

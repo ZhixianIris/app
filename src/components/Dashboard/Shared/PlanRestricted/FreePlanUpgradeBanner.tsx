@@ -4,7 +4,7 @@ import { usePlan } from '@components/Hooks/usePlan'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getUpgradeUrl } from '@services/config/config'
 import { useTranslation } from 'react-i18next'
-import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
 import UpgradeModal from './UpgradeModal'
 
 export default function FreePlanUpgradeBanner() {
@@ -13,7 +13,7 @@ export default function FreePlanUpgradeBanner() {
   const org = useOrg() as any
   const upgradeUrl = getUpgradeUrl(org?.slug || 'default')
   const [modalOpen, setModalOpen] = useState(false)
-  const { track } = useLHAnalytics('dashboard')
+  const { track } = useAppAnalytics('dashboard')
 
   if (plan !== 'free' || !upgradeUrl) return null
 
