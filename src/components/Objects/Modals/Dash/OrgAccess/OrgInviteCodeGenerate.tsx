@@ -8,7 +8,7 @@ import React, { useEffect } from 'react'
 import toast from 'react-hot-toast'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 
@@ -124,7 +124,7 @@ function OrgInviteCodeGenerate(props: OrgInviteCodeGenerateProps) {
                     <Link
                         className='px-3 text-blue-700 font-bold rounded-full py-1 bg-blue-100'
                         target='_blank'
-                        href={getUriWithOrg(org.slug, '/dash/users/settings/usergroups')}
+                        to={getUriWithOrg(org.slug, '/dash/users/settings/usergroups')}
                     >
                         {t('dashboard.users.signups.generate_modal.create_usergroup_link')}
                     </Link>

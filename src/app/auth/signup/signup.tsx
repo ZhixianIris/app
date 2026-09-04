@@ -1,4 +1,3 @@
-'use client'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import React, { useEffect, useRef, useState } from 'react'
 import { AlertTriangle, CheckCircle, Loader2, Mail, Ticket, UserPlus, X } from 'lucide-react'
@@ -6,7 +5,6 @@ import { useOrg } from '@components/Contexts/OrgContext'
 import UserAvatar from '@components/Objects/UserAvatar'
 import OpenSignUpComponent from './OpenSignup'
 import InviteOnlySignUpComponent from './InviteOnlySignUp'
-import { useRouter, useSearchParams } from 'next/navigation'
 import { validateInviteCode } from '@services/organizations/invites'
 import { joinOrg } from '@services/organizations/orgs'
 import { getUriWithOrg } from '@services/config/config'
@@ -17,6 +15,7 @@ import FormLayout, {
   FormField,
 } from '@components/Objects/StyledElements/Form/Form'
 import * as Form from '@radix-ui/react-form'
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 interface SignUpClientProps {
   org: any
@@ -25,10 +24,10 @@ interface SignUpClientProps {
 function SignUpClient(props: SignUpClientProps) {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
   const [joinMethod, setJoinMethod] = React.useState('open')
   const [inviteCode, setInviteCode] = React.useState('')
-  const searchParams = useSearchParams()
+  const [searchParams] = useSearchParams()
   const inviteCodeParam = searchParams.get('inviteCode')
 
   const isAuthenticated = session.status === 'authenticated'
@@ -40,7 +39,7 @@ function SignUpClient(props: SignUpClientProps) {
 
   useEffect(() => {
     if (isAuthenticated && !hasOrgToJoin) {
-      router.replace('/home')
+      navigate('/home', { replace: true })
     }
   }, [isAuthenticated, hasOrgToJoin, router])
 
@@ -121,7 +120,7 @@ const LoggedInJoinScreen = ({ inviteCode, org }: JoinScreenProps) => {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [showMessage, setShowMessage] = useState(false)
-  const router = useRouter()
+  const router = useNavigate()
   const redirectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => () => {
@@ -147,7 +146,7 @@ const LoggedInJoinScreen = ({ inviteCode, org }: JoinScreenProps) => {
         // Refresh session so the new org membership appears in session.data.roles
         await session.update?.(true)
         redirectTimeoutRef.current = setTimeout(() => {
-          router.push(getUriWithOrg(activeOrg.slug, '/'))
+          navigate(getUriWithOrg(activeOrg.slug, '/'))
         }, 2000)
       } else {
         setError(getErrorMessage(res.data?.detail, t('common.something_went_wrong')))
@@ -245,7 +244,7 @@ const NoTokenScreen = ({ org }: NoTokenScreenProps) => {
   const session = useLHSession() as any
   const contextOrg = useOrg() as any
   const activeOrg = contextOrg || org
-  const router = useRouter()
+  const router = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [inviteCode, setInviteCode] = useState('')
   const [error, setError] = useState('')
@@ -280,7 +279,7 @@ const NoTokenScreen = ({ org }: NoTokenScreenProps) => {
         setSuccess(t('auth.invite_code_valid'))
         setShowMessage(true)
         setTimeout(() => {
-          router.push(`/signup?inviteCode=${trimmedCode}`)
+          navigate(`/signup?inviteCode=${trimmedCode}`)
         }, 1500)
       } else {
         setError(getErrorMessage(res.data?.detail, t('auth.invite_code_invalid')))

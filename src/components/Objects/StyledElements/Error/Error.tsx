@@ -1,4 +1,3 @@
-'use client'
 import { classifyError } from '@lib/errors/classify'
 import type { ResolutionKind } from '@lib/errors/types'
 import { AlertTriangle, ChevronDown, ChevronRight } from 'lucide-react'

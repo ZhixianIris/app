@@ -1,4 +1,3 @@
-'use client'
 import { useSyncExternalStore } from 'react'
 import { getAbsoluteUriWithOrg } from '@services/config/config'
 import { getCanonicalUrl } from './utils'

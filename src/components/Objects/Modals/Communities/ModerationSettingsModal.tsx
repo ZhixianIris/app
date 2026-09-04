@@ -1,7 +1,5 @@
-'use client'
 import React, { useState, useEffect, useRef } from 'react'
 import { Plus, Trash2, Shield, AlertTriangle, Loader2 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { Community, updateCommunity } from '@services/communities/communities'
@@ -12,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@components/ui/dialog'
+import { useNavigate } from "react-router-dom";
 
 interface ModerationSettingsModalProps {
   isOpen: boolean
@@ -27,7 +26,7 @@ export function ModerationSettingsModal({
   orgSlug,
 }: ModerationSettingsModalProps) {
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
   const accessToken = session?.data?.tokens?.access_token
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -94,7 +93,7 @@ export function ModerationSettingsModal({
         accessToken
       )
       await revalidateTags(['communities'], orgSlug)
-      router.refresh()
+      window.location.reload()
       onClose()
     } catch (err: any) {
       const message =

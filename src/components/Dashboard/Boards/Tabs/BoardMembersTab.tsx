@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState } from 'react'
 import { UserPlus, Trash2, Search, Check, User, Users } from 'lucide-react'
 import { useLHSession } from '@components/Contexts/LHSessionContext'

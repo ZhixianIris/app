@@ -1,5 +1,4 @@
-'use client';
-import { use, useEffect, type ReactNode } from "react";
+import { use, useEffect, type ReactNode, lazy } from "react";
 import '@styles/globals.css'
 import Watermark from '@components/Objects/Watermark'
 import { SessionGate } from '@components/Contexts/LHSessionContext'
@@ -8,12 +7,9 @@ import { useOrg } from '@components/Contexts/OrgContext'
 import { OrgJoinBanner, OrgJoinBannerProvider } from '@components/Objects/Banners/OrgJoinBanner'
 import { OrgMFAPolicyGate } from '@components/Objects/Banners/OrgMFAPolicyGate'
 import { PodcastPlayerProvider } from '@components/Contexts/PodcastPlayerContext'
-import dynamic from 'next/dynamic'
-const PodcastPlayer = dynamic(() => import('@components/Objects/Podcasts/PodcastPlayer'), { ssr: false })
-import Image from 'next/image'
-import Link from 'next/link'
+const PodcastPlayer = lazy(() => import('@components/Objects/Podcasts/PodcastPlayer'))
+import { Link, useLocation, useSearchParams } from 'react-router-dom'
 import { PageViewTracker } from '@components/Analytics/PageViewTracker'
-import { usePathname, useSearchParams } from 'next/navigation'
 import { usePlan } from '@components/Hooks/usePlan'
 import { getGoogleFontUrl, DEFAULT_FONT } from '@/lib/fonts'
 
@@ -39,14 +35,14 @@ function OrgFooter() {
       <div className="flex flex-col items-center justify-center space-y-4">
         {footerText && <p className="text-sm text-gray-500">{footerText}</p>}
         {showWatermark && (
-          <Link href="https://learnhouse.app" target="_blank" rel="noopener noreferrer">
-            <Image
+          <Link to="https://learnhouse.app" target="_blank" rel="noopener noreferrer">
+            <img
               src="/lrn.svg"
               alt="LearnHouse"
               width={24}
               height={24}
               style={{ height: 'auto' }}
-              className="opacity-15 hover:opacity-40 transition-opacity duration-300 cursor-pointer"
+              className="opacity-15 hover:opacity-40 transition-opacity duration-300 cursor-pointer" 
             />
           </Link>
         )}
@@ -59,8 +55,8 @@ function LayoutContent({ children, orgslug }: { children: ReactNode; orgslug: st
   const org = useOrg() as any
   const primaryColor = org?.config?.config?.customization?.general?.color || org?.config?.config?.general?.color || ''
   const customFont = org?.config?.config?.customization?.general?.font || org?.config?.config?.general?.font || ''
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const pathname = useLocation().pathname
+  const [searchParams] = useSearchParams()
   // chrome=none strips the org navigation/footer so this route can be embedded
   // inside another view (e.g. a Resource activity iframe) without duplicate chrome.
   const chromeless = searchParams?.get('chrome') === 'none'

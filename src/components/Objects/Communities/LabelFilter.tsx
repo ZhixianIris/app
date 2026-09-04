@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChevronDown, MessageSquare, HelpCircle, Lightbulb, Megaphone, Star, X } from 'lucide-react'

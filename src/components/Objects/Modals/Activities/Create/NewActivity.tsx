@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { lazy } from 'react'
 import { Browsers, PlayCircle, FileText, Backpack, MarkdownLogo, Globe, Package, Cube } from '@phosphor-icons/react'
 import { SiGoogledocs, SiGooglesheets, SiGoogleslides, SiGoogleforms, SiFigma, SiNotion, SiCanvas, SiLoom, SiMiro, SiYoutube, SiSpotify, SiAirtable, SiTypeform, SiDropbox, SiTrello } from '@icons-pack/react-simple-icons'
-import dynamic from 'next/dynamic'
 import DynamicCanvaModal from './NewActivityModal/DynamicActivityModal'
 import MarkdownModal from './NewActivityModal/MarkdownActivityModal'
 import EmbedModal from './NewActivityModal/EmbedActivityModal'
@@ -15,9 +14,8 @@ import { useTranslation } from 'react-i18next'
 // SCORM authoring lives in the Enterprise (ee) package; load it lazily so
 // open-source builds without `ee/` degrade gracefully (the card is also
 // feature-gated, so it only appears when SCORM is enabled).
-const ScormActivityModal = dynamic(
-  () => import('../../../../../ee/components/Modals/ScormActivityModal'),
-  { ssr: false }
+const ScormActivityModal = lazy(
+  () => import('../../../../../ee/components/Modals/ScormActivityModal')
 )
 
 const EMBED_SERVICES = [

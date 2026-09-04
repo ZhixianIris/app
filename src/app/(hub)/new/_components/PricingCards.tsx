@@ -1,4 +1,3 @@
-'use client'
 // Presentational pricing cards for the .io create-org onboarding (/new).
 //
 // Ports the VISUAL design + motion of the platform's

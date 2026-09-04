@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { DirectionProvider as RadixDirectionProvider } from '@radix-ui/react-direction'
 import { useDirection } from '@hooks/useDirection'

@@ -1,4 +1,3 @@
-'use client'
 import { AIMessage } from '@components/Objects/Activities/AI/AIActivityAsk'
 import React, { createContext, useContext, useReducer } from 'react'
 export const AIChatBotContext = createContext(null) as any

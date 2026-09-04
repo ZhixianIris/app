@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState } from 'react'
 import { StarFour } from '@phosphor-icons/react'
 import { usePlan } from '@components/Hooks/usePlan'

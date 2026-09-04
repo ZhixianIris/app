@@ -1,4 +1,4 @@
-import { redirect } from 'next/navigation'
+import { redirect } from "react-router-dom";
 
 const AccountPage = async () => {
   // Browser-relative path (no org slug / no /orgs prefix): the proxy adds the

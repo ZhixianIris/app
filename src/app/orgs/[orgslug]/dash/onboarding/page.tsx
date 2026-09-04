@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ListChecks, CheckCircle } from '@phosphor-icons/react'
 import { useOnboarding } from '@components/Hooks/useOnboarding'
@@ -95,7 +94,7 @@ export default function OnboardingPage() {
               </p>
             </div>
             <Link
-              href={dashHref}
+              to={dashHref}
               className="shrink-0 px-4 py-2 text-sm font-semibold text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
             >
               {t('onboarding.back_to_dashboard', { defaultValue: 'Back to dashboard' })}

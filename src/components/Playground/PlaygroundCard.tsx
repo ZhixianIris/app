@@ -1,7 +1,5 @@
-'use client'
-
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { Globe, Lock, Users, Pencil } from 'lucide-react'
 import { Cube } from '@phosphor-icons/react'
 import { Playground } from '@services/playgrounds/playgrounds'
@@ -51,7 +49,7 @@ export default function PlaygroundCard({ playground, orgslug: _orgslug, canEdit 
       {canEdit && (
         <div className="absolute top-2 end-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity">
           <Link
-            href={editLink}
+            to={editLink}
             className="p-1.5 bg-white/90 backdrop-blur-sm rounded-full hover:bg-white transition-all shadow-md flex items-center justify-center"
           >
             <Pencil className="w-3.5 h-3.5 text-gray-700" />
@@ -60,7 +58,7 @@ export default function PlaygroundCard({ playground, orgslug: _orgslug, canEdit 
       )}
 
       {/* Thumbnail */}
-      <Link href={playgroundLink} onClick={handleOpen} className="block relative aspect-video overflow-hidden bg-gray-50">
+      <Link to={playgroundLink} onClick={handleOpen} className="block relative aspect-video overflow-hidden bg-gray-50">
         {thumbnailUrl ? (
           <div
             className="w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
@@ -90,7 +88,7 @@ export default function PlaygroundCard({ playground, orgslug: _orgslug, canEdit 
       {/* Content */}
       <div className="p-3 flex flex-col space-y-1.5">
         <Link
-          href={playgroundLink}
+          to={playgroundLink}
           onClick={handleOpen}
           className="text-base font-bold text-gray-900 leading-tight hover:text-black transition-colors line-clamp-1"
         >
@@ -105,7 +103,7 @@ export default function PlaygroundCard({ playground, orgslug: _orgslug, canEdit 
 
         <div className="pt-1.5 flex items-center justify-end border-t border-gray-100">
           <Link
-            href={playgroundLink}
+            to={playgroundLink}
             onClick={handleOpen}
             className="text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-wider"
           >

@@ -1,6 +1,4 @@
-'use client'
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
@@ -18,10 +16,11 @@ import { Input } from '@components/ui/input'
 import { Textarea } from '@components/ui/textarea'
 import { Switch } from '@components/ui/switch'
 import { Button } from '@components/ui/button'
+import { useNavigate } from "react-router-dom";
 
 const CommunityEditGeneral: React.FC = () => {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const org = useOrg() as any
   const communityState = useCommunity()
@@ -72,7 +71,7 @@ const CommunityEditGeneral: React.FC = () => {
           dispatch({ type: 'setCommunity', payload: { ...community, ...values } })
         }
         toast.success(t('dashboard.courses.communities.general.toasts.update_success'), { id: loadingToast })
-        router.refresh()
+        window.location.reload()
       }
     } catch (error) {
       console.error('Failed to update community:', error)

@@ -1,4 +1,3 @@
-'use client'
 import { useOrgMembership } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { getUriWithOrg } from '@services/config/config'

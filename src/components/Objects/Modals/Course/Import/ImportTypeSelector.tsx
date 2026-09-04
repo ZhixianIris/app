@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { FileArchive, GraduationCap } from 'lucide-react'
 import { useTranslation } from 'react-i18next'

@@ -22,11 +22,11 @@ import {
   Lightbulb
 } from '@phosphor-icons/react'
 import { Badge } from "@components/ui/badge"
-import { useRouter } from 'next/navigation'
 import UserAvatar from '@components/Objects/UserAvatar'
 import { useEditorProvider } from '@components/Contexts/Editor/EditorContext'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from "react-router-dom";
 
 type UserData = {
   id: string
@@ -73,7 +73,7 @@ function UserBlockComponent(props: any) {
   const access_token = session?.data?.tokens?.access_token
   const editorState = useEditorProvider() as any
   const isEditable = editorState.isEditable
-  const router = useRouter()
+  const router = useNavigate()
 
   const [username, setUsername] = useState('')
   const [userData, setUserData] = useState<UserData | null>(null)
@@ -260,7 +260,7 @@ function UserBlockComponent(props: any) {
                     variant="ghost"
                     size="icon"
                     className="h-7 w-7 text-neutral-500 hover:text-neutral-700 flex-shrink-0"
-                    onClick={() => userData.username && router.push(`/user/${userData.username}`)}
+                    onClick={() => userData.username && navigate(`/user/${userData.username}`)}
                   >
                     <ArrowSquareOut weight="duotone" className="w-4 h-4" />
                   </Button>
@@ -339,7 +339,7 @@ function UserBlockComponent(props: any) {
                     variant="ghost"
                     size="icon"
                     className="h-7 w-7 text-neutral-500 hover:text-neutral-700 flex-shrink-0"
-                    onClick={() => userData.username && router.push(`/user/${userData.username}`)}
+                    onClick={() => userData.username && navigate(`/user/${userData.username}`)}
                   >
                     <ArrowSquareOut weight="duotone" className="w-4 h-4" />
                   </Button>

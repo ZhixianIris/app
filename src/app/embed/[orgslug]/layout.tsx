@@ -1,5 +1,3 @@
-'use client'
-
 import { use } from 'react'
 import { OrgProvider } from '@components/Contexts/OrgContext'
 import OrgLanguageSync from '@components/Contexts/OrgLanguageSync'

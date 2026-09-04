@@ -1,8 +1,6 @@
-'use client'
-
 import React, { useState, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import {
   ArrowsOutSimple,
   ArrowsInSimple,
@@ -186,7 +184,7 @@ export default function PlaygroundViewClient({
               <div className={`px-3 pb-3 ${canEdit ? 'space-y-2' : ''}`}>
                 {canEdit && (
                   <Link
-                    href={`/editor/playground/${playground.playground_uuid}/edit`}
+                    to={`/editor/playground/${playground.playground_uuid}/edit`}
                     className="flex items-center justify-center gap-1.5 w-full py-1.5 rounded-lg text-xs font-bold bg-neutral-100 hover:bg-neutral-200 text-neutral-600 transition-colors"
                   >
                     <PencilSimple size={11} weight="bold" />
@@ -260,7 +258,7 @@ export default function PlaygroundViewClient({
                 </p>
                 {canEdit && (
                   <Link
-                    href={`/editor/playground/${playground.playground_uuid}/edit`}
+                    to={`/editor/playground/${playground.playground_uuid}/edit`}
                     className="mt-4 flex items-center gap-1.5 px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
                   >
                     <PencilSimple size={14} weight="bold" />

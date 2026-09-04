@@ -1,5 +1,3 @@
-'use client'
-
 import React, { createContext, useCallback, useContext, useState } from 'react'
 import UpgradeModal from '@components/Dashboard/Shared/PlanRestricted/UpgradeModal'
 import { isPlanLimitError } from '@services/utils/ts/errorMessage'

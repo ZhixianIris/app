@@ -1,10 +1,8 @@
 import { ReactNodeViewRenderer } from "@tiptap/react";
 import { mergeAttributes, Node } from "@tiptap/core";
-import dynamic from "next/dynamic";
+import { lazy } from "react";
 
-const ScenariosExtension = dynamic(() => import("./ScenariosExtension"), {
-  ssr: false,
-});
+const ScenariosExtension = lazy(() => import("./ScenariosExtension"));
 
 export default Node.create({
   name: "scenarios",

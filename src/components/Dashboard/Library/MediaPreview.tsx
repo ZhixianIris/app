@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { getMediaFileDirectory } from '@services/media/media-resource'
 import { getAPIUrl } from '@services/config/config'

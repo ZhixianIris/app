@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'next/link'
+import { Link, useNavigate } from 'react-router-dom'
 import { Draggable } from '@hello-pangea/dnd'
 import { getAPIUrl, getUriWithOrg } from '@services/config/config'
 import {
@@ -15,7 +15,6 @@ import {
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { revalidateTags } from '@services/utils/ts/requests'
-import { useRouter } from 'next/navigation'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import { deleteActivity, updateActivity } from '@services/courses/activities'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
@@ -27,7 +26,7 @@ interface ModifiedActivityInterface {
 }
 
 function Activity(props: any) {
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any;
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id
@@ -44,7 +43,7 @@ function Activity(props: any) {
     await deleteActivity(props.activity.id, session.data?.tokens?.access_token)
     queryClient.invalidateQueries({ queryKey: queryKeys.courses.meta(cleanCourseUuid(props.courseid)) })
     await revalidateTags(['courses'], props.orgslug)
-    router.refresh()
+    window.location.reload()
   }
 
   async function updateActivityName(activityId: string) {
@@ -55,7 +54,7 @@ function Activity(props: any) {
       await updateActivity({ name: modifiedActivity.activityName }, activityId, session.data?.tokens?.access_token)
       queryClient.invalidateQueries({ queryKey: queryKeys.courses.meta(cleanCourseUuid(props.courseid)) })
       await revalidateTags(['courses'], props.orgslug)
-      router.refresh()
+      window.location.reload()
     }
     setSelectedActivity(undefined)
   }
@@ -152,7 +151,7 @@ function Activity(props: any) {
             {props.activity.type === 'TYPE_DYNAMIC' && (
               <>
                 <Link
-                  href={
+                  to={
                     getUriWithOrg(props.orgslug, '') +
                     `/course/${props.courseid
                     }/activity/${props.activity.uuid.replace(
@@ -168,7 +167,7 @@ function Activity(props: any) {
               </>
             )}
             <Link
-              href={
+              to={
                 getUriWithOrg(props.orgslug, '') +
                 `/course/${props.courseid
                 }/activity/${props.activity.uuid.replace('activity_', '')}`

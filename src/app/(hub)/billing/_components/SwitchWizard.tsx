@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, useState } from 'react'
 import { ArrowLeft, ArrowRight, Check, Lock, AlertTriangle, Tag } from 'lucide-react'
 import toast from 'react-hot-toast'

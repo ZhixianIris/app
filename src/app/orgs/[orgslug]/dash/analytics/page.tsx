@@ -1,6 +1,4 @@
-'use client'
-import React, { useState } from 'react'
-import dynamic from 'next/dynamic'
+import React, { useState, lazy } from 'react'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import { ChartBar, ChartLine, SquaresFour } from '@phosphor-icons/react'
 import { motion } from 'motion/react'
@@ -13,26 +11,26 @@ import { usePlan } from '@components/Hooks/usePlan'
 import ExportAnalyticsButton from '@components/Dashboard/Analytics/AnalyticsExport'
 
 // Core widgets — dynamic to code-split recharts
-const EventOverview = dynamic(() => import('@components/Dashboard/Analytics/EventOverview'))
-const CoreWidgetsRow = dynamic(() => import('@components/Dashboard/Analytics/CoreWidgetsRow'))
+const EventOverview = lazy(() => import('@components/Dashboard/Analytics/EventOverview'))
+const CoreWidgetsRow = lazy(() => import('@components/Dashboard/Analytics/CoreWidgetsRow'))
 
 // Advanced widgets — only loaded when user clicks the Advanced tab
-const AdvancedGate = dynamic(() => import('@components/Dashboard/Analytics/AdvancedGate').then(m => ({ default: m.AdvancedGate })))
-const CourseDropoffMap = dynamic(() => import('@components/Dashboard/Analytics/CourseDropoffMap'))
-const CohortRetention = dynamic(() => import('@components/Dashboard/Analytics/CohortRetention'))
-const TimeToCompletion = dynamic(() => import('@components/Dashboard/Analytics/TimeToCompletion'))
-const PeakUsageHeatmap = dynamic(() => import('@components/Dashboard/Analytics/PeakUsageHeatmap'))
-const ContentTypeEffectiveness = dynamic(() => import('@components/Dashboard/Analytics/ContentTypeEffectiveness'))
-const NewVsReturning = dynamic(() => import('@components/Dashboard/Analytics/NewVsReturning'))
-const CompletionVelocity = dynamic(() => import('@components/Dashboard/Analytics/CompletionVelocity'))
-const CommunityCorrelation = dynamic(() => import('@components/Dashboard/Analytics/CommunityCorrelation'))
-const UserProgressSnapshot = dynamic(() => import('@components/Dashboard/Analytics/UserProgressSnapshot'))
-const GradeDistribution = dynamic(() => import('@components/Dashboard/Analytics/GradeDistribution'))
-const SearchEffectiveness = dynamic(() => import('@components/Dashboard/Analytics/SearchEffectiveness'))
-const CertificationRate = dynamic(() => import('@components/Dashboard/Analytics/CertificationRate'))
-const OrgGrowthTrend = dynamic(() => import('@components/Dashboard/Analytics/OrgGrowthTrend'))
-const LearnerEngagementScore = dynamic(() => import('@components/Dashboard/Analytics/LearnerEngagementScore'))
-const CourseEffectivenessMatrix = dynamic(() => import('@components/Dashboard/Analytics/CourseEffectivenessMatrix'))
+const AdvancedGate = lazy(() => import('@components/Dashboard/Analytics/AdvancedGate').then(m => ({ default: m.AdvancedGate })))
+const CourseDropoffMap = lazy(() => import('@components/Dashboard/Analytics/CourseDropoffMap'))
+const CohortRetention = lazy(() => import('@components/Dashboard/Analytics/CohortRetention'))
+const TimeToCompletion = lazy(() => import('@components/Dashboard/Analytics/TimeToCompletion'))
+const PeakUsageHeatmap = lazy(() => import('@components/Dashboard/Analytics/PeakUsageHeatmap'))
+const ContentTypeEffectiveness = lazy(() => import('@components/Dashboard/Analytics/ContentTypeEffectiveness'))
+const NewVsReturning = lazy(() => import('@components/Dashboard/Analytics/NewVsReturning'))
+const CompletionVelocity = lazy(() => import('@components/Dashboard/Analytics/CompletionVelocity'))
+const CommunityCorrelation = lazy(() => import('@components/Dashboard/Analytics/CommunityCorrelation'))
+const UserProgressSnapshot = lazy(() => import('@components/Dashboard/Analytics/UserProgressSnapshot'))
+const GradeDistribution = lazy(() => import('@components/Dashboard/Analytics/GradeDistribution'))
+const SearchEffectiveness = lazy(() => import('@components/Dashboard/Analytics/SearchEffectiveness'))
+const CertificationRate = lazy(() => import('@components/Dashboard/Analytics/CertificationRate'))
+const OrgGrowthTrend = lazy(() => import('@components/Dashboard/Analytics/OrgGrowthTrend'))
+const LearnerEngagementScore = lazy(() => import('@components/Dashboard/Analytics/LearnerEngagementScore'))
+const CourseEffectivenessMatrix = lazy(() => import('@components/Dashboard/Analytics/CourseEffectivenessMatrix'))
 
 const OVERVIEW_QUERIES = [
   'live_users', 'daily_active_users', 'top_courses', 'enrollment_funnel',

@@ -1,10 +1,9 @@
-'use client'
 import React, { Suspense, useEffect, useRef } from 'react'
-import { usePathname, useSearchParams } from 'next/navigation'
 import posthog from 'posthog-js'
 import { PostHogProvider as PHProvider, usePostHog } from 'posthog-js/react'
 import { getPOSTHOG_KEY_VAL } from '@services/config/config'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
+import { useLocation, useSearchParams } from "react-router-dom";
 
 let initialized = false
 
@@ -37,7 +36,7 @@ function initPostHog(key: string) {
  */
 function PostHogAdminGuard() {
   const posthogClient = usePostHog()
-  const pathname = usePathname()
+  const pathname = useLocation().pathname
 
   useEffect(() => {
     if (!posthogClient) return
@@ -55,8 +54,8 @@ function PostHogAdminGuard() {
 /** Fires PostHog's native $pageview on every App Router navigation. */
 function PostHogPageView() {
   const posthogClient = usePostHog()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+  const pathname = useLocation().pathname
+  const [searchParams] = useSearchParams()
 
   useEffect(() => {
     if (!posthogClient || !pathname) return

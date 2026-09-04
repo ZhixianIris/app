@@ -1,8 +1,7 @@
-'use client'
 import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
-import { useRouter } from 'next/navigation'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
+import { useNavigate } from "react-router-dom";
 
 type SuperadminAuthorizationProps = {
   children: React.ReactNode
@@ -12,7 +11,7 @@ const SuperadminAuthorization: React.FC<SuperadminAuthorizationProps> = ({
   children,
 }) => {
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [isChecking, setIsChecking] = useState(true)
   const [isRedirecting, setIsRedirecting] = useState(false)
@@ -29,7 +28,7 @@ const SuperadminAuthorization: React.FC<SuperadminAuthorizationProps> = ({
       // Keep the loader up through the navigation rather than releasing it
       // into a false "Access Denied" flash.
       setIsRedirecting(true)
-      router.push('/admin/login')
+      navigate('/admin/login')
       return
     }
 

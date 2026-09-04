@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import {
@@ -251,7 +250,7 @@ export default function UsageOverview() {
                 </span>
               </div>
               {feature.enabled ? (
-                <Link href={feature.href}>
+                <Link to={feature.href}>
                   <ArrowRight
                     size={12}
                     className="text-gray-300 hover:text-gray-500 transition-colors" data-dir-flip

@@ -1,7 +1,5 @@
-'use client'
 import React, { useEffect, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { ShieldAlert, ShieldCheck, X, LogOut, ArrowRight, LogIn } from 'lucide-react'
 import { useOrgMembership } from '@components/Contexts/OrgContext'
@@ -9,6 +7,7 @@ import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { signOut } from '@components/Contexts/AuthContext'
 import { getAPIUrl, getUriWithOrg, getUriWithoutOrg } from '@services/config/config'
 import { RequestBodyWithAuthHeader } from '@services/utils/ts/requests'
+import { useLocation } from "react-router-dom";
 
 /**
  * End-user surface for the org-wide "two-factor is mandatory" policy.
@@ -340,7 +339,7 @@ function OrgAuthMethodBanner({
 
 export function OrgMFAPolicyGate() {
   const { org, orgslug } = useOrgMembership()
-  const pathname = usePathname()
+  const pathname = useLocation().pathname
   const { data } = useOrgMFACompliance(org?.id)
 
   if (!data) return null

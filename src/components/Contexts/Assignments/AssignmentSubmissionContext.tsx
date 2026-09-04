@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useLHSession } from '../LHSessionContext'
 import { getAPIUrl } from '@services/config/config'

@@ -1,4 +1,3 @@
-'use client';
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import {
     ALargeSmall,
@@ -19,7 +18,7 @@ import {
     Zap,
     BarChart3,
 } from 'lucide-react'
-import React, { useEffect } from 'react'
+import React, { useEffect, lazy } from 'react'
 import { AssignmentProvider, useAssignments } from '@components/Contexts/Assignments/AssignmentContext';
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip';
 import { updateAssignment } from '@services/courses/assignments';
@@ -27,23 +26,21 @@ import { useLHSession } from '@components/Contexts/LHSessionContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/keys';
 import toast from 'react-hot-toast';
-import Link from 'next/link';
-import { useParams, useSearchParams } from 'next/navigation';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { updateActivity } from '@services/courses/activities';
 // Lazy Loading
-import dynamic from 'next/dynamic';
 import AssignmentEditorSubPage from './subpages/AssignmentEditorSubPage';
 import { useMediaQuery } from 'usehooks-ts';
 import EditAssignmentModal from '@components/Objects/Modals/Activities/Assignments/EditAssignmentModal';
 import { useTranslation } from 'react-i18next';
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics';
-const AssignmentSubmissionsSubPage = dynamic(() => import('./subpages/AssignmentSubmissionsSubPage'))
-const AssignmentAnalyticsSubPage = dynamic(() => import('./subpages/AssignmentAnalyticsSubPage'))
+const AssignmentSubmissionsSubPage = lazy(() => import('./subpages/AssignmentSubmissionsSubPage'))
+const AssignmentAnalyticsSubPage = lazy(() => import('./subpages/AssignmentAnalyticsSubPage'))
 
 function AssignmentEdit() {
     const { t } = useTranslation()
     const params = useParams<{ assignmentuuid: string; }>()
-    const searchParams = useSearchParams()
+    const [searchParams] = useSearchParams()
     const [selectedSubPage, setSelectedSubPage] = React.useState(searchParams.get('subpage') || 'editor')
     const isMobile = useMediaQuery('(max-width: 767px)')
     const { track } = useLHAnalytics('dashboard')
@@ -226,7 +223,7 @@ function PublishingState() {
                     content={t('dashboard.assignments.detail.publishing.preview_tooltip')} >
                     <Link
                         target='_blank'
-                        href={`/course/${assignment?.course_object?.course_uuid.replace('course_', '')}/activity/${assignment?.activity_object?.activity_uuid.replace('activity_', '')}`}
+                        to={`/course/${assignment?.course_object?.course_uuid.replace('course_', '')}/activity/${assignment?.activity_object?.activity_uuid.replace('activity_', '')}`}
                         className='flex px-3 py-2 cursor-pointer rounded-md space-x-2 items-center bg-linear-to-bl text-cyan-800 font-medium from-sky-400/50 to-cyan-200/80  border border-cyan-600/10 shadow-cyan-900/10 shadow-lg'>
                         <Eye size={18} />
                         <p className=' text-sm font-bold'>{t('dashboard.assignments.detail.publishing.preview')}</p>

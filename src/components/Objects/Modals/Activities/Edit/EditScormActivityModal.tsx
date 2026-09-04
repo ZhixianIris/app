@@ -1,6 +1,4 @@
-'use client'
-import React, { useState } from 'react'
-import dynamic from 'next/dynamic'
+import React, { useState, lazy } from 'react'
 import LearnHouseSpinner from '@components/Objects/Loaders/LearnHouseSpinner'
 import { Package } from 'lucide-react'
 import { updateActivity } from '@services/courses/activities'
@@ -10,9 +8,8 @@ import { mutate } from 'swr'
 
 // EE component — dynamically imported so OSS builds (no ee/) degrade gracefully,
 // mirroring how the activity page lazy-loads ScormActivity.
-const ScormResults = dynamic(
-  () => import('../../../../../ee/components/Activities/ScormResults'),
-  { ssr: false },
+const ScormResults = lazy(
+  () => import('../../../../../ee/components/Activities/ScormResults')
 )
 
 interface EditScormActivityModalProps {

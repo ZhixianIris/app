@@ -1,7 +1,5 @@
-'use client'
 import React, { useState, useRef } from 'react'
 import { UploadCloud, Image as ImageIcon, ArrowBigUpDash } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { Community, updateCommunityThumbnail } from '@services/communities/communities'
@@ -19,6 +17,7 @@ import UnsplashImagePicker from '@components/Dashboard/Pages/Course/EditCourseGe
 import AIImageButton from '@components/Objects/AI/AIImageButton'
 import toast from 'react-hot-toast'
 import { SafeImage } from '@components/Objects/SafeImage'
+import { useNavigate } from "react-router-dom";
 
 interface CommunityThumbnailModalProps {
   isOpen: boolean
@@ -38,7 +37,7 @@ export function CommunityThumbnailModal({
   orgSlug,
 }: CommunityThumbnailModalProps) {
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
   const org = useOrg() as any
   const queryClient = useQueryClient()
   const accessToken = session?.data?.tokens?.access_token
@@ -145,7 +144,7 @@ export function CommunityThumbnailModal({
           duration: 3000,
           position: 'top-center',
         })
-        router.refresh()
+        window.location.reload()
         onClose()
       }
     } catch (_err) {

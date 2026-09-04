@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
@@ -18,13 +17,13 @@ import {
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { constructAcceptValue } from '@/lib/constants'
 import { revalidateTags } from '@services/utils/ts/requests'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import {
   analyzeImportPackage,
   importCourses,
   ImportAnalysisResponse,
 } from '@services/courses/transfer'
+import { useNavigate } from "react-router-dom";
 
 const SUPPORTED_FILES = constructAcceptValue(['zip'])
 
@@ -52,7 +51,7 @@ function LearnHouseCourseImport({
   const { t } = useTranslation()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
-  const router = useRouter()
+  const router = useNavigate()
 
   // Step state: 'upload' | 'configure' | 'importing' | 'complete'
   const [step, setStep] = useState<'upload' | 'configure' | 'importing' | 'complete'>('upload')
@@ -207,7 +206,7 @@ function LearnHouseCourseImport({
 
   const handleComplete = () => {
     closeModal()
-    router.refresh()
+    window.location.reload()
   }
 
   const resetToUpload = () => {

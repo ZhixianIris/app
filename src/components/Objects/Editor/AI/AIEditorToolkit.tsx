@@ -1,7 +1,6 @@
 import React from 'react'
 import learnhouseAI_icon from 'public/learnhouse_ai_simple.png'
 import { motion, AnimatePresence } from 'motion/react'
-import Image from 'next/image'
 import {
   AlertTriangle,
   BetweenHorizontalStart,
@@ -91,11 +90,11 @@ function AIEditorToolkit(props: AIEditorToolkitProps) {
                     <div className="flex space-x-2">
                       <div className="pe-1">
                         <div className="flex w-full space-x-2 font-bold text-white/80 items-center">
-                          <Image
+                          <img
                             className="outline outline-1 outline-neutral-200/20 rounded-lg"
                             width={24}
                             src={learnhouseAI_icon}
-                            alt=""
+                            alt="" 
                           />
                           <div className="flex items-center">
                             AI Editor{' '}
@@ -450,11 +449,11 @@ const UserFeedbackModal = (props: AIEditorToolkitProps) => {
         className="backdrop-blur-md	z-modal rounded-2xl max-w-(--breakpoint-2xl) my-10 mx-auto w-[500px] h-[200px] fixed bottom-16 left-1/2 transform -translate-x-1/2 shadow-xl ring-1 ring-inset ring-white/10 text-white p-3 flex-col-reverse"
       >
         <div className="flex space-x-2 justify-center">
-          <Image
+          <img
             className="outline outline-1 outline-neutral-200/20 rounded-lg"
             width={24}
             src={learnhouseAI_icon}
-            alt=""
+            alt="" 
           />
         </div>
         <div className="flex h-[115px] justify-center mx-auto antialiased">

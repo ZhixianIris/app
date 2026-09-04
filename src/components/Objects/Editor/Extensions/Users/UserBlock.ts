@@ -1,10 +1,8 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const UserBlockComponent = dynamic(() => import('./UserBlockComponent'), {
-  ssr: false,
-})
+const UserBlockComponent = lazy(() => import('./UserBlockComponent'))
 
 export default Node.create({
   name: 'blockUser',

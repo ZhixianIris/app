@@ -1,7 +1,6 @@
-'use client'
 import React from 'react'
 import { useAnalyticsPipe } from './useAnalyticsDashboard'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 
 function getTypeLabel(type: string): string {
   const key = type.replace(/^TYPE_/, '').toLowerCase()
@@ -71,7 +70,7 @@ export default function ActivityEngagement({ days = '30' }: { days?: string }) {
                   <tr key={row.activity_uuid} className="border-b border-gray-50">
                     <td className="py-2 font-medium text-gray-700 truncate max-w-[180px]">
                       {href ? (
-                        <Link href={href} className="text-blue-600 hover:underline">
+                        <Link to={href} className="text-blue-600 hover:underline">
                           {name}
                         </Link>
                       ) : (

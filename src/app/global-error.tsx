@@ -1,5 +1,3 @@
-"use client";
-
 import * as Sentry from "@sentry/nextjs";
 import '../styles/globals.css'
 import { classifyError } from '@lib/errors/classify'

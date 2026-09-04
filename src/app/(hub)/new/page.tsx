@@ -1,8 +1,5 @@
-'use client'
-
 import React, { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { dirMultiplier, directionForLanguage } from '@/lib/direction'
@@ -710,7 +707,7 @@ function CreateOrgSuccess({ slug, t }: { slug: string; t: any }) {
           )}
         </button>
         <Link
-          href="/home"
+          to="/home"
           className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-gray-700 px-4 py-2.5 rounded-xl hover:bg-gray-100 transition-colors"
         >
           {t('hub_new.success.cta', { defaultValue: 'Back to organizations' })}
@@ -724,7 +721,7 @@ function CreateOrgSuccess({ slug, t }: { slug: string; t: any }) {
 
 export default function CreateNewOrgPage() {
   const { t, i18n } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const queryClient = useQueryClient()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
@@ -754,7 +751,7 @@ export default function CreateNewOrgPage() {
   // Redirect unauthenticated users (same effect as app/home/home.tsx).
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace('/login')
+      navigate('/login', { replace: true })
     }
   }, [isLoading, isAuthenticated, router])
 
@@ -968,14 +965,14 @@ export default function CreateNewOrgPage() {
           {/* Top bar */}
           <div className="w-full max-w-5xl mb-10 grid grid-cols-3 items-center">
             <Link
-              href="/home"
+              to="/home"
               className="flex items-center gap-1.5 text-sm font-semibold text-black/35 hover:text-black transition-colors w-fit"
             >
               <ArrowLeft size={14} data-dir-flip />
               {t('hub_new.topBar.back', { defaultValue: 'Organizations' })}
             </Link>
             <div className="flex justify-center">
-              <Link href="/home">
+              <Link to="/home">
                 { }
                 <img src="/lrn.svg" alt="LearnHouse" width={40} height={40} className="opacity-90" />
               </Link>

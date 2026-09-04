@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 import {
   Sparkles,
@@ -8,7 +7,6 @@ import {
   Upload,
   CheckCircle2,
 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -27,6 +25,7 @@ import {
   MigrationCreateResult,
 } from '@services/courses/migration'
 import toast from 'react-hot-toast'
+import { useNavigate } from "react-router-dom";
 
 type WizardStep = 'upload' | 'organize' | 'creating' | 'complete'
 
@@ -36,7 +35,7 @@ interface MigrationClientProps {
 
 export default function MigrationClient({ orgslug }: MigrationClientProps) {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const org = useOrg() as any
   const access_token = session?.data?.tokens?.access_token
@@ -172,7 +171,7 @@ export default function MigrationClient({ orgslug }: MigrationClientProps) {
   const handleGoToCourse = () => {
     if (createResult?.course_uuid) {
       const bareUuid = createResult.course_uuid.replace('course_', '')
-      router.push(
+      navigate(
         getUriWithOrg(
           orgslug,
           `/dash/courses/course/${bareUuid}/content`

@@ -4,20 +4,21 @@ import { Droppable, Draggable } from '@hello-pangea/dnd'
 import Activity from './Activity'
 import { Hexagon, MoreVertical, Pencil, Save, Sparkles, X } from 'lucide-react'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
-import { useRouter } from 'next/navigation'
 import { updateChapter } from '@services/courses/chapters'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { revalidateTags } from '@services/utils/ts/requests'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useCourse } from '@components/Contexts/CourseContext'
+import { useNavigate } from "react-router-dom";
+
 interface ModifiedChapterInterface {
   chapterId: string
   chapterName: string
 }
 
 function Chapter(props: any) {
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any;
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id
@@ -38,7 +39,7 @@ function Chapter(props: any) {
       await updateChapter(chapterId, modifiedChapterCopy, session.data?.tokens?.access_token)
       queryClient.invalidateQueries({ queryKey: queryKeys.courses.meta(cleanCourseUuid(props.course_uuid)) })
       await revalidateTags(['courses'], props.orgslug)
-      router.refresh()
+      window.location.reload()
     }
     setSelectedChapter(undefined)
   }

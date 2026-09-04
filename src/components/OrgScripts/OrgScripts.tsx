@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect } from 'react'
 import { useOrg } from '@/components/Contexts/OrgContext'
 import DOMPurify from 'dompurify'

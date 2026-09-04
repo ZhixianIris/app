@@ -1,10 +1,9 @@
-'use client'
-import { useRouter } from 'next/navigation'
 import { useMediaQuery } from 'usehooks-ts'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { getUriWithOrg } from '@services/config/config'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from "react-router-dom";
 
 interface ActivityNavigationProps {
   course: any
@@ -13,7 +12,7 @@ interface ActivityNavigationProps {
 }
 
 export default function ActivityNavigation(props: ActivityNavigationProps): React.ReactNode {
-  const router = useRouter();
+  const router = useNavigate();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isBottomNavVisible, setIsBottomNavVisible] = React.useState(true);
   const bottomNavRef = React.useRef<HTMLDivElement>(null);
@@ -55,7 +54,7 @@ export default function ActivityNavigation(props: ActivityNavigationProps): Reac
     if (!activity) return;
     
     const cleanCourseUuid = props.course.course_uuid?.replace('course_', '');
-    router.push(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/${activity.cleanUuid}`);
+    navigate(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/${activity.cleanUuid}`);
   };
 
   // Set up intersection observer to detect when bottom nav is out of viewport

@@ -20,7 +20,7 @@ export async function updateOrganizationConfigInternally(org_id: any, plan: Lear
   // mismatch. Fail loud instead: a missing credential is a deploy fault, and it
   // must not read as an authorization failure.
   const internalKey =
-    process.env.CLOUD_INTERNAL_KEY || process.env.LEARNHOUSE_CLOUD_INTERNAL_KEY || "";
+    import.meta.env.VITE_CLOUD_INTERNAL_KEY || import.meta.env.VITE_LEARNHOUSE_CLOUD_INTERNAL_KEY || "";
   if (!internalKey) {
     throw new Error(
       "[updateOrgConfig] internal key unset — set CLOUD_INTERNAL_KEY (or " +

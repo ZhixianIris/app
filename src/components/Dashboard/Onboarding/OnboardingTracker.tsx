@@ -1,7 +1,6 @@
-'use client'
 import { useEffect } from 'react'
-import { usePathname } from 'next/navigation'
 import { useOnboarding, ONBOARDING_STEP_DEFS } from '@components/Hooks/useOnboarding'
+import { useLocation } from "react-router-dom";
 
 /**
  * Headless tracker that auto-completes onboarding steps as the user navigates
@@ -11,7 +10,7 @@ import { useOnboarding, ONBOARDING_STEP_DEFS } from '@components/Hooks/useOnboar
  */
 export default function OnboardingTracker() {
   const { completeStep } = useOnboarding()
-  const pathname = usePathname()
+  const pathname = useLocation().pathname
 
   useEffect(() => {
     if (!pathname) return

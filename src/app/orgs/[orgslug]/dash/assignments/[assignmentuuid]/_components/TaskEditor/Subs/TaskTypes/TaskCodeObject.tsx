@@ -1,4 +1,3 @@
-'use client'
 import { useAssignments } from '@components/Contexts/Assignments/AssignmentContext'
 import {
   useAssignmentSubmission,
@@ -36,19 +35,15 @@ import {
   Lock,
   Settings2,
 } from 'lucide-react'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, lazy } from 'react'
 import toast from 'react-hot-toast'
 import { v4 as uuidv4 } from 'uuid'
 import { useTranslation } from 'react-i18next'
-import dynamic from 'next/dynamic'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { applyManualGrade } from './applyManualGrade'
 
-const CodeMirror = dynamic(() => import('@uiw/react-codemirror'), {
-  ssr: false,
-  loading: () => <div className="h-[200px] bg-neutral-900 animate-pulse rounded-md" />,
-})
+const CodeMirror = lazy(() => import('@uiw/react-codemirror'))
 
 async function getTheme() {
   const { tokyoNight } = await import('@uiw/codemirror-theme-tokyo-night')

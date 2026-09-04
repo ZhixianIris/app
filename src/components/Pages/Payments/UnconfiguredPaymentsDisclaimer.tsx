@@ -1,6 +1,6 @@
 import { CreditCard, Settings, ShoppingBag, Users } from 'lucide-react'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 
 const STEPS = [
   {
@@ -57,7 +57,7 @@ function UnconfiguredPaymentsDisclaimer() {
 
         {/* CTA */}
         <Link
-          href="./configuration"
+          to="./configuration"
           className="inline-flex items-center space-x-1.5 bg-gray-900 hover:bg-gray-800 text-white text-xs font-medium px-4 py-2 rounded-lg transition-colors duration-150"
         >
           <Settings size={13} />

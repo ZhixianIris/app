@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -62,7 +61,7 @@ export function CourseCommunitySection({ courseUuid, orgslug }: CourseCommunityS
             )}
           </div>
           <Link
-            href={getUriWithOrg(orgslug, `/community/${communityId}`)}
+            to={getUriWithOrg(orgslug, `/community/${communityId}`)}
             className="flex items-center gap-1.5 text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
           >
             {t('communities.course_section.view_all')}
@@ -77,7 +76,7 @@ export function CourseCommunitySection({ courseUuid, orgslug }: CourseCommunityS
               <MessageCircle size={32} className="mx-auto text-gray-300 mb-2" />
               <p className="text-sm text-gray-500">{t('communities.course_section.no_discussions')}</p>
               <Link
-                href={getUriWithOrg(orgslug, `/community/${communityId}`)}
+                to={getUriWithOrg(orgslug, `/community/${communityId}`)}
                 className="inline-block mt-3 text-sm font-medium text-gray-700 hover:text-gray-900"
               >
                 {t('communities.course_section.start_first')}
@@ -94,7 +93,7 @@ export function CourseCommunitySection({ courseUuid, orgslug }: CourseCommunityS
               return (
                 <Link
                   key={discussion.discussion_uuid}
-                  href={getUriWithOrg(orgslug, `/community/${communityId}/discussion/${discussionId}`)}
+                  to={getUriWithOrg(orgslug, `/community/${communityId}/discussion/${discussionId}`)}
                   className="block p-4 hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-start gap-3">

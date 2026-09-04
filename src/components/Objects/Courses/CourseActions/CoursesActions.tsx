@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { removeCourse, startCourse } from '@services/courses/activity'
 import { revalidateTags, asArray } from '@services/utils/ts/requests'
-import { useRouter } from 'next/navigation'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { getUriWithOrg } from '@services/config/config'
 import { getOffersByResource } from '@services/payments/offers'
@@ -17,6 +16,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useNavigate } from "react-router-dom";
 
 interface CourseRun {
   status: string
@@ -55,7 +55,7 @@ interface CourseActionsProps {
 
 function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseActionsProps) {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const [isActionLoading, setIsActionLoading] = useState(false)
   const [isContributeLoading, setIsContributeLoading] = useState(false)
@@ -92,13 +92,13 @@ function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseAction
         reason: 'unauthenticated',
         intended_action: isStarted ? 'leave_course' : 'start_course',
       })
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      navigate(getUriWithOrg(orgslug, '/signup'))
       return
     }
 
     // Check if user is part of the organization
     if (!isUserPartOfTheOrg) {
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      navigate(getUriWithOrg(orgslug, '/signup'))
       return
     }
 
@@ -129,7 +129,7 @@ function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseAction
 
         if (firstActivity) {
           // Redirect to the first activity
-          router.push(
+          navigate(
             getUriWithOrg(orgslug, '') +
             `/course/${courseuuid}/activity/${firstActivity.activity_uuid.replace('activity_', '')}`
           )
@@ -150,7 +150,7 @@ function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseAction
 
   const handleApplyToContribute = async () => {
     if (!session.data?.user) {
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      navigate(getUriWithOrg(orgslug, '/signup'))
       return
     }
 
@@ -209,7 +209,7 @@ function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseAction
     if (!session.data?.user) {
       return (
         <button
-          onClick={() => router.push(getUriWithOrg(orgslug, '/signup'))}
+          onClick={() => navigate(getUriWithOrg(orgslug, '/signup'))}
           aria-label={t('auth.sign_up_to_contribute')}
           className="w-full bg-white text-neutral-700 border border-neutral-200 py-3 rounded-lg nice-shadow font-semibold hover:bg-neutral-50 transition-colors flex items-center justify-center gap-2 mt-3 cursor-pointer"
         >

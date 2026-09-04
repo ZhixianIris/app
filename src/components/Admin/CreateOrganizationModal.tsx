@@ -1,11 +1,10 @@
-'use client'
 import React, { useState, useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 import { queryKeys } from '@/lib/query/keys'
 import { getAPIUrl, getDeploymentMode } from '@services/config/config'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { X, Buildings } from '@phosphor-icons/react'
+import { useNavigate } from "react-router-dom";
 
 function slugify(s: string): string {
   return s
@@ -26,7 +25,7 @@ export default function CreateOrganizationModal({
   const session = useLHSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
-  const router = useRouter()
+  const router = useNavigate()
   const isSaaS = getDeploymentMode() === 'saas'
 
   const [name, setName] = useState('')
@@ -86,7 +85,7 @@ export default function CreateOrganizationModal({
       }
       queryClient.invalidateQueries({ queryKey: queryKeys.superadmin.orgs() })
       onClose()
-      if (data?.id) router.push(`/admin/organizations/${data.id}`)
+      if (data?.id) navigate(`/admin/organizations/${data.id}`)
     } catch {
       setError('Network error')
     } finally {

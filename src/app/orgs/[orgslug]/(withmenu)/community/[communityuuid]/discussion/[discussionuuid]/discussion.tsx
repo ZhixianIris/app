@@ -1,7 +1,4 @@
-'use client'
-
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import GeneralWrapperStyled from '@components/Objects/StyledElements/Wrappers/GeneralWrapper'
 import { DiscussionDetail } from '@components/Objects/Communities/DiscussionDetail'
 import { DiscussionSidebar } from '@components/Objects/Communities/DiscussionSidebar'
@@ -13,6 +10,7 @@ import { MessageCircle } from 'lucide-react'
 import { getUriWithOrg } from '@services/config/config'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useTrackView, AnalyticsEvent } from '@services/analytics'
+import { useNavigate } from "react-router-dom";
 
 interface DiscussionPageClientProps {
   discussion: DiscussionWithAuthor
@@ -25,7 +23,7 @@ const DiscussionPageClient = ({
   community,
   orgslug,
 }: DiscussionPageClientProps) => {
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const [discussion, setDiscussion] = useState(initialDiscussion)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
@@ -38,7 +36,7 @@ const DiscussionPageClient = ({
 
   const handleDiscussionUpdated = (updated: DiscussionWithAuthor) => {
     setDiscussion(updated)
-    router.refresh()
+    window.location.reload()
   }
 
   return (

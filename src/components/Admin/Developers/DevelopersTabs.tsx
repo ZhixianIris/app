@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 import { Key, BookOpen } from '@phosphor-icons/react'
 import TokensTab from '@components/Admin/Developers/tabs/TokensTab'

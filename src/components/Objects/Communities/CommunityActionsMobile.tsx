@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { Plus, Settings, MessageCircle } from 'lucide-react'
 import { Community } from '@services/communities/communities'
 import { useCommunityRights } from '@components/Hooks/useCommunityRights'
@@ -40,7 +39,7 @@ export function CommunityActionsMobile({
           <div className="flex items-center gap-2">
             {canManageCommunity && (
               <Link
-                href={getUriWithOrg(orgslug, '/dash/communities')}
+                to={getUriWithOrg(orgslug, '/dash/communities')}
                 className="p-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
                 aria-label="Manage community"
               >

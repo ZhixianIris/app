@@ -1,24 +1,12 @@
-import { Metadata } from 'next'
 import React from 'react'
 import { cookies } from 'next/headers'
 import { getServerSession } from '@/lib/auth/server'
-import { redirect } from 'next/navigation'
 import BoardCanvasClient from './client'
+import { redirect } from "react-router-dom";
 
 type MetadataProps = {
   params: Promise<{ boarduuid: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-
-export async function generateMetadata(_props: MetadataProps): Promise<Metadata> {
-  return {
-    title: 'Board',
-    description: 'Collaborative board',
-    robots: {
-      index: false,
-      follow: false,
-    },
-  }
 }
 
 async function BoardEditorPage(props: any) {

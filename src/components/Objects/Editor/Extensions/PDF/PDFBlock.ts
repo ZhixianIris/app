@@ -1,10 +1,8 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const PDFBlockComponent = dynamic(() => import('./PDFBlockComponent'), {
-  ssr: false,
-})
+const PDFBlockComponent = lazy(() => import('./PDFBlockComponent'))
 
 export default Node.create({
   name: 'blockPDF',

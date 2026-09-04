@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Share2, Copy, Check, Timer, Play, Pause, RotateCcw, X, SkipForward } from 'lucide-react'

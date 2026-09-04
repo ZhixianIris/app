@@ -14,7 +14,7 @@ import { getServerAPIUrl } from "@services/config/config";
 // of an unset env var. Shared with activeUserBilling.ts so both internal call
 // sites resolve it identically.
 export function platformApiKey(): string {
-  const key = process.env.LEARNHOUSE_PLATFORM_API_KEY;
+  const key = import.meta.env.VITE_LEARNHOUSE_PLATFORM_API_KEY;
   if (!key) {
     throw new Error(
       "LEARNHOUSE_PLATFORM_API_KEY is unset on the web deployment — pack " +

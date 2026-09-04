@@ -1,8 +1,6 @@
-'use client'
 import React from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { useOnboarding } from '@components/Hooks/useOnboarding'
-import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import {
   BookOpen,
@@ -44,6 +42,7 @@ import PlanBadge from '@components/Dashboard/Shared/PlanRestricted/PlanBadge'
 import WelcomeGlobe from './WelcomeGlobe'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useNavigate, useLocation } from "react-router-dom";
 
 const ACTIVITY_TYPES = [
   { icon: Browsers, color: 'text-blue-400', label: 'Page' },
@@ -145,11 +144,11 @@ export default function OnboardingBar() {
   const { t } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
   const [showFarewell, setShowFarewell] = useState(false)
-  const isDev = process.env.NODE_ENV === 'development'
+  const isDev = import.meta.env.DEV
   const currentPlan = usePlan()
 
-  const pathname = usePathname()
-  const router = useRouter()
+  const pathname = useLocation().pathname
+  const router = useNavigate()
   const org = useOrg() as any
 
   useEffect(() => {
@@ -212,7 +211,7 @@ export default function OnboardingBar() {
       // Full page navigation from editor since it's outside the dash router
       window.location.href = fullPath
     } else {
-      router.push(fullPath)
+      navigate(fullPath)
     }
   }
 

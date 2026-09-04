@@ -5,7 +5,7 @@ import { getUser } from '@services/users/users'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { useRouter } from 'next/navigation'
+import { useNavigate } from "react-router-dom";
 
 type UserProfilePopupProps = {
   children: React.ReactNode
@@ -44,7 +44,7 @@ const UserProfilePopup = ({ children, userId }: UserProfilePopupProps) => {
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = Boolean(access_token)
-  const router = useRouter()
+  const router = useNavigate()
   const [userData, setUserData] = useState<UserData | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -84,7 +84,7 @@ const UserProfilePopup = ({ children, userId }: UserProfilePopupProps) => {
 
   const handleViewProfile = () => {
     if (!userData?.username) return
-    router.push(`/user/${userData.username}`)
+    navigate(`/user/${userData.username}`)
   }
 
   return (

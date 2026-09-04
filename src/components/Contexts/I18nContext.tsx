@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect, useState } from 'react'
 import i18n from '../../lib/i18n'
 import { applyDocumentDirection } from '../../lib/direction'

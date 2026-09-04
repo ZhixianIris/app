@@ -1,6 +1,5 @@
 import React from 'react'
 import { Send, Loader2 } from 'lucide-react'
-import Image from 'next/image'
 import { cn } from '@/lib/utils'
 import type { MagicBlockMessage } from './types'
 import lrnaiIcon from 'public/lrnai_icon.png'
@@ -74,11 +73,11 @@ function MagicBlockChat({
       {/* Header with iteration counter */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
         <div className="flex items-center gap-2">
-          <Image
+          <img
             className="outline outline-1 outline-neutral-200/20 rounded-lg"
             width={20}
             src={lrnaiIcon}
-            alt="Magic Chat"
+            alt="Magic Chat" 
           />
           <span className="font-semibold text-sm text-white/70">{t('editor.blocks.magic_block_content.magic_chat')}</span>
         </div>

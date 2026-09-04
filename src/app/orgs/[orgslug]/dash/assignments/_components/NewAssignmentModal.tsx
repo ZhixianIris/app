@@ -1,7 +1,6 @@
-'use client'
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
@@ -248,7 +247,7 @@ function EmptyCta({
       <p className="font-bold text-gray-800">{title}</p>
       <p className="text-sm text-gray-500 max-w-sm">{desc}</p>
       <Link
-        href={href}
+        to={href}
         onClick={onNavigate}
         className="mt-1 inline-flex items-center gap-1.5 bg-black text-white text-sm font-semibold rounded-lg px-4 py-2 hover:bg-gray-800 transition-colors"
       >

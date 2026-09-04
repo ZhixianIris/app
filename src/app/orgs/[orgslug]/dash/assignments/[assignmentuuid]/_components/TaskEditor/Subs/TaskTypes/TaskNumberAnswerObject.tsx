@@ -1,4 +1,3 @@
-'use client'
 import { useAssignments } from '@components/Contexts/Assignments/AssignmentContext'
 import { useAssignmentSubmission } from '@components/Contexts/Assignments/AssignmentSubmissionContext'
 import {

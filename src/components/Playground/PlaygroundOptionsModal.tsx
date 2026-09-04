@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useEffect, useRef } from 'react'
 import {
   Globe,
@@ -33,7 +31,7 @@ import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import UnsplashImagePicker from '@components/Dashboard/Pages/Course/EditCourseGeneral/UnsplashImagePicker'
 import AIImageButton from '@components/Objects/AI/AIImageButton'
 import toast from 'react-hot-toast'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 
 type Tab = 'general' | 'access' | 'thumbnail'
 
@@ -372,7 +370,7 @@ function AccessTab({
                 <Lock size={20} className="text-gray-300 mx-auto mb-2" />
                 <p className="text-xs text-gray-400">No user groups linked yet</p>
                 <Link
-                  href={getUriWithOrg(orgslug, '/dash/users/settings/usergroups')}
+                  to={getUriWithOrg(orgslug, '/dash/users/settings/usergroups')}
                   target="_blank"
                   className="text-xs text-sky-600 hover:underline mt-1 inline-block"
                 >
@@ -629,7 +627,7 @@ function LinkUserGroupForm({
       <div className="py-6 text-center space-y-2">
         <p className="text-sm text-gray-500">No user groups available.</p>
         <Link
-          href={getUriWithOrg(orgslug, '/dash/users/settings/usergroups')}
+          to={getUriWithOrg(orgslug, '/dash/users/settings/usergroups')}
           target="_blank"
           className="text-sm text-sky-600 hover:underline"
         >

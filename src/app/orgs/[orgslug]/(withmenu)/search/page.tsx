@@ -1,8 +1,5 @@
-'use client'
-
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import {
   BookCopy,
   Folder,
@@ -343,7 +340,7 @@ const sections: SectionDescriptor<any>[] = [
     itemKey: (u: ApiUser) => u.user_uuid,
     renderCard: (user: ApiUser, ctx) => (
       <Link
-        href={getUriWithOrg(ctx.orgSlug, `/user/${user.username}`)}
+        to={getUriWithOrg(ctx.orgSlug, `/user/${user.username}`)}
         className="flex items-center gap-4 p-3 bg-white rounded-lg border border-black/5 hover:border-black/15 transition-colors"
       >
         <UserAvatar
@@ -374,8 +371,8 @@ const PER_PAGE = 9
 
 function SearchPage() {
   const { t } = useTranslation()
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const router = useNavigate()
+  const [searchParams] = useSearchParams()
   const session = useLHSession() as any
   const org = useOrg() as any
   const { track } = useLHAnalytics('learner')
@@ -401,7 +398,7 @@ function SearchPage() {
           next.set(key, String(value))
         }
       }
-      router.push(`?${next.toString()}`)
+      navigate(`?${next.toString()}`)
     },
     [router, searchParams],
   )
@@ -643,7 +640,7 @@ function ResourceCard({
 }) {
   return (
     <Link
-      href={href}
+      to={href}
       className="bg-white rounded-lg border border-black/5 hover:border-black/15 transition-colors overflow-hidden group flex flex-col"
     >
       <div className="relative aspect-video bg-black/5 flex items-center justify-center">
@@ -683,7 +680,7 @@ function InlineCard({
 }) {
   return (
     <Link
-      href={href}
+      to={href}
       className="flex items-start gap-3 p-3 bg-white rounded-lg border border-black/5 hover:border-black/15 transition-colors"
     >
       <div className="w-9 h-9 bg-black/5 rounded-md flex items-center justify-center flex-shrink-0 text-base">

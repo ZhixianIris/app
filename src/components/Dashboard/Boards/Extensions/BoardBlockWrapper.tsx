@@ -1,5 +1,3 @@
-'use client'
-
 import React, { forwardRef, useCallback } from 'react'
 import { NodeViewWrapper } from '@tiptap/react'
 import NodeActions from './NodeActions'

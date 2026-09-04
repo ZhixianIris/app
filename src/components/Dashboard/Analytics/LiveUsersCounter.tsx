@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useAnalyticsPipe } from './useAnalyticsDashboard'
 import { Broadcast } from '@phosphor-icons/react'

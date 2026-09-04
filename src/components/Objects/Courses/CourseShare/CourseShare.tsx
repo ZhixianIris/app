@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useRef, useEffect, useMemo } from 'react'
 import { SiX, SiFacebook, SiWhatsapp, SiReddit } from '@icons-pack/react-simple-icons'
 import { Link2, Check, Share2 } from 'lucide-react'

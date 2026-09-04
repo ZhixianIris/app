@@ -1,16 +1,13 @@
-'use client'
-
 import React, { useEffect, useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
 import { Loader2, AlertTriangle, ShieldAlert } from 'lucide-react'
-import Link from 'next/link'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth, validateOAuthState } from '@components/Contexts/AuthContext'
 import { getLEARNHOUSE_DOMAIN_VAL, getLEARNHOUSE_TOP_DOMAIN_VAL, getAPIUrl } from '@services/config/config'
 import { getErrorMessage } from '@services/utils/ts/errorMessage'
 
 export default function GoogleCallbackPage() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  const [searchParams] = useSearchParams()
+  const router = useNavigate()
   const { signIn } = useAuth()
   const [error, setError] = useState<string | null>(null)
   const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'csrf_error'>('loading')
@@ -231,7 +228,7 @@ export default function GoogleCallbackPage() {
           const mfaParams = new URLSearchParams({ mfa_token: data.mfa_token })
           const next = new URLSearchParams(window.location.search).get('next')
           if (next && /^\/(?!\/)/.test(next)) mfaParams.set('redirect_to', next)
-          router.push(`/auth/login?${mfaParams.toString()}`)
+          navigate(`/auth/login?${mfaParams.toString()}`)
           return
         }
 
@@ -256,7 +253,7 @@ export default function GoogleCallbackPage() {
         }
 
         setStatus('success')
-        router.push(callbackUrl)
+        navigate(callbackUrl)
       } catch (err: any) {
         console.error('Google OAuth callback error:', err)
         setError(err.message || 'Authentication failed')
@@ -302,13 +299,13 @@ export default function GoogleCallbackPage() {
           </p>
           <div className="space-y-3">
             <Link
-              href="/login"
+              to="/login"
               className="block w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
             >
               Go to Login
             </Link>
             <Link
-              href="/"
+              to="/"
               className="block w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
             >
               Go Home
@@ -334,13 +331,13 @@ export default function GoogleCallbackPage() {
           <p className="text-gray-600 mb-6">{error}</p>
           <div className="space-y-3">
             <Link
-              href="/login"
+              to="/login"
               className="block w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
             >
               Try Again
             </Link>
             <Link
-              href="/"
+              to="/"
               className="block w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
             >
               Go Home

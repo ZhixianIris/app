@@ -1,6 +1,6 @@
 import { useAssignments } from '@components/Contexts/Assignments/AssignmentContext';
 import { BookOpenCheck, Check, CircleHelp, Download, Info, MessageSquare, UserCheck, X } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/keys';
@@ -302,7 +302,7 @@ function EvaluateAssignment({ user_id }: any) {
                                 )}
                                 {task.reference_file && (
                                     <Link
-                                        href={getTaskRefFileDir(
+                                        to={getTaskRefFileDir(
                                             org?.org_uuid,
                                             assignments?.course_object.course_uuid,
                                             assignments?.activity_object.activity_uuid,

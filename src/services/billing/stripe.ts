@@ -33,7 +33,7 @@ import { invoiceSubscriptionId } from "./activeUserBillingUtils";
 // deployments that only set the LEARNHOUSE_-prefixed var still work. Shared by
 // the lazy Stripe client here, the webhook route, and the billing guard.
 export function getStripeSecretKey(): string | undefined {
-  return process.env.STRIPE_SECRET_KEY || process.env.LEARNHOUSE_STRIPE_SECRET_KEY;
+  return import.meta.env.VITE_STRIPE_SECRET_KEY || import.meta.env.VITE_LEARNHOUSE_STRIPE_SECRET_KEY;
 }
 
 // Lazy Stripe client. The SDK throws if instantiated without a key, so we must

@@ -1,4 +1,3 @@
-'use client'
 import { Building2, ArrowRight } from 'lucide-react'
 import React, { useState } from 'react'
 import { getLEARNHOUSE_DOMAIN_VAL } from '@services/config/config'

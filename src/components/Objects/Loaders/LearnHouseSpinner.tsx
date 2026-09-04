@@ -1,5 +1,3 @@
-'use client'
-
 type LearnHouseSpinnerProps = {
   size?: number
   className?: string

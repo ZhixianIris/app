@@ -1,13 +1,11 @@
-'use client'
 import { useFormik } from 'formik'
-import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import FormLayout, {
   FormField,
 } from '@components/Objects/StyledElements/Form/Form'
 import * as Form from '@radix-ui/react-form'
 import { AlertTriangle, Info, Mail, User } from 'lucide-react'
-import Link from 'next/link'
+import { Link, useNavigate } from 'react-router-dom'
 import { signup, resendVerificationEmail } from '@services/auth/auth'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { signIn } from '@components/Contexts/AuthContext'
@@ -72,7 +70,7 @@ function OpenSignUpComponent({ org: propOrg }: OpenSignUpComponentProps = {}) {
   const [isSubmitting, setIsSubmitting] = React.useState(false)
   const contextOrg = useOrg() as any
   const org = (contextOrg && (contextOrg.id || contextOrg.slug)) ? contextOrg : propOrg
-  const _router = useRouter()
+  const _router = useNavigate()
   const [error, setError] = React.useState('')
   const [message, setMessage] = React.useState<{ email_verified: boolean } | null>(null)
   const [resendState, setResendState] = React.useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
@@ -221,7 +219,7 @@ function OpenSignUpComponent({ org: propOrg }: OpenSignUpComponentProps = {}) {
               <p className="text-xs text-red-500">{t('auth.resend_verification_failed', { defaultValue: 'Could not resend. Please try again shortly.' })}</p>
             )}
             <hr className="border-green-100" />
-            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" href="/login">
+            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/login">
               <User size={14} />
               <span>{t('auth.login')}</span>
             </Link>
@@ -235,7 +233,7 @@ function OpenSignUpComponent({ org: propOrg }: OpenSignUpComponentProps = {}) {
               <div className="font-semibold text-sm">{t('auth.account_created_success')}</div>
             </div>
             <hr className="border-green-100" />
-            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" href="/login">
+            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/login">
               <User size={14} />
               <span>{t('auth.login')}</span>
             </Link>
@@ -435,7 +433,7 @@ function OpenSignUpComponent({ org: propOrg }: OpenSignUpComponentProps = {}) {
         {/* Login Link */}
         <p className="text-center text-sm text-black/35 mt-6">
           {t('auth.already_have_account')}{' '}
-          <Link href="/login" className="text-black font-semibold hover:underline">
+          <Link to="/login" className="text-black font-semibold hover:underline">
             {t('auth.login')}
           </Link>
         </p>

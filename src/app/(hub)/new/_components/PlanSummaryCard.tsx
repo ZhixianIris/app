@@ -1,4 +1,3 @@
-'use client'
 // Plan summary card for the .io create-org onboarding (/new) step 4 right column.
 //
 // Ports the platform's `app/components/Landing/PlanSummaryCard.tsx` glow-header

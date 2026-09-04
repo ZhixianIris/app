@@ -1,7 +1,5 @@
-'use client'
 import React, { useState, useEffect } from 'react'
 import { UploadCloud, Info, Image as ImageIcon, Palette, Sun, Moon } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { getOrgLogoMediaDirectory, getOrgAuthBackgroundMediaDirectory } from '@services/media/media'
@@ -19,6 +17,7 @@ import { queryKeys } from '@/lib/query/keys'
 import UnsplashImagePicker, { UnsplashPhotoMeta } from '@components/Dashboard/Pages/Course/EditCourseGeneral/UnsplashImagePicker'
 import AIImageButton from '@components/Objects/AI/AIImageButton'
 import { usePlan } from '@components/Hooks/usePlan'
+import { useNavigate } from "react-router-dom";
 
 const SUPPORTED_FILES = constructAcceptValue(['png', 'jpg', 'webp'])
 
@@ -27,7 +26,7 @@ type TextColor = 'light' | 'dark'
 
 export default function AuthBrandingTab() {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
@@ -82,7 +81,7 @@ export default function AuthBrandingTab() {
       await revalidateTags(['organizations'], org.slug)
       queryClient.invalidateQueries({ queryKey: queryKeys.org.detail(org.slug) })
       toast.success(t('dashboard.organization.auth_branding.save_success'), { id: loadingToast })
-      router.refresh()
+      window.location.reload()
     } catch (_err) {
       toast.error(t('dashboard.organization.auth_branding.save_error'), { id: loadingToast })
     } finally {

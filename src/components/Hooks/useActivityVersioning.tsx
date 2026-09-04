@@ -1,4 +1,3 @@
-'use client'
 import { getAPIUrl } from '@services/config/config'
 import { apiFetch } from '@services/utils/ts/requests'
 import { useQuery, useQueryClient } from '@tanstack/react-query'

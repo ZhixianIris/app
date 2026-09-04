@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { Podcast } from '@services/podcasts/podcasts'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -9,7 +7,7 @@ import { removePodcastPrefix } from '@services/podcasts/podcasts'
 import UserAvatar from '@components/Objects/UserAvatar'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import { Globe, Lock, Headphones, Settings } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 interface PodcastSidebarProps {
@@ -145,7 +143,7 @@ export function PodcastSidebar({ podcast, episodeCount, orgslug }: PodcastSideba
         >
           <div className="pt-2">
             <Link
-              href={getUriWithOrg(orgslug, `/dash/podcasts/podcast/${removePodcastPrefix(podcast.podcast_uuid)}/general`)}
+              to={getUriWithOrg(orgslug, `/dash/podcasts/podcast/${removePodcastPrefix(podcast.podcast_uuid)}/general`)}
               className="flex items-center justify-center gap-2 w-full px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-sm font-medium transition-colors"
             >
               <Settings size={16} />

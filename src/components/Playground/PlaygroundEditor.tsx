@@ -1,8 +1,5 @@
-'use client'
-
 import React, { useState, useCallback, useRef, useEffect } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { motion, type Transition, type TargetAndTransition } from 'motion/react'
 import {
   ArrowLeft,
@@ -68,7 +65,7 @@ const EditorLearnHouseLogo = () => {
         animate={animation.animate}
         transition={animation.transition}
       >
-        <Image src="/lrn.svg" alt="LearnHouse" width={14} height={14} className="invert" />
+        <img src="/lrn.svg" alt="LearnHouse" width={14} height={14} className="invert"  />
       </motion.div>
     </div>
   )
@@ -284,7 +281,7 @@ export default function PlaygroundEditor({
         }}
       >
         {/* Logo */}
-        <Link href="/">
+        <Link to="/">
           <EditorLearnHouseLogo />
         </Link>
 
@@ -292,7 +289,7 @@ export default function PlaygroundEditor({
 
         {/* Back */}
         <Link
-          href="/playgrounds"
+          to="/playgrounds"
           className="flex items-center gap-1.5 text-sm text-neutral-400 hover:text-neutral-700 transition-colors flex-shrink-0 font-medium"
         >
           <ArrowLeft size={14} weight="bold" data-dir-flip />
@@ -393,7 +390,7 @@ export default function PlaygroundEditor({
 
           {/* Preview */}
           <Link
-            href={`/playground/${playground.playground_uuid}`}
+            to={`/playground/${playground.playground_uuid}`}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 h-9 px-3 py-2 font-black text-sm nice-shadow rounded-lg transition-all ease-linear bg-neutral-100 hover:bg-neutral-200 text-neutral-600"

@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
@@ -8,7 +7,6 @@ dayjs.extend(relativeTime)
 import { Edit, Trash2, MoreVertical } from 'lucide-react'
 import toast from 'react-hot-toast'
 import UserAvatar from '@components/Objects/UserAvatar'
-import { useRouter } from 'next/navigation'
 import { getUriWithOrg } from '@services/config/config'
 import { DiscussionWithAuthor, DiscussionAuthor, deleteDiscussion, getLabelInfo } from '@services/communities/discussions'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
@@ -22,6 +20,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@components/ui/dropdown-menu"
+import { useNavigate } from "react-router-dom";
 
 interface DiscussionDetailProps {
   discussion: DiscussionWithAuthor
@@ -74,7 +73,7 @@ export function DiscussionDetail({
 }: DiscussionDetailProps) {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
   const communityId = communityUuid.replace('community_', '')
   const accessToken = session?.data?.tokens?.access_token
   const currentUserId = session?.data?.user?.id
@@ -90,8 +89,8 @@ export function DiscussionDetail({
   const handleDelete = async () => {
     try {
       await deleteDiscussion(discussion.discussion_uuid, accessToken)
-      router.push(getUriWithOrg(orgslug, `/community/${communityId}`))
-      router.refresh()
+      navigate(getUriWithOrg(orgslug, `/community/${communityId}`))
+      window.location.reload()
     } catch (err: any) {
       const message =
         (err?.detail && typeof err.detail === 'object' && err.detail.message) ||

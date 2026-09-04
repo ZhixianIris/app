@@ -1,4 +1,3 @@
-'use client'
 import { getCommunityRights } from '@services/communities/communities'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'

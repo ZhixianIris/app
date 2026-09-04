@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Check, X, FileText, Code2 } from 'lucide-react'

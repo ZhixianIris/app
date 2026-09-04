@@ -1,7 +1,4 @@
-'use client'
-
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Plus, Users, MessagesSquare } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -12,6 +9,7 @@ import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import CommunityCard from '@components/Objects/Communities/CommunityCard'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
+import { useNavigate } from "react-router-dom";
 
 interface CommunitiesDashClientProps {
   org_id: number
@@ -25,7 +23,7 @@ const CommunitiesDashClient = ({
   communities,
 }: CommunitiesDashClientProps) => {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const org = useOrg() as any
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)

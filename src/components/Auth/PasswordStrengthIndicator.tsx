@@ -1,4 +1,3 @@
-'use client'
 import React, { useMemo } from 'react'
 import { Check, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'

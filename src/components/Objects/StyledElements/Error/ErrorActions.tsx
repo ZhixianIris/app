@@ -1,4 +1,3 @@
-'use client'
 import { getPlatformUrl, getUriWithoutOrg } from '@services/config/config'
 import { signOut } from '@components/Contexts/AuthContext'
 import { openFeedbackDialog, isReportingAvailable } from '@lib/errors/report'
@@ -11,8 +10,8 @@ import {
   MessageSquareWarning,
   RefreshCcw,
 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 type Variant = 'primary' | 'neutral' | 'danger' | 'ghost'
 
@@ -73,7 +72,7 @@ export interface ErrorActionsProps {
  * boundary (which renders outside providers) has its own inlined buttons.
  */
 export default function ErrorActions({ resolutions, reset, eventId, loginNext }: ErrorActionsProps) {
-  const router = useRouter()
+  const router = useNavigate()
   const [signingOut, setSigningOut] = useState(false)
 
   // Dedupe while preserving order.
@@ -83,7 +82,7 @@ export default function ErrorActions({ resolutions, reset, eventId, loginNext }:
     if (reset) {
       reset()
     } else {
-      router.refresh()
+      window.location.reload()
       window.location.reload()
     }
   }

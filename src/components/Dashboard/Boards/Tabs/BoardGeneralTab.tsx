@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useEffect } from 'react'
 import { Save } from 'lucide-react'
 import { useOrg } from '@components/Contexts/OrgContext'

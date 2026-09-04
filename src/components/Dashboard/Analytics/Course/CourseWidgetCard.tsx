@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useMemo } from 'react'
 import { ArrowsOutSimple, CaretLeft, CaretRight } from '@phosphor-icons/react'
 import {

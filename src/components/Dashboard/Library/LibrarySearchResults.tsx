@@ -1,4 +1,3 @@
-'use client'
 import FolderThumbnail from '@components/Objects/Thumbnails/FolderThumbnail'
 import LibraryItemCard from '@components/Dashboard/Library/LibraryItemCard'
 import CourseThumbnail, { removeCoursePrefix } from '@components/Objects/Thumbnails/CourseThumbnail'

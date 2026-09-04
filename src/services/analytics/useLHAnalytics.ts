@@ -1,4 +1,3 @@
-'use client'
 import { useCallback } from 'react'
 import { usePostHog } from 'posthog-js/react'
 import { useAnalytics } from '@/hooks/useAnalytics'

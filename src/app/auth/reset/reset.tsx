@@ -1,12 +1,10 @@
-'use client'
 import React from 'react'
 import FormLayout, {
     FormField,
 } from '@components/Objects/StyledElements/Form/Form'
 import * as Form from '@radix-ui/react-form'
 import { AlertTriangle, CheckCircle, Info, X } from 'lucide-react'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { Link, useSearchParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { resetPassword } from '@services/auth/auth'
 import { getErrorMessage } from '@services/utils/ts/errorMessage'
@@ -56,7 +54,7 @@ function ResetPasswordClient({ org }: ResetPasswordClientProps) {
     const { t } = useTranslation();
     const { track } = useLHAnalytics('public')
     const [isSubmitting, setIsSubmitting] = React.useState(false)
-    const searchParams = useSearchParams()
+    const [searchParams] = useSearchParams()
     const reset_code = searchParams.get('resetCode') || ''
     const email = searchParams.get('email') || ''
     const [error, setError] = React.useState('')
@@ -126,7 +124,7 @@ function ResetPasswordClient({ org }: ResetPasswordClientProps) {
                                 <span className="text-sm font-medium">{error || message}</span>
                                 {message && (
                                     <span className="text-sm ms-2">
-                                        · <Link href="/login" className="underline hover:no-underline">{t('auth.proceed_to_login')}</Link>
+                                        · <Link to="/login" className="underline hover:no-underline">{t('auth.proceed_to_login')}</Link>
                                     </span>
                                 )}
                             </div>
@@ -259,7 +257,7 @@ function ResetPasswordClient({ org }: ResetPasswordClientProps) {
                         {/* Back to Login */}
                         <p className="text-center text-sm text-black/35 mt-6">
                             {t('auth.remember_password')}{' '}
-                            <Link href="/login" className="text-black font-semibold hover:underline">
+                            <Link to="/login" className="text-black font-semibold hover:underline">
                                 {t('auth.login')}
                             </Link>
                         </p>

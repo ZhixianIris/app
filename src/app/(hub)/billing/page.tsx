@@ -1,7 +1,5 @@
-'use client'
 import React, { Suspense, useEffect, useMemo, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft } from 'lucide-react'
@@ -32,8 +30,8 @@ function resolveOrgActive(org: any): boolean {
 function BillingClient() {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const router = useNavigate()
+  const [searchParams] = useSearchParams()
   const queryClient = useQueryClient()
 
   const access_token = session?.data?.tokens?.access_token
@@ -56,7 +54,7 @@ function BillingClient() {
   // Redirect unauthenticated users to login (mirror app/home/home.tsx).
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace('/login')
+      navigate('/login', { replace: true })
     }
   }, [isLoading, isAuthenticated, router])
 
@@ -78,7 +76,7 @@ function BillingClient() {
   // No matching org once orgs have loaded → back to the org list.
   useEffect(() => {
     if (isAuthenticated && Array.isArray(orgs) && !org) {
-      router.replace('/organizations')
+      navigate('/organizations', { replace: true })
     }
   }, [isAuthenticated, orgs, org, router])
 
@@ -234,7 +232,7 @@ function BillingClient() {
     const sp = new URLSearchParams(Array.from(searchParams?.entries() ?? []))
     ;['checkout', 'session_id', 'pack_purchased', 'pack'].forEach((k) => sp.delete(k))
     const qs = sp.toString()
-    router.replace(qs ? `/billing?${qs}` : '/billing')
+    navigate(qs ? `/billing?${qs}` : '/billing', { replace: true })
   }, [orgId, checkoutParam, packPurchased, checkoutSessionId, orgSlug, queryClient, router, searchParams, t])
 
   const currentPlanId = resolvePlanIdFromOrg(org)
@@ -273,7 +271,7 @@ function BillingClient() {
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3 min-w-0">
                 <Link
-                  href="/organizations"
+                  to="/organizations"
                   className="flex items-center justify-center w-9 h-9 rounded-xl bg-white nice-shadow text-black/50 hover:text-black transition-colors flex-shrink-0"
                   aria-label={t('billing.back_to_orgs', { defaultValue: 'Back to organizations' })}
                 >
@@ -330,7 +328,7 @@ function BillingClient() {
                   })}
                 </p>
                 <Link
-                  href="/home"
+                  to="/home"
                   className="mt-4 inline-flex items-center rounded-full bg-gray-900 px-4 py-1.5 text-sm font-bold text-white hover:bg-gray-800"
                 >
                   {t('common.home', { defaultValue: 'Home' })}

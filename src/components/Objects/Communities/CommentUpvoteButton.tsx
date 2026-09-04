@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useCallback } from 'react'
 import { ChevronUp } from 'lucide-react'
 import toast from 'react-hot-toast'

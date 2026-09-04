@@ -1,6 +1,5 @@
-'use client'
 import React, { useRef, useState, useCallback, useEffect } from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { PlanLevel } from '@services/plans/plans'
 import PlanBadge from '@components/Dashboard/Shared/PlanRestricted/PlanBadge'
@@ -132,7 +131,7 @@ export function DashTabBar({ tabs }: DashTabBarProps) {
 
           if (tab.href) {
             return (
-              <Link key={tab.key} href={tab.href} prefetch={false}>
+              <Link key={tab.key} to={tab.href}>
                 <div className={tabClass} {...(tab.active ? { 'data-tab-active': '' } : {})}>
                   {inner}
                 </div>

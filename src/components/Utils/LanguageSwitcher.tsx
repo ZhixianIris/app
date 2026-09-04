@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { Languages, ChevronDown, Check } from 'lucide-react'

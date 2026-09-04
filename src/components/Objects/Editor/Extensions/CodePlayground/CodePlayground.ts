@@ -1,10 +1,8 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const CodePlaygroundComponent = dynamic(() => import('./CodePlaygroundComponent'), {
-  ssr: false,
-})
+const CodePlaygroundComponent = lazy(() => import('./CodePlaygroundComponent'))
 
 export default Node.create({
   name: 'blockCode',

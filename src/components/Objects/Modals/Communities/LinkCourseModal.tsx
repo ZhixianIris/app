@@ -1,6 +1,4 @@
-'use client'
 import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -10,6 +8,7 @@ import { revalidateTags } from '@services/utils/ts/requests'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import { Loader2, Link2, Unlink, Search } from 'lucide-react'
 import { searchMatches } from '@/lib/search/normalize'
+import { useNavigate } from "react-router-dom";
 
 interface LinkCourseModalProps {
   isOpen: boolean
@@ -33,7 +32,7 @@ export function LinkCourseModal({
 }: LinkCourseModalProps) {
   const session = useLHSession() as any
   const org = useOrg() as any
-  const router = useRouter()
+  const router = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [courses, setCourses] = useState<Course[]>([])
   const [isLoadingCourses, setIsLoadingCourses] = useState(true)
@@ -75,7 +74,7 @@ export function LinkCourseModal({
         accessToken
       )
       await revalidateTags(['communities'], orgSlug)
-      router.refresh()
+      window.location.reload()
       onClose()
     } catch (err: any) {
       const message =
@@ -97,7 +96,7 @@ export function LinkCourseModal({
         accessToken
       )
       await revalidateTags(['communities'], orgSlug)
-      router.refresh()
+      window.location.reload()
       onClose()
     } catch (err: any) {
       const message =

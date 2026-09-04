@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useCourses } from '@/hooks/queries/useCourses'

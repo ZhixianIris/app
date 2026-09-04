@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useCoursePipe } from '../useAnalyticsDashboard'
 import { getUriWithOrg } from '@services/config/config'
@@ -47,7 +46,7 @@ function FunnelStep({
         <div className="flex-1 pb-5 min-w-0">
           <div className="flex items-center gap-2 mb-2">
             <Link
-              href={href}
+              to={href}
               className="text-sm font-semibold text-gray-800 truncate hover:text-indigo-600 hover:underline transition-colors"
               title={`${row.chapterName ? row.chapterName + ' — ' : ''}${row.displayName}`}
             >

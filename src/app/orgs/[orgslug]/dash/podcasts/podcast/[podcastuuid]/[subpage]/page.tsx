@@ -1,7 +1,6 @@
-'use client'
 import React, { use } from 'react'
 import { PodcastProvider, usePodcast } from '@components/Contexts/PodcastContext'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { Info, ListMusic, Headphones, ArrowLeft, Rss } from 'lucide-react'
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar'
@@ -129,7 +128,7 @@ function PodcastOverviewHeader({
         <div className="flex items-center justify-between mt-4">
           <div className="flex items-center space-x-4">
             <Link
-              href={getUriWithOrg(params.orgslug, '/dash/podcasts')}
+              to={getUriWithOrg(params.orgslug, '/dash/podcasts')}
               className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
             >
               <ArrowLeft size={20} />
@@ -151,7 +150,7 @@ function PodcastOverviewHeader({
           </div>
           {podcast && (
             <Link
-              href={getUriWithOrg(params.orgslug, `/podcast/${params.podcastuuid}`)}
+              to={getUriWithOrg(params.orgslug, `/podcast/${params.podcastuuid}`)}
               target="_blank"
               className="text-sm text-gray-500 hover:text-gray-900 transition-colors"
             >

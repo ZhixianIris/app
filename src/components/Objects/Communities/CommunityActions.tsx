@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { Users, MessageCircle, Plus, Globe, Lock, Settings } from 'lucide-react'
 import { Community } from '@services/communities/communities'

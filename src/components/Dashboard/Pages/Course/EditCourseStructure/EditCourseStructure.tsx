@@ -1,4 +1,3 @@
-'use client'
 import { revalidateTags } from '@services/utils/ts/requests'
 import React, { useEffect, useState } from 'react'
 import { DragDropContext, Droppable } from '@hello-pangea/dnd'
@@ -7,7 +6,6 @@ import { queryKeys } from '@lib/query/keys'
 import ChapterElement from './DraggableElements/ChapterElement'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 import { createChapter } from '@services/courses/chapters'
-import { useRouter } from 'next/navigation'
 import {
   useCourse,
   useCourseDispatch,
@@ -18,6 +16,7 @@ import NewChapterModal from '@components/Objects/Modals/Chapters/NewChapter'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useNavigate } from "react-router-dom";
 
 type EditCourseStructureProps = {
   orgslug: string
@@ -42,7 +41,7 @@ export type OrderPayload =
 const EditCourseStructure = (props: EditCourseStructureProps) => {
   const { t } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const queryClient = useQueryClient()
@@ -87,7 +86,7 @@ const EditCourseStructure = (props: EditCourseStructureProps) => {
     })
     await queryClient.invalidateQueries({ queryKey: queryKeys.courses.meta(cleanCourseUuid(course.courseStructure.course_uuid)) })
     await revalidateTags(['courses'], props.orgslug)
-    router.refresh()
+    window.location.reload()
     setNewChapterModal(false)
   }
 

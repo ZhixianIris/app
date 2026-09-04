@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -26,8 +24,7 @@ import {
   getOrgPlaygrounds,
 } from '@services/playgrounds/playgrounds'
 import toast from 'react-hot-toast'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
@@ -45,7 +42,7 @@ export default function PlaygroundsListClient({ org_id, orgslug }: PlaygroundsLi
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
-  const router = useRouter()
+  const router = useNavigate()
   const { t } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
 
@@ -113,7 +110,7 @@ export default function PlaygroundsListClient({ org_id, orgslug }: PlaygroundsLi
         source: 'dashboard',
       })
       queryClient.invalidateQueries({ queryKey: queryKeys.playgrounds.list(orgslug) })
-      router.push(`/editor/playground/${pg.playground_uuid}/edit`)
+      navigate(`/editor/playground/${pg.playground_uuid}/edit`)
     } catch {
       toast.error('Failed to create playground')
     } finally {
@@ -488,7 +485,7 @@ function PlaygroundCard({
 
       <div className="px-3 pb-3 pt-0 flex items-center justify-end border-t border-gray-100 mt-auto">
         <Link
-          href={`/editor/playground/${playground.playground_uuid}/edit`}
+          to={`/editor/playground/${playground.playground_uuid}/edit`}
           className="pt-2 flex items-center gap-1 text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-wider"
           onClick={(e) => e.stopPropagation()}
         >

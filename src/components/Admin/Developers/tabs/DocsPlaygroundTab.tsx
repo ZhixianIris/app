@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 import { Eye, EyeSlash, CodeSimple } from '@phosphor-icons/react'
 import { ENDPOINTS } from '@components/Admin/Developers/catalog'

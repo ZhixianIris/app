@@ -1,4 +1,3 @@
-'use client'
 import React, { createContext, useContext, useEffect, useReducer } from 'react'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { getAssignmentTask } from '@services/courses/assignments'

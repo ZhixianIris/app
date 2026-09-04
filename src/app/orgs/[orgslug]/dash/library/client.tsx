@@ -1,4 +1,3 @@
-'use client'
 import LibraryGrid from '@components/Dashboard/Library/LibraryGrid'
 import LibraryHeader, { filterLibrary, sortLibrary, type FilterKey } from '@components/Dashboard/Library/LibraryHeader'
 import { type FolderSortMode } from '@components/Dashboard/Library/FolderSortDropdown'

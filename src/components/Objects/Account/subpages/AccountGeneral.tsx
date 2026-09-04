@@ -1,4 +1,3 @@
-'use client';
 import { updateProfile } from '@services/settings/profile'
 import { getUser } from '@services/users/users'
 import React, { useEffect, useState, useCallback } from 'react'

@@ -1,6 +1,4 @@
-'use client'
 import React from 'react'
-import { useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
 import { motion, AnimatePresence } from 'motion/react'
 import { ChevronLeft, ChevronRight, Folder } from 'lucide-react'
@@ -17,6 +15,7 @@ import {
 
 import { useAuth } from '@components/Contexts/AuthContext'
 import { getCourseMetadata } from '@services/courses/courses'
+import { useNavigate } from "react-router-dom";
 
 interface ActivitySwitcherProps {
   course: { course_uuid: string }
@@ -53,7 +52,7 @@ export default function ActivitySwitcher({
   isDirty,
   onSave,
 }: ActivitySwitcherProps) {
-  const router = useRouter()
+  const router = useNavigate()
   const { accessToken } = useAuth()
   const [open, setOpen] = React.useState(false)
   const closeTimerRef = React.useRef<number | null>(null)
@@ -142,7 +141,7 @@ export default function ActivitySwitcher({
         return
       }
     }
-    router.push(href)
+    navigate(href)
   }
 
   return (

@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 
 // Folder color presets — key is stored on folder.color; maps to a soft icon

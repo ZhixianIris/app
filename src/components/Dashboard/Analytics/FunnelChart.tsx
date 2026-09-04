@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useAnalyticsPipe } from './useAnalyticsDashboard'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts'

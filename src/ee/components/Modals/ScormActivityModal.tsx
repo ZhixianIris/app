@@ -15,8 +15,8 @@ import { constructAcceptValue } from '@/lib/constants'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from "react-router-dom";
 
 const SUPPORTED_FILES = constructAcceptValue(['zip'])
 
@@ -71,7 +71,7 @@ function ScormActivityModal({ course, closeModal, onImportComplete, chapterId }:
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id
-  const router = useRouter()
+  const router = useNavigate()
 
   // Step state: 'upload' | 'assign'
   const [step, setStep] = useState<'upload' | 'assign'>('upload')
@@ -223,7 +223,7 @@ function ScormActivityModal({ course, closeModal, onImportComplete, chapterId }:
       closeModal()
 
       // Force router refresh to update the UI
-      router.refresh()
+      window.location.reload()
     } catch (error: any) {
       setImportError(error.message || 'Failed to import SCORM package')
     } finally {

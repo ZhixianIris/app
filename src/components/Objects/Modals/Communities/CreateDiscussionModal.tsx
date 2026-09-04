@@ -1,6 +1,4 @@
-'use client'
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
@@ -11,6 +9,7 @@ import { DiscussionEditor } from '@components/Objects/Communities/DiscussionEdit
 import { EmojiPicker } from '@components/Objects/Communities/EmojiPicker'
 import { Loader2, AlertCircle, MessageSquare, HelpCircle, Lightbulb, Megaphone, Star, Check } from 'lucide-react'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useNavigate } from "react-router-dom";
 
 interface CreateDiscussionModalProps {
   isOpen: boolean
@@ -43,7 +42,7 @@ export function CreateDiscussionModal({
 }: CreateDiscussionModalProps) {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const _router = useRouter()
+  const _router = useNavigate()
   const mutateDiscussions = useMutateDiscussions()
   const { track } = useLHAnalytics('learner')
   const [isSubmitting, setIsSubmitting] = useState(false)

@@ -1,11 +1,9 @@
-'use client'
-
 import React from 'react'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getUriWithOrg } from '@services/config/config'
 import { Award, ExternalLink, Calendar, Building } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { getAllUserCertificates } from '@services/courses/certifications'
@@ -128,7 +126,7 @@ const UserCertificates: React.FC<UserCertificatesProps> = ({ orgslug }) => {
             >
               {/* Thumbnail */}
               <Link
-                href={verificationLink}
+                to={verificationLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block relative aspect-video overflow-hidden bg-gradient-to-br from-yellow-50 to-amber-100"
@@ -154,7 +152,7 @@ const UserCertificates: React.FC<UserCertificatesProps> = ({ orgslug }) => {
               {/* Content */}
               <div className="p-3 flex flex-col space-y-1.5">
                 <Link
-                  href={verificationLink}
+                  to={verificationLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-base font-bold text-gray-900 leading-tight hover:text-black transition-colors line-clamp-1"
@@ -176,7 +174,7 @@ const UserCertificates: React.FC<UserCertificatesProps> = ({ orgslug }) => {
                   </div>
 
                   <Link
-                    href={verificationLink}
+                    to={verificationLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-600 hover:text-blue-700 uppercase tracking-wider"

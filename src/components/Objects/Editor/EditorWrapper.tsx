@@ -1,4 +1,3 @@
-'use client'
 import { default as React, type JSX } from 'react';
 import Editor from './Editor'
 import { updateActivity, getActivityState, getActivity } from '@services/courses/activities'

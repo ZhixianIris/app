@@ -1,6 +1,5 @@
-'use client'
 import { NodeViewWrapper } from '@tiptap/react'
-import React, { useState, useCallback, useEffect, useRef } from 'react'
+import React, { useState, useCallback, useEffect, useRef, lazy } from 'react'
 import {
   Play,
   Plus,
@@ -41,21 +40,15 @@ import { parseBlankRegions, getBlankRegionExtensions } from './FillInTheBlank'
 import { createPlaygroundKeymap } from './keymap'
 import { linter, lintGutter } from '@codemirror/lint'
 import { parseErrors, errorsToDiagnostics } from './errorAnnotations'
-import dynamic from 'next/dynamic'
 import { v4 as uuidv4 } from 'uuid'
 import { Resizable } from 're-resizable'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
 
-const CodeMirror = dynamic(() => import('@uiw/react-codemirror'), {
-  ssr: false,
-  loading: () => (
-    <div className="h-[300px] bg-neutral-900 animate-pulse" />
-  ),
-})
+const CodeMirror = lazy(() => import('@uiw/react-codemirror'))
 
-const ReactConfetti = dynamic(() => import('react-confetti'), { ssr: false })
+const ReactConfetti = lazy(() => import('react-confetti'))
 
 const cmStyles: React.CSSProperties = {
   fontSize: '14px',

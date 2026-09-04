@@ -1,4 +1,3 @@
-import { Metadata } from 'next'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
 import { getOrgThumbnailMediaDirectory, getOrgOgImageMediaDirectory } from '@services/media/media'
 import { getServerSession } from '@/lib/auth/server'
@@ -7,74 +6,11 @@ import { getServerCanonicalUrl } from '@/lib/seo/utils.server'
 import { JsonLd } from '@components/SEO/JsonLd'
 import { getBoards } from '@services/boards/boards'
 import BoardsPublicClient from './boards'
-import { redirect } from 'next/navigation'
+import { redirect } from "react-router-dom";
 
 type PageParams = Promise<{
   orgslug: string
 }>
-
-export async function generateMetadata({
-  params,
-}: {
-  params: PageParams
-}): Promise<Metadata> {
-  const { orgslug } = await params
-  const org = await getOrganizationContextInfo(orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
-
-  const seoConfig = getOrgSeoConfig(org)
-
-  const ogImageUrl = seoConfig.default_og_image
-    ? getOrgOgImageMediaDirectory(org?.org_uuid, seoConfig.default_og_image)
-    : null
-  const imageUrl = ogImageUrl || (org ? getOrgThumbnailMediaDirectory(org.org_uuid, org.thumbnail_image) : undefined)
-  const title = buildPageTitle('Boards', org?.name || 'Organization', seoConfig)
-  const description = org?.description || seoConfig.default_meta_description || `Collaborative boards from ${org?.name || 'this organization'}`
-  const canonical = await getServerCanonicalUrl(orgslug, '/boards')
-
-  return {
-    title,
-    description,
-    keywords: `${org?.name}, boards, collaboration, projects, ${org?.name} boards`,
-    robots: {
-      index: true,
-      follow: true,
-      nocache: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-image-preview': 'large',
-      },
-    },
-    alternates: {
-      canonical,
-    },
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      ...(imageUrl && {
-        images: [
-          {
-            url: imageUrl,
-            width: 800,
-            height: 600,
-            alt: org?.name || 'Boards',
-          },
-        ],
-      }),
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title,
-      description,
-      ...(imageUrl && { images: [imageUrl] }),
-      ...(seoConfig.twitter_handle && { site: seoConfig.twitter_handle }),
-    },
-  }
-}
 
 export default async function BoardsPage({ params }: { params: PageParams }) {
   const { orgslug } = await params

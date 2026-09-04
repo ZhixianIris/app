@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 import { Button } from '@components/ui/button'
 import { Input } from '@components/ui/input'
@@ -16,8 +15,8 @@ import {
 } from '../../services/scorm/upload'
 import { revalidateTags } from '@services/utils/ts/requests'
 import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from "react-router-dom";
 
 const SUPPORTED_FILES = constructAcceptValue(['zip'])
 
@@ -53,7 +52,7 @@ function ScormCourseImport({ orgId, orgslug, closeModal }: ScormCourseImportProp
   const { t } = useTranslation()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
-  const router = useRouter()
+  const router = useNavigate()
 
   // Step state: 'upload' | 'configure'
   const [step, setStep] = useState<'upload' | 'configure'>('upload')
@@ -208,7 +207,7 @@ function ScormCourseImport({ orgId, orgslug, closeModal }: ScormCourseImportProp
       await revalidateTags(['courses'], orgslug)
       toast.success(t('courses.course_created_success'))
       closeModal()
-      router.refresh()
+      window.location.reload()
     } catch (error: any) {
       setImportError(error.message || 'Failed to import SCORM package')
     } finally {

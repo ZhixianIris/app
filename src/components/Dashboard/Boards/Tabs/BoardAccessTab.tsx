@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useEffect } from 'react'
 import { Globe, Users, X, SquareUserRound } from 'lucide-react'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -13,7 +11,7 @@ import { getUserGroups, linkResourcesToUserGroup, unLinkResourcesToUserGroup } f
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import toast from 'react-hot-toast'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 interface BoardAccessTabProps {
@@ -278,7 +276,7 @@ function LinkUserGroupToBoard({ boardUuid, orgId, accessToken, setModalOpen }: {
             <Link
               className="px-3 text-blue-700 font-bold rounded-full py-1 bg-blue-100 mx-1"
               target="_blank"
-              href={getUriWithOrg(org?.slug, '/dash/users/settings/usergroups')}
+              to={getUriWithOrg(org?.slug, '/dash/users/settings/usergroups')}
             >
               {t('boards.access.create_user_group')}
             </Link>

@@ -1,4 +1,3 @@
-'use client'
 import { createPortal } from 'react-dom'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { signOut } from '@components/Contexts/AuthContext'
@@ -28,8 +27,7 @@ import {
   Code,
 } from '@phosphor-icons/react'
 import { DiscordIcon } from '@components/Objects/Icons/DiscordIcon'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { Link, useLocation } from 'react-router-dom'
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import UserAvatar from '../../Objects/UserAvatar'
@@ -49,7 +47,7 @@ function DashMobileMenu() {
   const org = useOrg() as any
   const session = useLHSession() as any
   const { t, i18n } = useTranslation()
-  const pathname = usePathname() || ''
+  const pathname = useLocation().pathname || ''
   const plan = usePlan()
   const { toggle: openSearch } = useCommandPalette()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -95,7 +93,7 @@ function DashMobileMenu() {
         >
           {/* LearnHouse logo — links to home */}
           <Link
-            href="/dash"
+            to="/dash"
             className="flex items-center justify-center px-2.5 py-2.5 rounded-full transition-all duration-200"
             aria-label={t('common.home')}
           >
@@ -328,7 +326,7 @@ const PillLink = ({
   className?: string
 }) => (
   <Link
-    href={href}
+    to={href}
     className={cn(
       'flex items-center justify-center p-2.5 rounded-full transition-all duration-200',
       active ? 'bg-white/[0.15] text-white' : 'text-white/50 hover:text-white hover:bg-white/[0.08]',
@@ -353,7 +351,7 @@ const PanelItem = ({
   onClick: () => void
 }) => (
   <Link
-    href={href}
+    to={href}
     onClick={onClick}
     aria-current={active ? 'page' : undefined}
     className={cn(

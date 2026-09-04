@@ -1,10 +1,8 @@
 import { ReactNodeViewRenderer } from "@tiptap/react";
 import { mergeAttributes, Node } from "@tiptap/core";
-import dynamic from "next/dynamic";
+import { lazy } from "react";
 
-const FlipcardGridExtension = dynamic(() => import("./FlipcardGridExtension"), {
-  ssr: false,
-});
+const FlipcardGridExtension = lazy(() => import("./FlipcardGridExtension"));
 
 /**
  * Container that lays its flipcards out side by side.

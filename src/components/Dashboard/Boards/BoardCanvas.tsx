@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { MessageCircle } from 'lucide-react'
 import { FeedbackModal } from '@components/Objects/Modals/FeedbackModal'

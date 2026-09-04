@@ -1,4 +1,3 @@
-'use client';
 import { useLHSession } from '@components/Contexts/LHSessionContext';
 import { useOrg } from '@components/Contexts/OrgContext';
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
@@ -28,7 +27,7 @@ import {
   X,
   Zap,
 } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import React, { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 import NewAssignmentModal from './_components/NewAssignmentModal';
@@ -479,11 +478,10 @@ function CourseCard({
           </div>
         </div>
         <Link
-          href={{
+          to={{
             pathname: getUriWithOrg(org.slug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`),
             query: { subpage: 'editor' },
           }}
-          prefetch
           className='bg-black font-semibold text-xs text-zinc-100 rounded-lg flex space-x-1.5 nice-shadow items-center px-3 py-1.5 flex-none hover:bg-gray-800 transition-colors'
         >
           <GalleryVerticalEnd size={14} />
@@ -551,8 +549,7 @@ function AssignmentCard({
 
       {/* Title */}
       <Link
-        href={editorHref}
-        prefetch
+        to={editorHref}
         className='block text-base font-bold text-gray-900 leading-tight hover:text-black mb-1 line-clamp-2 break-words'
       >
         {assignment.title || t('dashboard.assignments.home.untitled')}
@@ -589,16 +586,14 @@ function AssignmentCard({
           classic white pill-with-nice-shadow look. */}
       <div className='flex items-center gap-2 mt-auto pt-3 border-t border-gray-100'>
         <Link
-          href={editorHref}
-          prefetch
+          to={editorHref}
           className='bg-white rounded-full flex space-x-1.5 nice-shadow items-center px-3 py-1 text-xs font-bold text-gray-700 hover:bg-gray-50 transition-colors'
         >
           <Layers2 size={13} />
           <p>{t('dashboard.assignments.home.editor')}</p>
         </Link>
         <Link
-          href={submissionsHref}
-          prefetch
+          to={submissionsHref}
           className='bg-white rounded-full flex space-x-1.5 nice-shadow items-center px-3 py-1 text-xs font-bold text-gray-700 hover:bg-gray-50 transition-colors'
         >
           <UserRoundPen size={13} />
@@ -618,7 +613,7 @@ const MiniThumbnail = (props: { course: any }) => {
 
   return (
     <Link
-      href={getUriWithOrg(
+      to={getUriWithOrg(
         org.orgslug,
         '/course/' + removeCoursePrefix(props.course.course_uuid)
       )}

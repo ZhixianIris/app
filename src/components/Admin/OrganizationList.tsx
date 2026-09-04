@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import { safeHref } from '@services/security/url'
 import { useQuery } from '@tanstack/react-query'
@@ -7,8 +6,7 @@ import { getAPIUrl, getDeploymentMode } from '@services/config/config'
 import { getOrgLogoMediaDirectory, getUserAvatarMediaDirectory } from '@services/media/media'
 import { apiFetch } from '@services/utils/ts/requests'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
-import Link from 'next/link'
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
+import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { Buildings, Globe, User, CaretLeft, CaretRight, BookOpen, MagnifyingGlass, ArrowSquareOut, Plus } from '@phosphor-icons/react'
 import CreateOrganizationModal from '@components/Admin/CreateOrganizationModal'
 import EELicenseError from '@components/Admin/EELicenseError'
@@ -192,9 +190,9 @@ function ImgWithFallback({
 export default function OrganizationList() {
   const session = useLHSession() as any
   const accessToken = session?.data?.tokens?.access_token
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
+  const [searchParams] = useSearchParams()
+  const router = useNavigate()
+  const pathname = useLocation().pathname
 
   // Read initial values from URL search params
   const [planFilter, setPlanFilter] = useState<string>(searchParams.get('plan') || 'all')
@@ -221,7 +219,7 @@ export default function OrganizationList() {
       }
     }
     const qs = params.toString()
-    router.replace(`${pathname}${qs ? `?${qs}` : ''}`, { scroll: false })
+    navigate(`${pathname}${qs ? `?${qs}` : ''}`, { scroll: false }, { replace: true })
   }, [searchParams, router, pathname])
 
   // Debounce search input
@@ -449,7 +447,7 @@ export default function OrganizationList() {
             return (
               <tr key={org.id} className="border-b border-white/[0.05] hover:bg-white/[0.03] transition-colors">
                 <td className="px-4 py-3">
-                  <Link href={`/admin/organizations/${org.id}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                  <Link to={`/admin/organizations/${org.id}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                     {org.logo_image ? (
                       <ImgWithFallback
                         src={getLogoUrl(org.org_uuid, org.logo_image)}

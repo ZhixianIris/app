@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import toast from 'react-hot-toast'
 import { Download, CheckCircle2, AlertCircle, Loader2, Package, FileArchive, FolderOpen, Layers, FileCheck } from 'lucide-react'

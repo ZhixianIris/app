@@ -1,6 +1,4 @@
-'use client'
 import React, { useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { Command } from 'cmdk'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
@@ -25,6 +23,7 @@ import { useOrgMembership } from '@components/Contexts/OrgContext'
 import { isFeatureAvailable } from '@services/plans/plans'
 import { normalizeForSearch } from '@/lib/search/normalize'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useNavigate } from "react-router-dom";
 
 const CONTENT_TYPE_ICON: Record<ContentResultType, SearchMeta['icon']> = {
   course: BookOpen,
@@ -84,7 +83,7 @@ function groupContentResults(results: ContentResult[]): Record<ContentResultType
 export default function CommandPalette() {
   const { t } = useTranslation()
   const { open, setOpen } = useCommandPalette()
-  const router = useRouter()
+  const router = useNavigate()
   const { track } = useLHAnalytics('dashboard')
   const [query, setQuery] = useState('')
 
@@ -110,7 +109,7 @@ export default function CommandPalette() {
       result_index: resultIndex,
     })
     setOpen(false)
-    router.push(href)
+    navigate(href)
   }
 
   const openSelectedInNewTab = (rootEl: HTMLElement | null) => {

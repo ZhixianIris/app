@@ -1,4 +1,3 @@
-'use client'
 import { updateCourseOrderStructure } from '@services/courses/chapters'
 import { revalidateTags } from '@services/utils/ts/requests'
 import {
@@ -9,7 +8,6 @@ import {
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { Check, SaveAllIcon, Loader2, AlertCircle } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import React, { useCallback, useEffect, useRef } from 'react'
 import { updateCourse } from '@services/courses/courses'
 import { updateCertification } from '@services/courses/certifications'
@@ -18,6 +16,7 @@ import { useOrg } from '@components/Contexts/OrgContext'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useNavigate } from "react-router-dom";
 
 interface SaveResult {
   success: boolean
@@ -32,7 +31,7 @@ function SaveState(props: { orgslug: string }) {
   const course = useCourse() as any
   const session = useLHSession() as any
   const org = useOrg() as any
-  const router = useRouter()
+  const router = useNavigate()
   const dispatchCourse = useCourseDispatch() as any
   const debounceManager = useDebounceManager()
   const saveInProgressRef = useRef(false)
@@ -142,7 +141,7 @@ function SaveState(props: { orgslug: string }) {
       dispatchCourse({ type: 'commitChanges' })
 
       // Refresh router to update any server components
-      router.refresh()
+      window.location.reload()
 
       // Show success feedback
       const allSucceeded = results.every(r => r.success)

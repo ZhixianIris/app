@@ -11,7 +11,7 @@ import TaskShortAnswerObject from 'app/orgs/[orgslug]/dash/assignments/[assignme
 import TaskNumberAnswerObject from 'app/orgs/[orgslug]/dash/assignments/[assignmentuuid]/_components/TaskEditor/Subs/TaskTypes/TaskNumberAnswerObject'
 import toast from 'react-hot-toast';
 import { AlarmClockOff, Backpack, Calendar, CheckCircle2, Download, EllipsisVertical, Info, MessageSquare, RotateCcw, XCircle } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import React, { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next';
 
@@ -230,7 +230,7 @@ function AssignmentStudentActivity() {
                   <p className='text-xs font-semibold'>{t('assignments.hint')}</p>
                 </div>}
                 {task.reference_file && <Link
-                  href={getTaskRefFileDir(
+                  to={getTaskRefFileDir(
                     org?.org_uuid,
                     assignments?.course_object.course_uuid,
                     assignments?.activity_object.activity_uuid,

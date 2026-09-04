@@ -1,4 +1,3 @@
-'use client'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import TrailCourseCard from '@components/Pages/Trail/TrailCourseCard'
@@ -11,12 +10,12 @@ import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { removeCourse } from '@services/courses/activity'
 import { revalidateTags } from '@services/utils/ts/requests'
-import { useRouter } from 'next/navigation'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import { BookOpen } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
 import { useTrackView, AnalyticsEvent } from '@services/analytics'
+import { useNavigate } from "react-router-dom";
 
 function Trail(params: any) {
   const { t } = useTranslation()
@@ -25,7 +24,7 @@ function Trail(params: any) {
   const access_token = session?.data?.tokens?.access_token;
   const org = useOrg() as any
   const orgID = org?.id
-  const router = useRouter()
+  const router = useNavigate()
   const [isQuittingAll, setIsQuittingAll] = useState(false)
   const [quittingProgress, setQuittingProgress] = useState(0)
   const queryClient = useQueryClient()
@@ -52,7 +51,7 @@ function Trail(params: any) {
       }
 
       await revalidateTags(['courses'], orgslug);
-      router.refresh();
+      window.location.reload();
       await queryClient.invalidateQueries({ queryKey: queryKeys.trail.org(orgID) });
     } catch (error) {
       console.error('Error quitting courses:', error);

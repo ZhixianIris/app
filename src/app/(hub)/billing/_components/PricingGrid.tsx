@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { Check, GraduationCap, Presentation } from 'lucide-react'
 import {

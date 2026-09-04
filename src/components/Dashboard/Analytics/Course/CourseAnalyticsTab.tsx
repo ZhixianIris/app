@@ -1,6 +1,4 @@
-'use client'
-import React, { useState, useMemo } from 'react'
-import dynamic from 'next/dynamic'
+import React, { useState, useMemo, lazy } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useCourse } from '@components/Contexts/CourseContext'
@@ -9,26 +7,26 @@ import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
 import { useResolvedFeature } from '@components/Hooks/useResolvedFeature'
 import ExportAnalyticsButton from '../AnalyticsExport'
 
-const CourseOverviewStats = dynamic(() => import('./CourseOverviewStats'))
-const CourseEnrollmentTrend = dynamic(() => import('./CourseEnrollmentTrend'))
-const CourseActivityFunnel = dynamic(() => import('./CourseActivityFunnel'))
-const CourseLearnerProgress = dynamic(() => import('./CourseLearnerProgress'))
-const CourseTimePerActivity = dynamic(() => import('./CourseTimePerActivity'))
-const CourseCompletionVelocity = dynamic(() => import('./CourseCompletionVelocity'))
-const CourseActiveLearners = dynamic(() => import('./CourseActiveLearners'))
-const CourseTimeToCompletion = dynamic(() => import('./CourseTimeToCompletion'))
-const CourseRecentEnrollments = dynamic(() => import('./CourseRecentEnrollments'))
-const CourseCertificationRate = dynamic(() => import('./CourseCertificationRate'))
-const CourseViewToEnrollment = dynamic(() => import('./CourseViewToEnrollment'))
-const CourseActivityTypeBreakdown = dynamic(() => import('./CourseActivityTypeBreakdown'))
-const CoursePeakHours = dynamic(() => import('./CoursePeakHours'))
-const CourseLearnerRetention = dynamic(() => import('./CourseLearnerRetention'))
-const CourseTopLearners = dynamic(() => import('./CourseTopLearners'))
-const CourseActivityDropoff = dynamic(() => import('./CourseActivityDropoff'))
-const CourseEngagementByType = dynamic(() => import('./CourseEngagementByType'))
-const CourseDailyCompletions = dynamic(() => import('./CourseDailyCompletions'))
-const CourseAvgSessionDuration = dynamic(() => import('./CourseAvgSessionDuration'))
-const CourseUniqueViewers = dynamic(() => import('./CourseUniqueViewers'))
+const CourseOverviewStats = lazy(() => import('./CourseOverviewStats'))
+const CourseEnrollmentTrend = lazy(() => import('./CourseEnrollmentTrend'))
+const CourseActivityFunnel = lazy(() => import('./CourseActivityFunnel'))
+const CourseLearnerProgress = lazy(() => import('./CourseLearnerProgress'))
+const CourseTimePerActivity = lazy(() => import('./CourseTimePerActivity'))
+const CourseCompletionVelocity = lazy(() => import('./CourseCompletionVelocity'))
+const CourseActiveLearners = lazy(() => import('./CourseActiveLearners'))
+const CourseTimeToCompletion = lazy(() => import('./CourseTimeToCompletion'))
+const CourseRecentEnrollments = lazy(() => import('./CourseRecentEnrollments'))
+const CourseCertificationRate = lazy(() => import('./CourseCertificationRate'))
+const CourseViewToEnrollment = lazy(() => import('./CourseViewToEnrollment'))
+const CourseActivityTypeBreakdown = lazy(() => import('./CourseActivityTypeBreakdown'))
+const CoursePeakHours = lazy(() => import('./CoursePeakHours'))
+const CourseLearnerRetention = lazy(() => import('./CourseLearnerRetention'))
+const CourseTopLearners = lazy(() => import('./CourseTopLearners'))
+const CourseActivityDropoff = lazy(() => import('./CourseActivityDropoff'))
+const CourseEngagementByType = lazy(() => import('./CourseEngagementByType'))
+const CourseDailyCompletions = lazy(() => import('./CourseDailyCompletions'))
+const CourseAvgSessionDuration = lazy(() => import('./CourseAvgSessionDuration'))
+const CourseUniqueViewers = lazy(() => import('./CourseUniqueViewers'))
 
 const COURSE_QUERY_NAMES = [
   'course_overview_stats', 'course_enrollment_trend', 'course_activity_funnel',

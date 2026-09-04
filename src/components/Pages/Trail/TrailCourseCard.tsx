@@ -1,4 +1,3 @@
-'use client'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getUriWithOrg } from '@services/config/config'
 import { removeCourse } from '@services/courses/activity'
@@ -8,8 +7,7 @@ import { revalidateTags } from '@services/utils/ts/requests'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { getUserCertificates } from '@services/courses/certifications'
 import { useCourseCertification } from '@components/Hooks/useCourseCertification'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
@@ -36,7 +34,7 @@ function TrailCourseCard(props: TrailCourseCardProps) {
   const access_token = session?.data?.tokens?.access_token;
   const courseid = props.course.course_uuid.replace('course_', '')
   const course = props.course
-  const router = useRouter()
+  const router = useNavigate()
   const course_total_steps = props.run.course_total_steps
   const course_completed_steps = props.run.steps.length
   const orgID = org?.id
@@ -72,7 +70,7 @@ function TrailCourseCard(props: TrailCourseCardProps) {
   async function quitCourse(course_uuid: string) {
     let activity = await removeCourse(course_uuid, props.orgslug, access_token)
     await revalidateTags(['courses'], props.orgslug)
-    router.refresh()
+    window.location.reload()
     if (orgID) {
       queryClient.invalidateQueries({ queryKey: queryKeys.trail.org(orgID) })
     }
@@ -139,7 +137,7 @@ function TrailCourseCard(props: TrailCourseCardProps) {
 
       {/* Thumbnail */}
       <Link
-        href={courseLink}
+        to={courseLink}
         className="block relative aspect-video overflow-hidden bg-gray-50"
       >
         {props.course.thumbnail_image && org?.org_uuid ? (
@@ -169,7 +167,7 @@ function TrailCourseCard(props: TrailCourseCardProps) {
       {/* Content */}
       <div className="p-3 flex flex-col space-y-1.5">
         <Link
-          href={courseLink}
+          to={courseLink}
           className="text-base font-bold text-gray-900 leading-tight hover:text-black transition-colors line-clamp-1"
         >
           {course.name}
@@ -212,7 +210,7 @@ function TrailCourseCard(props: TrailCourseCardProps) {
 
           {course_progress === 100 && showCertificateUI && courseCertificate ? (
             <Link
-              href={getUriWithOrg(props.orgslug, `/certificates/${courseCertificate.certificate_user.user_certification_uuid}/verify`)}
+              to={getUriWithOrg(props.orgslug, `/certificates/${courseCertificate.certificate_user.user_certification_uuid}/verify`)}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-[10px] font-bold text-blue-600 hover:text-blue-700 uppercase tracking-wider"
@@ -222,7 +220,7 @@ function TrailCourseCard(props: TrailCourseCardProps) {
             </Link>
           ) : (
             <Link
-              href={courseLink}
+              to={courseLink}
               className="text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-wider"
             >
               {t('courses.continue_learning')}

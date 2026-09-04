@@ -1,9 +1,8 @@
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { Metadata } from 'next'
 import { getServerSession } from '@/lib/auth/server'
 import { getOrgThumbnailMediaDirectory } from '@services/media/media'
 import AccountClient from '@components/Objects/Account/AccountClient'
-import { redirect } from 'next/navigation'
+import { redirect } from "react-router-dom";
 
 type MetadataProps = {
   params: Promise<{ orgslug: string; subpage: string }>
@@ -21,40 +20,6 @@ const getSubpageTitle = (subpage: string): string => {
   }
   return titles[subpage] || 'Account'
 }
-
-export async function generateMetadata(props: MetadataProps): Promise<Metadata> {
-  const params = await props.params
-  const org = await getOrganizationContextInfo(params.orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
-
-  const title = `${getSubpageTitle(params.subpage)} — ${org.name}`
-  const description = `Manage your account settings at ${org.name}`
-
-  return {
-    title,
-    description,
-    robots: {
-      index: false,
-      follow: false,
-    },
-    openGraph: {
-      title,
-      description,
-      type: 'website',
-      images: [
-        {
-          url: getOrgThumbnailMediaDirectory(org?.org_uuid, org?.thumbnail_image),
-          width: 800,
-          height: 600,
-          alt: org.name,
-        },
-      ],
-    },
-  }
-}
-
 const AccountSubPage = async (props: { params: Promise<{ orgslug: string; subpage: string }> }) => {
   const params = await props.params
   const session = await getServerSession()

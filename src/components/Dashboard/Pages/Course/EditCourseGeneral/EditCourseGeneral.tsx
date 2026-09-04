@@ -1,4 +1,3 @@
-'use client'
 import FormLayout, {
   FormField,
   FormLabelAndMessage,

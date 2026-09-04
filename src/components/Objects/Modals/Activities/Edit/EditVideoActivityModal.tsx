@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, useState } from 'react'
 import BarLoader from 'react-spinners/BarLoader'
 import { PlayCircle, Upload, YoutubeLogo, Sparkle } from '@phosphor-icons/react'

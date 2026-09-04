@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import {
   Broadcast,
   UserPlus,
@@ -56,7 +55,7 @@ export default function QuickStats() {
             {t('dashboard.home.enable_analytics_description')}
           </p>
           <Link
-            href="/dash/analytics"
+            to="/dash/analytics"
             className="text-[11px] font-medium text-blue-600 hover:text-blue-700"
           >
             {t('dashboard.home.enable')} &rarr;
@@ -131,7 +130,7 @@ function QuickStatsContent() {
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold text-gray-700">{t('dashboard.home.quick_stats')}</h3>
         <Link
-          href="/dash/analytics"
+          to="/dash/analytics"
           className="text-[11px] font-medium text-gray-400 hover:text-gray-600 transition-colors"
         >
           {t('dashboard.home.full_analytics')} &rarr;

@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { NodeViewContent } from '@tiptap/react'
 import { Article } from '@phosphor-icons/react'

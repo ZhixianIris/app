@@ -1,7 +1,4 @@
-'use client'
-
-import React from 'react'
-import dynamic from 'next/dynamic'
+import React, { lazy } from 'react'
 import { Download, File as FileIcon, FileArchive, FileSpreadsheet, FileText, Lock, Presentation } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { getMediaFileDirectory } from '@services/media/media-resource'
@@ -11,9 +8,8 @@ import { safeExternalUrl } from '@components/Dashboard/Library/resourceLink'
 import InlineAudioPlayer from '@components/Objects/Media/InlineAudioPlayer'
 
 // video.js touches window on import; keep it out of the server bundle.
-const LearnHousePlayer = dynamic(
-  () => import('@components/Objects/Activities/Video/LearnHousePlayer'),
-  { ssr: false }
+const LearnHousePlayer = lazy(
+  () => import('@components/Objects/Activities/Video/LearnHousePlayer')
 )
 
 /*

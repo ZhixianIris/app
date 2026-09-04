@@ -1,12 +1,10 @@
-'use client';
 import { AssignmentsTaskProvider } from '@components/Contexts/Assignments/AssignmentsTaskContext'
 import { LayoutList } from 'lucide-react'
-import React from 'react'
+import React, { lazy } from 'react'
 import AssignmentTasks from '../_components/Tasks'
 import { AssignmentProvider } from '@components/Contexts/Assignments/AssignmentContext'
-import dynamic from 'next/dynamic';
 import { useTranslation } from 'react-i18next';
-const AssignmentTaskEditor = dynamic(() => import('../_components/TaskEditor/TaskEditor'))
+const AssignmentTaskEditor = lazy(() => import('../_components/TaskEditor/TaskEditor'))
 
 function AssignmentEditorSubPage({ assignmentuuid }: { assignmentuuid: string }) {
     const { t } = useTranslation()

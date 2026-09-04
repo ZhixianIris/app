@@ -1,4 +1,3 @@
-'use client'
 import { FOLDER_COLORS } from '@components/Dashboard/Library/LibraryToolbar'
 import { Check, ImagePlus, X } from 'lucide-react'
 import React from 'react'

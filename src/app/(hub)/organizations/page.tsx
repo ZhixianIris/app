@@ -1,5 +1,3 @@
-'use client'
-
 // /organizations — the hub entry point.
 //
 // Thin route that renders the same org picker used at /home, so the apex

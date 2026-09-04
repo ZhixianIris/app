@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useRef, useEffect } from 'react'
 import { PaperPlaneTilt, Sparkle, CircleNotch, BookOpen, Brain } from '@phosphor-icons/react'
 

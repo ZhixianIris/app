@@ -1,4 +1,3 @@
-'use client'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { updatePassword } from '@services/settings/password'
 import { Formik, Form } from 'formik'

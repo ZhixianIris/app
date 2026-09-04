@@ -1,9 +1,6 @@
-'use client'
-
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import Link from 'next/link'
-import Image from 'next/image'
+import { Link } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip'
 import { getUriWithOrg } from '@services/config/config'
@@ -31,21 +28,21 @@ export default function BoardTopBar({
         }}
       >
         <ToolTip content={t('boards.back_to_boards')}>
-          <Link href={getUriWithOrg(orgslug, '/boards')}>
+          <Link to={getUriWithOrg(orgslug, '/boards')}>
             <div className="editor-tool-btn">
               <ArrowLeft size={15} />
             </div>
           </Link>
         </ToolTip>
 
-        <Link href={getUriWithOrg(orgslug, '/boards')}>
+        <Link to={getUriWithOrg(orgslug, '/boards')}>
           <div className="bg-black rounded-md w-[25px] h-[25px] flex items-center justify-center hover:opacity-80 transition-opacity">
-            <Image
+            <img
               src="/lrn.svg"
               alt="LearnHouse"
               width={14}
               height={14}
-              className="invert"
+              className="invert" 
             />
           </div>
         </Link>

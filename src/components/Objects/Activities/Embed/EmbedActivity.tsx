@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 import { WarningCircle, Globe, FloppyDisk, SpinnerGap } from '@phosphor-icons/react'
 import { updateActivity } from '@services/courses/activities'

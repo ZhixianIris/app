@@ -1,4 +1,3 @@
-'use client'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import { getUriWithOrg } from '@services/config/config'
 import { Terminal, KeyIcon, Zap, Globe, Search, Shield, LucideIcon } from 'lucide-react'

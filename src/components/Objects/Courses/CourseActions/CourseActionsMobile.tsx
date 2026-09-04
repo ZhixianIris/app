@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg, useOrgMembership } from '@components/Contexts/OrgContext'
 import { getUriWithOrg } from '@services/config/config'
@@ -11,7 +10,7 @@ import UserAvatar from '../../UserAvatar'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
-import Link from 'next/link'
+import { Link, useNavigate } from 'react-router-dom'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useTranslation } from 'react-i18next'
 import { formatCurrency } from '@/lib/format'
@@ -130,7 +129,7 @@ const MultipleAuthors = ({ authors }: { authors: Author[] }) => {
 }
 
 const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseActionsMobileProps) => {
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const { isUserPartOfTheOrg } = useOrgMembership()
   const org = useOrg() as any
@@ -164,13 +163,13 @@ const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseA
         reason: 'unauthenticated',
         intended_action: isStarted ? 'leave_course' : 'start_course',
       })
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      navigate(getUriWithOrg(orgslug, '/signup'))
       return
     }
 
     // Check if user is part of the organization
     if (!isUserPartOfTheOrg) {
-      router.push(getUriWithOrg(orgslug, '/signup'))
+      navigate(getUriWithOrg(orgslug, '/signup'))
       return
     }
 
@@ -181,7 +180,7 @@ const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseA
         await revalidateTags(['courses'], orgslug)
         queryClient.invalidateQueries({ queryKey: queryKeys.trail.org(org.id) })
         track(AnalyticsEvent.CourseLeft, { course_uuid: cleanCourseUuid })
-        router.refresh()
+        window.location.reload()
       } else {
         await startCourse('course_' + courseuuid, orgslug, session.data?.tokens?.access_token)
         await revalidateTags(['courses'], orgslug)
@@ -199,12 +198,12 @@ const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseA
         if (firstActivity) {
           // Redirect to the first activity
           await revalidateTags(['activities'], orgslug)
-          router.push(
+          navigate(
             getUriWithOrg(orgslug, '') +
             `/course/${courseuuid}/activity/${firstActivity.activity_uuid.replace('activity_', '')}`
           )
         } else {
-          router.refresh()
+          window.location.reload()
         }
       }
     } catch (error) {
@@ -308,7 +307,7 @@ const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseA
                       </div>
                     </div>
                   </div>
-                  <Link href={storeHref}>
+                  <Link to={storeHref}>
                     <button
                       onClick={() => track(AnalyticsEvent.CourseOfferCtaClicked, {
                         offer_uuid: offer.offer_uuid,

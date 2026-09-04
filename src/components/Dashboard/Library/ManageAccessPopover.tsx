@@ -1,4 +1,3 @@
-'use client'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
@@ -13,7 +12,7 @@ import { updateMedia, getMediaById } from '@services/media/media-resource'
 import { updateCourse, getCourse } from '@services/courses/courses'
 import { apiFetch } from '@services/utils/ts/requests'
 import { Check, Globe, Info, SquareUserRound, Users, X } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import React, { useEffect, useState } from 'react'
@@ -162,7 +161,7 @@ function LinkUserGroup({
             <Link
               className="px-3 text-blue-700 font-bold rounded-full py-1 bg-blue-100 mx-1"
               target="_blank"
-              href={getUriWithOrg(org.slug, '/dash/users/settings/usergroups')}
+              to={getUriWithOrg(org.slug, '/dash/users/settings/usergroups')}
             >
               {t('access.usergroups.create_usergroup')}
             </Link>

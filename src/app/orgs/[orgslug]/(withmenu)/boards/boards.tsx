@@ -1,11 +1,9 @@
-'use client'
-
 import React, { useState, useMemo } from 'react'
 import GeneralWrapperStyled from '@components/Objects/StyledElements/Wrappers/GeneralWrapper'
 import TypeOfContentTitle from '@components/Objects/StyledElements/Titles/TypeOfContentTitle'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getBoardThumbnailMediaDirectory } from '@services/media/media'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { Search, X, Users } from 'lucide-react'
 import { ChalkboardSimple } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'
@@ -158,7 +156,7 @@ function PublicBoardCard({ board, orgUuid, fromSearch }: { board: any; orgUuid: 
 
   return (
     <Link
-      href={`/board/${board.board_uuid.replace('board_', '')}`}
+      to={`/board/${board.board_uuid.replace('board_', '')}`}
       onClick={() => track(AnalyticsEvent.BoardOpened, { member_count: board.member_count, from_search: fromSearch })}
       className="group relative flex flex-col bg-white rounded-xl nice-shadow overflow-hidden w-full transition-all duration-300 hover:scale-[1.01]"
     >

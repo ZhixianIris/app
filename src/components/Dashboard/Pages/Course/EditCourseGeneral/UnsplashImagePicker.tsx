@@ -10,7 +10,7 @@ async function getUnsplashApi() {
   if (!unsplashApi) {
     const { createApi } = await import('unsplash-js');
     unsplashApi = createApi({
-      accessKey: process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY as string,
+      accessKey: import.meta.env.VITE_UNSPLASH_ACCESS_KEY as string,
     });
   }
   return unsplashApi;

@@ -1,8 +1,6 @@
-'use client'
-
 import React, { useEffect, useState, Suspense } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { Loader2, AlertTriangle } from 'lucide-react'
+import { useSearchParams } from "react-router-dom";
 
 const ERROR_MESSAGES: Record<string, string> = {
   missing_code: 'No sign-in code was provided.',
@@ -33,7 +31,7 @@ function sanitizeRedirect(raw: string | null): string {
 }
 
 function TokenExchangeInner() {
-  const searchParams = useSearchParams()
+  const [searchParams] = useSearchParams()
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {

@@ -1,8 +1,7 @@
-'use client';
 import React from 'react';
 import { Lock, ShoppingCart } from 'lucide-react';
 import { Button } from '@components/ui/button';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { useOrg } from '@components/Contexts/OrgContext';
 import { getUriWithOrg } from '@services/config/config';
 import { useLHAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics';
@@ -89,7 +88,7 @@ function PaymentWall({ offer, resourceName, resourceThumbnail, orgslug }: Paymen
         </div>
 
         <Link
-          href={storeHref}
+          to={storeHref}
           onClick={() => track(AnalyticsEvent.PaywallGetAccessClicked, { offer_id: offer.offer_id, amount: offer.amount })}
         >
           <Button className="w-full flex items-center space-x-2">

@@ -1,4 +1,3 @@
-'use client'
 import { useOrg } from '@components/Contexts/OrgContext'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
@@ -14,7 +13,7 @@ import { queryKeys } from '@/lib/query/keys'
 import { getCourseMetadata } from '@services/courses/courses'
 import { BookMinus, FilePenLine, Settings2, MoreVertical, Copy, Download, CheckSquare, Square, Lock } from 'lucide-react'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import React from 'react'
 import toast from 'react-hot-toast'
 import UserAvatar from '@components/Objects/UserAvatar'
@@ -183,7 +182,7 @@ function CourseThumbnail({ course, orgslug, customLink, isDashboard = false, isS
         isDashboard={isDashboard}
       />
 
-      <Link prefetch={false} href={courseLink} onClick={handleCardOpen} className="block relative aspect-video overflow-hidden bg-gray-50">
+      <Link to={courseLink} onClick={handleCardOpen} className="block relative aspect-video overflow-hidden bg-gray-50">
         {/* Hidden img gives the browser a real resource hint so it can fetch the background-image early as an LCP candidate */}
         {isPriority && (
            
@@ -218,8 +217,7 @@ function CourseThumbnail({ course, orgslug, customLink, isDashboard = false, isS
       <div className="p-3 flex flex-col space-y-1.5">
         <div className="flex items-start justify-between">
           <Link
-            prefetch={false}
-            href={courseLink}
+            to={courseLink}
             onClick={handleCardOpen}
             className="text-base font-bold text-gray-900 leading-tight hover:text-black transition-colors line-clamp-1"
            dir="auto">
@@ -272,8 +270,7 @@ function CourseThumbnail({ course, orgslug, customLink, isDashboard = false, isS
           </div>
           
           <Link
-            prefetch={false}
-            href={courseLink}
+            to={courseLink}
             onClick={handleCardOpen}
             className="text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-wider"
           >
@@ -315,12 +312,12 @@ const AdminEditOptions = ({ course, orgSlug, deleteCourse, cloneCourse, exportCo
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuItem asChild>
-              <Link prefetch={false} href={getUriWithOrg(orgSlug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`)} className="flex items-center cursor-pointer">
+              <Link to={getUriWithOrg(orgSlug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`)} className="flex items-center cursor-pointer">
                 <FilePenLine className="me-2 h-4 w-4" /> {t('courses.edit_content')}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link prefetch={false} href={getUriWithOrg(orgSlug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/general`)} className="flex items-center cursor-pointer">
+              <Link to={getUriWithOrg(orgSlug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/general`)} className="flex items-center cursor-pointer">
                 <Settings2 className="me-2 h-4 w-4" /> {t('common.settings')}
               </Link>
             </DropdownMenuItem>

@@ -1,7 +1,7 @@
 import { NodeViewWrapper } from '@tiptap/react'
 import { v4 as uuidv4 } from 'uuid'
 import { cn } from '@/lib/utils'
-import React from 'react'
+import React, { lazy } from 'react'
 import {
   Question as QuestionIcon,
   Check,
@@ -12,9 +12,8 @@ import {
   X,
   Sparkle,
 } from '@phosphor-icons/react'
-import dynamic from 'next/dynamic'
-const ReactConfetti = dynamic(() => import('react-confetti'), { ssr: false })
-const AIQuizGeneratorModal = dynamic(() => import('@components/Objects/AI/AIQuizGeneratorModal'), { ssr: false })
+const ReactConfetti = lazy(() => import('react-confetti'))
+const AIQuizGeneratorModal = lazy(() => import('@components/Objects/AI/AIQuizGeneratorModal'))
 import { useEditorProvider } from '@components/Contexts/Editor/EditorContext'
 import { useTranslation } from 'react-i18next'
 import {

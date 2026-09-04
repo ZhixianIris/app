@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { Headphones, ArrowLeft, Play, Pause } from '@phosphor-icons/react'
 import BoardBlockWrapper from './BoardBlockWrapper'

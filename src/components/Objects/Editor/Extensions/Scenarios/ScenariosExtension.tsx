@@ -1,10 +1,9 @@
 import { NodeViewWrapper } from '@tiptap/react'
-import React, { useState } from 'react'
+import React, { useState, lazy } from 'react'
 import { ArrowCounterClockwise, ArrowRight, CheckCircle, GitBranch, Sparkle } from '@phosphor-icons/react'
-import dynamic from 'next/dynamic'
 import { useEditorProvider } from '@components/Contexts/Editor/EditorContext'
 import ScenariosModal from './ScenariosModal'
-const AIScenarioGeneratorModal = dynamic(() => import('@components/Objects/AI/AIScenarioGeneratorModal'), { ssr: false })
+const AIScenarioGeneratorModal = lazy(() => import('@components/Objects/AI/AIScenarioGeneratorModal'))
 
 interface ScenarioOption {
   id: string

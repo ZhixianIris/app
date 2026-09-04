@@ -1,4 +1,3 @@
-import { Metadata } from 'next'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
 import { getCanonicalUrl, getOrgSeoConfig, buildPageTitle, buildBreadcrumbJsonLd } from '@/lib/seo/utils'
 import { getServerCanonicalUrl } from '@/lib/seo/utils.server'
@@ -8,23 +7,6 @@ import { getServerSession } from '@/lib/auth/server'
 import OfferDetailClient from './offer-detail'
 
 type PageParams = Promise<{ orgslug: string; offerid: string }>
-
-export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
-  const { orgslug, offerid } = await params
-  const org = await getOrganizationContextInfo(orgslug, { revalidate: 120, tags: ['organizations'] })
-  const seoConfig = getOrgSeoConfig(org)
-  let offerName = 'Offer'
-  try {
-    const result = await getPublicOffer(org.id, offerid)
-    offerName = result?.data?.name || 'Offer'
-  } catch {}
-  const title = buildPageTitle(offerName, org?.name || 'Organization', seoConfig)
-  return {
-    title,
-    robots: { index: true, follow: true },
-    alternates: { canonical: await getServerCanonicalUrl(orgslug, `/store/offers/${offerid}`) },
-  }
-}
 
 export default async function OfferPage({ params }: { params: PageParams }) {
   const { orgslug, offerid } = await params

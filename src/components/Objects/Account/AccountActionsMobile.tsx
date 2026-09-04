@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { User, Lock, ShoppingBag, Settings } from 'lucide-react'
 import { getUriWithOrg } from '@services/config/config'
 import { useTranslation } from 'react-i18next'
@@ -30,7 +29,7 @@ export function AccountActionsMobile({ orgslug, currentSubpage }: AccountActions
             return (
               <Link
                 key={item.id}
-                href={getUriWithOrg(orgslug, `/account/${item.id}`)}
+                to={getUriWithOrg(orgslug, `/account/${item.id}`)}
                 className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
                   isActive
                     ? 'bg-gray-900 text-white'

@@ -1,4 +1,3 @@
-'use client'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'

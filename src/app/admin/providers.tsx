@@ -1,4 +1,3 @@
-'use client'
 import { SessionProvider } from '@components/Contexts/AuthContext'
 import LHSessionProvider, { SessionGate } from '@components/Contexts/LHSessionContext'
 import React from 'react'

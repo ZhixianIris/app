@@ -1,4 +1,3 @@
-'use client'
 import { useOrg } from '@components/Contexts/OrgContext'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
@@ -8,8 +7,7 @@ import { getCourseThumbnailMediaDirectory, getUserAvatarMediaDirectory } from '@
 import { revalidateTags } from '@services/utils/ts/requests'
 import { BookMinus, FilePenLine, Settings2, MoreVertical } from 'lucide-react'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import React from 'react'
 import toast from 'react-hot-toast'
 import { useQueryClient } from '@tanstack/react-query'
@@ -77,12 +75,12 @@ const AdminEditOptions: React.FC<AdminEditOptionsProps> = ({ course, orgslug, de
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuItem asChild>
-              <Link prefetch href={getUriWithOrg(orgslug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`)}>
+              <Link to={getUriWithOrg(orgslug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`)}>
                 <FilePenLine className="me-2 h-4 w-4" /> {t('courses.edit_content')}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link prefetch href={getUriWithOrg(orgslug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/general`)}>
+              <Link to={getUriWithOrg(orgslug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/general`)}>
                 <Settings2 className="me-2 h-4 w-4" /> {t('common.settings')}
               </Link>
             </DropdownMenuItem>
@@ -109,7 +107,7 @@ const AdminEditOptions: React.FC<AdminEditOptionsProps> = ({ course, orgslug, de
 
 const CourseThumbnailLanding: React.FC<PropsType> = ({ course, orgslug, customLink }) => {
   const { t, i18n } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const org = useOrg() as any
   const session = useLHSession() as any
   const queryClient = useQueryClient()
@@ -126,7 +124,7 @@ const CourseThumbnailLanding: React.FC<PropsType> = ({ course, orgslug, customLi
       await revalidateTags(['courses'], orgslug)
       queryClient.invalidateQueries({ queryKey: queryKeys.courses.list(orgslug) })
       toast.success(t('courses.course_deleted_success'))
-      router.refresh()
+      window.location.reload()
     } catch (error) {
       toast.error(t('courses.course_deleted_error'))
     } finally {
@@ -145,7 +143,7 @@ const CourseThumbnailLanding: React.FC<PropsType> = ({ course, orgslug, customLi
         orgslug={orgslug}
         deleteCourse={deleteCourse}
       />
-      <Link prefetch={false} href={customLink ? customLink : getUriWithOrg(orgslug, `/course/${removeCoursePrefix(course.course_uuid)}`)}>
+      <Link to={customLink ? customLink : getUriWithOrg(orgslug, `/course/${removeCoursePrefix(course.course_uuid)}`)}>
         <div
           className="inset-0 ring-1 ring-inset ring-black/10 rounded-t-xl w-full aspect-video bg-cover bg-center"
           style={{ backgroundImage: `url(${thumbnailImage})` }}
@@ -200,8 +198,7 @@ const CourseThumbnailLanding: React.FC<PropsType> = ({ course, orgslug, customLi
         </div>
 
         <Link 
-          prefetch 
-          href={customLink ? customLink : getUriWithOrg(orgslug, `/course/${removeCoursePrefix(course.course_uuid)}`)}
+          to={customLink ? customLink : getUriWithOrg(orgslug, `/course/${removeCoursePrefix(course.course_uuid)}`)}
           className="inline-flex items-center justify-center w-full px-3 py-1.5 bg-black text-white text-xs font-medium rounded-lg hover:bg-gray-800 transition-colors"
         >
           {t('courses.start_learning')}

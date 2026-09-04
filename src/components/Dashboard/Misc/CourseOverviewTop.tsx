@@ -1,4 +1,3 @@
-'use client'
 import { useCourse, useCourseDispatch } from '@components/Contexts/CourseContext'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import SaveState from './SaveState'
@@ -6,8 +5,7 @@ import { CourseOverviewParams } from 'app/orgs/[orgslug]/dash/courses/course/[co
 import { getUriWithOrg } from '@services/config/config'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getCourseThumbnailMediaDirectory } from '@services/media/media'
-import Link from 'next/link'
-import Image from 'next/image'
+import { Link } from 'react-router-dom'
 import EmptyThumbnailImage from '../../../public/empty_thumbnail.png'
 import { BookCopy, BrainCircuit, Eye, Globe, GlobeLock, Loader2, Check } from 'lucide-react'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@components/ui/tooltip'
@@ -154,7 +152,7 @@ export function CourseOverviewTop({
       <div className="flex flex-wrap gap-2 items-center">
         <div className="flex py-2 grow min-w-0 items-center">
           <Link
-            href={getUriWithOrg(org?.slug, '') + `/course/${params.courseuuid}`}
+            to={getUriWithOrg(org?.slug, '') + `/course/${params.courseuuid}`}
             className="shrink-0"
           >
             {courseStructure?.thumbnail_image ? (
@@ -168,11 +166,11 @@ export function CourseOverviewTop({
                 alt={courseStructure.name}
               />
             ) : (
-              <Image
+              <img
                 width={100}
                 className="w-[72px] sm:w-[100px] h-[41px] sm:h-[57px] rounded-md drop-shadow-md"
                 src={EmptyThumbnailImage}
-                alt={courseStructure?.name || ''}
+                alt={courseStructure?.name || ''} 
               />
             )}
           </Link>
@@ -261,7 +259,7 @@ export function CourseOverviewTop({
           )}
           <div className="w-px self-stretch bg-neutral-200/80" />
           <Link
-            href={getUriWithOrg(org?.slug, '') + `/course/${params.courseuuid}`}
+            to={getUriWithOrg(org?.slug, '') + `/course/${params.courseuuid}`}
             target="_blank"
             aria-label={t('dashboard.courses.preview')}
             title={t('dashboard.courses.preview')}

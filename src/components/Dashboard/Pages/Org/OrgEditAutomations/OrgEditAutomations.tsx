@@ -1,7 +1,5 @@
-'use client'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Image from 'next/image'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { toast } from 'react-hot-toast'
@@ -55,13 +53,12 @@ const ZapierLogo: React.FC<{ size?: number; className?: string }> = ({
   size = 20,
   className,
 }) => (
-  <Image
+  <img
     src="/zapier_logo.png"
     alt="Zapier"
     width={size}
     height={size}
-    className={className}
-    unoptimized
+    className={className} 
   />
 )
 import {

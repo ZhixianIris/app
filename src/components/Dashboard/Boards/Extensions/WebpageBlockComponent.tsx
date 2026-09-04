@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Globe, Link as LinkIcon, ExternalLink, RotateCw, X, Pencil } from 'lucide-react'

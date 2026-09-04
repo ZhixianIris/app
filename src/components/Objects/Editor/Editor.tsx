@@ -1,16 +1,12 @@
-'use client'
-import React from 'react'
-import dynamic from 'next/dynamic'
+import React, { lazy } from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 // ToolbarButtons pulls in @phosphor-icons/react (~360KB) and only renders
 // after the editor is interactive — defer it so it doesn't block first paint.
-const ToolbarButtons = dynamic(
-  () => import('./Toolbar/ToolbarButtons').then((m) => m.ToolbarButtons),
-  { ssr: false, loading: () => null }
+const ToolbarButtons = lazy(
+  () => import('./Toolbar/ToolbarButtons').then((m) => m.ToolbarButtons)
 )
 import { motion } from 'motion/react'
-import Image from 'next/image'
 import { DividerVerticalIcon, SlashIcon } from '@radix-ui/react-icons'
 import learnhouseAI_icon from 'public/learnhouse_ai_simple.png'
 import {
@@ -40,7 +36,7 @@ import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import TableRow from '@tiptap/extension-table-row'
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { getCourseThumbnailMediaDirectory } from '@services/media/media'
 import { getLinkExtension } from './EditorConf'
 import WebPreview from './Extensions/WebPreview/WebPreview'
@@ -49,8 +45,8 @@ import WebPreview from './Extensions/WebPreview/WebPreview'
 import { lowlight } from './editorLowlight'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
 import { CourseProvider } from '@components/Contexts/CourseContext'
-const AIEditorToolkit = dynamic(() => import('./AI/AIEditorToolkit'), { ssr: false, loading: () => null })
-const AIEditorSidePanel = dynamic(() => import('./AI/AIEditorSidePanel'), { ssr: false, loading: () => null })
+const AIEditorToolkit = lazy(() => import('./AI/AIEditorToolkit'))
+const AIEditorSidePanel = lazy(() => import('./AI/AIEditorSidePanel'))
 import AIStreamingMark from './Extensions/AIStreaming/AIStreamingMark'
 import AISelectionHighlight from './Extensions/AISelectionHighlight/AISelectionHighlight'
 import useGetAIFeatures from '@components/Hooks/useGetAIFeatures'
@@ -72,9 +68,9 @@ import MagicBlock from './Extensions/MagicBlocks/MagicBlock'
 import PlanBadge from '@components/Dashboard/Shared/PlanRestricted/PlanBadge'
 import { PlanLevel } from '@services/plans/plans'
 import { useOrg } from '@components/Contexts/OrgContext'
-const VersionHistoryPanel = dynamic(() => import('./VersionHistory/VersionHistoryPanel'), { ssr: false, loading: () => null })
-const MergeConflictModal = dynamic(() => import('./VersionHistory/MergeConflictModal'), { ssr: false, loading: () => null })
-const ActivitySwitcher = dynamic(() => import('./ActivitySwitcher'), { ssr: false, loading: () => null })
+const VersionHistoryPanel = lazy(() => import('./VersionHistory/VersionHistoryPanel'))
+const MergeConflictModal = lazy(() => import('./VersionHistory/MergeConflictModal'))
+const ActivitySwitcher = lazy(() => import('./ActivitySwitcher'))
 import { usePlan } from '@components/Hooks/usePlan'
 import {
   createBeforeUnloadHandler,
@@ -465,10 +461,10 @@ function Editor(props: EditorProps) {
             />
             <div className="activity-editor-doc-section">
               <div className="activity-editor-info-wrapper">
-                <Link href="/">
+                <Link to="/">
                   <EditorLearnHouseLogo />
                 </Link>
-                <Link target="_blank" href={`/course/${course_uuid}`}>
+                <Link target="_blank" to={`/course/${course_uuid}`}>
                   <img
                     className="activity-editor-info-thumbnail"
                     src={`${props.course.thumbnail_image ? getCourseThumbnailMediaDirectory(
@@ -511,11 +507,11 @@ function Editor(props: EditorProps) {
                     >
                       {' '}
                       <i>
-                        <Image
+                        <img
                           className=""
                           width={20}
                           src={learnhouseAI_icon}
-                          alt=""
+                          alt="" 
                         />
                       </i>{' '}
                       <i className="not-italic text-xs font-bold">{t('editor.ai_editor')}</i>
@@ -526,11 +522,11 @@ function Editor(props: EditorProps) {
                       className="rounded-md px-3 py-2 drop-shadow-md flex items-center space-x-1.5 text-sm text-gray-400 bg-gray-200 cursor-not-allowed opacity-70"
                     >
                       <i>
-                        <Image
+                        <img
                           className="opacity-50 grayscale"
                           width={20}
                           src={learnhouseAI_icon}
-                          alt=""
+                          alt="" 
                         />
                       </i>
                       <i className="not-italic text-xs font-bold">{t('editor.ai_editor')}</i>
@@ -631,7 +627,7 @@ function Editor(props: EditorProps) {
                 <ToolTip content={t('editor.preview')}>
                   <Link
                     target="_blank"
-                    href={`/course/${course_uuid}/activity/${activity_uuid}`}
+                    to={`/course/${course_uuid}/activity/${activity_uuid}`}
                   >
                     <div className="flex bg-neutral-600 hover:bg-neutral-700 transition-all ease-linear h-9 px-3 py-2 font-black justify-center items-center text-sm shadow-sm text-neutral-100 rounded-lg hover:cursor-pointer">
                       <Eye className="mx-auto items-center" size={15} />
@@ -718,12 +714,12 @@ const EditorLearnHouseLogo = () => {
         animate={animation.animate}
         transition={animation.transition}
       >
-        <Image
+        <img
           src="/lrn.svg"
           alt="LearnHouse"
           width={14}
           height={14}
-          className="invert"
+          className="invert" 
         />
       </motion.div>
     </div>

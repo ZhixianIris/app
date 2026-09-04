@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Check, Square, ArrowRight, Folder, FileText, Video, Layers, BookOpenCheck, Package, Puzzle, Globe } from 'lucide-react'
 import { MarkdownLogo } from '@phosphor-icons/react'
 import { getUriWithOrg } from '@services/config/config'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 
 interface CourseProgressProps {
@@ -84,7 +84,7 @@ const CourseProgress: React.FC<CourseProgressProps> = ({ course, orgslug, isOpen
               return (
                 <Link
                   key={activity.activity_uuid}
-                  href={getUriWithOrg(orgslug, '') + `/course/${courseId}/activity/${activityId}`}
+                  to={getUriWithOrg(orgslug, '') + `/course/${courseId}/activity/${activityId}`}
                 >
                   <div className="px-4 py-3 hover:bg-gray-100 transition-colors flex items-center group">
                     <div className="flex items-center space-x-3 flex-1">

@@ -1,19 +1,9 @@
-import { Metadata } from 'next'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
 import { getServerSession } from '@/lib/auth/server'
 import PlaygroundsClient from './playgrounds'
 import { getOrgPlaygrounds } from '@services/playgrounds/playgrounds'
 
 type PageParams = Promise<{ orgslug: string }>
-
-export async function generateMetadata({ params }: { params: PageParams }): Promise<Metadata> {
-  const { orgslug } = await params
-  const org = await getOrganizationContextInfo(orgslug, { revalidate: 120, tags: ['organizations'] })
-  return {
-    title: `Playgrounds — ${org?.name || 'Organization'}`,
-    description: `Interactive AI-generated experiences from ${org?.name || 'this organization'}`,
-  }
-}
 
 export default async function PlaygroundsPage({ params }: { params: PageParams }) {
   const { orgslug } = await params

@@ -1,5 +1,3 @@
-'use client';
-
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useLHSession } from '@components/Contexts/LHSessionContext';
@@ -7,7 +5,7 @@ import { useOrg } from '@components/Contexts/OrgContext';
 import { getUserCertificates } from '@services/courses/certifications';
 import CertificatePreview from '@components/Dashboard/Pages/Course/EditCourseCertification/CertificatePreview';
 import { ArrowLeft, Download, Share2, Copy, Check } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { getUriWithOrg } from '@services/config/config';
 import { useLHAnalytics, useTrackView, AnalyticsEvent } from '@services/analytics';
 import {
@@ -200,7 +198,7 @@ const CertificatePage: React.FC<CertificatePageProps> = ({ orgslug, courseid, qr
             <h2 className="text-xl font-semibold text-red-800 mb-2">Certificate Not Available</h2>
             <p className="text-red-600 mb-4">{error}</p>
             <Link
-              href={getUriWithOrg(orgslug, '') + `/course/${courseid}`}
+              to={getUriWithOrg(orgslug, '') + `/course/${courseid}`}
               className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition duration-200"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -222,7 +220,7 @@ const CertificatePage: React.FC<CertificatePageProps> = ({ orgslug, courseid, qr
               No certificate is available for this course. Please contact your instructor for more information.
             </p>
             <Link
-              href={getUriWithOrg(orgslug, '') + `/course/${courseid}`}
+              to={getUriWithOrg(orgslug, '') + `/course/${courseid}`}
               className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition duration-200"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -240,7 +238,7 @@ const CertificatePage: React.FC<CertificatePageProps> = ({ orgslug, courseid, qr
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <Link
-            href={getUriWithOrg(orgslug, '') + `/course/${courseid}`}
+            to={getUriWithOrg(orgslug, '') + `/course/${courseid}`}
             className="inline-flex items-center space-x-2 text-gray-600 hover:text-gray-900 transition duration-200"
           >
             <ArrowLeft className="w-5 h-5" />

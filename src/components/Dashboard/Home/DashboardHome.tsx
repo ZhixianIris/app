@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import {
   PlusCircle,
   ChartBar,
@@ -74,28 +73,28 @@ export default function DashboardHome() {
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               <Link
-                href="/dash/courses?new=true"
+                to="/dash/courses?new=true"
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-colors"
               >
                 <PlusCircle size={14} weight="bold" />
                 {t('dashboard.home.create_course')}
               </Link>
               <Link
-                href="/dash/analytics"
+                to="/dash/analytics"
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-gray-600 bg-white rounded-lg nice-shadow hover:bg-gray-50 transition-colors"
               >
                 <ChartBar size={14} weight="bold" />
                 {t('dashboard.home.analytics')}
               </Link>
               <Link
-                href="/dash/users/settings/users"
+                to="/dash/users/settings/users"
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-gray-600 bg-white rounded-lg nice-shadow hover:bg-gray-50 transition-colors"
               >
                 <Users size={14} weight="bold" />
                 {t('dashboard.home.members')}
               </Link>
               <Link
-                href="/dash/org/settings/general"
+                to="/dash/org/settings/general"
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-gray-600 bg-white rounded-lg nice-shadow hover:bg-gray-50 transition-colors"
               >
                 <GearSix size={14} weight="bold" />

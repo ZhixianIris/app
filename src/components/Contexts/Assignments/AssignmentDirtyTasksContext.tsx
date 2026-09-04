@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 
 // Cross-subtree registry that lets the single "Submit for grading" button

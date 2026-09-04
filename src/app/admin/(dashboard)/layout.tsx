@@ -1,4 +1,3 @@
-'use client'
 import AdminTopMenu from '@components/Admin/AdminLeftMenu'
 import SuperadminAuthorization from '@components/Security/SuperadminAuthorization'
 import React from 'react'

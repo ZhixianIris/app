@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect, useRef, useState } from 'react'
 import 'video.js/dist/video-js.css'
 import './player-controls.css'

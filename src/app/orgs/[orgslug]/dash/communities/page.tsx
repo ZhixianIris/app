@@ -1,5 +1,4 @@
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { Metadata } from 'next'
 import React from 'react'
 import { getServerSession } from '@/lib/auth/server'
 import { getCommunities } from '@services/communities/communities'
@@ -8,23 +7,6 @@ import CommunitiesDashClient from './client'
 type MetadataProps = {
   params: Promise<{ orgslug: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-
-export async function generateMetadata(props: MetadataProps): Promise<Metadata> {
-  const params = await props.params
-  const org = await getOrganizationContextInfo(params.orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
-
-  return {
-    title: 'Communities — ' + org.name,
-    description: `Manage communities for ${org.name}`,
-    robots: {
-      index: false,
-      follow: false,
-    },
-  }
 }
 
 async function CommunitiesDashPage(params: any) {

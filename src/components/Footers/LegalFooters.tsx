@@ -1,4 +1,3 @@
-'use client'
 // Shared legal/footer bits, ported from the platform's look.
 //
 // AuthFooter   — the "By continuing, you agree to … Terms of Service and
@@ -9,7 +8,7 @@
 // Legal pages live on the marketing/platform site, so links resolve via
 // getPlatformUrl() with a sensible public fallback.
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { getPlatformUrl } from '@services/config/config'
 
@@ -23,7 +22,7 @@ export function AuthFooter({ className = '' }: { className?: string }) {
       <p className="text-[13px] text-black/30 font-medium">
         {t('auth.terms_text', { defaultValue: "By continuing, you agree to LearnHouse's" })}{' '}
         <Link
-          href={TERMS_URL}
+          to={TERMS_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="text-black/50 hover:text-black/70 transition-colors"
@@ -32,7 +31,7 @@ export function AuthFooter({ className = '' }: { className?: string }) {
         </Link>{' '}
         {t('auth.and', { defaultValue: 'and' })}{' '}
         <Link
-          href={PRIVACY_URL}
+          to={PRIVACY_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="text-black/50 hover:text-black/70 transition-colors"
@@ -66,7 +65,7 @@ export function CopyrightFooter({
         </p>
         <nav className="flex items-center gap-x-5">
           <Link
-            href={TERMS_URL}
+            to={TERMS_URL}
             target="_blank"
             rel="noopener noreferrer"
             className={`${link} transition-colors`}
@@ -74,7 +73,7 @@ export function CopyrightFooter({
             {t('auth.terms_of_service', { defaultValue: 'Terms of Service' })}
           </Link>
           <Link
-            href={PRIVACY_URL}
+            to={PRIVACY_URL}
             target="_blank"
             rel="noopener noreferrer"
             className={`${link} transition-colors`}

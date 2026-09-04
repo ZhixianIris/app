@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { ClosedCaptioning, Plus, X } from '@phosphor-icons/react'
 import { AVAILABLE_LANGUAGES } from '@/lib/languages'

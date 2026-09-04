@@ -1,8 +1,6 @@
-'use client'
 import CreateCourseModal from '@components/Objects/Modals/Course/Create/CreateCourse'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import React, { useState, useMemo, useEffect } from 'react'
-import { useSearchParams } from 'next/navigation'
 import GeneralWrapperStyled from '@components/Objects/StyledElements/Wrappers/GeneralWrapper'
 import TypeOfContentTitle from '@components/Objects/StyledElements/Titles/TypeOfContentTitle'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
@@ -11,7 +9,7 @@ import NewCourseButton from '@components/Objects/StyledElements/Buttons/NewCours
 import useAdminStatus from '@components/Hooks/useAdminStatus'
 import { useTranslation } from 'react-i18next'
 import { BookCopy, Search, X, Users, Info, LogIn } from 'lucide-react'
-import Link from 'next/link'
+import { Link, useSearchParams } from 'react-router-dom'
 import { getUriWithOrg } from '@services/config/config'
 import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -30,7 +28,7 @@ interface CourseProps {
 function Courses(props: CourseProps) {
   const { t } = useTranslation()
   const orgslug = props.orgslug
-  const searchParams = useSearchParams()
+  const [searchParams] = useSearchParams()
   const isCreatingCourse = searchParams.get('new') ? true : false
   const [newCourseModal, setNewCourseModal] = React.useState(isCreatingCourse)
   const { isAdmin: isUserAdmin } = useAdminStatus()
@@ -329,7 +327,7 @@ function Courses(props: CourseProps) {
                     empty. */}
                 {!isAuthenticated && (
                   <Link
-                    href={getUriWithOrg(orgslug, '/login')}
+                    to={getUriWithOrg(orgslug, '/login')}
                     className="inline-flex items-center gap-2 justify-center px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors"
                   >
                     <LogIn size={16} />

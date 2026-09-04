@@ -1,4 +1,3 @@
-'use client'
 import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useOrg, useOrgMembership } from '@components/Contexts/OrgContext'
@@ -71,7 +70,7 @@ export function useStandardProps(surface?: string): StandardProps {
       is_org_member: isAuthenticated ? isUserPartOfTheOrg : false,
       user_role: highestRole(session, orgId),
       interface_language: i18n?.language || 'en',
-      app_version: process.env.NEXT_PUBLIC_BUILD_ID || process.env.BUILD_ID || 'dev',
+      app_version: import.meta.env.VITE_BUILD_ID || import.meta.env.VITE_BUILD_ID || 'dev',
     }),
     // session object identity changes on every auth update; depend on stable bits
     [orgId, org?.slug, plan, surface, isAuthenticated, isUserPartOfTheOrg, i18n?.language, session?.data?.user?.user_uuid],

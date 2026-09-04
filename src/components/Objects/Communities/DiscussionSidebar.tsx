@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -140,7 +139,7 @@ export function DiscussionSidebar({
           {t('communities.sidebar.community')}
         </div>
         <Link
-          href={getUriWithOrg(orgslug, `/community/${communityId}`)}
+          to={getUriWithOrg(orgslug, `/community/${communityId}`)}
           className="group flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-indigo-600 transition-colors"
         >
           <MessageCircle size={14} className="text-gray-400 group-hover:text-indigo-500" />

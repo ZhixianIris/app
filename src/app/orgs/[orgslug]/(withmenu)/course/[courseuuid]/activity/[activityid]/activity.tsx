@@ -1,10 +1,7 @@
-'use client'
-import Link from 'next/link'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { getUriWithOrg } from '@services/config/config'
 import { BookOpenCheck, CheckCircle, ChevronLeft, ChevronRight, MessageSquare, UserRoundPen, Edit2, Loader2, Maximize2, Minimize2, Trophy, Sparkles, XCircle, Lock, RotateCcw, Infinity as InfinityIcon } from 'lucide-react'
-import dynamic from 'next/dynamic'
 import { markActivityAsComplete, unmarkActivityAsComplete } from '@services/courses/activity'
-import { usePathname, useRouter } from 'next/navigation'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import { getCourseThumbnailMediaDirectory, getUserAvatarMediaDirectory } from '@services/media/media'
 import { useOrg, useOrgMembership } from '@components/Contexts/OrgContext'
@@ -44,7 +41,7 @@ import { useDirection } from '@hooks/useDirection'
 import { formatDate } from '@/lib/format'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 
-const ReactConfetti = dynamic(() => import('react-confetti'), { ssr: false })
+const ReactConfetti = lazy(() => import('react-confetti'))
 
 // Lazy load heavy components
 const Canva = lazy(() => import('@components/Objects/Activities/DynamicCanva/DynamicCanva'))
@@ -247,7 +244,7 @@ function ActivityClient(props: ActivityClientProps) {
   const { data: course, isLoading: courseLoading } = useCourseMeta(courseuuid)
   const { data: activity, isLoading: activityLoading } = useActivity(activityid)
   const session = useLHSession() as any;
-  const pathname = usePathname()
+  const pathname = useLocation().pathname
   const access_token = session?.data?.tokens?.access_token;
   const [bgColor, setBgColor] = React.useState('bg-white nice-shadow')
   const [assignment, setAssignment] = React.useState(null) as any;
@@ -255,7 +252,7 @@ function ActivityClient(props: ActivityClientProps) {
   const [isFocusMode, setIsFocusMode] = React.useState(false);
   const isInitialRender = useRef(true);
   const { contributorStatus } = useContributorStatus(courseuuid);
-  const router = useRouter();
+  const router = useNavigate();
 
   const { track } = useLHAnalytics('learner')
   const activityStartTime = useRef(Date.now())
@@ -384,12 +381,12 @@ function ActivityClient(props: ActivityClientProps) {
     const cleanCourseUuid = course.course_uuid?.replace('course_', '');
     if (!activity) {
       if (isLastActivity) {
-        router.push(getUriWithOrg(orgslug, '') + `/course/${cleanCourseUuid}/activity/end`);
+        navigate(getUriWithOrg(orgslug, '') + `/course/${cleanCourseUuid}/activity/end`);
       }
       return;
     }
 
-    router.push(getUriWithOrg(orgslug, '') + `/course/${cleanCourseUuid}/activity/${activity.cleanUuid}`);
+    navigate(getUriWithOrg(orgslug, '') + `/course/${cleanCourseUuid}/activity/${activity.cleanUuid}`);
   };
 
   // Initialize focus mode from localStorage
@@ -517,14 +514,14 @@ function ActivityClient(props: ActivityClientProps) {
           <div className="flex flex-col sm:flex-row gap-2 justify-center">
             {!isAuthenticated && (
               <Link
-                href={getUriWithOrg(orgslug, '/login')}
+                to={getUriWithOrg(orgslug, '/login')}
                 className="inline-flex items-center justify-center px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors"
               >
                 {t('auth.sign_in', 'Sign in')}
               </Link>
             )}
             <Link
-              href={getUriWithOrg(orgslug, '') + `/course/${courseuuid}`}
+              to={getUriWithOrg(orgslug, '') + `/course/${courseuuid}`}
               className="inline-flex items-center justify-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-200 transition-colors"
             >
               {t('course.back_to_course', 'Back to course')}
@@ -616,7 +613,7 @@ function ActivityClient(props: ActivityClientProps) {
                         >
                           <div className="flex">
                             <Link
-                              href={getUriWithOrg(orgslug, '') + `/course/${courseuuid}`}
+                              to={getUriWithOrg(orgslug, '') + `/course/${courseuuid}`}
                             >
                               <img
                                 className="w-[60px] h-[34px] rounded-md drop-shadow-md"
@@ -807,7 +804,7 @@ function ActivityClient(props: ActivityClientProps) {
                           <div className="flex space-x-4 sm:space-x-6 items-center">
                             <div className="flex shrink-0">
                               <Link
-                                href={getUriWithOrg(orgslug, '') + `/course/${courseuuid}`}
+                                to={getUriWithOrg(orgslug, '') + `/course/${courseuuid}`}
                               >
                                 <img
                                   className="w-[60px] h-[34px] sm:w-[100px] sm:h-[57px] rounded-md drop-shadow-md"
@@ -952,7 +949,7 @@ function ActivityClient(props: ActivityClientProps) {
                                     />
                                     {contributorStatus === 'ACTIVE' && activity.activity_type == 'TYPE_DYNAMIC' && (
                                       <Link
-                                        href={getUriWithOrg(orgslug, '') + `/course/${courseuuid}/activity/${activityid}/edit`}
+                                        to={getUriWithOrg(orgslug, '') + `/course/${courseuuid}/activity/${activityid}/edit`}
                                         className="bg-emerald-600 rounded-full px-5 drop-shadow-md flex items-center space-x-2 p-2.5 text-white hover:cursor-pointer transition delay-150 duration-300 ease-in-out"
                                       >
                                         <Edit2 size={17} />
@@ -1069,7 +1066,7 @@ export function MarkStatus(props: {
   trailData: any
 }) {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any;
   const org = useOrg() as any;
   const { isUserPartOfTheOrg } = useOrgMembership();
@@ -1194,10 +1191,10 @@ export function MarkStatus(props: {
       const cleanCourseUuid = props.course.course_uuid.replace('course_', '');
       await queryClient.invalidateQueries({ queryKey: queryKeys.courses.meta(cleanCourseUuid) });
       if (willCompleteAll || !nextActivity) {
-        router.push(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/end`);
+        navigate(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/end`);
       } else {
         const nextUuid = nextActivity.activity_uuid?.replace('activity_', '');
-        router.push(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/${nextUuid}`);
+        navigate(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/${nextUuid}`);
       }
     } catch (error) {
       console.error('Error marking activity as complete:', error);
@@ -1362,7 +1359,7 @@ export function MarkStatus(props: {
 
 function NextActivityButton({ course, currentActivityId, orgslug }: { course: any, currentActivityId: string, orgslug: string }) {
   const { t } = useTranslation();
-  const router = useRouter();
+  const router = useNavigate();
   const _isMobile = useMediaQuery('(max-width: 768px)');
 
   const findNextActivity = () => {
@@ -1401,7 +1398,7 @@ function NextActivityButton({ course, currentActivityId, orgslug }: { course: an
   const cleanCourseUuid = course.course_uuid?.replace('course_', '');
 
   const navigateToActivity = () => {
-    router.push(
+    navigate(
       isLastActivity
         ? getUriWithOrg(orgslug, '') + `/course/${cleanCourseUuid}/activity/end`
         : getUriWithOrg(orgslug, '') + `/course/${cleanCourseUuid}/activity/${nextActivity.cleanUuid}`
@@ -1426,7 +1423,7 @@ function NextActivityButton({ course, currentActivityId, orgslug }: { course: an
 
 function PreviousActivityButton({ course, currentActivityId, orgslug }: { course: any, currentActivityId: string, orgslug: string }) {
   const { t } = useTranslation();
-  const router = useRouter();
+  const router = useNavigate();
   const _isMobile = useMediaQuery('(max-width: 768px)');
 
   const findPreviousActivity = () => {
@@ -1460,7 +1457,7 @@ function PreviousActivityButton({ course, currentActivityId, orgslug }: { course
 
   const navigateToActivity = () => {
     const cleanCourseUuid = course.course_uuid?.replace('course_', '');
-    router.push(getUriWithOrg(orgslug, '') + `/course/${cleanCourseUuid}/activity/${previousActivity.cleanUuid}`);
+    navigate(getUriWithOrg(orgslug, '') + `/course/${cleanCourseUuid}/activity/${previousActivity.cleanUuid}`);
   };
 
   return (

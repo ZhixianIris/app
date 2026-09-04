@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useQuery } from '@tanstack/react-query'

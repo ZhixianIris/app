@@ -1,5 +1,3 @@
-'use client'
-
 import React, { createContext, useContext, useReducer, useCallback, useRef, useEffect, useMemo } from 'react'
 import { Podcast, PodcastEpisode } from '@services/podcasts/podcasts'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'

@@ -1,12 +1,11 @@
-'use client'
 import React, { useState } from 'react'
 import { useAuth } from '@components/Contexts/AuthContext'
-import { useRouter } from 'next/navigation'
 import { Shield } from 'lucide-react'
+import { useNavigate } from "react-router-dom";
 
 export default function AdminLoginPage() {
   const { signIn } = useAuth()
-  const _router = useRouter()
+  const _router = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')

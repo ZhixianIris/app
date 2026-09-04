@@ -1,11 +1,8 @@
-'use client'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import { getUriWithOrg } from '@services/config/config'
 import { TextIcon, LucideIcon, LayoutDashboardIcon, CodeIcon, Palette, School, BarChart3, Menu as MenuIcon, AlertTriangle } from 'lucide-react'
 import React, { useEffect, use } from 'react';
-import { useRouter } from 'next/navigation'
 import { motion } from 'motion/react'
-import Image from 'next/image'
 import OrgEditGeneral from '@components/Dashboard/Pages/Org/OrgEditGeneral/OrgEditGeneral'
 import OrgEditBranding from '@components/Dashboard/Pages/Org/OrgEditBranding/OrgEditBranding'
 import OrgEditLanding from '@components/Dashboard/Pages/Org/OrgEditLanding/OrgEditLanding'
@@ -17,6 +14,7 @@ import OrgEditDangerZone from '@components/Dashboard/Pages/Org/OrgEditDangerZone
 import { useTranslation } from 'react-i18next'
 import { PlanLevel } from '@services/plans/plans'
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar'
+import { useNavigate } from "react-router-dom";
 
 // Security now lives with the people it governs, under Users, split across a
 // two-factor tab and a sign-in-methods tab. The old single URL keeps working.
@@ -61,7 +59,7 @@ const getSettingTabs = (t: any): TabConfig[] => [
 
 function OrgPage(props: { params: Promise<OrgParams> }) {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const params = use(props.params);
   const [H1Label, setH1Label] = React.useState('')
   const [H2Label, setH2Label] = React.useState('')
@@ -71,8 +69,8 @@ function OrgPage(props: { params: Promise<OrgParams> }) {
   const movedTo = MOVED_TO_DEVELOPERS[params.subpage]
   const movedToUsers = MOVED_TO_USERS[params.subpage]
   useEffect(() => {
-    if (movedTo) router.replace(`/dash/developers/${movedTo}`)
-    else if (movedToUsers) router.replace(`/dash/users/settings/${movedToUsers}`)
+    if (movedTo) navigate(`/dash/developers/${movedTo}`, { replace: true })
+    else if (movedToUsers) navigate(`/dash/users/settings/${movedToUsers}`, { replace: true })
   }, [movedTo, movedToUsers, router])
 
   function handleLabels() {
@@ -112,7 +110,7 @@ function OrgPage(props: { params: Promise<OrgParams> }) {
     key: tab.id,
     label: tab.label,
     icon: tab.customIcon
-      ? <Image src={tab.customIcon} alt={tab.label} width={16} height={16} />
+      ? <img src={tab.customIcon} alt={tab.label} width={16} height={16}  />
       : tab.icon
         ? <tab.icon size={16} />
         : null,

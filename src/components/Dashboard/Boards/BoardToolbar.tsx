@@ -1,9 +1,6 @@
-'use client'
-
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Link from 'next/link'
-import Image from 'next/image'
+import { Link } from 'react-router-dom'
 import {
   Cursor,
   Hand,
@@ -90,14 +87,14 @@ export default function BoardToolbar({
       }}
     >
       {/* Logo */}
-      <Link href="/dash/boards">
+      <Link to="/dash/boards">
         <div className="bg-black rounded-md w-[25px] h-[25px] flex items-center justify-center hover:opacity-80 transition-opacity">
-          <Image
+          <img
             src="/lrn.svg"
             alt="LearnHouse"
             width={14}
             height={14}
-            className="invert"
+            className="invert" 
           />
         </div>
       </Link>

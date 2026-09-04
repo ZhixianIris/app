@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useEffect } from 'react'
 import { SmilePlus } from 'lucide-react'
 import toast from 'react-hot-toast'

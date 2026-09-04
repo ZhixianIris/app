@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { X, Clock, User, RotateCcw, Eye, Loader2 } from 'lucide-react'
 import { useActivityVersions, ActivityVersion } from '@components/Hooks/useActivityVersioning'

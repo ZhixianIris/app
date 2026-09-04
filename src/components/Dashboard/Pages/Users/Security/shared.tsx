@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ExternalLink, ShieldAlert } from 'lucide-react'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -416,7 +415,7 @@ export function AdminMfaCallout({ href, message }: { href: string; message?: str
           })}
         </p>
         <Link
-          href={href}
+          to={href}
           className="inline-flex items-center gap-1.5 text-sm font-medium text-amber-900 underline underline-offset-2 hover:text-amber-950"
         >
           {t('dashboard.organization.security.admin_mfa_first_cta', {

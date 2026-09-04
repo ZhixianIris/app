@@ -1,6 +1,5 @@
 import { ArrowRight } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import learnhouseIcon from 'public/black_logo.png'
 
 export default function NotFound() {
@@ -11,11 +10,11 @@ export default function NotFound() {
         existed in this project's Tailwind build, so they rendered nothing.
         Only pb-20 was ever doing anything. */}
     <div className="pb-20">
-        <Image quality={100}
+        <img
           width={270}
           height={100}
           src={learnhouseIcon}
-          alt="logo"
+          alt="logo" 
         />
         </div>
       <div className="space-y-6 text-center">
@@ -29,7 +28,7 @@ export default function NotFound() {
       </div>
       <div className='pt-8 flex flex-col items-center'>
       <Link
-        href="/"
+        to="/"
         className="flex w-fit h-[50px] text-xl space-x-2 bg-black px-6 py-2 text-md rounded-lg font-bold text-white items-center shadow-md gap-2"
       >
         Go back to homepage

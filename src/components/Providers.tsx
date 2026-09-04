@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 import '../lib/i18n'
 import { SessionProvider } from '@components/Contexts/AuthContext'
@@ -34,7 +33,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           </PostHogProvider>
         </LHSessionProvider>
       </SessionProvider>
-      {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
+      {import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   )
 }

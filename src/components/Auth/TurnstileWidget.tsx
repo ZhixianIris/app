@@ -1,4 +1,3 @@
-'use client'
 import { getConfig, getDeploymentMode } from '@services/config/config'
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'

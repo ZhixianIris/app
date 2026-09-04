@@ -27,13 +27,13 @@ import { deleteActivity, updateActivity } from '@services/courses/activities'
 import LockPopover, { LockType } from './LockPopover'
 import { deleteAssignmentUsingActivityUUID } from '@services/courses/assignments'
 import { revalidateTags } from '@services/utils/ts/requests'
-import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@lib/query/keys'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useCourse, useCourseDispatch } from '@components/Contexts/CourseContext'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from "react-router-dom";
 
 type ChapterElementProps = {
   chapter: any
@@ -67,7 +67,7 @@ function ChapterElement(props: ChapterElementProps) {
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id
 
-  const router = useRouter()
+  const router = useNavigate()
 
   // Selection state
   const [selectedActivities, setSelectedActivities] = React.useState<Set<string>>(new Set())
@@ -172,7 +172,7 @@ function ChapterElement(props: ChapterElementProps) {
     await deleteChapter(props.chapter.id, access_token)
     await queryClient.invalidateQueries({ queryKey: queryKeys.courses.meta(cleanCourseUuid(props.course_uuid)) })
     await revalidateTags(['courses'], props.orgslug)
-    router.refresh()
+    window.location.reload()
   }
 
   async function updateChapterName(chapterId: string) {
@@ -183,7 +183,7 @@ function ChapterElement(props: ChapterElementProps) {
       await updateChapter(chapterId, modifiedChapterCopy, access_token)
       await queryClient.invalidateQueries({ queryKey: queryKeys.courses.meta(cleanCourseUuid(props.course_uuid)) })
       await revalidateTags(['courses'], props.orgslug)
-      router.refresh()
+      window.location.reload()
     }
     setSelectedChapter(undefined)
   }

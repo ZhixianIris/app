@@ -7,7 +7,6 @@ import {
 import { AlertTriangle, BadgeInfo, NotebookTabs, Maximize2, Minimize2, PanelRightOpen, PanelRightClose, PanelTop } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'
 import { FlaskConical, MessageCircle, X } from 'lucide-react'
-import Image from 'next/image'
 import learnhouseAI_icon from 'public/learnhouse_ai_simple.png'
 import learnhouseAI_logo_black from 'public/learnhouse_ai_black_logo.png'
 import React, { useEffect, useRef } from 'react'
@@ -62,11 +61,11 @@ function AIActivityAsk(props: AIActivityAskProps) {
           >
             {' '}
             <i>
-              <Image
+              <img
                 className="outline outline-1 outline-neutral-200/20 rounded-md"
                 width={20}
                 src={learnhouseAI_icon}
-                alt=""
+                alt="" 
               />
             </i>{' '}
             <i className="not-italic text-xs font-bold">{t('ai.ask_ai')}</i>
@@ -328,12 +327,12 @@ function ActivityChatMessageBox(props: ActivityChatMessageBoxProps) {
                   className={`flex space-x-2 items-center -ms-[100px] ${isInputDisabled ? 'animate-pulse' : ''
                     }`}
                 >
-                  <Image
+                  <img
                     className={`outline outline-1 outline-neutral-200/20 rounded-lg ${isInputDisabled ? 'animate-pulse' : ''
                       }`}
                     width={24}
                     src={learnhouseAI_icon}
-                    alt=""
+                    alt="" 
                   />
                   <span className="text-sm font-semibold text-white/70">
                     {' '}
@@ -624,11 +623,11 @@ const AIMessagePlaceHolder = (props: {
               delay: 0.17,
             }}
           >
-            <Image
+            <img
               width={100}
               className="mx-auto"
               src={learnhouseAI_logo_black}
-              alt=""
+              alt="" 
             />
             <p className="pt-3 text-2xl font-semibold text-white/70 flex justify-center space-x-2 items-center">
               <span className="items-center">{t('common.hello')}</span>
@@ -929,11 +928,11 @@ function AISidePanelInline(props: AISidePanelProps) {
             <div
               className={`flex space-x-2 items-center ${isInputDisabled ? 'animate-pulse' : ''}`}
             >
-              <Image
+              <img
                 className={`outline outline-1 outline-neutral-200/20 rounded-lg ${isInputDisabled ? 'animate-pulse' : ''}`}
                 width={24}
                 src={learnhouseAI_icon}
-                alt=""
+                alt="" 
               />
               <span className="text-sm font-semibold text-white/70">AI</span>
             </div>
@@ -1169,11 +1168,11 @@ const AISidePanelPlaceholder = (props: {
               delay: 0.17,
             }}
           >
-            <Image
+            <img
               width={80}
               className="mx-auto"
               src={learnhouseAI_logo_black}
-              alt=""
+              alt="" 
             />
             <p className="pt-3 text-lg font-semibold text-white/70 flex flex-col justify-center items-center">
               <span className="flex items-center space-x-2">

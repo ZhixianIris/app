@@ -7,7 +7,7 @@ import AssignmentBoxUI from '@components/Objects/Activities/Assignment/Assignmen
 import { getAssignmentTask, getAssignmentTaskSubmissionsUser, handleAssignmentTaskSubmission, updateSubFile } from '@services/courses/assignments';
 import { getTaskFileSubmissionDir } from '@services/media/media';
 import { Cloud, Download, File, Info, Loader, Lock, UploadCloud } from 'lucide-react'
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
@@ -308,7 +308,7 @@ export default function TaskFileObject({ view, user_id, assignmentTaskUUID, onGr
                     </div>
                     {userSubmissions.fileUUID && !isLoading && assignmentTaskUUID && (
                         <Link
-                            href={getTaskFileSubmissionDir(org?.org_uuid, assignment.course_object.course_uuid, assignment.activity_object.activity_uuid, assignment.assignment_object.assignment_uuid, assignmentTaskUUID, userSubmissions.fileUUID)}
+                            to={getTaskFileSubmissionDir(org?.org_uuid, assignment.course_object.course_uuid, assignment.activity_object.activity_uuid, assignment.assignment_object.assignment_uuid, assignmentTaskUUID, userSubmissions.fileUUID)}
                             target='_blank'
                             className='flex flex-col rounded-lg bg-white text-gray-500 shadow-xs hover:shadow-md transition-shadow border border-gray-100 px-4 sm:px-5 py-4 space-y-1 items-center relative w-full sm:w-auto mx-auto'>
                             <div className='absolute top-0 end-0 transform translate-x-1/2 -translate-y-1/2 bg-emerald-500 rounded-full p-1.5 text-white flex justify-center items-center shadow-xs'>

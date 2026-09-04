@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState } from 'react'
 import { Plus, Mic2, Headphones } from 'lucide-react'
 import { useTranslation } from 'react-i18next'

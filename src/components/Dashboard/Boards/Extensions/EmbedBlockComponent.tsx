@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Code, Link as LinkIcon, X, Pencil, Palette } from 'lucide-react'

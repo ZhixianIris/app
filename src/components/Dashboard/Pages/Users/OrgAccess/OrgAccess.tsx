@@ -4,7 +4,7 @@ import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationMo
 import { getAPIUrl, getAbsoluteUriWithOrg } from '@services/config/config'
 import { apiFetch } from '@services/utils/ts/requests'
 import { Check, Copy, Globe, Ticket, UserSquare, Users, X } from 'lucide-react'
-import Link from 'next/link'
+import { Link, useNavigate } from 'react-router-dom'
 import React, { useEffect } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
@@ -14,7 +14,6 @@ import {
   deleteInviteCode,
 } from '@services/organizations/invites'
 import toast from 'react-hot-toast'
-import { useRouter } from 'next/navigation'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import OrgInviteCodeGenerate from '@components/Objects/Modals/Dash/OrgAccess/OrgInviteCodeGenerate'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
@@ -51,7 +50,7 @@ function OrgAccess() {
   const [isLoading, setIsLoading] = React.useState(false)
   const [joinMethod, setJoinMethod] = React.useState('closed')
   const [invitesModal, setInvitesModal] = React.useState(false)
-  const router = useRouter()
+  const router = useNavigate()
   const { track } = useLHAnalytics('dashboard')
 
   const { data: invites, isLoading: isInvitesLoading } = useQuery({
@@ -95,7 +94,7 @@ function OrgAccess() {
       setJoinMethod(method)
       track(AnalyticsEvent.SignupMechanismChanged, { method })
       queryClient.invalidateQueries({ queryKey: queryKeys.org.detail(org?.slug) })
-      router.refresh()
+      window.location.reload()
       toast.success(t('dashboard.users.signups.invite_codes.toasts.change_success', { method }), {id:toastId})
     } else {
       toast.error(t('dashboard.users.signups.invite_codes.toasts.change_error'), {id:toastId})
@@ -212,7 +211,7 @@ function OrgAccess() {
                             <Link
                               className="outline bg-gray-50 text-gray-600 px-2 py-1 rounded-md outline-gray-300 outline-dashed outline-1 text-xs truncate max-w-[200px] sm:max-w-[300px]"
                               target="_blank"
-                              href={getAbsoluteUriWithOrg(org.slug, `/signup?inviteCode=${invite.invite_code}`)}
+                              to={getAbsoluteUriWithOrg(org.slug, `/signup?inviteCode=${invite.invite_code}`)}
                             >
                               {getAbsoluteUriWithOrg(org.slug, `/signup?inviteCode=${invite.invite_code}`)}
                             </Link>

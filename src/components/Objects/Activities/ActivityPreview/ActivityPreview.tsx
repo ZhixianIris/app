@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect, useMemo, useState } from 'react'
 import ReactMarkdown, { Components as MarkdownComponents } from 'react-markdown'
 import remarkGfm from 'remark-gfm'

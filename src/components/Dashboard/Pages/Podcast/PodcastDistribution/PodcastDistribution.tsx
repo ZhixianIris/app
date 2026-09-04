@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { usePodcast } from '@components/Contexts/PodcastContext'
 import { useAbsoluteUrl } from '@/lib/seo/useAbsoluteUrl'

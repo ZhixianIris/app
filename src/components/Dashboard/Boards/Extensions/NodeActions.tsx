@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { Trash2, ArrowUp, ArrowDown, Copy } from 'lucide-react'
 import type { Editor } from '@tiptap/core'

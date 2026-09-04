@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { CheckSquare, Plus, X } from '@phosphor-icons/react'
 import BoardBlockWrapper from './BoardBlockWrapper'

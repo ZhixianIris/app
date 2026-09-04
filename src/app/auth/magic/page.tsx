@@ -1,7 +1,5 @@
-'use client'
-
 import React, { useEffect, useRef, useState } from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { Loader2, AlertTriangle } from 'lucide-react'
 import { useAuth } from '@components/Contexts/AuthContext'
 
@@ -97,13 +95,13 @@ export default function MagicLinkConsumePage() {
           <p className="text-gray-600 mb-6">{error}</p>
           <div className="space-y-3">
             <Link
-              href="/login"
+              to="/login"
               className="block w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
             >
               Request a new link
             </Link>
             <Link
-              href="/"
+              to="/"
               className="block w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
             >
               Go Home

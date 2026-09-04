@@ -1,7 +1,4 @@
-'use client'
-
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
@@ -41,7 +38,7 @@ import {
   Check,
   GlobeSimple,
 } from '@phosphor-icons/react'
-import Link from 'next/link'
+import { Link, useSearchParams } from 'react-router-dom'
 
 export type CopilotProps = {
   orgslug: string
@@ -91,7 +88,7 @@ export function CopilotChat({ orgslug }: CopilotProps) {
   const session = useLHSession() as any
   const org = useOrg() as any
   const accessToken = session?.data?.tokens?.access_token
-  const searchParams = useSearchParams()
+  const [searchParams] = useSearchParams()
   const initialChatUuid = searchParams.get('chat')
   const { track } = useLHAnalytics('learner')
 
@@ -868,7 +865,7 @@ function CitationBadge({ num, sources, orgslug }: { num: number; sources: Stream
   )
 
   if (href) {
-    return <Link href={href} target="_blank" className="no-underline">{badge}</Link>
+    return <Link to={href} target="_blank" className="no-underline">{badge}</Link>
   }
   return badge
 }
@@ -1113,7 +1110,7 @@ export function SourcesCompact({ sources, orgslug }: { sources: StreamSourceData
         )
 
         if (href) {
-          return <Link key={i} href={href} target="_blank">{inner}</Link>
+          return <Link key={i} to={href} target="_blank">{inner}</Link>
         }
         return <span key={i}>{inner}</span>
       })}

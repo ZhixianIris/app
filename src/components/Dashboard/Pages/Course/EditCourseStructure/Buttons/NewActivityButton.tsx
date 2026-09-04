@@ -15,13 +15,13 @@ import { revalidateTags } from '@services/utils/ts/requests'
 import { Layers } from 'lucide-react'
 import { ArrowLeft } from '@phosphor-icons/react'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
-import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@lib/query/keys'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useNavigate } from "react-router-dom";
 
 type NewActivityButtonProps = {
   chapterId: string
@@ -36,7 +36,7 @@ function NewActivityButton(props: NewActivityButtonProps) {
   const { track } = useLHAnalytics('dashboard')
   const [newActivityModal, setNewActivityModal] = React.useState(false)
   const [selectedView, setSelectedView] = React.useState('home')
-  const router = useRouter()
+  const router = useNavigate()
   const course = useCourse() as any
   const session = useLHSession() as any;
   const access_token = session?.data?.tokens?.access_token;
@@ -67,7 +67,7 @@ function NewActivityButton(props: NewActivityButtonProps) {
     toast.success(t('dashboard.courses.structure.activity.toasts.create_success'))
     setNewActivityModal(false)
     await revalidateTags(['courses'], props.orgslug)
-    router.refresh()
+    window.location.reload()
   }
 
   const refreshStructure = async () => {
@@ -75,7 +75,7 @@ function NewActivityButton(props: NewActivityButtonProps) {
       queryKey: queryKeys.courses.meta(cleanCourseUuid(course.courseStructure.course_uuid)),
     })
     await revalidateTags(['courses'], props.orgslug)
-    router.refresh()
+    window.location.reload()
   }
 
   // Submit File Upload
@@ -160,7 +160,7 @@ function NewActivityButton(props: NewActivityButtonProps) {
     toast.dismiss(toast_loading)
     toast.success(t('dashboard.courses.structure.activity.toasts.create_success'))
     await revalidateTags(['courses'], props.orgslug)
-    router.refresh()
+    window.location.reload()
   }
 
   useEffect(() => { }, [course])

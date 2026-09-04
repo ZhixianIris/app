@@ -1,4 +1,3 @@
-'use client'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
@@ -12,7 +11,7 @@ import { getFolderThumbnailMediaDirectory } from '@services/media/media'
 import { folderTone } from '@components/Dashboard/Library/LibraryToolbar'
 import { shareFolderLink } from '@components/Dashboard/Library/shareFolder'
 import { FolderSimple, DotsThreeVertical, ArrowSquareOut, PencilSimple, Trash, Lock, LinkSimple } from '@phosphor-icons/react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import React from 'react'
 import toast from 'react-hot-toast'
 import {
@@ -78,7 +77,7 @@ function FolderThumbnail({ folder, orgslug, org_id, isDashboard = false, onChang
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-52">
                 <DropdownMenuItem asChild>
-                  <Link prefetch={false} href={folderLink} className="flex items-center cursor-pointer">
+                  <Link to={folderLink} className="flex items-center cursor-pointer">
                     <ArrowSquareOut className="me-2 h-4 w-4" /> {t('library.open')}
                   </Link>
                 </DropdownMenuItem>
@@ -120,7 +119,7 @@ function FolderThumbnail({ folder, orgslug, org_id, isDashboard = false, onChang
         </AuthenticatedClientElement>
       )}
 
-      <Link prefetch={false} href={folderLink} className="flex items-center gap-3 pe-6">
+      <Link to={folderLink} className="flex items-center gap-3 pe-6">
         {thumb ? (
           <div
             className="w-10 h-10 rounded-lg bg-cover bg-center flex-shrink-0 ring-1 ring-inset ring-black/5"

@@ -1,4 +1,3 @@
-'use client'
 import React, { useMemo } from 'react'
 
 // Allowlist of safe URL protocols

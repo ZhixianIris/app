@@ -1,4 +1,3 @@
-'use client'
 import { Input } from "@components/ui/input"
 import { Textarea } from "@components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/ui/select"
@@ -13,7 +12,6 @@ import { getOrganizationContextInfoWithoutCredentials } from '@services/organiza
 import React, { useEffect } from 'react'
 import { BarLoader } from 'react-spinners'
 import { revalidateTags } from '@services/utils/ts/requests'
-import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
@@ -27,6 +25,7 @@ import FormTagInput from "@components/Objects/StyledElements/Form/TagInput"
 import { useTranslation } from "react-i18next"
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
+import { useNavigate } from "react-router-dom";
 
 const _validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -43,7 +42,7 @@ const _validationSchema = Yup.object().shape({
 function CreateCourseModal({ closeModal, orgslug }: any) {
   const { t } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const queryClient = useQueryClient()
   const [orgId, setOrgId] = React.useState(null) as any
@@ -131,7 +130,7 @@ function CreateCourseModal({ closeModal, orgslug }: any) {
           // popup so a brand-new course lands the teacher on the core creation
           // action (their first activity) instead of an empty settings page.
           const courseId = res.data.course_uuid?.replace('course_', '') || res.data.course_uuid
-          router.push(`/dash/courses/course/${courseId}/content?new_activity=1`)
+          navigate(`/dash/courses/course/${courseId}/content?new_activity=1`)
         } else {
           toast.dismiss(toast_loading)
           const detail = typeof res.data?.detail === 'string' ? res.data.detail : ''

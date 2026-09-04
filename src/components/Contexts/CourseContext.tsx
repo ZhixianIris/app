@@ -1,4 +1,3 @@
-'use client'
 import { getCourseMetadata } from '@services/courses/courses'
 import React, { createContext, useContext, useEffect, useReducer, useMemo, useCallback, useRef } from 'react'
 import { useQuery } from '@tanstack/react-query'

@@ -1,10 +1,8 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const VideoBlockComponent = dynamic(() => import('./VideoBlockComponent'), {
-  ssr: false,
-})
+const VideoBlockComponent = lazy(() => import('./VideoBlockComponent'))
 
 export default Node.create({
   name: 'blockVideo',

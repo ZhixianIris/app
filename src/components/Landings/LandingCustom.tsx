@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { LandingSection } from '@components/Dashboard/Pages/Org/OrgEditLanding/landing_types'
 import { useQuery } from '@tanstack/react-query'

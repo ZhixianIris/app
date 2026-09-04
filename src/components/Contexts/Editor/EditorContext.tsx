@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 
 export const EditorProviderContext = React.createContext(null) as any

@@ -1,13 +1,11 @@
-'use client'
 import { useFormik } from 'formik'
-import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 import FormLayout, {
   FormField,
 } from '@components/Objects/StyledElements/Form/Form'
 import * as Form from '@radix-ui/react-form'
 import { AlertTriangle, Info, Mail, User } from 'lucide-react'
-import Link from 'next/link'
+import { Link, useNavigate } from 'react-router-dom'
 import { signUpWithInviteCode } from '@services/auth/auth'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { signIn } from '@components/Contexts/AuthContext'
@@ -73,7 +71,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
   // of joined to the invited org. Mirrors OpenSignup.
   const contextOrg = useOrg() as any
   const org = (contextOrg && (contextOrg.id || contextOrg.slug)) ? contextOrg : props.org
-  const _router = useRouter()
+  const _router = useNavigate()
   const [error, setError] = React.useState('')
   const [message, setMessage] = React.useState<{ email_verified: boolean } | null>(null)
   const turnstileRef = React.useRef<TurnstileWidgetHandle>(null)
@@ -188,7 +186,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
               {t('auth.verification_email_sent_message')}
             </p>
             <hr className="border-green-100" />
-            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" href="/login">
+            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/login">
               <User size={14} />
               <span>{t('auth.login')}</span>
             </Link>
@@ -202,7 +200,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
               <div className="font-semibold text-sm">{t('auth.account_created_success')}</div>
             </div>
             <hr className="border-green-100" />
-            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" href="/login">
+            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/login">
               <User size={14} />
               <span>{t('auth.login')}</span>
             </Link>
@@ -384,7 +382,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
         {/* Login Link */}
         <p className="text-center text-sm text-black/35 mt-6">
           {t('auth.already_have_account')}{' '}
-          <Link href="/login" className="text-black font-semibold hover:underline">
+          <Link to="/login" className="text-black font-semibold hover:underline">
             {t('auth.login')}
           </Link>
         </p>

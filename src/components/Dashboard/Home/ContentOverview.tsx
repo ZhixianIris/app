@@ -1,6 +1,5 @@
-'use client'
 import React from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import {
@@ -174,7 +173,7 @@ export default function ContentOverview() {
       {visibleCards.map((card) => (
         <Link
           key={card.label}
-          href={card.href}
+          to={card.href}
           className="bg-white rounded-xl nice-shadow px-5 py-4 hover:bg-gray-50 transition-colors group"
         >
           <div className="flex items-center gap-2 mb-2">

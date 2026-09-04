@@ -35,8 +35,7 @@ import {
 } from 'lucide-react'
 import { MarkdownLogo, Globe as GlobePhosphor, Cube } from '@phosphor-icons/react'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import { Draggable } from '@hello-pangea/dnd'
 import { useQueryClient } from '@tanstack/react-query'
@@ -73,7 +72,7 @@ interface ModifiedActivityInterface {
 
 function ActivityElement(props: ActivitiyElementProps) {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const [modifiedActivity, setModifiedActivity] = React.useState<
@@ -214,7 +213,7 @@ function ActivityElement(props: ActivitiyElementProps) {
         await queryClient.invalidateQueries({ queryKey: queryKeys.courses.meta(cleanCourseUuid(props.course_uuid)) })
         await revalidateTags(['courses'], props.orgslug)
         toast.success(t('dashboard.courses.structure.activity.toasts.name_update_success'))
-        router.refresh()
+        window.location.reload()
       } catch (error) {
         toast.error(t('dashboard.courses.structure.activity.toasts.name_update_error'))
         console.error('Error updating activity name:', error)
@@ -441,7 +440,7 @@ function ActivityElement(props: ActivitiyElementProps) {
                   side="top"
                 >
                   <Link
-                    href={editHref}
+                    to={editHref}
                     target="_blank"
                     className="h-7 w-7 flex items-center justify-center rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
                   >
@@ -453,7 +452,7 @@ function ActivityElement(props: ActivitiyElementProps) {
               )}
               <ToolTip content={t('dashboard.courses.structure.actions.preview_activity')} side="top">
                 <Link
-                  href={previewHref}
+                  to={previewHref}
                   className="h-7 w-7 flex items-center justify-center rounded-md text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
                 >
                   <Eye size={15} />

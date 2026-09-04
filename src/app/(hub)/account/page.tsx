@@ -1,7 +1,5 @@
-'use client'
 import React, { Suspense, useEffect, useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, AlertTriangle, Trash2, ShieldAlert, UserCog, KeyRound } from 'lucide-react'
 import { Toaster, toast } from 'react-hot-toast'
@@ -25,7 +23,7 @@ import { AnalyticsEvent } from '@services/analytics/events'
 function AccountClient() {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
 
   const access_token = session?.data?.tokens?.access_token
   const user = session?.data?.user
@@ -35,7 +33,7 @@ function AccountClient() {
   // Redirect unauthenticated users to login (mirror app/home/home.tsx).
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace('/login')
+      navigate('/login', { replace: true })
     }
   }, [isLoading, isAuthenticated, router])
 
@@ -67,7 +65,7 @@ function AccountClient() {
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3 min-w-0">
                 <Link
-                  href="/home"
+                  to="/home"
                   className="flex items-center justify-center w-9 h-9 rounded-xl bg-white nice-shadow text-black/50 hover:text-black transition-colors flex-shrink-0"
                   aria-label={t('account.back_home', { defaultValue: 'Back to organizations' })}
                 >

@@ -1,4 +1,3 @@
-'use client';
 import DashLeftMenu from '@components/Dashboard/Menus/DashLeftMenu';
 import DashMobileMenu from '@components/Dashboard/Menus/DashMobileMenu';
 import OnboardingTracker from '@components/Dashboard/Onboarding/OnboardingTracker';

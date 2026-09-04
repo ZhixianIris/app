@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useEffect } from 'react'
 import { safeExternalUrl } from '@services/security/url'
 import { useOrg } from '@components/Contexts/OrgContext'

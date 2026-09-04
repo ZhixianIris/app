@@ -1,5 +1,3 @@
-'use client'
-
 import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { BookOpen, ChevronRight, ArrowLeft, ExternalLink } from 'lucide-react'

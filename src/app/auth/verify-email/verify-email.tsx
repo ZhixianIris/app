@@ -1,8 +1,6 @@
-'use client'
 import React, { useEffect, useRef, useState } from 'react'
 import { AlertTriangle, CheckCircle, Loader2, X } from 'lucide-react'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+import { Link, useSearchParams } from 'react-router-dom'
 import { verifyEmail } from '@services/auth/auth'
 import { useTranslation } from 'react-i18next'
 import AuthLayout from '@components/Auth/AuthLayout'
@@ -15,7 +13,7 @@ interface VerifyEmailClientProps {
 function VerifyEmailClient({ org }: VerifyEmailClientProps) {
     const { t } = useTranslation();
     const { track } = useLHAnalytics('public')
-    const searchParams = useSearchParams()
+    const [searchParams] = useSearchParams()
     const token = searchParams.get('token') || ''
     const userUuid = searchParams.get('user') || ''
     const orgUuid = searchParams.get('org') || ''
@@ -111,7 +109,7 @@ function VerifyEmailClient({ org }: VerifyEmailClientProps) {
                                 </span>
                                 {success && (
                                     <span className="text-sm ms-2">
-                                        · <Link href="/home" className="underline hover:no-underline">{t('auth.continue_to_dashboard', { defaultValue: 'Continue to your dashboard' })}</Link>
+                                        · <Link to="/home" className="underline hover:no-underline">{t('auth.continue_to_dashboard', { defaultValue: 'Continue to your dashboard' })}</Link>
                                     </span>
                                 )}
                             </div>
@@ -152,7 +150,7 @@ function VerifyEmailClient({ org }: VerifyEmailClientProps) {
                                     {t('auth.verification_trouble')}
                                 </p>
                                 <Link
-                                    href="/login"
+                                    to="/login"
                                     className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none transition-all"
                                 >
                                     {t('auth.back_to_login')}
@@ -173,7 +171,7 @@ function VerifyEmailClient({ org }: VerifyEmailClientProps) {
                                     </div>
                                 </div>
                                 <Link
-                                    href="/home"
+                                    to="/home"
                                     className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none transition-all"
                                 >
                                     {t('auth.continue_to_dashboard', { defaultValue: 'Continue to your dashboard' })}

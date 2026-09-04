@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 import LearnHouseSpinner from '@components/Objects/Loaders/LearnHouseSpinner'
 import { FileText } from '@phosphor-icons/react'

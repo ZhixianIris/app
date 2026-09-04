@@ -1,4 +1,3 @@
-'use client'
 import React, { useState } from 'react'
 import { ChevronDown, ExternalLink, FileText } from 'lucide-react'
 import { useTranslation } from 'react-i18next'

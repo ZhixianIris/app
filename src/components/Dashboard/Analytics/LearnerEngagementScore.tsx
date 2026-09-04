@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useAnalyticsDetail } from './useAnalyticsDashboard'
 import { getUserAvatarMediaDirectory } from '@services/media/media'

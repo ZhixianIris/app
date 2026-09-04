@@ -1,4 +1,3 @@
-'use client'
 import React, { useMemo, useState } from 'react'
 import { CaretDown, MagnifyingGlass } from '@phosphor-icons/react'
 import { ENDPOINTS, CATEGORIES, type EndpointDoc, type HttpMethod } from '@components/Admin/Developers/catalog'

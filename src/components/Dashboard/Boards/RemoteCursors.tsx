@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect, useRef, useCallback } from 'react'
 import type { HocuspocusProvider } from '@hocuspocus/provider'
 

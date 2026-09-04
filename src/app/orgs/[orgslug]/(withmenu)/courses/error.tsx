@@ -1,5 +1,3 @@
-'use client' // Error components must be Client Components
-
 import BoundaryError from '@components/Objects/StyledElements/Error/BoundaryError'
 
 export default function Error({

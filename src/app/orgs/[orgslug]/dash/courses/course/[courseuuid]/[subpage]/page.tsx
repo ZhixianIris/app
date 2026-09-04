@@ -1,4 +1,3 @@
-'use client'
 import React, { use, useEffect } from 'react';
 import { CourseProvider } from '../../../../../../../../components/Contexts/CourseContext'
 import { CourseOverviewTop } from '@components/Dashboard/Misc/CourseOverviewTop'
@@ -12,13 +11,13 @@ import EditCourseContributors from '@components/Dashboard/Pages/Course/EditCours
 import EditCourseCertification from '@components/Dashboard/Pages/Course/EditCourseCertification/EditCourseCertification'
 import EditCourseSEO from '@components/Dashboard/Pages/Course/EditCourseSEO/EditCourseSEO'
 import { useCourseRights } from '@hooks/useCourseRights'
-import { useRouter } from 'next/navigation'
 import { getUriWithOrg } from '@services/config/config';
 import { useTranslation } from 'react-i18next';
 import { PlanLevel } from '@services/plans/plans';
 import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate';
 import CourseAnalyticsTab from '@components/Dashboard/Analytics/Course/CourseAnalyticsTab';
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar';
+import { useNavigate } from "react-router-dom";
 
 export type CourseOverviewParams = {
   orgslug: string
@@ -29,7 +28,7 @@ export type CourseOverviewParams = {
 function CourseOverviewPage(props: { params: Promise<CourseOverviewParams> }) {
   const { t } = useTranslation()
   const params = use(props.params);
-  const router = useRouter();
+  const router = useNavigate();
 
   function getEntireCourseUUID(courseuuid: string) {
     // add course_ to uuid
@@ -106,7 +105,7 @@ function CourseOverviewPage(props: { params: Promise<CourseOverviewParams> }) {
   useEffect(() => {
     if (!rightsLoading && !hasAccessToCurrentPage && visibleTabs.length > 0) {
       const firstAvailableTab = visibleTabs[0]
-      router.replace(getUriWithOrg(params.orgslug, '') + firstAvailableTab.href)
+      navigate(getUriWithOrg(params.orgslug, '') + firstAvailableTab.href, { replace: true })
     }
   }, [rightsLoading, hasAccessToCurrentPage, visibleTabs, router, params.orgslug])
 

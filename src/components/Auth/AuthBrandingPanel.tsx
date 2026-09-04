@@ -1,7 +1,5 @@
-'use client'
 import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import learnhouseIcon from 'public/learnhouse_bigicon_1.png'
 import { getOrgLogoMediaDirectory, getOrgAuthBackgroundMediaDirectory } from '@services/media/media'
 import { getUriWithOrg } from '@services/config/config'
@@ -145,7 +143,7 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
               and for the no-org apex panel (platform shows no logo on the image). */}
           {!isEnterprise && !noOrg && (
             <div className="login-topbar">
-              <Link prefetch href="https://learnhouse.app" target="_blank">
+              <Link to="https://learnhouse.app" target="_blank">
                 <img
                   src="/lrn.svg"
                   alt="LearnHouse"
@@ -180,7 +178,7 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
                   text_color === 'light' ? "text-white" : "text-gray-900"
                 )}>
                   {/* Organization logo */}
-                  <Link prefetch href={getUriWithOrg(org?.slug, '/')}>
+                  <Link to={getUriWithOrg(org?.slug, '/')}>
                     <div className="w-24 h-24 rounded-2xl ring-1 ring-inset ring-white/10 bg-white flex items-center justify-center overflow-hidden">
                       {org?.logo_image ? (
                         <img
@@ -189,13 +187,12 @@ export default function AuthBrandingPanel({ org, welcomeText, title, subtitle }:
                           className="w-full h-full object-contain p-3"
                         />
                       ) : (
-                        <Image
-                          quality={100}
+                        <img
                           width={96}
                           height={96}
                           src={learnhouseIcon}
                           alt="LearnHouse"
-                          className="object-contain"
+                          className="object-contain" 
                         />
                       )}
                     </div>

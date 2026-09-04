@@ -1,5 +1,3 @@
-'use client'
-
 // ---------------------------------------------------------------------------
 // CourseCardSkeleton
 // Mirrors CourseThumbnail layout:

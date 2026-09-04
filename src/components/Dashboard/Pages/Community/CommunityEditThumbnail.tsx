@@ -1,7 +1,5 @@
-'use client'
 import React, { useState, useRef } from 'react'
 import { UploadCloud, Image as ImageIcon, ArrowBigUpDash } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -16,6 +14,7 @@ import AIImageButton from '@components/Objects/AI/AIImageButton'
 import toast from 'react-hot-toast'
 import { Button } from '@components/ui/button'
 import { SafeImage } from '@components/Objects/SafeImage'
+import { useNavigate } from "react-router-dom";
 
 const MAX_FILE_SIZE = 8_000_000 // 8MB
 const VALID_IMAGE_MIME_TYPES = ['image/jpeg', 'image/jpg', 'image/png'] as const
@@ -23,7 +22,7 @@ type ValidImageMimeType = (typeof VALID_IMAGE_MIME_TYPES)[number]
 
 const CommunityEditThumbnail: React.FC = () => {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const org = useOrg() as any
   const communityState = useCommunity()
@@ -132,7 +131,7 @@ const CommunityEditThumbnail: React.FC = () => {
           duration: 3000,
           position: 'top-center',
         })
-        router.refresh()
+        window.location.reload()
       }
     } catch (_err) {
       showError(t('dashboard.courses.communities.thumbnail.toasts.update_error'))

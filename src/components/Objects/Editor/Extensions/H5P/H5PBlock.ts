@@ -1,6 +1,6 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
 /*
  H5P interactive content — EMBED ONLY, by design.
@@ -17,9 +17,7 @@ import dynamic from 'next/dynamic'
  it in a sandboxed iframe. The content — and its licence — stays on their host.
 */
 
-const H5PBlockComponent = dynamic(() => import('./H5PBlockComponent'), {
-  ssr: false,
-})
+const H5PBlockComponent = lazy(() => import('./H5PBlockComponent'))
 
 export default Node.create({
   name: 'blockH5P',

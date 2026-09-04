@@ -1,11 +1,9 @@
-'use client'
 import { BookOpenCheck, Check, FileText, Layers, Video, ChevronLeft, ChevronRight, ChevronDown, Trophy, Package, Puzzle, Globe } from 'lucide-react'
 import { MarkdownLogo } from '@phosphor-icons/react'
 import React, { useMemo, memo, useState, useRef, useEffect, useCallback } from 'react'
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip'
 import { getUriWithOrg } from '@services/config/config'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useCourseCertification } from '@components/Hooks/useCourseCertification'
 
@@ -184,8 +182,7 @@ const CertificationBadge = memo(({
     }
   >
     <Link
-      href={`${getUriWithOrg(orgslug, '')}/course/${courseid}/activity/end`}
-      prefetch={false}
+      to={`${getUriWithOrg(orgslug, '')}/course/${courseid}/activity/end`}
       className={`shrink-0 flex items-center cursor-pointer focus:outline-none transition-all ${
         isCompleted ? 'opacity-100' : 'opacity-40 cursor-not-allowed'
       }`}
@@ -269,8 +266,7 @@ const MobileChapterSelector = memo(({
                   return (
                     <Link
                       key={activity.activity_uuid}
-                      href={getUriWithOrg(orgslug, '') + `/course/${courseid}/activity/${activityId}`}
-                      prefetch={false}
+                      to={getUriWithOrg(orgslug, '') + `/course/${courseid}/activity/${activityId}`}
                       onClick={handleClose}
                       className={`flex items-center gap-2 px-3 py-2 text-xs transition-colors ${
                         isCurrent
@@ -304,7 +300,7 @@ function ActivityIndicators(props: Props) {
   const orgslug = props.orgslug
   const courseid = props.course_uuid.replace('course_', '')
   const enableNavigation = props.enableNavigation || false
-  const router = useRouter()
+  const router = useNavigate()
 
   // The trophy promises a certificate, so it only makes sense on a course that
   // actually has certification. A definitive "no certification" hides it; a
@@ -379,7 +375,7 @@ function ActivityIndicators(props: Props) {
     if (currentActivityIndex > 0) {
       const prevActivity = allActivities[currentActivityIndex - 1]
       const activityId = prevActivity.activity_uuid.replace('activity_', '')
-      router.push(getUriWithOrg(orgslug, '') + `/course/${courseid}/activity/${activityId}`)
+      navigate(getUriWithOrg(orgslug, '') + `/course/${courseid}/activity/${activityId}`)
     }
   }
 
@@ -390,10 +386,10 @@ function ActivityIndicators(props: Props) {
     if (currentActivityIndex < allActivities.length - 1) {
       const nextActivity = allActivities[currentActivityIndex + 1]
       const activityId = nextActivity.activity_uuid.replace('activity_', '')
-      router.push(getUriWithOrg(orgslug, '') + `/course/${courseid}/activity/${activityId}`)
+      navigate(getUriWithOrg(orgslug, '') + `/course/${courseid}/activity/${activityId}`)
     } else if (isOnLastActivity) {
       // Same destination as the trophy badge — the course-end/certificate view.
-      router.push(getUriWithOrg(orgslug, '') + `/course/${courseid}/activity/end`)
+      navigate(getUriWithOrg(orgslug, '') + `/course/${courseid}/activity/end`)
     }
   }
 
@@ -528,7 +524,7 @@ function ActivityIndicators(props: Props) {
                   }
                 >
                   {chapterLinkHref ? (
-                    <Link href={chapterLinkHref} prefetch={false} className="relative z-10 shrink-0 flex items-center cursor-pointer focus:outline-none">
+                    <Link to={chapterLinkHref} className="relative z-10 shrink-0 flex items-center cursor-pointer focus:outline-none">
                       <div className={`w-[22px] h-[22px] rounded-full flex items-center justify-center text-[10px] font-bold transition-all border-2 border-white ${
                         isChapterComplete
                           ? 'bg-teal-500 text-white'
@@ -570,8 +566,7 @@ function ActivityIndicators(props: Props) {
                         key={activity.activity_uuid}
                       >
                         <Link
-                          prefetch={false}
-                          href={
+                          to={
                             getUriWithOrg(orgslug, '') +
                             `/course/${courseid}/activity/${activity.activity_uuid.replace(
                               'activity_',

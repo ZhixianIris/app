@@ -1,4 +1,3 @@
-'use client'
 import { getConfig } from '@services/config/config'
 
 function readCookie(name: string): string | null {
@@ -13,8 +12,8 @@ function readCookie(name: string): string | null {
 function topDomain(): string | null {
   const t =
     readCookie('LH_top_domain') ||
-    getConfig('NEXT_PUBLIC_LEARNHOUSE_TOP_DOMAIN') ||
-    getConfig('NEXT_PUBLIC_LEARNHOUSE_DOMAIN') ||
+    getConfig('VITE_APP_TOP_DOMAIN') ||
+    getConfig('VITE_APP_DOMAIN') ||
     ''
   return t ? t.replace(/^\./, '').split(':')[0] : null
 }

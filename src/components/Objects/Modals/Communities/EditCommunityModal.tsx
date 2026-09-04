@@ -1,6 +1,4 @@
-'use client'
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import toast from 'react-hot-toast'
@@ -12,6 +10,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import { Loader2 } from 'lucide-react'
+import { useNavigate } from "react-router-dom";
 
 interface EditCommunityModalProps {
   isOpen: boolean
@@ -38,7 +37,7 @@ export function EditCommunityModal({
 }: EditCommunityModalProps) {
   const session = useLHSession() as any
   const org = useOrg() as any
-  const router = useRouter()
+  const router = useNavigate()
   const queryClient = useQueryClient()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -61,7 +60,7 @@ export function EditCommunityModal({
         await revalidateTags(['communities'], orgSlug)
         queryClient.invalidateQueries({ queryKey: queryKeys.community.list(org?.id) })
         queryClient.invalidateQueries({ queryKey: queryKeys.community.detail(community.community_uuid) })
-        router.refresh()
+        window.location.reload()
         onClose()
       }
     } catch (err: any) {

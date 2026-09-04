@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useMemo } from 'react'
 import { Search, X, Users, Globe, Lock, MoreVertical, Settings2, Eye, Trash2, CheckSquare, Square, Copy } from 'lucide-react'
 import { ChalkboardSimple } from '@phosphor-icons/react'
@@ -12,7 +10,7 @@ import { createBoard, deleteBoard, duplicateBoard, getBoards } from '@services/b
 import { getBoardThumbnailMediaDirectory } from '@services/media/media'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
@@ -460,7 +458,7 @@ function BoardCard({ board, orgslug, orgUuid, orgId, isSelected, onToggleSelect,
       />
 
       <Link
-        href={settingsLink}
+        to={settingsLink}
         className="block relative aspect-video overflow-hidden bg-gray-50"
       >
         <div
@@ -485,7 +483,7 @@ function BoardCard({ board, orgslug, orgUuid, orgId, isSelected, onToggleSelect,
 
       <div className="p-3 flex flex-col space-y-1.5">
         <div className="flex items-start justify-between">
-          <Link href={settingsLink} className="text-base font-bold text-gray-900 leading-tight hover:text-black transition-colors line-clamp-1">
+          <Link to={settingsLink} className="text-base font-bold text-gray-900 leading-tight hover:text-black transition-colors line-clamp-1">
             {board.name}
           </Link>
         </div>
@@ -504,7 +502,7 @@ function BoardCard({ board, orgslug, orgUuid, orgId, isSelected, onToggleSelect,
               : t('boards.member_count', { count: board.member_count })}</span>
           </div>
           <Link
-            href={settingsLink}
+            to={settingsLink}
             className="text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-wider"
           >
             {t('boards.settings')}
@@ -543,12 +541,12 @@ function BoardCardOptions({ board, orgslug, orgId, onDuplicate, onDelete }: {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-52">
             <DropdownMenuItem asChild>
-              <Link href={`/board/${board.board_uuid.replace('board_', '')}`} className="flex items-center cursor-pointer">
+              <Link to={`/board/${board.board_uuid.replace('board_', '')}`} className="flex items-center cursor-pointer">
                 <Eye className="me-2 h-4 w-4" /> {t('boards.open_board')}
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href={getUriWithOrg(orgslug, `/dash/boards/${board.board_uuid.replace('board_', '')}/general`)} className="flex items-center cursor-pointer">
+              <Link to={getUriWithOrg(orgslug, `/dash/boards/${board.board_uuid.replace('board_', '')}/general`)} className="flex items-center cursor-pointer">
                 <Settings2 className="me-2 h-4 w-4" /> {t('boards.settings')}
               </Link>
             </DropdownMenuItem>

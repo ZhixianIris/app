@@ -81,11 +81,11 @@ const getCookieValue = (name: string): string | null => {
 
 // Dynamic config getters - these are functions to ensure runtime values are used
 const getLEARNHOUSE_HTTP_PROTOCOL = () =>
-  (getConfig('NEXT_PUBLIC_LEARNHOUSE_HTTPS') === 'true') ? 'https://' : 'http://'
-const getLEARNHOUSE_BACKEND_URL = () => getConfig('NEXT_PUBLIC_LEARNHOUSE_BACKEND_URL', 'http://localhost/')
+  (getConfig('VITE_APP_HTTPS') === 'true') ? 'https://' : 'http://'
+const getLEARNHOUSE_BACKEND_URL = () => getConfig('VITE_BACKEND_URL', 'http://localhost/')
 const getLEARNHOUSE_DOMAIN = () => {
   // 1. Env var (backward compat for existing deploys)
-  const envVal = getConfig('NEXT_PUBLIC_LEARNHOUSE_DOMAIN')
+  const envVal = getConfig('VITE_APP_DOMAIN')
   if (envVal) return envVal
   // 2. Cookie set by middleware from backend instance info
   const cookieVal = getCookieValue('LH_frontend_domain')
@@ -95,7 +95,7 @@ const getLEARNHOUSE_DOMAIN = () => {
 }
 const getLEARNHOUSE_TOP_DOMAIN = () => {
   // 1. Env var (backward compat for existing deploys)
-  const envVal = getConfig('NEXT_PUBLIC_LEARNHOUSE_TOP_DOMAIN')
+  const envVal = getConfig('VITE_APP_TOP_DOMAIN')
   if (envVal) return envVal
   // 2. Cookie set by middleware from backend instance info
   const cookieVal = getCookieValue('LH_top_domain')
@@ -106,10 +106,10 @@ const getLEARNHOUSE_TOP_DOMAIN = () => {
 }
 // PostHog product analytics — opt-in. Telemetry is OFF unless this key is set
 // in the deployment env. No separate enable flag: presence of the key IS the switch.
-const getPOSTHOG_KEY = () => getConfig('NEXT_PUBLIC_POSTHOG_KEY', '');
+const getPOSTHOG_KEY = () => getConfig('VITE_POSTHOG_KEY', '');
 const getLEARNHOUSE_PLATFORM_URL = (): string | null => {
   // NEXT_PUBLIC_ variant (available client-side via runtime config)
-  const pubVal = getConfig('NEXT_PUBLIC_LEARNHOUSE_PLATFORM_URL')
+  const pubVal = getConfig('VITE_PLATFORM_URL')
   if (pubVal) return pubVal.replace(/\/+$/, '')
   // Non-prefixed variant (server-side only, backward compat)
   const val = getConfig('LEARNHOUSE_PLATFORM_URL')
@@ -144,7 +144,7 @@ export const isOnCustomDomain = (): boolean => {
 // Derive API URL from backend URL (with backward compat for NEXT_PUBLIC_LEARNHOUSE_API_URL)
 const deriveAPIUrl = (): string => {
   // Backward compat: if explicit API URL is set, use it
-  const explicitApiUrl = getConfig('NEXT_PUBLIC_LEARNHOUSE_API_URL')
+  const explicitApiUrl = getConfig('VITE_API_URL')
   if (explicitApiUrl) return explicitApiUrl
   // Derive from backend URL
   const backendUrl = getLEARNHOUSE_BACKEND_URL().replace(/\/+$/, '')
@@ -335,7 +335,7 @@ export const getUriWithOrg = (orgslug: string, path: string) => {
     const domain = getLEARNHOUSE_DOMAIN()
     return `${protocol}${orgslug}.${domain}${path}`
   }
-  const explicitDomain = getConfig('NEXT_PUBLIC_LEARNHOUSE_DOMAIN')
+  const explicitDomain = getConfig('VITE_APP_DOMAIN')
   if (explicitDomain) {
     const protocol = getLEARNHOUSE_HTTP_PROTOCOL()
     return `${protocol}${explicitDomain}${path}`
@@ -366,7 +366,7 @@ export const getAbsoluteUriWithOrg = (orgslug: string, path: string) => {
   }
 
   // Server-side fallback
-  const explicitDomain = getConfig('NEXT_PUBLIC_LEARNHOUSE_DOMAIN')
+  const explicitDomain = getConfig('VITE_APP_DOMAIN')
   if (explicitDomain) {
     const protocol = getLEARNHOUSE_HTTP_PROTOCOL()
     return `${protocol}${explicitDomain}${uri}`
@@ -381,7 +381,7 @@ export const getUriWithoutOrg = (path: string) => {
   }
 
   // Server-side fallback
-  const explicitDomain = getConfig('NEXT_PUBLIC_LEARNHOUSE_DOMAIN')
+  const explicitDomain = getConfig('VITE_APP_DOMAIN')
   if (explicitDomain) {
     const protocol = getLEARNHOUSE_HTTP_PROTOCOL()
     return `${protocol}${explicitDomain}${path}`
@@ -427,11 +427,11 @@ export const isEEAvailable = (): boolean => {
 }
 
 // Collaboration server WebSocket URL
-export const getCollabUrl = () => getConfig('NEXT_PUBLIC_COLLAB_URL', 'ws://localhost:4000')
+export const getCollabUrl = () => getConfig('VITE_COLLAB_URL', 'ws://localhost:4000')
 
 export const getDefaultOrg = () => {
   // 1. Env var (backward compat)
-  const envVal = getConfig('NEXT_PUBLIC_LEARNHOUSE_DEFAULT_ORG')
+  const envVal = getConfig('VITE_APP_DEFAULT_ORG')
   if (envVal) return envVal
   // 2. Client-side: read cookie set by middleware
   const cookieVal = getCookieValue('LH_default_org')

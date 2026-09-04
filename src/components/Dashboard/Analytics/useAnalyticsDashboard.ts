@@ -1,4 +1,3 @@
-'use client'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { getAPIUrl } from '@services/config/config'

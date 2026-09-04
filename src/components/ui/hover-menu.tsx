@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import * as Portal from "@radix-ui/react-portal"
 import { cn } from "@/lib/utils"

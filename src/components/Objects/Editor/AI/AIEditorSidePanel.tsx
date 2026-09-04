@@ -1,8 +1,5 @@
-'use client'
-
 import React, { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import Image from 'next/image'
 import { Editor } from '@tiptap/react'
 import {
   X,
@@ -1023,13 +1020,13 @@ function AIEditorSidePanel(props: AIEditorSidePanelProps) {
               isInputDisabled ? 'animate-pulse' : ''
             }`}
           >
-            <Image
+            <img
               className={`outline outline-1 outline-neutral-200/20 rounded-lg ${
                 isInputDisabled ? 'animate-pulse' : ''
               }`}
               width={24}
               src={learnhouseAI_icon}
-              alt=""
+              alt="" 
             />
             <span className="text-sm font-semibold text-white/80">
               {t('editor.ai_panel.title')}
@@ -1485,11 +1482,11 @@ const AIEditorSidePanelPlaceholder = (props: { sendMessage: (_msg: string) => vo
               delay: 0.17,
             }}
           >
-            <Image
+            <img
               width={80}
               className="mx-auto"
               src={learnhouseAI_logo_black}
-              alt=""
+              alt="" 
             />
             <p className="pt-3 text-lg font-semibold text-white/70 flex flex-col justify-center items-center">
               <span className="flex items-center space-x-2">

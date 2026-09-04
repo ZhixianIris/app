@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { CheckCircle2, XCircle, ArrowUpRight } from 'lucide-react'
 import BarLoader from 'react-spinners/BarLoader'

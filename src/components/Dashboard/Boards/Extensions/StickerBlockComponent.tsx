@@ -1,5 +1,3 @@
-'use client'
-
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import BoardBlockWrapper from './BoardBlockWrapper'
 import { useDragResize } from './useDragResize'

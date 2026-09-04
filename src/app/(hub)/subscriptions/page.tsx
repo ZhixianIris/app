@@ -1,7 +1,5 @@
-'use client'
 import React, { Suspense, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { Link, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, ChevronRight, CreditCard, TentTree } from 'lucide-react'
@@ -86,7 +84,7 @@ function OrgSubscriptionRow({ org, enabled }: { org: any; enabled: boolean }) {
 
   return (
     <Link
-      href={`/billing?org=${org.slug}`}
+      to={`/billing?org=${org.slug}`}
       className="relative flex items-center p-4 bg-white rounded-2xl nice-shadow hover:shadow-lg transition-all group"
     >
       {org.logo_image ? (
@@ -138,7 +136,7 @@ function OrgSubscriptionRow({ org, enabled }: { org: any; enabled: boolean }) {
 function SubscriptionsClient() {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
 
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = session?.status === 'authenticated'
@@ -149,7 +147,7 @@ function SubscriptionsClient() {
   // Redirect unauthenticated users to login (mirror app/home/home.tsx).
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace('/login')
+      navigate('/login', { replace: true })
     }
   }, [isLoading, isAuthenticated, router])
 
@@ -208,7 +206,7 @@ function SubscriptionsClient() {
             {/* Top bar */}
             <div className="flex items-center justify-between mb-8">
               <Link
-                href="/home"
+                to="/home"
                 className="flex items-center justify-center w-9 h-9 rounded-xl bg-white nice-shadow text-black/50 hover:text-black transition-colors flex-shrink-0"
                 aria-label={t('subscriptions.back_home', { defaultValue: 'Back to home' })}
               >

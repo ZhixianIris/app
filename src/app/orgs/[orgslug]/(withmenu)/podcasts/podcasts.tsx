@@ -1,7 +1,4 @@
-'use client'
-
 import React, { useState, useMemo } from 'react'
-import { useSearchParams } from 'next/navigation'
 import GeneralWrapperStyled from '@components/Objects/StyledElements/Wrappers/GeneralWrapper'
 import TypeOfContentTitle from '@components/Objects/StyledElements/Titles/TypeOfContentTitle'
 import PodcastThumbnail from '@components/Objects/Thumbnails/PodcastThumbnail'
@@ -17,6 +14,7 @@ import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
 import { searchMatchesAny } from '@/lib/search/normalize'
 import { useTrackView, AnalyticsEvent } from '@services/analytics'
 import CatalogPagination, { useCatalogPagination } from '@components/Objects/Catalog/CatalogPagination'
+import { useSearchParams } from "react-router-dom";
 
 interface PodcastsClientProps {
   orgslug: string
@@ -31,7 +29,7 @@ export default function PodcastsClient({
 }: PodcastsClientProps) {
   const { t } = useTranslation()
   const allPodcasts = initialPodcasts
-  const searchParams = useSearchParams()
+  const [searchParams] = useSearchParams()
   const isCreatingPodcast = searchParams.get('new') ? true : false
   const [newPodcastModal, setNewPodcastModal] = useState(isCreatingPodcast)
   const { isAdmin: isUserAdmin } = useAdminStatus()

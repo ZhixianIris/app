@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { Draggable, Droppable } from '@hello-pangea/dnd'
 import { FileVideo, FileText, Image, Music, GripVertical } from 'lucide-react'

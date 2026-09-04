@@ -1,4 +1,3 @@
-'use client'
 import { captureError } from '@lib/errors/report'
 import { useEffect, useState } from 'react'
 import ErrorUI from './Error'

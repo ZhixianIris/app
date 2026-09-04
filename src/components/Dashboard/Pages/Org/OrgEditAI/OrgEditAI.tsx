@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
@@ -12,8 +11,6 @@ import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
 import useAdminStatus from '@components/Hooks/useAdminStatus'
 import { Switch } from '@components/ui/switch'
 import { ShieldAlert, BrainCircuit, MessageCircle, Pencil, Sparkles, Info } from 'lucide-react'
-import Image from 'next/image'
-
 const OrgEditAI: React.FC = () => {
   const { t } = useTranslation()
   const session = useLHSession() as any
@@ -91,11 +88,11 @@ const OrgEditAI: React.FC = () => {
       <div className="sm:mx-10 mx-0 space-y-4">
         {/* Header */}
         <div className="flex items-center gap-3">
-          <Image
+          <img
             src="/learnhouse_ai_simple_colored.png"
             alt="LearnHouse AI"
             width={28}
-            height={28}
+            height={28} 
           />
           <div>
             <h1 className="font-bold text-lg text-gray-800">

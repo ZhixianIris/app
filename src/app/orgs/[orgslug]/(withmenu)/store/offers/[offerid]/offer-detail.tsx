@@ -1,9 +1,7 @@
-'use client'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatCurrency } from '@/lib/format'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import GeneralWrapperStyled from '@components/Objects/StyledElements/Wrappers/GeneralWrapper'
 import { getUriWithOrg } from '@services/config/config'
 import { getCourseThumbnailMediaDirectory } from '@services/media/media'
@@ -95,14 +93,14 @@ function ResourceCard({ resource, orgslug }: { resource: Resource; orgslug: stri
     </div>
   )
 
-  return url ? <Link href={url}>{card}</Link> : card
+  return url ? <Link to={url}>{card}</Link> : card
 }
 
 export default function OfferDetailClient({ orgslug, orgId, offerUuid, offer, access_token }: OfferDetailClientProps) {
   const { i18n } = useTranslation()
   const session = useLHSession() as any
   const token = session?.data?.tokens?.access_token ?? access_token
-  const router = useRouter()
+  const router = useNavigate()
   const [loading, setLoading] = useState(false)
   const { track } = useLHAnalytics('learner')
 
@@ -123,7 +121,7 @@ export default function OfferDetailClient({ orgslug, orgId, offerUuid, offer, ac
         <div className="flex flex-col items-center justify-center py-24 text-center">
           <AlertCircle size={32} className="text-gray-300 mb-3" />
           <h2 className="font-bold text-gray-600 text-lg">Offer not found</h2>
-          <Link href={getUriWithOrg(orgslug, '/store')} className="mt-4 text-sm text-indigo-600 hover:underline">
+          <Link to={getUriWithOrg(orgslug, '/store')} className="mt-4 text-sm text-indigo-600 hover:underline">
             ← Back to store
           </Link>
         </div>
@@ -140,7 +138,7 @@ export default function OfferDetailClient({ orgslug, orgId, offerUuid, offer, ac
   const handleCheckout = async () => {
     if (!token) {
       track(AnalyticsEvent.CheckoutLoginRedirected, { redirect_target: `/store/offers/${offerUuid}` })
-      router.push(getUriWithOrg(orgslug, `/login?redirect=/store/offers/${offerUuid}`))
+      navigate(getUriWithOrg(orgslug, `/login?redirect=/store/offers/${offerUuid}`))
       return
     }
     track(AnalyticsEvent.OfferCheckoutStarted, {
@@ -173,7 +171,7 @@ export default function OfferDetailClient({ orgslug, orgId, offerUuid, offer, ac
     <div className="w-full">
       <GeneralWrapperStyled>
         <Link
-          href={getUriWithOrg(orgslug, '/store')}
+          to={getUriWithOrg(orgslug, '/store')}
           className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-700 transition-colors mb-7"
         >
           <ArrowLeft size={14} /> Back to store

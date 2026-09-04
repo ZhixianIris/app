@@ -1,4 +1,3 @@
-'use client'
 import FormLayout, {
   FormField,
 } from '@components/Objects/StyledElements/Form/Form'
@@ -7,8 +6,7 @@ import { useFormik } from 'formik'
 import React, { useState, useEffect } from 'react'
 import { AlertTriangle, Info, Lock, Mail, Shield, X, Clock, Send, CheckCircle2 } from 'lucide-react'
 import { checkSSOEnabled, redirectToSSOLogin } from '@services/auth/sso'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@components/Contexts/AuthContext'
 import { getLEARNHOUSE_TOP_DOMAIN_VAL, getDeploymentMode, isOnCustomDomain } from '@services/config/config'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
@@ -33,7 +31,7 @@ const LoginClient = (props: LoginClientProps) => {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const turnstileRef = React.useRef<TurnstileWidgetHandle>(null)
   const turnstileRequired = useTurnstileRequired()
-  const router = useRouter();
+  const router = useNavigate();
   const session = useLHSession() as any;
   const isAuthenticated = session?.status === 'authenticated'
 
@@ -55,7 +53,7 @@ const LoginClient = (props: LoginClientProps) => {
   // Guarded by !isSubmitting so a FRESH login (which flips the session to
   // authenticated) doesn't race the onSubmit's own post-login navigation.
   useEffect(() => {
-    if (isAuthenticated && !isSubmitting) router.replace('/home')
+    if (isAuthenticated && !isSubmitting) navigate('/home', { replace: true })
   }, [isAuthenticated, isSubmitting, router])
 
   // Error state with type information
@@ -764,7 +762,7 @@ const LoginClient = (props: LoginClientProps) => {
                       </span>
                     )}
                     <Link
-                      href="/forgot"
+                      to="/forgot"
                       className="text-xs text-black/60 hover:text-black font-semibold transition-colors"
                     >
                       {t('auth.forgot_password')}
@@ -872,7 +870,7 @@ const LoginClient = (props: LoginClientProps) => {
               {/* Sign Up Link */}
               <p className="text-center text-sm text-black/35 mt-6">
                 {t('auth.no_account')}{' '}
-                <Link href="/signup" className="text-black font-semibold hover:underline">
+                <Link to="/signup" className="text-black font-semibold hover:underline">
                   {t('auth.sign_up')}
                 </Link>
               </p>

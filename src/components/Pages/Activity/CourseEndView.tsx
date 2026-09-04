@@ -1,9 +1,8 @@
-import React, { useMemo, useEffect, useState, useRef } from 'react';
+import React, { useMemo, useEffect, useState, useRef, lazy } from 'react';
 import toast from 'react-hot-toast';
-import dynamic from 'next/dynamic';
-const ReactConfetti = dynamic(() => import('react-confetti'), { ssr: false });
+const ReactConfetti = lazy(() => import('react-confetti'));
 import { Trophy, ArrowLeft, BookOpen, Target, Download, Shield } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { getUriWithOrg, getAbsoluteUriWithOrg } from '@services/config/config';
 import { getCourseThumbnailMediaDirectory } from '@services/media/media';
 import { useWindowSize } from 'usehooks-ts';
@@ -330,7 +329,7 @@ const CourseEndView: React.FC<CourseEndViewProps> = ({
                   <span>{t('certificate.download_certificate')}</span>
                 </button>
                 <Link
-                  href={getUriWithOrg(orgslug, `/certificates/${userCertificate.certificate_user.user_certification_uuid}/verify`)}
+                  to={getUriWithOrg(orgslug, `/certificates/${userCertificate.certificate_user.user_certification_uuid}/verify`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition duration-200"
@@ -351,7 +350,7 @@ const CourseEndView: React.FC<CourseEndViewProps> = ({
 
           <div className="pt-6">
             <Link
-              href={getUriWithOrg(orgslug, `/course/${courseUuid.replace('course_', '')}`)}
+              to={getUriWithOrg(orgslug, `/course/${courseUuid.replace('course_', '')}`)}
               className="inline-flex items-center space-x-2 bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-gray-700 transition duration-200"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -428,7 +427,7 @@ const CourseEndView: React.FC<CourseEndViewProps> = ({
 
           <div className="pt-6">
             <Link
-              href={getUriWithOrg(orgslug, `/course/${courseUuid.replace('course_', '')}`)}
+              to={getUriWithOrg(orgslug, `/course/${courseUuid.replace('course_', '')}`)}
               className="inline-flex items-center space-x-2 bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition duration-200"
             >
               <ArrowLeft className="w-5 h-5" />

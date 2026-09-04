@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { getUriWithOrg } from '@services/config/config'
-import { useParams } from 'next/navigation'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import UserProfilePopup from './UserProfilePopup'
 import { getUserByUsername, getUser } from '@services/users/users'
+import { useParams } from "react-router-dom";
 
 type UserAvatarProps = {
   width?: number

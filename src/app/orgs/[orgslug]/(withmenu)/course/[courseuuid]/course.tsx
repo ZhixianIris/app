@@ -1,11 +1,9 @@
-'use client'
-import Link from 'next/link'
+import { Link, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState, Suspense } from 'react'
 import { getUriWithOrg } from '@services/config/config'
 import { getCourseMetadata } from '@services/courses/courses'
 import { useTrail } from '@/hooks/queries/useTrail'
 import ActivityIndicators from '@components/Pages/Courses/ActivityIndicators'
-import { useRouter } from 'next/navigation'
 import GeneralWrapperStyled from '@components/Objects/StyledElements/Wrappers/GeneralWrapper'
 import {
   getCourseThumbnailMediaDirectory,
@@ -39,7 +37,7 @@ const CourseClient = (props: any) => {
   const initialCourse = props.course
   const serverError = props.serverError
   const org = useOrg() as any
-  const _router = useRouter()
+  const _router = useNavigate()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const session = useLHSession() as any;
   const access_token = session?.data?.tokens?.access_token;
@@ -178,7 +176,7 @@ const CourseClient = (props: any) => {
               ? t('course.noPermission', 'You do not have permission to view this course.')
               : t('course.loadError', 'This course could not be found or there was an error loading it.')}
           </p>
-          <Link href={getUriWithOrg(orgslug, '/courses')} className="text-blue-600 hover:underline">
+          <Link to={getUriWithOrg(orgslug, '/courses')} className="text-blue-600 hover:underline">
             {t('course.backToCourses', 'Back to Courses')}
           </Link>
         </div>
@@ -664,12 +662,11 @@ const CourseClient = (props: any) => {
                             return (
                               <Link
                                 key={activity.activity_uuid}
-                                href={
+                                to={
                                   getUriWithOrg(orgslug, '') +
                                   `/course/${courseuuid}/activity/${activity.activity_uuid.replace('activity_', '')}`
                                 }
                                 rel="noopener noreferrer"
-                                prefetch={false}
                                 className="block group activity-container transition-all duration-200 px-4 py-4"
                                 onMouseEnter={() => handleActivityMouseEnter(activity)}
                               >

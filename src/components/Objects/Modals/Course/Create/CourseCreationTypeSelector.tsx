@@ -1,10 +1,8 @@
-'use client'
 import React from 'react'
 import { PenLine, Sparkles, Lock, Upload } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import PlanBadge from '@components/Dashboard/Shared/PlanRestricted/PlanBadge'
 import { PlanLevel } from '@services/plans/plans'
-import Image from 'next/image'
 import lrnaiIcon from 'public/lrnai_icon.png'
 import { useOrg } from '@components/Contexts/OrgContext'
 
@@ -54,12 +52,12 @@ function CourseCreationTypeSelector({ onSelectType, currentPlan }: CourseCreatio
               : 'bg-gray-100'
           }`}>
             {canUseAI ? (
-              <Image
+              <img
                 src={lrnaiIcon}
                 alt="AI"
                 width={28}
                 height={28}
-                className="drop-shadow-md"
+                className="drop-shadow-md" 
               />
             ) : (
               <Lock size={28} className="text-gray-400" />

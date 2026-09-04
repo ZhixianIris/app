@@ -1,7 +1,6 @@
-'use client'
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { useOnboarding } from '@components/Hooks/useOnboarding'
 import {
   BookOpen,
@@ -192,7 +191,7 @@ export default function OnboardingSteps() {
                               </a>
                             ) : (
                               <Link
-                                href={target}
+                                to={target}
                                 onClick={() => track(AnalyticsEvent.OnboardingStepActionClicked, { step_id: step.id })}
                                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-[13px] font-semibold text-white bg-gray-900 hover:bg-gray-800 transition-colors"
                               >

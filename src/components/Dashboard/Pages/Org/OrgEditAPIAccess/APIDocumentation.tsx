@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useEffect } from 'react'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'

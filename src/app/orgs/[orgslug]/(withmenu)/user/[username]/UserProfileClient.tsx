@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react'
 import UserAvatar from '@components/Objects/UserAvatar'
 import {

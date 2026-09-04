@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect, useRef } from 'react'
 import GeneralWrapperStyled from '@components/Objects/StyledElements/Wrappers/GeneralWrapper'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'

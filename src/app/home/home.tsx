@@ -1,4 +1,3 @@
-'use client'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { canManageOrgFromSession } from '@components/Hooks/useAdminStatus'
 import { useLHAnalytics } from '@services/analytics/useLHAnalytics'
@@ -11,10 +10,9 @@ import { signOut } from '@components/Contexts/AuthContext'
 import { getOrgLogoMediaDirectory } from '@services/media/media'
 import { deleteOrganizationFromBackend, leaveOrg } from '@services/organizations/orgs'
 import { ChevronRight, Languages, Check, LogOut, Settings, TentTree, LogIn, Plus, MoreVertical, CreditCard, Trash2, AlertTriangle } from 'lucide-react'
-import Link from 'next/link'
+import { Link, useNavigate } from 'react-router-dom'
 import React, { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { changeLanguage } from '@/lib/i18n'
 import { CopyrightFooter } from '@components/Footers/LegalFooters'
@@ -43,7 +41,7 @@ import { AVAILABLE_LANGUAGES } from '@/lib/languages'
 function HomeClient() {
   const { t, i18n } = useTranslation()
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = session?.status === 'authenticated'
   const isLoading = session?.status === 'loading'
@@ -58,7 +56,7 @@ function HomeClient() {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      router.replace('/login')
+      navigate('/login', { replace: true })
     }
   }, [isLoading, isAuthenticated, router])
 
@@ -67,7 +65,7 @@ function HomeClient() {
   // post-signup onboarding hop.
   useEffect(() => {
     if (isAuthenticated && Array.isArray(orgs) && orgs.length === 0) {
-      router.replace('/new')
+      navigate('/new', { replace: true })
     }
   }, [isAuthenticated, orgs, router])
 
@@ -195,7 +193,7 @@ function HomeClient() {
 
               {!isLoading && !isAuthenticated && (
                 <Link
-                  href="/login"
+                  to="/login"
                   className="w-full flex items-center justify-center gap-2 px-5 py-3.5 bg-gray-900 text-white rounded-2xl font-semibold text-sm nice-shadow hover:bg-gray-800 transition-colors"
                 >
                   <LogIn size={16} />
@@ -221,7 +219,7 @@ function HomeClient() {
               {/* Create organization — prominent entry into the hub */}
               {isAuthenticated && orgs && (
                 <Link
-                  href="/new"
+                  to="/new"
                   className="w-full flex items-center justify-center gap-2 px-5 py-3.5 bg-gray-900 text-white rounded-2xl font-semibold text-sm nice-shadow hover:bg-gray-800 transition-colors"
                 >
                   <Plus size={16} />
@@ -320,7 +318,7 @@ function OrgRow({ org, access_token }: { org: any; access_token: string }) {
   return (
     <div className="relative flex items-center p-4 bg-white rounded-2xl nice-shadow hover:shadow-lg transition-all group">
       <Link
-        href={getUriWithOrg(org.slug, '/')}
+        to={getUriWithOrg(org.slug, '/')}
         className="flex items-center flex-1 min-w-0"
       >
         {org.logo_image ? (
@@ -375,7 +373,7 @@ function OrgRow({ org, access_token }: { org: any; access_token: string }) {
         <DropdownMenuContent className="w-52" align="end">
           {canManageOrg && (
             <DropdownMenuItem asChild>
-              <Link href={`/billing?org=${org.slug}`} className="flex items-center space-x-2">
+              <Link to={`/billing?org=${org.slug}`} className="flex items-center space-x-2">
                 <CreditCard size={14} />
                 <span>{t('common.manage_upgrade', { defaultValue: 'Manage / Upgrade' })}</span>
               </Link>
@@ -383,7 +381,7 @@ function OrgRow({ org, access_token }: { org: any; access_token: string }) {
           )}
           <DropdownMenuItem asChild>
             <Link
-              href={getUriWithOrg(org.slug, '/dash/org/settings/general')}
+              to={getUriWithOrg(org.slug, '/dash/org/settings/general')}
               className="flex items-center space-x-2"
             >
               <Settings size={14} />

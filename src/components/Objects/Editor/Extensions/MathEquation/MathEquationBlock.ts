@@ -1,10 +1,9 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const MathEquationBlockComponent = dynamic(
-  () => import('./MathEquationBlockComponent'),
-  { ssr: false }
+const MathEquationBlockComponent = lazy(
+  () => import('./MathEquationBlockComponent')
 )
 
 export default Node.create({

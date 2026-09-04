@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useCallback, useMemo, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 // Named `...Utils` rather than `catalogPagination` so it cannot collide with

@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useMemo, useCallback } from 'react'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
@@ -11,8 +10,7 @@ import {
 import { apiFetch } from '@services/utils/ts/requests'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
-import Link from 'next/link'
-import { useParams, useSearchParams, useRouter, usePathname } from 'next/navigation'
+import { Link, useNavigate, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import {
   ArrowLeft,
   Buildings,
@@ -68,9 +66,9 @@ function getTabsForMode(mode: string) {
 }
 
 function useUrlParams() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
+  const [searchParams] = useSearchParams()
+  const router = useNavigate()
+  const pathname = useLocation().pathname
 
   const updateParams = useCallback(
     (updates: Record<string, string | number>, removals?: string[]) => {
@@ -93,7 +91,7 @@ function useUrlParams() {
         }
       }
       const qs = params.toString()
-      router.replace(`${pathname}${qs ? `?${qs}` : ''}`, { scroll: false })
+      navigate(`${pathname}${qs ? `?${qs}` : ''}`, { scroll: false }, { replace: true })
     },
     [searchParams, router, pathname]
   )
@@ -150,7 +148,7 @@ export default function OrgDetailPage() {
       {/* Header */}
       <div className="mb-6">
         <Link
-          href="/admin/organizations"
+          to="/admin/organizations"
           className="inline-flex items-center gap-1.5 text-sm text-white/40 hover:text-white/60 transition-colors mb-3"
         >
           <ArrowLeft size={14} weight="bold" data-dir-flip />

@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useMemo, useRef, useEffect } from 'react'
 import { Check, ChevronsUpDown, X, Type } from 'lucide-react'
 import { Input } from '@components/ui/input'

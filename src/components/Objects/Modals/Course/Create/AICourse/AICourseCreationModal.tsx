@@ -1,11 +1,8 @@
-'use client'
 import React from 'react'
 import { createPortal } from 'react-dom'
 import { X, Loader2, ArrowUpRight } from 'lucide-react'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '@/lib/utils'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
@@ -20,6 +17,7 @@ import {
   parseCoursePlanFromStream,
   ENABLE_ACTIVITY_CONTENT_GENERATION,
 } from '@services/ai/courseplanning'
+import { useNavigate } from "react-router-dom";
 
 interface AICourseCreationModalProps {
   isOpen: boolean
@@ -40,7 +38,7 @@ function AICourseCreationModal({
 }: AICourseCreationModalProps) {
   const { t, i18n } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
-  const router = useRouter()
+  const router = useNavigate()
 
   const [sessionUuid, setSessionUuid] = React.useState<string | null>(null)
   const [messages, setMessages] = React.useState<CoursePlanningMessage[]>([])
@@ -180,7 +178,7 @@ function AICourseCreationModal({
     if (!courseUuid) return
     onClose()
     const courseId = courseUuid.replace('course_', '')
-    router.push(`/dash/courses/course/${courseId}/content`)
+    navigate(`/dash/courses/course/${courseId}/content`)
   }
 
   if (typeof document === 'undefined') return null
@@ -221,11 +219,11 @@ function AICourseCreationModal({
             {/* Header - clean, minimal */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 flex-shrink-0">
               <div className="flex items-center gap-3">
-                <Image
+                <img
                   className="outline outline-1 outline-neutral-200/20 rounded-lg"
                   width={24}
                   src={lrnaiIcon}
-                  alt="AI Course"
+                  alt="AI Course" 
                 />
                 <span className="text-sm font-semibold text-white/70">
                   {t('courses.create.ai.title')}

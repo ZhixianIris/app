@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import LanguageSwitcher from '@components/Utils/LanguageSwitcher'
 import AuthBrandingPanel from '@components/Auth/AuthBrandingPanel'

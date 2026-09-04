@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useMemo, useCallback, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
@@ -6,7 +5,6 @@ import { getAPIUrl } from '@services/config/config'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
 import { apiFetch } from '@services/utils/ts/requests'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
-import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 import {
   User,
   CaretLeft,
@@ -16,6 +14,7 @@ import {
   ShieldStar,
   EnvelopeSimple,
 } from '@phosphor-icons/react'
+import { useNavigate, useLocation, useSearchParams } from "react-router-dom";
 
 interface OrgMembership {
   id: number
@@ -119,9 +118,9 @@ function OrgListTooltip({ orgs }: { orgs: OrgMembership[] }) {
 export default function UserList() {
   const session = useLHSession() as any
   const accessToken = session?.data?.tokens?.access_token
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const pathname = usePathname()
+  const [searchParams] = useSearchParams()
+  const router = useNavigate()
+  const pathname = useLocation().pathname
 
   const [search, setSearch] = useState(searchParams.get('search') || '')
   const [debouncedSearch, setDebouncedSearch] = useState(
@@ -156,7 +155,7 @@ export default function UserList() {
         }
       }
       const qs = params.toString()
-      router.replace(`${pathname}${qs ? `?${qs}` : ''}`, { scroll: false })
+      navigate(`${pathname}${qs ? `?${qs}` : ''}`, { scroll: false }, { replace: true })
     },
     [searchParams, router, pathname]
   )

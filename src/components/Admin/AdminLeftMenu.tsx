@@ -1,4 +1,3 @@
-'use client'
 import {
   Buildings,
   ChartBar,
@@ -10,7 +9,7 @@ import {
 import { signOut } from '@components/Contexts/AuthContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { getUserAvatarMediaDirectory } from '@services/media/media'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import React from 'react'
 
 function AdminTopMenu() {
@@ -39,7 +38,7 @@ function AdminTopMenu() {
         style={{ zIndex: 'var(--z-overlay)' }}
       >
         {/* Logo */}
-        <Link className="flex items-center gap-2 transition-opacity hover:opacity-70 shrink-0" href="/admin">
+        <Link className="flex items-center gap-2 transition-opacity hover:opacity-70 shrink-0" to="/admin">
           <img src="/lrn-dash.svg" alt="Learnhouse logo" className="h-7 w-7" />
           <span className="font-semibold text-sm text-white">Admin</span>
           <span className="text-[9px] font-medium uppercase tracking-wider text-amber-400 bg-amber-400/10 px-1.5 py-0.5 rounded">
@@ -116,7 +115,7 @@ const NavLink = ({
   label: string
 }) => {
   return (
-    <Link aria-label={label} href={href}>
+    <Link aria-label={label} to={href}>
       <div className="flex items-center rounded-lg text-white/50 hover:text-white hover:bg-white/[0.08] transition-all px-3 py-1.5 gap-2">
         {icon}
         <span className="text-sm font-medium">{label}</span>

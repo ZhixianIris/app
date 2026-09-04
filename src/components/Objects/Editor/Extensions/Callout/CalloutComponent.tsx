@@ -1,4 +1,3 @@
-'use client'
 import { useEditorProvider } from '@components/Contexts/Editor/EditorContext'
 import { NodeViewContent, NodeViewWrapper } from '@tiptap/react'
 import {

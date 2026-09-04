@@ -1,7 +1,4 @@
-'use client'
-
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { usePathname } from 'next/navigation'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import {
@@ -41,6 +38,7 @@ import {
 } from '@/app/orgs/[orgslug]/(withmenu)/copilot/copilot'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useLocation } from "react-router-dom";
 
 type ChatMessage = {
   role: 'user' | 'assistant'
@@ -76,7 +74,7 @@ function BubbleInner({ orgslug, open, onOpenChange, sessionToLoad }: CopilotBubb
   const session = useLHSession() as any
   const org = useOrg() as any
   const accessToken = session?.data?.tokens?.access_token
-  const pathname = usePathname()
+  const pathname = useLocation().pathname
   const { track } = useLHAnalytics('learner')
 
   const [showSessions, setShowSessions] = useState(false)

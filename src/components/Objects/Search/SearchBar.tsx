@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import { Search, ArrowRight, Sparkles, BookCopy, Folder, ArrowUpRight, TextSearch, ScanSearch, Users } from 'lucide-react';
 import { searchOrgContent } from '@services/search/search';
 import { useLHSession } from '@components/Contexts/LHSessionContext';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { getCourseThumbnailMediaDirectory, getUserAvatarMediaDirectory } from '@services/media/media';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useOrg } from '@components/Contexts/OrgContext';
@@ -231,7 +231,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {searchTerms.map(({ term, type, icon }) => (
               <Link
                 key={`${term}-${type}`}
-                href={getUriWithOrg(orgslug, `/search?q=${encodeURIComponent(term)}`)}
+                to={getUriWithOrg(orgslug, `/search?q=${encodeURIComponent(term)}`)}
                 className="flex items-center px-3 py-2 hover:bg-black/[0.02] rounded-lg transition-colors group"
               >
                 <div className="flex items-center gap-2 flex-1">
@@ -272,7 +272,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {searchResults.courses.map((course) => (
               <Link
                 key={course.course_uuid}
-                href={getUriWithOrg(orgslug, `/course/${removeCoursePrefix(course.course_uuid)}`)}
+                to={getUriWithOrg(orgslug, `/course/${removeCoursePrefix(course.course_uuid)}`)}
                 className="flex items-center gap-3 p-2 hover:bg-black/[0.02] rounded-lg transition-colors"
               >
                 <div className="relative">
@@ -313,7 +313,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {searchResults.folders.map((folder) => (
               <Link
                 key={folder.folder_uuid}
-                href={getUriWithOrg(orgslug, `/library/folder/${folder.folder_uuid.replace('folder_', '')}`)}
+                to={getUriWithOrg(orgslug, `/library/folder/${folder.folder_uuid.replace('folder_', '')}`)}
                 className="flex items-center gap-3 p-2 hover:bg-black/[0.02] rounded-lg transition-colors"
               >
                 <div className="w-10 h-10 bg-black/5 rounded-lg flex items-center justify-center">
@@ -341,7 +341,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             {searchResults.users.map((user) => (
               <Link
                 key={user.user_uuid}
-                href={getUriWithOrg(orgslug, `/user/${user.username}`)}
+                to={getUriWithOrg(orgslug, `/user/${user.username}`)}
                 className="flex items-center gap-3 p-2 hover:bg-black/[0.02] rounded-lg transition-colors"
               >
                 <UserAvatar
@@ -416,7 +416,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
                    searchResults.users.length > 0) ||
                    searchQuery.trim()) && (
                   <Link
-                    href={getUriWithOrg(orgslug, `/search?q=${encodeURIComponent(searchQuery)}`)}
+                    to={getUriWithOrg(orgslug, `/search?q=${encodeURIComponent(searchQuery)}`)}
                     className="flex items-center justify-between px-4 py-2.5 text-xs text-black/50 hover:text-black/70 hover:bg-black/[0.02] transition-colors"
                   >
                     <span>{t('search.view_all_results')}</span>

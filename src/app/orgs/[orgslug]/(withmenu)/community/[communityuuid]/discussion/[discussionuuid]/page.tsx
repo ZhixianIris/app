@@ -1,6 +1,4 @@
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { getServerSession } from '@/lib/auth/server'
 import { getCommunity } from '@services/communities/communities'
 import { getDiscussion } from '@services/communities/discussions'
@@ -38,55 +36,6 @@ type MetadataProps = {
   params: Promise<{ orgslug: string; communityuuid: string; discussionuuid: string }>
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }
-
-export async function generateMetadata(props: MetadataProps): Promise<Metadata> {
-  const params = await props.params
-  const org = await getOrganizationContextInfo(params.orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
-
-  const discussionUuid = `discussion_${params.discussionuuid}`
-  let discussion = null
-  try {
-    discussion = await getDiscussion(discussionUuid, { revalidate: 120, tags: ['discussions'] })
-  } catch (error) {
-    // Discussion might not exist or user doesn't have access
-  }
-
-  const title = discussion ? `${discussion.title} — ${org.name}` : `Discussion — ${org.name}`
-  const contentText = discussion ? getContentDescription(discussion.content) : ''
-  const description = contentText ? contentText.substring(0, 160) : `Discussion from ${org.name}`
-
-  return {
-    title,
-    description,
-    robots: {
-      index: true,
-      follow: true,
-      nocache: true,
-      googleBot: {
-        index: true,
-        follow: true,
-        'max-image-preview': 'large',
-      },
-    },
-    openGraph: {
-      title,
-      description,
-      type: 'article',
-      images: [
-        {
-          url: getOrgThumbnailMediaDirectory(org?.org_uuid, org?.thumbnail_image),
-          width: 800,
-          height: 600,
-          alt: org.name,
-        },
-      ],
-    },
-  }
-}
-
 const DiscussionPage = async (params: any) => {
   const session = await getServerSession()
   const access_token = session?.tokens?.access_token

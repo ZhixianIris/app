@@ -1,10 +1,8 @@
-'use client';
-
 import React, { useEffect, useState } from 'react';
 import { getCertificateByUuid } from '@services/courses/certifications';
 import CertificatePreview from '@components/Dashboard/Pages/Course/EditCourseCertification/CertificatePreview';
 import { Shield, CheckCircle, XCircle, AlertTriangle, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import { getUriWithOrg, getAbsoluteUriWithOrg } from '@services/config/config';
 import { getCourseThumbnailMediaDirectory } from '@services/media/media';
 import { useOrg } from '@components/Contexts/OrgContext';
@@ -138,7 +136,7 @@ const CertificateVerificationPage: React.FC<CertificateVerificationPageProps> = 
             
             <div className="pt-4">
               <Link
-                href="/"
+                to="/"
                 className="inline-flex items-center space-x-2 bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-gray-700 transition duration-200"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -269,7 +267,7 @@ const CertificateVerificationPage: React.FC<CertificateVerificationPageProps> = 
                 {/* View Course Link */}
                 <div className="flex-shrink-0">
                   <Link
-                    href={getUriWithOrg(org?.org_slug || '', `/course/${certificateData.course.course_uuid.replace('course_', '')}`)}
+                    to={getUriWithOrg(org?.org_slug || '', `/course/${certificateData.course.course_uuid.replace('course_', '')}`)}
                     className="inline-flex items-center space-x-1 text-neutral-400 hover:text-neutral-600 transition-colors text-sm"
                   >
                     <span>View Course</span>
@@ -357,7 +355,7 @@ const CertificateVerificationPage: React.FC<CertificateVerificationPageProps> = 
         {/* Footer */}
         <div className="mt-8 text-center">
           <Link
-            href="/"
+            to="/"
             className="inline-flex items-center space-x-2 bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-gray-700 transition duration-200"
           >
             <ArrowLeft className="w-5 h-5" />

@@ -1,4 +1,3 @@
-'use client'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getUriWithOrg } from '@services/config/config'
 import { removeCourse } from '@services/courses/activity'
@@ -7,8 +6,7 @@ import { getCourseThumbnailMediaDirectory } from '@services/media/media'
 import { revalidateTags } from '@services/utils/ts/requests'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { getUserCertificates } from '@services/courses/certifications'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
@@ -28,7 +26,7 @@ function TrailCourseElement(props: TrailCourseElementProps) {
   const access_token = session?.data?.tokens?.access_token;
   const courseid = props.course.course_uuid.replace('course_', '')
   const course = props.course
-  const router = useRouter()
+  const router = useNavigate()
   const course_total_steps = props.run.course_total_steps
   const course_completed_steps = props.run.steps.length
   const orgID = org?.id
@@ -53,7 +51,7 @@ function TrailCourseElement(props: TrailCourseElementProps) {
     let activity = await removeCourse(course_uuid, props.orgslug, access_token)
     // Mutate course
     await revalidateTags(['courses'], props.orgslug)
-    router.refresh()
+    window.location.reload()
 
     // Invalidate trail
     if (orgID) {
@@ -95,7 +93,7 @@ function TrailCourseElement(props: TrailCourseElementProps) {
       style={{ boxShadow: '0px 4px 7px 0px rgba(0, 0, 0, 0.03)' }}
       onMouseEnter={handleMouseEnter}
     >
-      <Link href={getUriWithOrg(props.orgslug, '/course/' + courseid)}>
+      <Link to={getUriWithOrg(props.orgslug, '/course/' + courseid)}>
         <div
           className="course_tumbnail inset-0 ring-1 ring-inset ring-black/10 rounded-lg relative h-[50px] w-[72px] bg-cover bg-center"
           style={{
@@ -155,7 +153,7 @@ function TrailCourseElement(props: TrailCourseElementProps) {
                   </span>
                 </div>
                 <Link
-                  href={getUriWithOrg(props.orgslug, `/certificates/${courseCertificate.certificate_user.user_certification_uuid}/verify`)}
+                  to={getUriWithOrg(props.orgslug, `/certificates/${courseCertificate.certificate_user.user_certification_uuid}/verify`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-xs font-medium"

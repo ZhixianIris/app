@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect } from 'react'
 import { useOrg } from './OrgContext'
 import i18n, { changeLanguage } from '@/lib/i18n'

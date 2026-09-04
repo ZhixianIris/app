@@ -1,4 +1,3 @@
-'use client'
 import React, { useCallback, useState } from 'react'
 import { Upload, FileVideo, FileText, Image, Music, X } from 'lucide-react'
 import { useTranslation } from 'react-i18next'

@@ -1,10 +1,8 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const QuizBlockComponent = dynamic(() => import('./QuizBlockComponent'), {
-  ssr: false,
-})
+const QuizBlockComponent = lazy(() => import('./QuizBlockComponent'))
 
 export default Node.create({
   name: 'blockQuiz',

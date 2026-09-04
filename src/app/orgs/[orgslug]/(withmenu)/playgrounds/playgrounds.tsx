@@ -1,8 +1,5 @@
-'use client'
-
 import React, { useState, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
-import { useRouter } from 'next/navigation'
 import { Search, X } from 'lucide-react'
 import { Cube } from '@phosphor-icons/react'
 import toast from 'react-hot-toast'
@@ -18,6 +15,7 @@ import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate'
 import useAdminStatus from '@components/Hooks/useAdminStatus'
 import { searchMatchesAny } from '@/lib/search/normalize'
 import CatalogPagination, { useCatalogPagination } from '@components/Objects/Catalog/CatalogPagination'
+import { useNavigate } from "react-router-dom";
 
 interface PlaygroundsClientProps {
   orgslug: string
@@ -30,7 +28,7 @@ export default function PlaygroundsClient({
   org_id,
   initialPlaygrounds,
 }: PlaygroundsClientProps) {
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
   const { isAdmin: isUserAdmin } = useAdminStatus()
@@ -86,7 +84,7 @@ export default function PlaygroundsClient({
         source: 'learner',
       })
       queryClient.invalidateQueries({ queryKey: queryKeys.playgrounds.list(orgslug) })
-      router.push(`/editor/playground/${newPlayground.playground_uuid}/edit`)
+      navigate(`/editor/playground/${newPlayground.playground_uuid}/edit`)
     } catch {
       toast.error(t('playgrounds.failed_create'))
     } finally {

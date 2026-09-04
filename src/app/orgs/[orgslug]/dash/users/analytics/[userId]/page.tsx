@@ -1,6 +1,5 @@
-'use client'
 import React, { use, useState } from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { getUriWithOrg } from '@services/config/config'
@@ -37,7 +36,7 @@ export default function UserAnalyticsDetailPage(props: { params: Promise<PagePar
           ]} />
         </div>
         <div className="my-2 py-3 flex items-center justify-between gap-3">
-          <Link href={backHref} className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-800">
+          <Link to={backHref} className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-gray-800">
             <ArrowLeft size={16} /> {t('dashboard.users.analytics.back_to_students')}
           </Link>
           <div className="flex items-center bg-white rounded-lg border border-gray-200 p-0.5">

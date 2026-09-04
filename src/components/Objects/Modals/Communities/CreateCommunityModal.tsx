@@ -1,6 +1,4 @@
-'use client'
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +13,7 @@ import { Loader2 } from 'lucide-react'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 import { getErrorMessage } from '@services/utils/ts/errorMessage'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
+import { useNavigate } from "react-router-dom";
 
 interface CreateCommunityModalProps {
   isOpen: boolean
@@ -31,7 +30,7 @@ export function CreateCommunityModal({
 }: CreateCommunityModalProps) {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
   const queryClient = useQueryClient()
   const { track } = useLHAnalytics('learner')
   const { handlePlanLimit } = useUpgradeModal()
@@ -72,7 +71,7 @@ export function CreateCommunityModal({
         })
         await revalidateTags(['communities'], orgSlug)
         queryClient.invalidateQueries({ queryKey: queryKeys.community.list(orgId) })
-        router.refresh()
+        window.location.reload()
         onClose()
       } else if (handlePlanLimit(result, { source: 'community_create', feature: 'communities', requiredPlan: 'standard' })) {
         onClose()

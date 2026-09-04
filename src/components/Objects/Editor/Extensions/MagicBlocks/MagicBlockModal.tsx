@@ -1,7 +1,6 @@
 import React from 'react'
 import { createPortal } from 'react-dom'
 import { X, Save, FlaskConical } from 'lucide-react'
-import Image from 'next/image'
 import { motion, AnimatePresence } from 'motion/react'
 import { cn } from '@/lib/utils'
 import MagicBlockPreview from './MagicBlockPreview'
@@ -199,11 +198,11 @@ function MagicBlockModal({
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 flex-shrink-0">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <Image
+                  <img
                     className="outline outline-1 outline-neutral-200/20 rounded-lg"
                     width={24}
                     src={lrnaiIcon}
-                    alt="Magic Block"
+                    alt="Magic Block" 
                   />
                   <span className="text-sm font-semibold text-white/70">{t('editor.blocks.magic_block_content.title')}</span>
                 </div>

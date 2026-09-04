@@ -1,4 +1,3 @@
-'use client'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { getDeploymentMode } from '@services/config/config'
 import type { PlanLevel } from '@services/plans/plans'

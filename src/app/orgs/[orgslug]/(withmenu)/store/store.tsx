@@ -1,8 +1,7 @@
-'use client'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import { formatCurrency } from '@/lib/format'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import GeneralWrapperStyled from '@components/Objects/StyledElements/Wrappers/GeneralWrapper'
 import { getUriWithOrg } from '@services/config/config'
 import { getCourseThumbnailMediaDirectory } from '@services/media/media'
@@ -101,7 +100,7 @@ function OfferCard({ offer, orgslug, orgUuid, position }: { offer: Offer; orgslu
 
   return (
     <Link
-      href={getUriWithOrg(orgslug, `/store/offers/${offer.offer_uuid}`)}
+      to={getUriWithOrg(orgslug, `/store/offers/${offer.offer_uuid}`)}
       onClick={() => track(AnalyticsEvent.StoreOfferCardClicked, { offer_type: offer.offer_type, amount: offer.amount, position })}
     >
       <div className="group bg-white rounded-xl nice-shadow overflow-hidden flex flex-col h-full cursor-pointer transition-all duration-200 hover:scale-[1.01]">

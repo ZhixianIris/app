@@ -1,4 +1,3 @@
-'use client'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import CreateCourseModal from '@components/Objects/Modals/Course/Create/CreateCourse'
 import CourseCreationTypeSelector from '@components/Objects/Modals/Course/Create/CourseCreationTypeSelector'
@@ -11,7 +10,6 @@ import AuthenticatedClientElement from '@components/Security/AuthenticatedClient
 import NewCourseButton from '@components/Objects/StyledElements/Buttons/NewCourseButton'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import ConfirmationModal from '@components/Objects/StyledElements/ConfirmationModal/ConfirmationModal'
-import { useSearchParams, useRouter } from 'next/navigation'
 import React, { useState, useMemo } from 'react'
 import useAdminStatus from '@components/Hooks/useAdminStatus'
 import { getAPIUrl, getUriWithOrg } from '@services/config/config'
@@ -33,6 +31,7 @@ import { usePlan } from '@components/Hooks/usePlan'
 import { searchMatchesAny } from '@/lib/search/normalize'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 import CatalogPagination, { useCatalogPagination } from '@components/Objects/Catalog/CatalogPagination'
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 type CourseProps = {
   orgslug: string
@@ -41,7 +40,7 @@ type CourseProps = {
 function CoursesHome(params: CourseProps) {
   const { t } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
-  const searchParams = useSearchParams()
+  const [searchParams] = useSearchParams()
   const isCreatingCourse = searchParams.get('new') ? true : false
   const [newCourseModal, setNewCourseModal] = React.useState(isCreatingCourse)
   const [importCourseModal, setImportCourseModal] = React.useState(false)
@@ -193,7 +192,7 @@ function CoursesHome(params: CourseProps) {
     mutateCourses()
   }
 
-  const router = useRouter()
+  const router = useNavigate()
 
   const handleCreationTypeSelect = (type: 'scratch' | 'ai' | 'migrate') => {
     track(AnalyticsEvent.CourseCreationTypeSelected, { creation_type: type })
@@ -202,7 +201,7 @@ function CoursesHome(params: CourseProps) {
       setAiCourseModalOpen(true)
     } else if (type === 'migrate') {
       setNewCourseModal(false)
-      router.push(getUriWithOrg(orgslug, '/dash/courses/migrate'))
+      navigate(getUriWithOrg(orgslug, '/dash/courses/migrate'))
     } else {
       setCreationType('scratch')
     }

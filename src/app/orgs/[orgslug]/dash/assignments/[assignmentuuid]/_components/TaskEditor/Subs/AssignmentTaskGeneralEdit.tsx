@@ -1,4 +1,3 @@
-'use client';
 import { useAssignments } from '@components/Contexts/Assignments/AssignmentContext';
 import { useAssignmentsTask, useAssignmentsTaskDispatch } from '@components/Contexts/Assignments/AssignmentsTaskContext';
 import { useLHSession } from '@components/Contexts/LHSessionContext';
@@ -10,7 +9,7 @@ import { updateAssignmentTask, updateReferenceFile } from '@services/courses/ass
 import { getTaskRefFileDir } from '@services/media/media';
 import { useFormik } from 'formik';
 import { Cloud, File, Info, Loader, UploadCloud } from 'lucide-react'
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 import React, { useEffect } from 'react'
 import toast from 'react-hot-toast';
 import { constructAcceptValue } from '@/lib/constants';
@@ -219,7 +218,7 @@ function UpdateTaskRef() {
                             </div>
                             <div className='flex space-x-2 mt-2'>
                                 <Link
-                                    href={getTaskRefDirUI()}
+                                    to={getTaskRefDirUI()}
                                     download
                                     target='_blank'
                                     className='bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-semibold'>{t('dashboard.assignments.editor.task_editor.general.download')}</Link>

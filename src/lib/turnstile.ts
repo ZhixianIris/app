@@ -15,7 +15,7 @@ const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverif
 
 /** True when a server secret is configured, i.e. Turnstile is active. */
 export function isTurnstileEnabled(): boolean {
-  return Boolean(process.env.TURNSTILE_SECRET_KEY)
+  return Boolean(import.meta.env.VITE_TURNSTILE_SECRET_KEY)
 }
 
 export interface TurnstileResult {

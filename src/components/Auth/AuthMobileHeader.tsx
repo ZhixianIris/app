@@ -1,7 +1,5 @@
-'use client'
 import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import learnhouseIcon from 'public/learnhouse_bigicon_1.png'
 import { getOrgLogoMediaDirectory, getOrgAuthBackgroundMediaDirectory } from '@services/media/media'
 import { getUriWithOrg } from '@services/config/config'
@@ -58,7 +56,7 @@ export default function AuthMobileHeader({ org }: AuthMobileHeaderProps) {
         <div className="absolute inset-0 bg-black/30" />
       )}
 
-      <Link prefetch href={getUriWithOrg(org?.slug, '/')} className="relative z-10">
+      <Link to={getUriWithOrg(org?.slug, '/')} className="relative z-10">
         <div className="w-10 h-10 rounded-lg ring-1 ring-inset ring-white/10 bg-white flex items-center justify-center overflow-hidden shrink-0">
           {org?.logo_image ? (
             <img
@@ -67,13 +65,12 @@ export default function AuthMobileHeader({ org }: AuthMobileHeaderProps) {
               className="w-full h-full object-contain p-1.5"
             />
           ) : (
-            <Image
-              quality={100}
+            <img
               width={40}
               height={40}
               src={learnhouseIcon}
               alt="LearnHouse"
-              className="object-contain"
+              className="object-contain" 
             />
           )}
         </div>

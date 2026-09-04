@@ -1,9 +1,8 @@
 import React from 'react'
 import { getUserByUsername } from '@services/users/users'
-import { Metadata } from 'next'
 import { getServerSession } from '@/lib/auth/server'
 import UserProfileClient from './UserProfileClient'
-import { redirect } from 'next/navigation'
+import { redirect } from "react-router-dom";
 
 interface UserPageParams {
   username: string;
@@ -13,32 +12,6 @@ interface UserPageParams {
 interface UserPageProps {
   params: Promise<UserPageParams>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
-
-export async function generateMetadata({ params }: UserPageProps): Promise<Metadata> {
-  try {
-    const resolvedParams = await params
-    const session = await getServerSession()
-    const access_token = session?.tokens?.access_token
-
-    // If no session, return basic metadata (SEO will show generic title)
-    if (!access_token) {
-      return {
-        title: 'User Profile',
-        description: 'View user profile',
-      }
-    }
-
-    const userData = await getUserByUsername(resolvedParams.username, access_token)
-    return {
-      title: `${userData.first_name} ${userData.last_name} | Profile`,
-      description: userData.bio || `Profile page of ${userData.first_name} ${userData.last_name}`,
-    }
-  } catch {
-    return {
-      title: 'User Profile',
-    }
-  }
 }
 
 async function UserPage({ params }: UserPageProps) {

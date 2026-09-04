@@ -1,10 +1,8 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const AudioBlockComponent = dynamic(() => import('./AudioBlockComponent'), {
-  ssr: false,
-})
+const AudioBlockComponent = lazy(() => import('./AudioBlockComponent'))
 
 export default Node.create({
   name: 'blockAudio',

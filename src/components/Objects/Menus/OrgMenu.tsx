@@ -1,8 +1,6 @@
-'use client'
 import React, { useEffect, useState } from 'react'
 import CopilotBubble from '@components/Copilot/CopilotBubble'
-import Image from 'next/image'
-import Link from 'next/link'
+import { Link, useLocation } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { getUriWithOrg } from '@services/config/config'
@@ -13,7 +11,6 @@ import { getOrgLogoMediaDirectory } from '@services/media/media'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { SearchBar } from '@components/Objects/Search/SearchBar'
-import { usePathname } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import useAdminStatus from '@components/Hooks/useAdminStatus'
 import {
@@ -56,7 +53,7 @@ export const OrgMenu = (props: any) => {
   const org = useOrg() as any;
   const [isMenuOpen, setIsMenuOpen] = React.useState(false)
   const [isFocusMode, setIsFocusMode] = useState(false)
-  const pathname = usePathname()
+  const pathname = useLocation().pathname
   const { t } = useTranslation()
   const { rights } = useAdminStatus()
   const [feedbackModalOpen, setFeedbackModalOpen] = useState(false)
@@ -154,7 +151,7 @@ export const OrgMenu = (props: any) => {
         <div className="flex items-center justify-between w-full max-w-(--breakpoint-2xl) mx-auto px-4 sm:px-6 lg:px-8 h-full">
           <div className="flex items-center space-x-5 md:w-auto w-full">
             <div className="logo flex md:w-auto w-full justify-center">
-              <Link href={getUriWithOrg(orgslug, '/')}>
+              <Link to={getUriWithOrg(orgslug, '/')}>
                 <div className="flex w-auto h-9 rounded-md items-center m-auto py-1 justify-center">
                   {org?.logo_image ? (
                     <img
@@ -187,7 +184,7 @@ export const OrgMenu = (props: any) => {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <Link
-                        href={getUriWithOrg(orgslug, '/trail')}
+                        to={getUriWithOrg(orgslug, '/trail')}
                         className={`p-2 rounded-lg transition-colors ${colors.iconBtn}`}
                         aria-label={t('courses.progress')}
                       >
@@ -209,7 +206,7 @@ export const OrgMenu = (props: any) => {
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Link
-                          href={getUriWithOrg(orgslug, '/boards')}
+                          to={getUriWithOrg(orgslug, '/boards')}
                           className={`p-2 rounded-lg transition-colors ${colors.iconBtn}`}
                           aria-label="Boards"
                         >
@@ -271,7 +268,7 @@ export const OrgMenu = (props: any) => {
                       return (
                         <DropdownMenuItem key={item.id} asChild>
                           <Link
-                            href={item.href}
+                            to={item.href}
                             className="flex items-center gap-2"
                             onClick={() => track(AnalyticsEvent.DashboardEntered, { source: 'org_menu' })}
                           >
@@ -497,7 +494,7 @@ const CopilotMenuButton = ({
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem key={s.aichat_uuid} asChild>
-                  <Link href={getUriWithOrg(orgslug, `/copilot?chat=${s.aichat_uuid}`)} className="flex items-center gap-2">
+                  <Link to={getUriWithOrg(orgslug, `/copilot?chat=${s.aichat_uuid}`)} className="flex items-center gap-2">
                     <ChatCircleDots size={14} weight="fill" className="shrink-0 text-neutral-400" />
                     <span className="truncate text-sm">{s.title || 'Untitled'}</span>
                   </Link>
@@ -523,7 +520,7 @@ const CopilotMenuButton = ({
           </DropdownMenuItem>
         ) : (
           <DropdownMenuItem asChild>
-            <Link href={getUriWithOrg(orgslug, '/copilot')} className="flex items-center gap-2 font-medium">
+            <Link to={getUriWithOrg(orgslug, '/copilot')} className="flex items-center gap-2 font-medium">
               <ChatCircle size={14} weight="fill" className="text-violet-500" />
               <span>{recentSessions.length > 0 ? 'View all conversations' : 'Start a conversation'}</span>
             </Link>
@@ -559,12 +556,12 @@ const CopilotMenuButton = ({
 
 const LearnHouseLogo = ({ logoFilter }: { logoFilter: string }) => {
   return (
-    <Image
+    <img
       src="/lrn-text.svg"
       alt="LearnHouse logo"
       width={133}
       height={40}
-      style={{ height: 'auto', filter: logoFilter }}
+      style={{ height: 'auto', filter: logoFilter }} 
     />
   )
 }

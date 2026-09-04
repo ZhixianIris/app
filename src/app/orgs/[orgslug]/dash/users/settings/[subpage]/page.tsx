@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, use } from 'react';
 import { motion } from 'motion/react'
 import { getUriWithOrg } from '@services/config/config'

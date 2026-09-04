@@ -1,4 +1,3 @@
-'use client'
 import { Input } from "@components/ui/input"
 import { Textarea } from "@components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/ui/select"
@@ -14,7 +13,6 @@ import { getOrganizationContextInfoWithoutCredentials } from '@services/organiza
 import React, { useEffect } from 'react'
 import { BarLoader } from 'react-spinners'
 import { revalidateTags } from '@services/utils/ts/requests'
-import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
@@ -26,10 +24,11 @@ import UnsplashImagePicker from "@components/Dashboard/Pages/Course/EditCourseGe
 import AIImageButton from '@components/Objects/AI/AIImageButton'
 import FormTagInput from "@components/Objects/StyledElements/Form/TagInput"
 import { useTranslation } from "react-i18next"
+import { useNavigate } from "react-router-dom";
 
 function CreatePodcastModal({ closeModal, orgslug }: any) {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const queryClient = useQueryClient()
   const { track } = useLHAnalytics('learner')
@@ -88,7 +87,7 @@ function CreatePodcastModal({ closeModal, orgslug }: any) {
           closeModal()
           // Redirect to the podcast dashboard
           const podcastId = res.data.podcast_uuid?.replace('podcast_', '') || res.data.podcast_uuid
-          router.push(`/dash/podcasts/podcast/${podcastId}/general`)
+          navigate(`/dash/podcasts/podcast/${podcastId}/general`)
         } else {
           toast.dismiss(toast_loading)
           // Podcasts are gated on the free plan → offer an upgrade at the

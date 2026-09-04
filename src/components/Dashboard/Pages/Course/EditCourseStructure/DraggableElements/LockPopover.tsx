@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useEffect, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '@components/ui/popover'
 import { Globe, Lock, LockOpen, Shield, Users, Plus, X, Loader2, Check } from 'lucide-react'

@@ -1,11 +1,10 @@
-'use client'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { getUriWithOrg } from '@services/config/config'
-import { useRouter } from 'next/navigation'
 import React, { useEffect, useState, useRef, useMemo, memo } from 'react'
 import { getCourseThumbnailMediaDirectory } from '@services/media/media'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from "react-router-dom";
 
 interface FixedActivitySecondaryBarProps {
   course: any
@@ -115,7 +114,7 @@ const CourseInfo = memo(({ course, org }: { course: any, org: any }) => {
 CourseInfo.displayName = 'CourseInfo';
 
 export default function FixedActivitySecondaryBar(props: FixedActivitySecondaryBarProps): React.ReactNode {
-  const router = useRouter();
+  const router = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [shouldShow, setShouldShow] = useState(false);
   const mainActivityInfoRef = useRef<HTMLDivElement | null>(null);
@@ -155,12 +154,12 @@ export default function FixedActivitySecondaryBar(props: FixedActivitySecondaryB
     const cleanCourseUuid = props.course.course_uuid?.replace('course_', '');
     if (!activity) {
       if (isLastActivity) {
-        router.push(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/end`);
+        navigate(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/end`);
       }
       return;
     }
 
-    router.push(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/${activity.cleanUuid}`);
+    navigate(getUriWithOrg(props.orgslug, '') + `/course/${cleanCourseUuid}/activity/${activity.cleanUuid}`);
   };
 
   useEffect(() => {

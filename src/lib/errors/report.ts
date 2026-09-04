@@ -1,4 +1,3 @@
-'use client'
 import * as Sentry from '@sentry/nextjs'
 
 // Thin wrappers around the Sentry SDK so error UIs can (a) capture an exception

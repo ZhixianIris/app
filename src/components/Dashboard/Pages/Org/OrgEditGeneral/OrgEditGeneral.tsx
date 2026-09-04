@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { Form, Formik } from 'formik'
 import * as Yup from 'yup'
@@ -10,7 +9,6 @@ import {
 } from '@services/settings/org'
 import { AVAILABLE_LANGUAGES } from '@/lib/languages'
 import { revalidateTags } from '@services/utils/ts/requests'
-import { useRouter } from 'next/navigation'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { toast } from 'react-hot-toast'
@@ -23,6 +21,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
+import { useNavigate } from "react-router-dom";
 
 const ORG_LABELS = [
   { value: 'languages', label: '🌐 Languages' },
@@ -82,7 +81,7 @@ interface OrganizationValues {
 
 const OrgEditGeneral: React.FC = () => {
   const { t } = useTranslation()
-  const _router = useRouter()
+  const _router = useNavigate()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any

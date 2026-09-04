@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import Modal from '@components/Objects/StyledElements/Modal/Modal'
 import { AlertTriangle, Info, Loader2 } from 'lucide-react'

@@ -1,10 +1,5 @@
 import React from 'react'
-import type { Metadata } from 'next'
 import UserList from '@components/Admin/UserList'
-
-export const metadata: Metadata = {
-  title: 'Users',
-}
 
 export default function AdminUsersPage() {
   return (

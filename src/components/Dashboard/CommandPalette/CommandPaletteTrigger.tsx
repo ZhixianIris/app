@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, useState } from 'react'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'

@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useEffect, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { MessageCircle, Plus, Loader2, Search, X, Trash2, CheckSquare, Square } from 'lucide-react'

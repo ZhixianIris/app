@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'

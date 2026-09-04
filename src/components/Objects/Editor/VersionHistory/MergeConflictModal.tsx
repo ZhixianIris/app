@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { X, Clock, User, GitMerge, Check } from 'lucide-react'
 import { motion, AnimatePresence } from 'motion/react'

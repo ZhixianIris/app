@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useEffect, useMemo, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { useOrg } from '@components/Contexts/OrgContext'

@@ -1,4 +1,3 @@
-'use client'
 import React, { createContext, useContext, useEffect, useReducer } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'

@@ -1,5 +1,3 @@
-'use client'
-
 import BoundaryError from '@components/Objects/StyledElements/Error/BoundaryError'
 import { useTrackView, AnalyticsEvent } from '@services/analytics'
 

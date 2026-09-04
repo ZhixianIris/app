@@ -1,4 +1,3 @@
-'use client'
 import React, { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Form, Formik } from 'formik'

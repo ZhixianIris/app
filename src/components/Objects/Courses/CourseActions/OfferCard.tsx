@@ -1,6 +1,5 @@
-'use client'
 import React, { useState } from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { ArrowRight, RefreshCcw, SquareCheck, Sparkles, ChevronDown, ChevronUp } from 'lucide-react'
 import { getUriWithOrg } from '@services/config/config'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
@@ -92,7 +91,7 @@ export function OfferCard({ offer, orgslug }: OfferCardProps) {
 
         {/* CTA */}
         <Link
-          href={getUriWithOrg(orgslug, `/store/offers/${offer.offer_uuid}`)}
+          to={getUriWithOrg(orgslug, `/store/offers/${offer.offer_uuid}`)}
           onClick={() => track(AnalyticsEvent.CourseOfferCtaClicked, {
             offer_uuid: offer.offer_uuid,
             offer_type: offer.offer_type,

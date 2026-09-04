@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { Form, Formik } from 'formik'
 import { updateOrganization } from '@services/settings/org'
@@ -16,10 +15,10 @@ import {
   SiYoutube 
 } from '@icons-pack/react-simple-icons'
 import { Plus, X as XIcon } from "lucide-react"
-import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from "react-router-dom";
 
 interface OrganizationValues {
   socials: {
@@ -40,7 +39,7 @@ export default function OrgEditSocials() {
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const queryClient = useQueryClient()
-  const router = useRouter()
+  const router = useNavigate()
   const initialValues: OrganizationValues = {
     socials: org?.socials || {},
     links: org?.links || {}

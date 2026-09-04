@@ -1,11 +1,9 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
 import { v4 as uuidv4 } from 'uuid'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const MagicBlockComponent = dynamic(() => import('./MagicBlockComponent'), {
-  ssr: false,
-})
+const MagicBlockComponent = lazy(() => import('./MagicBlockComponent'))
 
 export default Node.create({
   name: 'blockMagic',

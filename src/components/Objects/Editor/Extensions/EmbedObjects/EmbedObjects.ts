@@ -1,10 +1,8 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const EmbedObjectsComponent = dynamic(() => import('./EmbedObjectsComponent'), {
-  ssr: false,
-})
+const EmbedObjectsComponent = lazy(() => import('./EmbedObjectsComponent'))
 
 
 export default Node.create({

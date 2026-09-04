@@ -1,4 +1,3 @@
-'use client'
 import PageLoading from '@components/Objects/Loaders/PageLoading';
 import { useSession, UseSessionReturn } from '@components/Contexts/AuthContext';
 import React, { useContext, createContext } from 'react'

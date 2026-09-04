@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { Lock } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'

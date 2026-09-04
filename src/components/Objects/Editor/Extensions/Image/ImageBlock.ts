@@ -1,10 +1,8 @@
 import { mergeAttributes, Node } from '@tiptap/core'
 import { ReactNodeViewRenderer } from '@tiptap/react'
-import dynamic from 'next/dynamic'
+import { lazy } from "react";
 
-const ImageBlockComponent = dynamic(() => import('./ImageBlockComponent'), {
-  ssr: false,
-})
+const ImageBlockComponent = lazy(() => import('./ImageBlockComponent'))
 
 export default Node.create({
   name: 'blockImage',

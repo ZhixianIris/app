@@ -1,5 +1,3 @@
-'use client'
-
 import { useEffect } from 'react'
 import { getAPIUrl } from '@services/config/config'
 import { dispatchAuthExpired, dispatchAuthRefreshed } from '@/lib/auth/events'

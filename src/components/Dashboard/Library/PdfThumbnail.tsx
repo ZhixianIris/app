@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { FilePdf, ArrowSquareOut } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'

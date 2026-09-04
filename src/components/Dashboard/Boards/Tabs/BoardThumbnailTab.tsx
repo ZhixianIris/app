@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useState, useRef, useEffect } from 'react'
 import { UploadCloud, Image as ImageIcon, ArrowBigUpDash } from 'lucide-react'
 import { useOrg } from '@components/Contexts/OrgContext'

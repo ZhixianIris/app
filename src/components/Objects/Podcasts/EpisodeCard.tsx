@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { PodcastEpisode, Podcast } from '@services/podcasts/podcasts'
 import { formatDuration } from '@services/podcasts/episodes'

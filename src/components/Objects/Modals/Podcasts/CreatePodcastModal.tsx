@@ -1,6 +1,4 @@
-'use client'
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { useTranslation } from 'react-i18next'
@@ -15,6 +13,7 @@ import { queryKeys } from '@/lib/query/keys'
 import toast from 'react-hot-toast'
 import { getErrorMessage } from '@services/utils/ts/errorMessage'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
+import { useNavigate } from "react-router-dom";
 
 interface CreatePodcastModalProps {
   isOpen: boolean
@@ -31,7 +30,7 @@ export function CreatePodcastModal({
 }: CreatePodcastModalProps) {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useRouter()
+  const router = useNavigate()
   const queryClient = useQueryClient()
   const { track } = useLHAnalytics('learner')
   const { handlePlanLimit } = useUpgradeModal()
@@ -74,7 +73,7 @@ export function CreatePodcastModal({
         })
         await revalidateTags(['podcasts'], orgSlug)
         queryClient.invalidateQueries({ queryKey: queryKeys.podcasts.list(orgSlug) })
-        router.refresh()
+        window.location.reload()
         onClose()
       } else if (handlePlanLimit(result, { source: 'podcast_create', feature: 'podcasts', requiredPlan: 'standard' })) {
         onClose()

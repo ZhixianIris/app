@@ -1,8 +1,7 @@
-'use client'
 import React, { use } from 'react';
 import { motion } from 'motion/react'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { getUriWithOrg } from '@services/config/config'
 import { Settings, Users, Gem, CreditCard, Layers, ShoppingBag, ExternalLink } from 'lucide-react'
 import { SiStripe } from '@icons-pack/react-simple-icons'
@@ -130,7 +129,7 @@ function PaymentsPage(props: { params: Promise<PaymentsParams> }) {
           <div className="flex items-center space-x-2 pb-1 shrink-0">
             {paymentsEnabled && (
               <Link
-                href={getUriWithOrg(params.orgslug, '/store')}
+                to={getUriWithOrg(params.orgslug, '/store')}
                 target="_blank"
                 className="flex items-center space-x-2 px-3 py-1.5 rounded-lg border border-gray-200 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors"
               >

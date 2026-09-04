@@ -1,7 +1,6 @@
-'use client'
 import React from 'react'
 import { motion } from 'motion/react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { ListChecks, ArrowRight } from '@phosphor-icons/react'
 import { useOnboarding } from '@components/Hooks/useOnboarding'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -84,7 +83,7 @@ export default function OnboardingSidebarBox() {
 
         {/* CTA button */}
         <Link
-          href={href}
+          to={href}
           className="group mt-3 flex items-center justify-center gap-1.5 w-full rounded-lg bg-indigo-500 hover:bg-indigo-400 text-white text-[12px] font-semibold py-2 transition-colors"
         >
           {t('onboarding.continue_setup', { defaultValue: 'Continue setup' })}

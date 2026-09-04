@@ -1,11 +1,8 @@
-'use client'
-
 import React, { useEffect, useState } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
 import { handleSSOCallback, SSOError, getErrorMessage } from '@services/auth/sso'
 import { useAuth } from '@components/Contexts/AuthContext'
 import { Shield, AlertTriangle, Loader2, Info, Copy, Check } from 'lucide-react'
-import Link from 'next/link'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
 interface ErrorDetails {
@@ -19,8 +16,8 @@ interface ErrorDetails {
 export default function SSOCallbackPage() {
   const { t } = useTranslation()
   const { signIn } = useAuth()
-  const searchParams = useSearchParams()
-  const router = useRouter()
+  const [searchParams] = useSearchParams()
+  const router = useNavigate()
   const [error, setError] = useState<ErrorDetails | null>(null)
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false)
@@ -90,11 +87,11 @@ export default function SSOCallbackPage() {
           setStatus('error')
         } else if (signInResult?.ok) {
           setStatus('success')
-          router.push(redirectUrl)
+          navigate(redirectUrl)
         } else {
           // No error but not ok either - likely a redirect happened
           setStatus('success')
-          router.push(redirectUrl)
+          navigate(redirectUrl)
         }
       } catch (err: any) {
         console.error('SSO callback error:', err)
@@ -262,13 +259,13 @@ export default function SSOCallbackPage() {
 
           <div className="space-y-3">
             <Link
-              href="/login"
+              to="/login"
               className="block w-full py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors"
             >
               {t('auth.sso_callback.try_again')}
             </Link>
             <Link
-              href="/"
+              to="/"
               className="block w-full py-2 px-4 bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 transition-colors"
             >
               {t('auth.sso_callback.go_home')}

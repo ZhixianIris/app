@@ -1,10 +1,5 @@
-import { Metadata } from 'next'
 import React from 'react'
 import ClientAdminLayout from './ClientAdminLayout'
-
-export const metadata: Metadata = {
-  title: 'LearnHouse Dashboard',
-}
 
 async function DashboardLayout(
   props: {

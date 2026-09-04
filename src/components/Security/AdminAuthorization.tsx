@@ -1,12 +1,11 @@
-'use client';
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useLHSession } from '@components/Contexts/LHSessionContext';
 import useAdminStatus from '@components/Hooks/useAdminStatus';
-import { usePathname, useRouter } from 'next/navigation';
 import PageLoading from '@components/Objects/Loaders/PageLoading';
 import { getUriWithOrg } from '@services/config/config';
 import { useOrg } from '@components/Contexts/OrgContext';
 import ErrorUI from '@components/Objects/StyledElements/Error/Error';
+import { useNavigate, useLocation } from "react-router-dom";
 
 type AuthorizationProps = {
   children: React.ReactNode;
@@ -20,8 +19,8 @@ const ADMIN_PATH_PREFIX = '/dash';
 const AdminAuthorization: React.FC<AuthorizationProps> = ({ children, authorizationMode }) => {
   const session = useLHSession() as any;
   const org = useOrg() as any;
-  const pathname = usePathname();
-  const router = useRouter();
+  const pathname = useLocation().pathname;
+  const router = useNavigate();
   const { isAdmin, loading } = useAdminStatus() as any
   // `null` is "not decided yet", distinct from a decided `false`. The decision
   // is made in an effect, which runs after the commit — so a `false` initial
@@ -49,7 +48,7 @@ const AdminAuthorization: React.FC<AuthorizationProps> = ({ children, authorizat
       //
       // org can still be null here (its fetch is client-side and may not have
       // landed); getUriWithOrg tolerates an empty slug, dereferencing does not.
-      router.push(getUriWithOrg(org?.slug ?? '', '/login'));
+      navigate(getUriWithOrg(org?.slug ?? '', '/login'));
       return;
     }
 

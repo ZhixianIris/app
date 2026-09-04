@@ -1,4 +1,3 @@
-'use client'
 import React from 'react'
 import { Receipt, TrendingUp } from 'lucide-react'
 import { useTranslation } from 'react-i18next'

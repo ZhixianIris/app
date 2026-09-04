@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect } from 'react'
 import { X } from '@phosphor-icons/react'
 

@@ -1,4 +1,3 @@
-import { notFound } from 'next/navigation'
 import type { ReactNode } from 'react'
 import { getServerAPIUrl } from '@services/config/config'
 

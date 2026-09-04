@@ -1,16 +1,14 @@
-'use client';
 import { useAssignments } from '@components/Contexts/Assignments/AssignmentContext';
 import { useAssignmentsTask, useAssignmentsTaskDispatch } from '@components/Contexts/Assignments/AssignmentsTaskContext';
 import { useLHSession } from '@components/Contexts/LHSessionContext';
 import { deleteAssignmentTask } from '@services/courses/assignments';
 import { GalleryVerticalEnd, Info, TentTree, Trash } from 'lucide-react'
-import React, { useEffect } from 'react'
+import React, { useEffect, lazy } from 'react'
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '@/lib/query/keys';
-import dynamic from 'next/dynamic';
 import { AssignmentTaskGeneralEdit } from './Subs/AssignmentTaskGeneralEdit';
-const AssignmentTaskContentEdit = dynamic(() => import('./Subs/AssignmentTaskContentEdit'))
+const AssignmentTaskContentEdit = lazy(() => import('./Subs/AssignmentTaskContentEdit'))
 
 function AssignmentTaskEditor({ page }: any) {
     const [selectedSubPage, setSelectedSubPage] = React.useState(page)

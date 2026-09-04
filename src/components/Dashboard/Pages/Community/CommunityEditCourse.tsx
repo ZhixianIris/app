@@ -1,6 +1,4 @@
-'use client'
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -16,6 +14,7 @@ import { Loader2, Link2, Unlink, Search, BookOpen } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { Input } from '@components/ui/input'
 import { Button } from '@components/ui/button'
+import { useNavigate } from "react-router-dom";
 
 interface Course {
   id: number
@@ -26,7 +25,7 @@ interface Course {
 
 const CommunityEditCourse: React.FC = () => {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const org = useOrg() as any
   const communityState = useCommunity()
@@ -67,7 +66,7 @@ const CommunityEditCourse: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.community.detail(community.community_uuid) })
       toast.success(t('dashboard.courses.communities.course.toasts.link_success'), { id: loadingToast })
       setSelectedCourse(null)
-      router.refresh()
+      window.location.reload()
     } catch (error) {
       console.error('Failed to link course:', error)
       toast.error(t('dashboard.courses.communities.course.toasts.link_error'), { id: loadingToast })
@@ -85,7 +84,7 @@ const CommunityEditCourse: React.FC = () => {
       await revalidateTags(['communities'], org.slug)
       queryClient.invalidateQueries({ queryKey: queryKeys.community.detail(community.community_uuid) })
       toast.success(t('dashboard.courses.communities.course.toasts.unlink_success'), { id: loadingToast })
-      router.refresh()
+      window.location.reload()
     } catch (error) {
       console.error('Failed to unlink course:', error)
       toast.error(t('dashboard.courses.communities.course.toasts.unlink_error'), { id: loadingToast })

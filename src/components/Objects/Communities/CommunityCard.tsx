@@ -1,4 +1,3 @@
-'use client'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import AuthenticatedClientElement from '@components/Security/AuthenticatedClientElement'
@@ -10,8 +9,7 @@ import { revalidateTags } from '@services/utils/ts/requests'
 import { useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { MoreVertical, Users, Trash2, Edit, MessageCircle, ExternalLink } from 'lucide-react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useNavigate } from 'react-router-dom'
 import React from 'react'
 import { useTranslation } from 'react-i18next'
 import {
@@ -59,7 +57,7 @@ function CommunityCard(props: PropsType) {
       )}
 
       <Link
-        href={communityLink}
+        to={communityLink}
         className="block relative aspect-video overflow-hidden bg-gray-50"
       >
         {props.community.thumbnail_image && org?.org_uuid ? (
@@ -81,7 +79,7 @@ function CommunityCard(props: PropsType) {
 
       <div className="p-3 flex flex-col space-y-1.5">
         <Link
-          href={communityLink}
+          to={communityLink}
           className="text-base font-bold text-gray-900 leading-tight hover:text-black transition-colors line-clamp-1"
         >
           {props.community.name}
@@ -103,14 +101,14 @@ function CommunityCard(props: PropsType) {
 
           {variant === 'dashboard' ? (
             <Link
-              href={getUriWithOrg(props.orgslug, `/dash/communities/${communityId}/general`)}
+              to={getUriWithOrg(props.orgslug, `/dash/communities/${communityId}/general`)}
               className="text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-wider"
             >
               {t('dashboard.courses.communities.card.open_settings')}
             </Link>
           ) : (
             <Link
-              href={communityLink}
+              to={communityLink}
               className="text-[10px] font-bold text-gray-400 hover:text-gray-900 transition-colors uppercase tracking-wider"
             >
               {t('dashboard.courses.communities.card.view_community')}
@@ -124,7 +122,7 @@ function CommunityCard(props: PropsType) {
 
 const CommunityAdminEditsArea = (props: any) => {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const queryClient = useQueryClient()
 
@@ -133,7 +131,7 @@ const CommunityAdminEditsArea = (props: any) => {
     await revalidateTags(['communities'], props.orgslug)
     queryClient.invalidateQueries({ queryKey: queryKeys.community.list(props.org_id) })
     queryClient.invalidateQueries({ queryKey: queryKeys.community.detail(props.community_uuid) })
-    router.refresh()
+    window.location.reload()
   }
 
   return (
@@ -153,7 +151,7 @@ const CommunityAdminEditsArea = (props: any) => {
           <DropdownMenuContent align="end" className="w-48">
             <DropdownMenuItem asChild>
               <Link
-                href={getUriWithOrg(props.orgslug, `/dash/communities/${removeCommunityPrefix(props.community_uuid)}/general`)}
+                to={getUriWithOrg(props.orgslug, `/dash/communities/${removeCommunityPrefix(props.community_uuid)}/general`)}
                 className="flex items-center px-2 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded-md transition-colors"
               >
                 <ExternalLink className="me-2 h-4 w-4" /> {t('dashboard.courses.communities.card.open_settings')}

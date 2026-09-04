@@ -1,10 +1,5 @@
 import React from 'react'
-import type { Metadata } from 'next'
 import GlobalAnalytics from '@components/Admin/GlobalAnalytics'
-
-export const metadata: Metadata = {
-  title: 'Analytics',
-}
 
 export default function AdminAnalyticsPage() {
   return (

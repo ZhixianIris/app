@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useRef, useEffect } from 'react'
 import { DownloadSimple, CaretDown } from '@phosphor-icons/react'
 import { useTranslation } from 'react-i18next'

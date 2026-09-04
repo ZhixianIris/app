@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { Editor } from '@tiptap/core'
 import learnhouseAI_icon from 'public/learnhouse_ai_simple.png'
-import Image from 'next/image'
 import { BookOpen, FormInput, Languages, MoreVertical } from 'lucide-react'
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip'
 import {
@@ -16,7 +15,7 @@ import {
 } from '@services/ai/ai'
 import useGetAIFeatures from '../../../../Hooks/useGetAIFeatures'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
-import { usePathname } from 'next/navigation'
+import { useLocation } from "react-router-dom";
 
 type AICanvaToolkitProps = {
   editor: Editor
@@ -24,7 +23,7 @@ type AICanvaToolkitProps = {
 }
 
 function AICanvaToolkit(props: AICanvaToolkitProps) {
-  const pathname = usePathname()
+  const pathname = useLocation().pathname
   const is_ai_feature_enabled = useGetAIFeatures({ feature: 'activity_ask' })
 
   // Never show the AI bubble in embedded views. Checked after the hooks
@@ -151,11 +150,11 @@ function AICanvaToolkit(props: AICanvaToolkitProps) {
         className="py-1 h-10 px-2 w-max text-white rounded-xl shadow-md cursor-pointer flex items-center space-x-2 antialiased animate-in fade-in-0 zoom-in-95 duration-200"
       >
         <div className="flex w-full space-x-2 font-bold text-white/80">
-          <Image
+          <img
             className="outline-1 outline-neutral-200/10 rounded-lg"
             width={24}
             src={learnhouseAI_icon}
-            alt=""
+            alt="" 
           />
           <div>AI</div>
         </div>

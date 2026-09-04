@@ -1,4 +1,3 @@
-'use client'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import { getUriWithOrg } from '@services/config/config'
 import { Image as ImageIcon, Link2, Shield, MessagesSquare, Users } from 'lucide-react'

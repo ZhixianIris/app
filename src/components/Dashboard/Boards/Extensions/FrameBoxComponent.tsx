@@ -1,5 +1,3 @@
-'use client'
-
 import React, { useCallback, useState } from 'react'
 import { Lock, Unlock } from 'lucide-react'
 import BoardBlockWrapper from './BoardBlockWrapper'

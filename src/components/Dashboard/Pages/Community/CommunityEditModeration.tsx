@@ -1,4 +1,3 @@
-'use client'
 import React, { useState, useEffect, useRef } from 'react'
 import {
   Plus,
@@ -16,7 +15,6 @@ import {
   Lock,
   SmilePlus,
 } from 'lucide-react'
-import { useRouter } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
@@ -33,6 +31,7 @@ import { Input } from '@components/ui/input'
 import { Button } from '@components/ui/button'
 import { Label } from '@components/ui/label'
 import { Switch } from '@components/ui/switch'
+import { useNavigate } from "react-router-dom";
 
 type Settings = Required<CommunityModerationSettings>
 
@@ -93,7 +92,7 @@ type ToggleKey = 'block_links' | 'require_email_verified' | 'disable_reactions'
 
 const CommunityEditModeration: React.FC = () => {
   const { t } = useTranslation()
-  const router = useRouter()
+  const router = useNavigate()
   const session = useLHSession() as any
   const org = useOrg() as any
   const communityState = useCommunity()
@@ -203,7 +202,7 @@ const CommunityEditModeration: React.FC = () => {
         })
       }
       toast.success(t('dashboard.courses.communities.moderation.toasts.save_success'), { id: loadingToast })
-      router.refresh()
+      window.location.reload()
     } catch (err) {
       setError(t('dashboard.courses.communities.moderation.toasts.save_error'))
       toast.error(t('dashboard.courses.communities.moderation.toasts.save_error'), { id: loadingToast })

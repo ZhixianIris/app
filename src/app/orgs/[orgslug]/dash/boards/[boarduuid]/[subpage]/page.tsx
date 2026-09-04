@@ -1,6 +1,5 @@
-'use client'
 import React, { use } from 'react'
-import Link from 'next/link'
+import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { Info, Globe, Users, Image as ImageIcon, Eye } from 'lucide-react'
 import { ChalkboardSimple } from '@phosphor-icons/react'
@@ -122,7 +121,7 @@ function BoardSettingsPage(props: { params: Promise<BoardSettingsParams> }) {
 
         <div className="flex flex-wrap gap-2 items-center">
           <div className="flex py-3 grow min-w-0 items-center">
-            <Link href={`/board/${boardUuid.replace('board_', '')}`} className="shrink-0">
+            <Link to={`/board/${boardUuid.replace('board_', '')}`} className="shrink-0">
               <img
                 className="w-[72px] sm:w-[100px] h-[41px] sm:h-[57px] rounded-md drop-shadow-md object-cover"
                 src={thumbnailUrl}
@@ -147,7 +146,7 @@ function BoardSettingsPage(props: { params: Promise<BoardSettingsParams> }) {
             </div>
             <div className="w-px self-stretch bg-neutral-200/80" />
             <Link
-              href={`/board/${boardUuid.replace('board_', '')}`}
+              to={`/board/${boardUuid.replace('board_', '')}`}
               className="px-2.5 sm:px-3.5 py-2 text-sm font-semibold text-neutral-600 bg-neutral-50/70 hover:bg-neutral-100/70 transition-colors flex items-center space-x-2"
             >
               <Eye className="w-4 h-4" />
