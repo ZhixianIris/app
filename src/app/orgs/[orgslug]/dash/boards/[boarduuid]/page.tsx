@@ -1,8 +1,8 @@
-import { redirect } from "react-router-dom";
+import { Navigate, useParams } from 'react-router-dom'
 
-async function BoardSettingsRedirectPage(props: any) {
-  const params = await props.params
-  redirect(`/dash/boards/${params.boarduuid}/general`)
+function BoardSettingsRedirectPage() {
+  const { boarduuid } = useParams() as { boarduuid: string }
+  return <Navigate to={`/dash/boards/${boarduuid}/general`} replace />
 }
 
 export default BoardSettingsRedirectPage

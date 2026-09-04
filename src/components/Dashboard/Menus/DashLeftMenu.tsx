@@ -1253,7 +1253,7 @@ const MenuLink = ({ href, icon, label, isCollapsed, isExternal, active, onClick 
   if (isCollapsed) {
     return (
       <Tooltip>
-                    <TooltipTrigger render={{linkElement}} />
+                    <TooltipTrigger render={linkElement} />
         <TooltipContent side="right" className="z-tooltip bg-[#1a1a1b] border-white/10 text-white text-xs px-2 py-1 shadow-lg shadow-black/20">
           {label}
         </TooltipContent>

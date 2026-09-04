@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom'
 import React, { useEffect, use } from 'react';
 import { motion } from 'motion/react'
 import { getUriWithOrg } from '@services/config/config'
@@ -16,13 +17,12 @@ import { useTranslation } from 'react-i18next'
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar'
 
 export type SettingsParams = {
-  subpage: string
-  orgslug: string
+  subpage: string; orgslug: string
 }
 
 function UsersSettingsPage(props: { params: Promise<SettingsParams> }) {
   const { t } = useTranslation()
-  const params = use(props.params);
+  const params = useParams() as { subpage: string; orgslug: string };
   const [H1Label, setH1Label] = React.useState('')
   const [H2Label, setH2Label] = React.useState('')
 

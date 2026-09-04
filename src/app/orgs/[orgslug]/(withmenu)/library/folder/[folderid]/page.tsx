@@ -1,22 +1,14 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import FolderClient from './FolderClient'
-import { getOrganizationContextInfo } from '@services/organizations/orgs'
 import { getFolderById } from '@services/folders/folders'
-import { getOrgThumbnailMediaDirectory, getOrgOgImageMediaDirectory } from '@services/media/media'
-import { getOrgSeoConfig, buildPageTitle } from '@/lib/seo/utils'
-import { getServerCanonicalUrl } from '@/lib/seo/utils.server'
-import { getServerSession } from '@/lib/auth/server'
-
-type MetadataProps = {
-  params: Promise<{ orgslug: string; folderid: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
+import { useLHSession } from '@components/Contexts/LHSessionContext'
+import PageLoading from '@components/Objects/Loaders/PageLoading'
+import NotFound from '@app/not-found'
 
 /** Fetch the folder as the current viewer (forwards their session). Returns null
  * when the folder is private / the viewer has no access (the API denies). */
-async function fetchFolderForViewer(folderid: string) {
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
+async function fetchFolderForViewer(folderid: string, access_token?: string) {
   try {
     const folder = await getFolderById(
       `folder_${folderid}`,
@@ -29,15 +21,38 @@ async function fetchFolderForViewer(folderid: string) {
   }
 }
 
-const FolderPage = async (props: any) => {
-  const params = await props.params
-  // Server-side access gate: a private folder (or one the viewer lacks rights
-  // to) returns a real 404 — no folder name/contents are rendered or indexed.
-  const folder = await fetchFolderForViewer(params.folderid)
-  if (!folder) {
-    notFound()
+const FolderPage = () => {
+  const params = useParams() as { orgslug: string; folderid: string }
+  const { orgslug, folderid } = params
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
+
+  const [folderFound, setFolderFound] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!folderid) return
+      // Access gate: a private folder (or one the viewer lacks rights to)
+      // returns null — no folder name/contents are rendered.
+      const folder = await fetchFolderForViewer(folderid, access_token ?? undefined)
+      if (!cancelled) setFolderFound(!!folder)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [folderid, access_token])
+
+  if (folderFound === null) {
+    return <PageLoading />
   }
-  return <FolderClient orgslug={params.orgslug} folderid={params.folderid} />
+
+  if (!folderFound) {
+    return <NotFound />
+  }
+
+  return <FolderClient orgslug={orgslug ?? ''} folderid={folderid ?? ''} />
 }
 
 export default FolderPage

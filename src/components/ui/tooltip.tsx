@@ -2,7 +2,16 @@ import * as React from "react"
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip"
 import { cn } from "@/lib/utils"
 
-const TooltipProvider = TooltipPrimitive.Provider
+const TooltipProvider = function TooltipProvider({
+  delayDuration,
+  delay,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Provider> & {
+  delayDuration?: number
+}) {
+  // Radix called the open delay `delayDuration`; Base UI calls it `delay`.
+  return <TooltipPrimitive.Provider delay={delay ?? delayDuration} {...props} />
+}
 
 const Tooltip = TooltipPrimitive.Root
 

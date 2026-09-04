@@ -26,7 +26,7 @@ function TrailCourseElement(props: TrailCourseElementProps) {
   const access_token = session?.data?.tokens?.access_token;
   const courseid = props.course.course_uuid.replace('course_', '')
   const course = props.course
-  const router = useNavigate()
+  const navigate = useNavigate()
   const course_total_steps = props.run.course_total_steps
   const course_completed_steps = props.run.steps.length
   const orgID = org?.id

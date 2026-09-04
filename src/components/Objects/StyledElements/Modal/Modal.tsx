@@ -44,7 +44,7 @@ const Modal = (params: ModalParams) => {
   return (
     <Dialog open={params.isDialogOpen} onOpenChange={params.onOpenChange}>
       {params.dialogTrigger && (
-                    <DialogTrigger render={{params.dialogTrigger}} />
+                    <DialogTrigger render={params.dialogTrigger as React.ReactElement} />
       )}
       <DialogContent className={cn(
         "flex flex-col",

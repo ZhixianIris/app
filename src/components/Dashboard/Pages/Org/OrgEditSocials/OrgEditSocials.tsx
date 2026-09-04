@@ -39,7 +39,7 @@ export default function OrgEditSocials() {
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any
   const queryClient = useQueryClient()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const initialValues: OrganizationValues = {
     socials: org?.socials || {},
     links: org?.links || {}

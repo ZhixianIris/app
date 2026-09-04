@@ -1,4 +1,4 @@
-import { use, useEffect, type ReactNode, lazy } from "react";
+import { Suspense, lazy, useEffect, type ReactNode } from "react";
 import '@styles/globals.css'
 import Watermark from '@components/Objects/Watermark'
 import { SessionGate } from '@components/Contexts/LHSessionContext'
@@ -8,7 +8,7 @@ import { OrgJoinBanner, OrgJoinBannerProvider } from '@components/Objects/Banner
 import { OrgMFAPolicyGate } from '@components/Objects/Banners/OrgMFAPolicyGate'
 import { PodcastPlayerProvider } from '@components/Contexts/PodcastPlayerContext'
 const PodcastPlayer = lazy(() => import('@components/Objects/Podcasts/PodcastPlayer'))
-import { Link, useLocation, useSearchParams } from 'react-router-dom'
+import { Link, useLocation, useSearchParams, useParams } from 'react-router-dom'
 import { PageViewTracker } from '@components/Analytics/PageViewTracker'
 import { usePlan } from '@components/Hooks/usePlan'
 import { getGoogleFontUrl, DEFAULT_FONT } from '@/lib/fonts'
@@ -133,7 +133,7 @@ export default function RootLayout(
     params: Promise<any>
   }
 ) {
-  const params = use(props.params);
+  const params = useParams() as { orgslug: string };
 
   const {
     children
@@ -147,7 +147,9 @@ export default function RootLayout(
           <LayoutContent orgslug={params?.orgslug}>
             {children}
           </LayoutContent>
+          <Suspense fallback={null}>
           <PodcastPlayer />
+        </Suspense>
         </PodcastPlayerProvider>
       </OrgJoinBannerProvider>
       </SessionGate>

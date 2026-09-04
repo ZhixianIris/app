@@ -1,21 +1,15 @@
-import 'server-only'
-
-// Cloudflare Turnstile server-side verification.
+// Cloudflare Turnstile support.
 //
-// The widget on the client produces a short-lived, single-use token; we verify
-// it here against Cloudflare's siteverify endpoint before allowing a sensitive
-// action (signup, login, password reset). Secrets stay server-side.
-//
-// Design principle: Turnstile is OPTIONAL infrastructure. When TURNSTILE_SECRET_KEY
-// is absent (local dev, self-hosted, OSS) verification is disabled and every
-// action is allowed through — so the app degrades gracefully instead of locking
-// everyone out. Gate the UI on isTurnstileEnabled() / the public site key.
+// In the original Next.js app the secret-key verification lived in a server
+// route. In this SPA the Turnstile secret never reaches the browser, so
+// verification is enforced by the backend API; the client only needs to know
+// whether the widget should render and forward the token with the request.
+// Without a public site key the gate degrades to "disabled" — matching the
+// upstream OSS default.
 
-const SITEVERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
-
-/** True when a server secret is configured, i.e. Turnstile is active. */
+/** True when the widget should render (public site key configured). */
 export function isTurnstileEnabled(): boolean {
-  return Boolean(import.meta.env.VITE_TURNSTILE_SECRET_KEY)
+  return Boolean(import.meta.env.VITE_TURNSTILE_SITE_KEY)
 }
 
 export interface TurnstileResult {
@@ -28,46 +22,20 @@ export interface TurnstileResult {
 }
 
 /**
- * Verify a Turnstile token. Returns { ok: true } when Turnstile is disabled
- * (no secret) so callers can stay unconditional. When enabled, a missing or
- * invalid token yields ok: false with a reason.
+ * Client-side gate. Without a backend verification route the SPA cannot
+ * enforce Turnstile itself; the backend rejects protected actions when its
+ * own secret is configured and the token is missing/invalid.
  */
 export async function verifyTurnstile(
   token: string | null | undefined,
-  remoteIp?: string | null,
+  _remoteIp?: string | null,
 ): Promise<TurnstileResult> {
-  const secret = process.env.TURNSTILE_SECRET_KEY
-  // Disabled deployment — allow through.
-  if (!secret) return { ok: true }
-
-  if (!token) return { ok: false, reason: 'missing_token' }
-
-  try {
-    const body = new URLSearchParams({ secret, response: token })
-    if (remoteIp) body.set('remoteip', remoteIp)
-
-    const res = await fetch(SITEVERIFY_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body,
-      // Never let a slow/unreachable Cloudflare hang the request forever.
-      signal: AbortSignal.timeout(8000),
-    })
-    const data = (await res.json()) as { success: boolean; 'error-codes'?: string[] }
-
-    if (data.success) return { ok: true }
-    return { ok: false, reason: 'verification_failed', errorCodes: data['error-codes'] }
-  } catch (err) {
-    console.error('[turnstile] siteverify request failed:', err)
-    // Fail-OPEN on infrastructure errors: a Cloudflare outage shouldn't take
-    // down our signup/login. Bot pressure is the exceptional case, not the norm.
-    return { ok: true, reason: 'error' }
+  if (!isTurnstileEnabled()) {
+    return { ok: true }
   }
-}
-
-/** Extract the best-effort client IP from a request for remoteip verification. */
-export function clientIpFromHeaders(headers: Headers): string | undefined {
-  const xff = headers.get('cf-connecting-ip') || headers.get('x-forwarded-for')
-  if (!xff) return undefined
-  return xff.split(',')[0]?.trim() || undefined
+  if (!token) {
+    return { ok: false, reason: 'missing_token' }
+  }
+  // Token presence is all the SPA can check; the API verifies it server-side.
+  return { ok: true }
 }

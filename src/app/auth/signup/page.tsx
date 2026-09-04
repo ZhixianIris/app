@@ -1,36 +1,60 @@
+import { Suspense, useEffect, useState } from 'react'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getAuthOrgSlug } from '@services/org/orgResolution'
 import SignUpClient from './signup'
-import { Suspense } from 'react'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 import OrgNotFound from '@components/Objects/StyledElements/Error/OrgNotFound'
-const SignUp = async () => {
-  const orgslug = await getAuthOrgSlug()
 
-  // On the org-less apex (learn.io/signup) there is no subdomain org. We keep
-  // `org` null so the page renders the generic, org-less open-signup form —
-  // exactly like the apex login page. The account is still created against the
-  // instance default org, but that is resolved server-side in the signup API so
-  // the UI never shows an org here.
-  let org: any = null
-  if (orgslug) {
-    try {
-      org = await getOrganizationContextInfo(orgslug, null)
-    } catch {
-      org = null
+function getAuthOrgSlug(): string | null {
+  try {
+    const match = document.cookie.match(/(?:^|; )app_org=([^;]*)/)
+    return match ? decodeURIComponent(match[1]) : null
+  } catch {
+    return null
+  }
+}
+
+const SignUp = () => {
+  const [org, setOrg] = useState<any>(null)
+  const [orgMissing, setOrgMissing] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      const orgslug = getAuthOrgSlug()
+      if (!orgslug) {
+        if (!cancelled) setLoaded(true)
+        return
+      }
+      let nextOrg: any = null
+      try {
+        nextOrg = await getOrganizationContextInfo(orgslug, null)
+      } catch {
+        nextOrg = null
+      }
+      if (cancelled) return
+      // A missing subdomain org is a real 404.
+      if (!nextOrg) {
+        setOrgMissing(true)
+        return
+      }
+      setOrg(nextOrg)
+      setLoaded(true)
     }
-    // A missing subdomain org is a real 404.
-    if (!org) {
-      return <OrgNotFound />
+    load()
+    return () => {
+      cancelled = true
     }
+  }, [])
+
+  if (orgMissing) {
+    return <OrgNotFound />
   }
 
   return (
-    <>
-      <Suspense fallback={<PageLoading />}>
-        <SignUpClient org={org} />
-      </Suspense>
-    </>
+    <Suspense fallback={<PageLoading />}>
+      {loaded ? <SignUpClient org={org} /> : <PageLoading />}
+    </Suspense>
   )
 }
 

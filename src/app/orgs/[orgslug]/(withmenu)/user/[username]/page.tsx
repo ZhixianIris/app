@@ -1,51 +1,58 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
+import { Navigate, useParams } from 'react-router-dom'
 import { getUserByUsername } from '@services/users/users'
-import { getServerSession } from '@/lib/auth/server'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import UserProfileClient from './UserProfileClient'
-import { redirect } from "react-router-dom";
+import PageLoading from '@components/Objects/Loaders/PageLoading'
 
-interface UserPageParams {
-  username: string;
-  orgslug: string;
-}
+const UserPage = () => {
+  const { username } = useParams() as { username: string }
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-interface UserPageProps {
-  params: Promise<UserPageParams>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
+  const [userData, setUserData] = useState<any>(null)
+  const [error, setError] = useState(false)
+  const [loaded, setLoaded] = useState(false)
 
-async function UserPage({ params }: UserPageProps) {
-  const resolvedParams = await params;
-  const { username } = resolvedParams;
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!access_token || !username) return
+      try {
+        // Fetch user data by username with authentication
+        const data = await getUserByUsername(username, access_token)
+        if (!cancelled) {
+          setUserData(data)
+          setLoaded(true)
+        }
+      } catch (err) {
+        console.error('Error fetching user data:', err)
+        if (!cancelled) {
+          setError(true)
+          setLoaded(true)
+        }
+      }
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [username, access_token])
 
-  // Get session for authentication
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
-
-  // Require authentication to view user profiles. Browser-relative path only —
-  // the proxy adds /orgs/{slug} and rewrites /login → /auth/login; an
-  // org-prefixed path would be double-prefixed → 404.
-  if (!access_token) {
-    redirect(`/login?redirect=/user/${username}`)
+  if (session?.status === 'loading') {
+    return <PageLoading />
   }
 
-  try {
-    // Fetch user data by username with authentication
-    const userData = await getUserByUsername(username, access_token);
-    const profile = userData.profile ? (
-      typeof userData.profile === 'string' ? JSON.parse(userData.profile) : userData.profile
-    ) : { sections: [] };
+  // Require authentication to view user profiles.
+  if (!access_token) {
+    return <Navigate to={`/login?redirect=/user/${username}`} replace />
+  }
 
-    return (
-      <div>
-        <UserProfileClient
-          userData={userData}
-          profile={profile}
-        />
-      </div>
-    )
-  } catch (error) {
-    console.error('Error fetching user data:', error)
+  if (!loaded) {
+    return <PageLoading />
+  }
+
+  if (error) {
     return (
       <div className="container mx-auto py-8">
         <div className="bg-white rounded-xl nice-shadow p-6">
@@ -54,6 +61,19 @@ async function UserPage({ params }: UserPageProps) {
       </div>
     )
   }
+
+  const profile = userData?.profile ? (
+    typeof userData.profile === 'string' ? JSON.parse(userData.profile) : userData.profile
+  ) : { sections: [] }
+
+  return (
+    <div>
+      <UserProfileClient
+        userData={userData}
+        profile={profile}
+      />
+    </div>
+  )
 }
 
 export default UserPage

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { createPortal } from 'react-dom'
 import { Editor } from '@tiptap/core'
-import learnhouseAI_icon from 'public/learnhouse_ai_simple.png'
+const learnhouseAI_icon = '/learnhouse_ai_simple.png'
 import { BookOpen, FormInput, Languages, MoreVertical } from 'lucide-react'
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip'
 import {

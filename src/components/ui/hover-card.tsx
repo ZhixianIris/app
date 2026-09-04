@@ -5,32 +5,51 @@ import { cn } from "@/lib/utils"
 
 // Base UI has no dedicated hover-card primitive; PreviewCard is its
 // open-on-hover popup with delay handling, which is what a hover card is.
+const HoverDelayContext = React.createContext<{ delay?: number; closeDelay?: number }>({})
+
 function HoverCard({
+  openDelay,
+  closeDelay,
   ...props
-}: React.ComponentProps<typeof PreviewCard.Root>) {
-  return <PreviewCard.Root data-slot="hover-card" {...props} />
+}: React.ComponentProps<typeof PreviewCard.Root> & {
+  openDelay?: number
+  closeDelay?: number
+}) {
+  return (
+    <HoverDelayContext.Provider value={{ delay: openDelay, closeDelay: closeDelay }}>
+      <PreviewCard.Root data-slot="hover-card" {...props} />
+    </HoverDelayContext.Provider>
+  )
 }
 
 function HoverCardTrigger({
   ...props
 }: React.ComponentProps<typeof PreviewCard.Trigger>) {
+  const { delay, closeDelay } = React.useContext(HoverDelayContext)
   return (
-    <PreviewCard.Trigger data-slot="hover-card-trigger" {...props} />
+    <PreviewCard.Trigger
+      data-slot="hover-card-trigger"
+      delay={delay}
+      closeDelay={closeDelay}
+      {...props}
+    />
   )
 }
 
 function HoverCardContent({
   className,
   align = "center",
+  side,
   sideOffset = 4,
   ...props
 }: React.ComponentProps<typeof PreviewCard.Popup> & {
   align?: "start" | "center" | "end"
+  side?: "top" | "right" | "bottom" | "left"
   sideOffset?: number
 }) {
   return (
     <PreviewCard.Portal data-slot="hover-card-portal">
-      <PreviewCard.Positioner align={align} sideOffset={sideOffset}>
+      <PreviewCard.Positioner align={align} side={side} sideOffset={sideOffset}>
         <PreviewCard.Popup
           data-slot="hover-card-content"
           className={cn(

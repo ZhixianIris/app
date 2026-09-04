@@ -23,7 +23,7 @@ const DiscussionPageClient = ({
   community,
   orgslug,
 }: DiscussionPageClientProps) => {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const [discussion, setDiscussion] = useState(initialDiscussion)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)

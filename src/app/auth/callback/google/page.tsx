@@ -7,7 +7,7 @@ import { getErrorMessage } from '@services/utils/ts/errorMessage'
 
 export default function GoogleCallbackPage() {
   const [searchParams] = useSearchParams()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const { signIn } = useAuth()
   const [error, setError] = useState<string | null>(null)
   const [status, setStatus] = useState<'loading' | 'success' | 'error' | 'csrf_error'>('loading')
@@ -262,7 +262,7 @@ export default function GoogleCallbackPage() {
     }
 
     handleCallback()
-  }, [searchParams, router, signIn])
+  }, [searchParams, navigate, signIn])
 
   if (status === 'loading') {
     return (

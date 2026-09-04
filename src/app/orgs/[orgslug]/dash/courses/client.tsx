@@ -192,7 +192,7 @@ function CoursesHome(params: CourseProps) {
     mutateCourses()
   }
 
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   const handleCreationTypeSelect = (type: 'scratch' | 'ai' | 'migrate') => {
     track(AnalyticsEvent.CourseCreationTypeSelected, { creation_type: type })

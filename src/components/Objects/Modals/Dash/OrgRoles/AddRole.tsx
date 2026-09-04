@@ -655,7 +655,6 @@ function AddRole(props: AddRoleProps) {
                         {t('common.cancel')}
                     </button>
                                         <button type="submit"
-                            type="submit"
                             disabled={isSubmitting}
                             className="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 transition-colors disabled:opacity-50 w-full sm:w-auto font-medium shadow-sm"
                         >

@@ -50,7 +50,7 @@ function OrgAccess() {
   const [isLoading, setIsLoading] = React.useState(false)
   const [joinMethod, setJoinMethod] = React.useState('closed')
   const [invitesModal, setInvitesModal] = React.useState(false)
-  const router = useNavigate()
+  const navigate = useNavigate()
   const { track } = useLHAnalytics('dashboard')
 
   const { data: invites, isLoading: isInvitesLoading } = useQuery({

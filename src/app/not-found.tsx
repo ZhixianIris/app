@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import learnhouseIcon from 'public/black_logo.png'
+const learnhouseIcon = '/black_logo.png'
 
 export default function NotFound() {
   return (

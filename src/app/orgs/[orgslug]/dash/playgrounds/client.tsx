@@ -42,7 +42,7 @@ export default function PlaygroundsListClient({ org_id, orgslug }: PlaygroundsLi
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
 

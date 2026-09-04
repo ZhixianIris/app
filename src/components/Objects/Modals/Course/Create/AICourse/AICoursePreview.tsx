@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
-import lrnaiIcon from 'public/lrnai_icon.png'
+const lrnaiIcon = '/lrnai_icon.png'
 import toast from 'react-hot-toast'
 import type { CoursePlan, ChapterPlan, ActivityPlan, CreatedChapter } from '@services/ai/courseplanning'
 import {

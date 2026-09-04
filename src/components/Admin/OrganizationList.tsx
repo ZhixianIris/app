@@ -191,7 +191,7 @@ export default function OrganizationList() {
   const session = useLHSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const [searchParams] = useSearchParams()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const pathname = useLocation().pathname
 
   // Read initial values from URL search params
@@ -219,8 +219,8 @@ export default function OrganizationList() {
       }
     }
     const qs = params.toString()
-    navigate(`${pathname}${qs ? `?${qs}` : ''}`, { scroll: false }, { replace: true })
-  }, [searchParams, router, pathname])
+    navigate(`${pathname}${qs ? `?${qs}` : ''}`, { replace: true })
+  }, [searchParams, navigate, pathname])
 
   // Debounce search input
   useEffect(() => {

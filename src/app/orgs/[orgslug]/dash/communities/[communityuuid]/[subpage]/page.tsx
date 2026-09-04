@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import { getUriWithOrg } from '@services/config/config'
 import { Image as ImageIcon, Link2, Shield, MessagesSquare, Users } from 'lucide-react'
@@ -13,9 +14,7 @@ import CommunityEditAccess from '@components/Dashboard/Pages/Community/Community
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar'
 
 export type CommunityParams = {
-  subpage: string
-  orgslug: string
-  communityuuid: string
+  subpage: string; orgslug: string; communityuuid: string
 }
 
 function CommunitySettingsContent({ params }: { params: CommunityParams }) {
@@ -125,7 +124,7 @@ function CommunitySettingsContent({ params }: { params: CommunityParams }) {
 }
 
 function CommunitySettingsPage(props: { params: Promise<CommunityParams> }) {
-  const params = use(props.params)
+  const params = useParams() as { subpage: string; orgslug: string; communityuuid: string }
 
   return (
     <CommunityProvider communityuuid={params.communityuuid}>

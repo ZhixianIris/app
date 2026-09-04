@@ -43,7 +43,7 @@ function EmbedActivityModal({ submitActivity, chapterId, course }: any) {
       </div>
 
       <div className="rounded-xl nice-shadow p-4 space-y-4">
-        <Field name="embed-activity-name" className="space-y-1.5">
+        <Field.Root name="embed-activity-name" className="space-y-1.5">
           <Field.Label className="text-sm font-medium text-gray-700">
             Activity name
           </Field.Label>
@@ -57,9 +57,9 @@ function EmbedActivityModal({ submitActivity, chapterId, course }: any) {
               placeholder="Enter a name..."
               className="w-full h-9 px-3 text-sm rounded-lg bg-gray-50 border border-gray-200 outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-200 transition-colors"
             />} />
-        </Field>
+        </Field.Root>
 
-        <Field name="embed-activity-url" className="space-y-1.5">
+        <Field.Root name="embed-activity-url" className="space-y-1.5">
           <Field.Label className="text-sm font-medium text-gray-700">
             Embed URL
           </Field.Label>
@@ -76,9 +76,9 @@ function EmbedActivityModal({ submitActivity, chapterId, course }: any) {
               placeholder="https://docs.google.com/document/d/..."
               className="w-full h-9 px-3 text-sm rounded-lg bg-gray-50 border border-gray-200 outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-200 transition-colors"
             />} />
-        </Field>
+        </Field.Root>
 
-        <Field name="embed-activity-desc" className="space-y-1.5">
+        <Field.Root name="embed-activity-desc" className="space-y-1.5">
           <Field.Label className="text-sm font-medium text-gray-700">
             Description
           </Field.Label>
@@ -88,12 +88,11 @@ function EmbedActivityModal({ submitActivity, chapterId, course }: any) {
               rows={3}
               className="w-full px-3 py-2 text-sm rounded-lg bg-gray-50 border border-gray-200 outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-200 transition-colors resize-none"
             />} />
-        </Field>
+        </Field.Root>
       </div>
 
       <div className="flex justify-end">
                     <button type="submit"
-            type="submit"
             disabled={isSubmitting}
             className="inline-flex items-center justify-center h-9 px-5 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
           >

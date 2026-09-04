@@ -172,7 +172,7 @@ export default function EphemeralChat({ ydoc, provider }: EphemeralChatProps) {
   return (
     <>
       {/* CSS keyframes for emoji float-up */}
-      <style jsx>{`
+      <style >{`
         @keyframes emoji-float {
           0% {
             transform: translateY(0) scale(1);

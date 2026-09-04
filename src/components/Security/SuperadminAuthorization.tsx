@@ -11,7 +11,7 @@ const SuperadminAuthorization: React.FC<SuperadminAuthorizationProps> = ({
   children,
 }) => {
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [isChecking, setIsChecking] = useState(true)
   const [isRedirecting, setIsRedirecting] = useState(false)
@@ -34,7 +34,7 @@ const SuperadminAuthorization: React.FC<SuperadminAuthorizationProps> = ({
 
     setIsAuthorized(session?.data?.user?.is_superadmin === true)
     setIsChecking(false)
-  }, [session.status, isUserAuthenticated, session?.data?.user?.is_superadmin, router])
+  }, [session.status, isUserAuthenticated, session?.data?.user?.is_superadmin, navigate])
 
   useEffect(() => {
     checkAuth()

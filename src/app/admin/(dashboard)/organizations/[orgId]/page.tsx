@@ -67,7 +67,7 @@ function getTabsForMode(mode: string) {
 
 function useUrlParams() {
   const [searchParams] = useSearchParams()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const pathname = useLocation().pathname
 
   const updateParams = useCallback(
@@ -91,9 +91,9 @@ function useUrlParams() {
         }
       }
       const qs = params.toString()
-      navigate(`${pathname}${qs ? `?${qs}` : ''}`, { scroll: false }, { replace: true })
+      navigate(`${pathname}${qs ? `?${qs}` : ''}`, { replace: true })
     },
-    [searchParams, router, pathname]
+    [searchParams, navigate, pathname]
   )
 
   return { searchParams, updateParams }

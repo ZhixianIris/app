@@ -80,7 +80,7 @@ function DiscussionContentEditor({ content }: { content: any }) {
   return (
     <>
       <EditorContent editor={editor} className="discussion-content-readonly" />
-      <style jsx global>{`
+      <style  >{`
         .discussion-content-readonly .ProseMirror {
           outline: none;
         }

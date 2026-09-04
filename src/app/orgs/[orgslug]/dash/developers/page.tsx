@@ -1,7 +1,6 @@
-import { redirect } from "react-router-dom";
+import { Navigate } from 'react-router-dom'
 
-// Bare /dash/developers → the first section. Browser-relative path only (the proxy
-// adds the /orgs/{slug} prefix); a slug-prefixed path would be double-prefixed.
+// Bare /dash/developers → the first section.
 export default function DevelopersIndex() {
-  redirect('/dash/developers/api')
+  return <Navigate to="/dash/developers/api" replace />
 }

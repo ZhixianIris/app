@@ -55,7 +55,7 @@ function ResourceActivityModal({ submitActivity, chapterId, course, orgslug }: a
       </div>
 
       <div className="rounded-xl nice-shadow p-4 space-y-4">
-        <Field name="resource-activity-name" className="space-y-1.5">
+        <Field.Root name="resource-activity-name" className="space-y-1.5">
           <Field.Label className="text-sm font-medium text-gray-700">
             Activity name
           </Field.Label>
@@ -70,7 +70,7 @@ function ResourceActivityModal({ submitActivity, chapterId, course, orgslug }: a
               placeholder="Enter a name..."
               className="w-full h-9 px-3 text-sm rounded-lg bg-gray-50 border border-gray-200 outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-200 transition-colors"
             />} />
-        </Field>
+        </Field.Root>
 
         <div className="space-y-1.5">
           <label className="text-sm font-medium text-gray-700">Pick a resource</label>
@@ -85,7 +85,6 @@ function ResourceActivityModal({ submitActivity, chapterId, course, orgslug }: a
 
       <div className="flex justify-end">
                     <button type="submit"
-            type="submit"
             disabled={isSubmitting || !selected}
             className="inline-flex items-center justify-center h-9 px-5 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
           >

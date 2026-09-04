@@ -300,7 +300,7 @@ function ActivityIndicators(props: Props) {
   const orgslug = props.orgslug
   const courseid = props.course_uuid.replace('course_', '')
   const enableNavigation = props.enableNavigation || false
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   // The trophy promises a certificate, so it only makes sense on a course that
   // actually has certification. A definitive "no certification" hides it; a

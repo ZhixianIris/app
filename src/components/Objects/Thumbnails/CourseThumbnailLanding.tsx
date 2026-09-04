@@ -99,7 +99,7 @@ const AdminEditOptions: React.FC<AdminEditOptionsProps> = ({ course, orgslug, de
 
 const CourseThumbnailLanding: React.FC<PropsType> = ({ course, orgslug, customLink }) => {
   const { t, i18n } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const org = useOrg() as any
   const session = useLHSession() as any
   const queryClient = useQueryClient()

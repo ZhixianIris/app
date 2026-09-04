@@ -73,7 +73,7 @@ export function DiscussionDetail({
 }: DiscussionDetailProps) {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const communityId = communityUuid.replace('community_', '')
   const accessToken = session?.data?.tokens?.access_token
   const currentUserId = session?.data?.user?.id

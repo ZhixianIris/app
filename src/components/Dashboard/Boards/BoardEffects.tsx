@@ -886,7 +886,7 @@ export default function BoardEffects({ ydoc, provider }: BoardEffectsProps) {
   return (
     <>
       {/* CSS for all effects */}
-      <style jsx global>{`
+      <style  >{`
         @keyframes effect-rise {
           0% { opacity: 0.9; transform: translateY(0) translateX(0) scale(1); }
           60% { opacity: 0.6; }

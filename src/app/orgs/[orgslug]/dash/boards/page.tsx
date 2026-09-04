@@ -1,20 +1,33 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import React from 'react'
-import BoardListClient from './client'
+import BoardsHome from './client'
 
-type MetadataProps = {
-  params: Promise<{ orgslug: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+function BoardsPage() {
+  const { orgslug } = useParams() as { orgslug: string }
+  const [orgId, setOrgId] = useState<number | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!orgslug) return
+      try {
+        const org = await getOrganizationContextInfo(orgslug, {
+          revalidate: 120,
+          tags: ['organizations'],
+        })
+        if (!cancelled) setOrgId(org?.id ?? null)
+      } catch (error) {
+        console.error('Failed to fetch organization:', error)
+      }
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug])
+
+  return <BoardsHome orgslug={orgslug ?? ''} org_id={orgId ?? 0} />
 }
 
-async function BoardsDashPage(params: any) {
-  const orgslug = (await params.params).orgslug
-  const org = await getOrganizationContextInfo(orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
-
-  return <BoardListClient org_id={org.id} orgslug={orgslug} />
-}
-
-export default BoardsDashPage
+export default BoardsPage

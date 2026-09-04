@@ -12,7 +12,7 @@ interface ActivityNavigationProps {
 }
 
 export default function ActivityNavigation(props: ActivityNavigationProps): React.ReactNode {
-  const router = useNavigate();
+  const navigate = useNavigate();
   const isMobile = useMediaQuery('(max-width: 768px)');
   const [isBottomNavVisible, setIsBottomNavVisible] = React.useState(true);
   const bottomNavRef = React.useRef<HTMLDivElement>(null);

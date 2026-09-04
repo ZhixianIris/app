@@ -25,7 +25,7 @@ interface SignUpClientProps {
 function SignUpClient(props: SignUpClientProps) {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [joinMethod, setJoinMethod] = React.useState('open')
   const [inviteCode, setInviteCode] = React.useState('')
   const [searchParams] = useSearchParams()
@@ -42,7 +42,7 @@ function SignUpClient(props: SignUpClientProps) {
     if (isAuthenticated && !hasOrgToJoin) {
       navigate('/home', { replace: true })
     }
-  }, [isAuthenticated, hasOrgToJoin, router])
+  }, [isAuthenticated, hasOrgToJoin, navigate])
 
   useEffect(() => {
     // On the org-less apex (learn.io/signup) props.org is null — guard it and
@@ -121,7 +121,7 @@ const LoggedInJoinScreen = ({ inviteCode, org }: JoinScreenProps) => {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [showMessage, setShowMessage] = useState(false)
-  const router = useNavigate()
+  const navigate = useNavigate()
   const redirectTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => () => {
@@ -245,7 +245,7 @@ const NoTokenScreen = ({ org }: NoTokenScreenProps) => {
   const session = useLHSession() as any
   const contextOrg = useOrg() as any
   const activeOrg = contextOrg || org
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [inviteCode, setInviteCode] = useState('')
   const [error, setError] = useState('')

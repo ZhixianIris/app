@@ -26,7 +26,7 @@ type TextColor = 'light' | 'dark'
 
 export default function AuthBrandingTab() {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any

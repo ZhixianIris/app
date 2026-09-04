@@ -1,4 +1,3 @@
-import "server-only";
 // Plan / pack type primitives + Stripe price-id configuration.
 //
 // server-only: this reads process.env.STRIPE_PRICE_* at module load, so it must

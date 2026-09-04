@@ -31,7 +31,7 @@ function SaveState(props: { orgslug: string }) {
   const course = useCourse() as any
   const session = useLHSession() as any
   const org = useOrg() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const dispatchCourse = useCourseDispatch() as any
   const debounceManager = useDebounceManager()
   const saveInProgressRef = useRef(false)
@@ -204,7 +204,7 @@ function SaveState(props: { orgslug: string }) {
     session.data?.tokens?.access_token,
     debounceManager,
     dispatchCourse,
-    router,
+    navigate,
     props.orgslug,
     track,
     t

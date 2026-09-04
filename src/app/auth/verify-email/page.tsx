@@ -1,30 +1,58 @@
+import { Suspense, useEffect, useState } from 'react'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getAuthOrgSlug } from '@services/org/orgResolution'
 import VerifyEmailClient from './verify-email'
 import OrgNotFound from '@components/Objects/StyledElements/Error/OrgNotFound'
-import { Suspense } from 'react'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
-const VerifyEmailPage = async () => {
-  const orgslug = await getAuthOrgSlug()
 
-  let org: any = null
-  if (orgslug) {
-    try {
-      org = await getOrganizationContextInfo(orgslug, {
-        revalidate: 60,
-        tags: ['organizations'],
-      })
-    } catch {
-      org = null
+function getAuthOrgSlug(): string | null {
+  try {
+    const match = document.cookie.match(/(?:^|; )app_org=([^;]*)/)
+    return match ? decodeURIComponent(match[1]) : null
+  } catch {
+    return null
+  }
+}
+
+const VerifyEmailPage = () => {
+  const [org, setOrg] = useState<any>(null)
+  const [orgMissing, setOrgMissing] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      const orgslug = getAuthOrgSlug()
+      if (!orgslug) {
+        if (!cancelled) setLoaded(true)
+        return
+      }
+      let nextOrg: any = null
+      try {
+        nextOrg = await getOrganizationContextInfo(orgslug, null)
+      } catch {
+        nextOrg = null
+      }
+      if (cancelled) return
+      if (!nextOrg) {
+        setOrgMissing(true)
+        return
+      }
+      setOrg(nextOrg)
+      setLoaded(true)
     }
-    if (!org) {
-      return <OrgNotFound />
+    load()
+    return () => {
+      cancelled = true
     }
+  }, [])
+
+  if (orgMissing) {
+    return <OrgNotFound />
   }
 
   return (
     <Suspense fallback={<PageLoading />}>
-      <VerifyEmailClient org={org} />
+      {loaded ? <VerifyEmailClient org={org} /> : <PageLoading />}
     </Suspense>
   )
 }

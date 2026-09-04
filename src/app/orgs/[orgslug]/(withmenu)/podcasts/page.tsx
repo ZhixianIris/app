@@ -1,51 +1,65 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getOrgPodcasts } from '@services/podcasts/podcasts'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getOrgThumbnailMediaDirectory, getOrgOgImageMediaDirectory } from '@services/media/media'
-import { getServerSession } from '@/lib/auth/server'
-import { getOrgSeoConfig, buildPageTitle, buildBreadcrumbJsonLd } from '@/lib/seo/utils'
-import { getServerCanonicalUrl } from '@/lib/seo/utils.server'
-import { JsonLd } from '@components/SEO/JsonLd'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import PodcastsClient from './podcasts'
+import PageLoading from '@components/Objects/Loaders/PageLoading'
 
-type PageParams = Promise<{
-  orgslug: string
-}>
+export default function PodcastsPage() {
+  const { orgslug } = useParams() as { orgslug: string }
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-export default async function PodcastsPage({ params }: { params: PageParams }) {
-  const { orgslug } = await params
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
+  const [orgId, setOrgId] = useState<number | null>(null)
+  const [initialPodcasts, setInitialPodcasts] = useState<any[]>([])
+  const [loaded, setLoaded] = useState(false)
 
-  const org = await getOrganizationContextInfo(orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!orgslug) return
+      let nextOrgId: number | null = null
+      try {
+        const org = await getOrganizationContextInfo(orgslug, {
+          revalidate: 120,
+          tags: ['organizations'],
+        })
+        nextOrgId = org?.id || 0
+      } catch (error) {
+        console.error('Error fetching organization:', error)
+      }
+      let podcasts: any[] = []
+      try {
+        podcasts = await getOrgPodcasts(
+          orgslug,
+          { revalidate: 120, tags: ['podcasts'] },
+          access_token ? access_token : undefined,
+          access_token ? true : false  // include_unpublished for logged-in users
+        )
+      } catch (error) {
+        console.error('Error fetching podcasts:', error)
+      }
+      if (cancelled) return
+      setOrgId(nextOrgId)
+      setInitialPodcasts(podcasts || [])
+      setLoaded(true)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug, access_token])
 
-  let initialPodcasts = []
-  try {
-    initialPodcasts = await getOrgPodcasts(
-      orgslug,
-      { revalidate: 120, tags: ['podcasts'] },
-      access_token ? access_token : undefined,
-      access_token ? true : false  // include_unpublished for logged-in users
-    )
-  } catch (error) {
-    console.error('Error fetching podcasts:', error)
+  if (!loaded) {
+    return <PageLoading />
   }
 
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: 'Home', url: await getServerCanonicalUrl(orgslug, '/') },
-    { name: 'Podcasts', url: await getServerCanonicalUrl(orgslug, '/podcasts') },
-  ])
-
   return (
-    <>
-      <JsonLd data={breadcrumbJsonLd} />
-      <PodcastsClient
-        orgslug={orgslug}
-        org_id={org?.id || 0}
-        initialPodcasts={initialPodcasts || []}
-      />
-    </>
+    <PodcastsClient
+      orgslug={orgslug ?? ''}
+      org_id={orgId || 0}
+      initialPodcasts={initialPodcasts || []}
+    />
   )
 }

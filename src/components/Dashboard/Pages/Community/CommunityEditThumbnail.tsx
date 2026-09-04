@@ -22,7 +22,7 @@ type ValidImageMimeType = (typeof VALID_IMAGE_MIME_TYPES)[number]
 
 const CommunityEditThumbnail: React.FC = () => {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const org = useOrg() as any
   const communityState = useCommunity()

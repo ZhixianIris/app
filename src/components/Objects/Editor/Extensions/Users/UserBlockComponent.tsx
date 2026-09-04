@@ -73,7 +73,7 @@ function UserBlockComponent(props: any) {
   const access_token = session?.data?.tokens?.access_token
   const editorState = useEditorProvider() as any
   const isEditable = editorState.isEditable
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   const [username, setUsername] = useState('')
   const [userData, setUserData] = useState<UserData | null>(null)

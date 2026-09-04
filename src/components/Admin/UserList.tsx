@@ -119,7 +119,7 @@ export default function UserList() {
   const session = useLHSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const [searchParams] = useSearchParams()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const pathname = useLocation().pathname
 
   const [search, setSearch] = useState(searchParams.get('search') || '')
@@ -155,9 +155,9 @@ export default function UserList() {
         }
       }
       const qs = params.toString()
-      navigate(`${pathname}${qs ? `?${qs}` : ''}`, { scroll: false }, { replace: true })
+      navigate(`${pathname}${qs ? `?${qs}` : ''}`, { replace: true })
     },
-    [searchParams, router, pathname]
+    [searchParams, navigate, pathname]
   )
 
   useEffect(() => {

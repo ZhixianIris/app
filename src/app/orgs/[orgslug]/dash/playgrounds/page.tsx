@@ -1,20 +1,33 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import React from 'react'
-import PlaygroundsListClient from './client'
+import PlaygroundsDashClient from './client'
 
-type MetadataProps = {
-  params: Promise<{ orgslug: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
+function PlaygroundsDashPage() {
+  const { orgslug } = useParams<{ orgslug: string }>()
+  const [orgId, setOrgId] = useState<number | null>(null)
 
-async function PlaygroundsDashPage(params: any) {
-  const orgslug = (await params.params).orgslug
-  const org = await getOrganizationContextInfo(orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!orgslug) return
+      try {
+        const org = await getOrganizationContextInfo(orgslug, {
+          revalidate: 120,
+          tags: ['organizations'],
+        })
+        if (!cancelled) setOrgId(org?.id ?? null)
+      } catch (error) {
+        console.error('Failed to fetch organization:', error)
+      }
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug])
 
-  return <PlaygroundsListClient org_id={org.id} orgslug={orgslug} />
+  return <PlaygroundsDashClient orgslug={orgslug ?? ''} org_id={orgId ?? 0} />
 }
 
 export default PlaygroundsDashPage

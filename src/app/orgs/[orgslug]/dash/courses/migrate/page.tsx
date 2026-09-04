@@ -1,10 +1,7 @@
+import { useParams } from 'react-router-dom'
 import MigrationClient from './client'
 
-export default async function MigrationPage({
-  params,
-}: {
-  params: Promise<{ orgslug: string }>
-}) {
-  const { orgslug } = await params
-  return <MigrationClient orgslug={orgslug} />
+export default function MigrationPage() {
+  const { orgslug } = useParams() as { orgslug: string }
+  return <MigrationClient orgslug={orgslug ?? ''} />
 }

@@ -217,7 +217,7 @@ const EditAssignmentForm: React.FC<EditAssignmentFormProps> = ({
     return (
         <Form onSubmit={formik.handleSubmit} className="space-y-5">
             {/* Basic info */}
-            <Field name="title" className="space-y-1.5">
+            <Field.Root name="title" className="space-y-1.5">
                 <Field.Label className={labelClass}>
                     {t('dashboard.assignments.modals.edit.form.title_label')}
                 </Field.Label>
@@ -231,9 +231,9 @@ const EditAssignmentForm: React.FC<EditAssignmentFormProps> = ({
                         required
                         className={inputClass}
                     />} />
-            </Field>
+            </Field.Root>
 
-            <Field name="description" className="space-y-1.5">
+            <Field.Root name="description" className="space-y-1.5">
                 <Field.Label className={labelClass}>
                     {t('dashboard.assignments.modals.edit.form.description_label')}
                 </Field.Label>
@@ -247,11 +247,11 @@ const EditAssignmentForm: React.FC<EditAssignmentFormProps> = ({
                         rows={3}
                         className={textareaClass}
                     />} />
-            </Field>
+            </Field.Root>
 
             {/* Optional: a self-paced course has no date that means anything to
                 a learner who enrolled today. */}
-            <Field name="due_date" className="space-y-1.5">
+            <Field.Root name="due_date" className="space-y-1.5">
                 <div className="flex items-center justify-between">
                     <Field.Label className={labelClass}>
                         {t('dashboard.assignments.modals.edit.form.due_date_label')}
@@ -275,7 +275,7 @@ const EditAssignmentForm: React.FC<EditAssignmentFormProps> = ({
                 <p className="text-[10px] text-gray-400">
                     {t('dashboard.assignments.modals.edit.form.due_date_hint')}
                 </p>
-            </Field>
+            </Field.Root>
 
             {/* Grading type */}
             <div className="space-y-2">
@@ -392,7 +392,6 @@ const EditAssignmentForm: React.FC<EditAssignmentFormProps> = ({
                     {t('dashboard.assignments.modals.edit.form.cancel')}
                 </button>
                                 <button type="submit"
-                        type="submit"
                         disabled={formik.isSubmitting}
                         className="inline-flex items-center justify-center h-9 px-5 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
                     >

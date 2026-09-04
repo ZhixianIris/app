@@ -39,7 +39,7 @@ const AssignmentAnalyticsSubPage = lazy(() => import('./subpages/AssignmentAnaly
 
 function AssignmentEdit() {
     const { t } = useTranslation()
-    const params = useParams<{ assignmentuuid: string; }>()
+    const params = useParams() as { assignmentuuid: string; }
     const [searchParams] = useSearchParams()
     const [selectedSubPage, setSelectedSubPage] = React.useState(searchParams.get('subpage') || 'editor')
     const isMobile = useMediaQuery('(max-width: 767px)')

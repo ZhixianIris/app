@@ -32,7 +32,7 @@ const LoginClient = (props: LoginClientProps) => {
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const turnstileRef = React.useRef<TurnstileWidgetHandle>(null)
   const turnstileRequired = useTurnstileRequired()
-  const router = useNavigate();
+  const navigate = useNavigate();
   const session = useLHSession() as any;
   const isAuthenticated = session?.status === 'authenticated'
 
@@ -55,7 +55,7 @@ const LoginClient = (props: LoginClientProps) => {
   // authenticated) doesn't race the onSubmit's own post-login navigation.
   useEffect(() => {
     if (isAuthenticated && !isSubmitting) navigate('/home', { replace: true })
-  }, [isAuthenticated, isSubmitting, router])
+  }, [isAuthenticated, isSubmitting, navigate])
 
   // Error state with type information
   const [error, setError] = useState('')

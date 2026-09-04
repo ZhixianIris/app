@@ -50,10 +50,10 @@ DropdownMenuSubTrigger.displayName = "DropdownMenuSubTrigger"
 
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof Menu.Popup>,
-  React.ComponentPropsWithoutRef<typeof Menu.Popup>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof Menu.Popup> & { align?: 'start' | 'center' | 'end' }
+>(({ className, align = 'center', ...props }, ref) => (
   <Menu.Portal>
-    <Menu.Positioner style={{ zIndex: 'var(--z-dropdown)' }} sideOffset={4}>
+    <Menu.Positioner align={align} style={{ zIndex: 'var(--z-dropdown)' }} sideOffset={4}>
       <Menu.Popup
         ref={ref}
         className={cn(
@@ -70,10 +70,13 @@ DropdownMenuSubContent.displayName = "DropdownMenuSubContent"
 
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof Menu.Popup>,
-  React.ComponentPropsWithoutRef<typeof Menu.Popup>
->(({ className, sideOffset = 4, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof Menu.Popup> & {
+    align?: 'start' | 'center' | 'end'
+    sideOffset?: number
+  }
+>(({ className, sideOffset = 4, align = 'center', ...props }, ref) => (
   <Menu.Portal>
-    <Menu.Positioner sideOffset={sideOffset} style={{ zIndex: 'var(--z-dropdown)' }}>
+    <Menu.Positioner align={align} sideOffset={sideOffset} style={{ zIndex: 'var(--z-dropdown)' }}>
       <Menu.Popup
         ref={ref}
         className={cn(

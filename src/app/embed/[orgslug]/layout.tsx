@@ -1,19 +1,18 @@
-import { use } from 'react'
+import React, { type ReactNode } from 'react'
+import { useParams } from 'react-router-dom'
 import { OrgProvider } from '@components/Contexts/OrgContext'
 import OrgLanguageSync from '@components/Contexts/OrgLanguageSync'
 import '@styles/globals.css'
 
-export default function EmbedLayout(
-  props: {
-    children: React.ReactNode
-    params: Promise<{ orgslug: string }>
-  }
-) {
-  const params = use(props.params)
-  const { children } = props
+export default function EmbedLayout({
+  children,
+}: {
+  children: ReactNode
+}) {
+  const params = useParams() as { orgslug: string }
 
   return (
-    <OrgProvider orgslug={params.orgslug}>
+    <OrgProvider orgslug={params.orgslug ?? ''}>
       <OrgLanguageSync />
       {/* Suppress the root layout fade-in animation for embeds */}
       {/* Force light color scheme — prevents browsers in OS dark mode from auto-inverting text colors */}

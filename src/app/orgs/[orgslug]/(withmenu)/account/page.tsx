@@ -1,10 +1,9 @@
-import { redirect } from "react-router-dom";
+import { Navigate } from 'react-router-dom'
 
-const AccountPage = async () => {
-  // Browser-relative path (no org slug / no /orgs prefix): the proxy adds the
-  // single /orgs/{slug} prefix. A slug-prefixed redirect would be double-prefixed
-  // by the proxy → 404.
-  redirect('/account/general')
+const AccountPage = () => {
+  // Browser-relative path (no org slug / no /orgs prefix): the SPA keeps every
+  // route on the current origin, so a plain relative redirect is correct.
+  return <Navigate to="/account/general" replace />
 }
 
 export default AccountPage

@@ -37,7 +37,7 @@ export function EditCommunityModal({
 }: EditCommunityModalProps) {
   const session = useLHSession() as any
   const org = useOrg() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [isSubmitting, setIsSubmitting] = useState(false)
 

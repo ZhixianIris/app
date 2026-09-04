@@ -1,45 +1,50 @@
-import React from 'react'
-import { cookies } from 'next/headers'
-import { getServerSession } from '@/lib/auth/server'
+import React, { useEffect, useState } from 'react'
+import { Navigate, useParams } from 'react-router-dom'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import BoardCanvasClient from './client'
-import { redirect } from "react-router-dom";
+import PageLoading from '@components/Objects/Loaders/PageLoading'
 
-type MetadataProps = {
-  params: Promise<{ boarduuid: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
+function BoardEditorPage() {
+  const { boarduuid } = useParams() as { boarduuid: string }
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-async function BoardEditorPage(props: any) {
-  const params = await props.params
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
-  const cookieStore = await cookies()
-  const orgslug = cookieStore.get('LH_org')?.value || ''
+  const [orgslug, setOrgslug] = useState('')
 
-  // Require authentication to access board canvas. Bare /login only — the proxy
-  // rewrites it to /auth/login with tenant context; an /orgs/{slug}/login path
-  // isn't a real route (the /orgs prefix is an internal rewrite target) → 404.
-  //
-  // Redirect ONLY when there is no session at all. A session the server could
+  useEffect(() => {
+    // The active org slug rides in a cookie set at login.
+    try {
+      const match = document.cookie.match(/(?:^|; )app_org=([^;]*)/)
+      setOrgslug(match ? decodeURIComponent(match[1]) : '')
+    } catch {
+      setOrgslug('')
+    }
+  }, [])
+
+  if (session?.status === 'loading') {
+    return <PageLoading />
+  }
+
+  // Redirect ONLY when there is no session at all. A session the client could
   // not resolve (`unresolved`: refresh cookie present, access token expired)
-  // belongs to a signed-in user — bouncing them to /login here was signing
+  // belongs to a signed-in user — bouncing them to /login here would sign
   // people out just for coming back after their 8-hour access token lapsed.
   // The client picks up the real token from the session context instead.
   if (!session) {
-    redirect(`/login?redirect=/board/${params.boarduuid}`)
+    return <Navigate to={`/login?redirect=/board/${boarduuid}`} replace />
   }
 
   // Ensure board_uuid has the board_ prefix for the API
-  const boardUuid = params.boarduuid.startsWith('board_')
-    ? params.boarduuid
-    : `board_${params.boarduuid}`
+  const boardUuid = (boarduuid ?? '').startsWith('board_')
+    ? boarduuid
+    : `board_${boarduuid}`
 
   return (
     <BoardCanvasClient
-      boardUuid={boardUuid}
+      boardUuid={boardUuid ?? ''}
       accessToken={access_token}
       orgslug={orgslug}
-      username={session?.user?.username || session?.user?.email || ''}
+      username={session?.data?.user?.username || session?.data?.user?.email || ''}
     />
   )
 }

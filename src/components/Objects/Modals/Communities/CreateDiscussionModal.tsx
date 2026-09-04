@@ -42,7 +42,7 @@ export function CreateDiscussionModal({
 }: CreateDiscussionModalProps) {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const _router = useNavigate()
+  const navigate = useNavigate()
   const mutateDiscussions = useMutateDiscussions()
   const { track } = useLHAnalytics('learner')
   const [isSubmitting, setIsSubmitting] = useState(false)

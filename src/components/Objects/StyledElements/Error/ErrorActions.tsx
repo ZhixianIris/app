@@ -72,7 +72,7 @@ export interface ErrorActionsProps {
  * boundary (which renders outside providers) has its own inlined buttons.
  */
 export default function ErrorActions({ resolutions, reset, eventId, loginNext }: ErrorActionsProps) {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [signingOut, setSigningOut] = useState(false)
 
   // Dedupe while preserving order.

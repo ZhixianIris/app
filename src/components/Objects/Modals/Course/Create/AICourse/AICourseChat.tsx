@@ -3,7 +3,7 @@ import { Send, Loader2, Paperclip, X, Image as ImageIcon, Link as LinkIcon, File
 import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 import type { CoursePlanningMessage, Attachment } from '@services/ai/courseplanning'
-import lrnaiIcon from 'public/lrnai_icon.png'
+const lrnaiIcon = '/lrnai_icon.png'
 
 interface AICourseChatProps {
   messages: CoursePlanningMessage[]

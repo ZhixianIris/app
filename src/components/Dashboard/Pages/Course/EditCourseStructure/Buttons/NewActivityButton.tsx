@@ -36,7 +36,7 @@ function NewActivityButton(props: NewActivityButtonProps) {
   const { track } = useLHAnalytics('dashboard')
   const [newActivityModal, setNewActivityModal] = React.useState(false)
   const [selectedView, setSelectedView] = React.useState('home')
-  const router = useNavigate()
+  const navigate = useNavigate()
   const course = useCourse() as any
   const session = useLHSession() as any;
   const access_token = session?.data?.tokens?.access_token;

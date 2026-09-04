@@ -371,7 +371,7 @@ const PER_PAGE = 9
 
 function SearchPage() {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const session = useLHSession() as any
   const org = useOrg() as any
@@ -400,7 +400,7 @@ function SearchPage() {
       }
       navigate(`?${next.toString()}`)
     },
-    [router, searchParams],
+    [navigate, searchParams],
   )
 
   const handleSubmit = (e: React.FormEvent) => {

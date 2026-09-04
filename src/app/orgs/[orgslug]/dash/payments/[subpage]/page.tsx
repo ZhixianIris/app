@@ -1,7 +1,7 @@
 import React, { use } from 'react';
 import { motion } from 'motion/react'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { getUriWithOrg } from '@services/config/config'
 import { Settings, Users, Gem, CreditCard, Layers, ShoppingBag, ExternalLink } from 'lucide-react'
 import { SiStripe } from '@icons-pack/react-simple-icons'
@@ -17,12 +17,11 @@ import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar
 import { useTrackView, AnalyticsEvent } from '@services/analytics'
 
 export type PaymentsParams = {
-  subpage: string
-  orgslug: string
+  subpage: string; orgslug: string
 }
 
 function PaymentsPage(props: { params: Promise<PaymentsParams> }) {
-  const params = use(props.params);
+  const params = useParams() as { subpage: string; orgslug: string };
   const _session = useLHSession() as any
   const org = useOrg() as any
   const subpage = params.subpage || 'overview'

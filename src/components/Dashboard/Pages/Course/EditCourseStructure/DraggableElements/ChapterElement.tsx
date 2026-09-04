@@ -67,7 +67,7 @@ function ChapterElement(props: ChapterElementProps) {
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id
 
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   // Selection state
   const [selectedActivities, setSelectedActivities] = React.useState<Set<string>>(new Set())

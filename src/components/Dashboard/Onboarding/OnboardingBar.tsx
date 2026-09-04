@@ -148,7 +148,7 @@ export default function OnboardingBar() {
   const currentPlan = usePlan()
 
   const pathname = useLocation().pathname
-  const router = useNavigate()
+  const navigate = useNavigate()
   const org = useOrg() as any
 
   useEffect(() => {

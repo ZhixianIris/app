@@ -24,7 +24,7 @@ function Trail(params: any) {
   const access_token = session?.data?.tokens?.access_token;
   const org = useOrg() as any
   const orgID = org?.id
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [isQuittingAll, setIsQuittingAll] = useState(false)
   const [quittingProgress, setQuittingProgress] = useState(0)
   const queryClient = useQueryClient()

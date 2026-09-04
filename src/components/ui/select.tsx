@@ -4,7 +4,27 @@ import { Check, ChevronsUpDown, ChevronDown, ChevronUp } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const Select = SelectPrimitive.Root
+const Select = function Select({
+  onValueChange,
+  ...props
+}: Omit<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>, 'onValueChange' | 'ref'> & {
+  onValueChange?: (value: any, eventDetails?: any) => void
+}) {
+  return (
+  <SelectPrimitive.Root
+    onValueChange={
+      onValueChange
+        ? (value: any, eventDetails: any) => {
+            // Deselecting (null) is not representable in the app's handlers.
+            if (value !== null && value !== undefined) onValueChange(value as never, eventDetails as never)
+          }
+        : undefined
+    }
+    {...props}
+  />
+  )
+}
+Select.displayName = 'Select'
 
 const SelectGroup = SelectPrimitive.Group
 

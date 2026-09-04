@@ -141,7 +141,7 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
 
       {/* Basic info */}
       <div className="rounded-xl nice-shadow p-4 space-y-4">
-        <Field name="assignment-activity-title" className="space-y-1.5">
+        <Field.Root name="assignment-activity-title" className="space-y-1.5">
           <Field.Label className="text-sm font-medium text-gray-700">
             {t('dashboard.assignments.modals.create.form.title_label')}
           </Field.Label>
@@ -154,9 +154,9 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
               required
               className={inputClass}
             />} />
-        </Field>
+        </Field.Root>
 
-        <Field
+        <Field.Root
           name="assignment-activity-description"
           className="space-y-1.5"
         >
@@ -172,11 +172,11 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
               rows={3}
               className="w-full px-3 py-2 text-sm rounded-lg bg-gray-50 border border-gray-200 outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-200 transition-colors resize-none"
             />} />
-        </Field>
+        </Field.Root>
 
         {/* Optional: a self-paced course has no date that means anything to a
             learner who enrolled today. */}
-        <Field
+        <Field.Root
           name="assignment-activity-due-date"
           className="space-y-1.5"
         >
@@ -203,7 +203,7 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
           <p className="text-[10px] text-gray-400">
             {t('dashboard.assignments.modals.create.form.due_date_hint')}
           </p>
-        </Field>
+        </Field.Root>
       </div>
 
       {/* Grading type */}
@@ -339,7 +339,6 @@ function NewAssignment({ submitActivity: _submitActivity, chapterId, course, clo
 
       <div className="flex justify-end">
                     <button type="submit"
-            type="submit"
             disabled={isSubmitting}
             className="inline-flex items-center justify-center h-9 px-5 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
           >

@@ -136,7 +136,7 @@ function OrgSubscriptionRow({ org, enabled }: { org: any; enabled: boolean }) {
 function SubscriptionsClient() {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = session?.status === 'authenticated'
@@ -149,7 +149,7 @@ function SubscriptionsClient() {
     if (!isLoading && !isAuthenticated) {
       navigate('/login', { replace: true })
     }
-  }, [isLoading, isAuthenticated, router])
+  }, [isLoading, isAuthenticated, navigate])
 
   const { data: orgs, isLoading: orgsLoading } = useQuery({
     queryKey: ['orgs', 'user'],

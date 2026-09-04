@@ -18,7 +18,7 @@ interface ModifiedChapterInterface {
 }
 
 function Chapter(props: any) {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any;
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id

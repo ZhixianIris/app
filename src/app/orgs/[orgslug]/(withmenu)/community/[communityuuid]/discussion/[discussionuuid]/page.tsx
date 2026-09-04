@@ -1,82 +1,71 @@
-import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getServerSession } from '@/lib/auth/server'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getCommunity } from '@services/communities/communities'
 import { getDiscussion } from '@services/communities/discussions'
-import { getOrgThumbnailMediaDirectory } from '@services/media/media'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import DiscussionPageClient from './discussion'
+import PageLoading from '@components/Objects/Loaders/PageLoading'
+import NotFound from '@app/not-found'
 
-/**
- * Extract plain text from discussion content for SEO metadata
- */
-function getContentDescription(content: string | null): string {
-  if (!content) return ''
+const DiscussionPage = () => {
+  const params = useParams() as { orgslug: string; communityuuid: string; discussionuuid: string }
+  const { orgslug, communityuuid, discussionuuid } = params
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-  try {
-    const parsed = JSON.parse(content)
-    if (parsed && typeof parsed === 'object' && parsed.type === 'doc') {
-      // Extract text from tiptap JSON
-      const extractText = (node: any): string => {
-        if (!node) return ''
-        if (node.type === 'text') return node.text || ''
-        if (node.content && Array.isArray(node.content)) {
-          return node.content.map(extractText).join(' ')
-        }
-        return ''
+  const [community, setCommunity] = useState<any>(null)
+  const [discussion, setDiscussion] = useState<any>(null)
+  const [fetchErrored, setFetchErrored] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!orgslug || !communityuuid || !discussionuuid) return
+      const communityUuid = `community_${communityuuid}`
+      const discussionUuid = `discussion_${discussionuuid}`
+      let nextCommunity = null
+      let nextDiscussion = null
+      let errored = false
+      try {
+        nextCommunity = await getCommunity(
+          communityUuid,
+          { revalidate: 120, tags: ['communities'] },
+          access_token ? access_token : undefined
+        )
+      } catch (error) {
+        errored = true
+        console.error('Failed to fetch community:', error)
       }
-      return extractText(parsed).trim()
+      try {
+        nextDiscussion = await getDiscussion(
+          discussionUuid,
+          { revalidate: 120, tags: ['discussions'] },
+          access_token ? access_token : undefined
+        )
+      } catch (error) {
+        errored = true
+        console.error('Failed to fetch discussion:', error)
+      }
+      if (cancelled) return
+      setCommunity(nextCommunity)
+      setDiscussion(nextDiscussion)
+      setFetchErrored(errored)
+      setLoaded(true)
     }
-  } catch {
-    // Not JSON, return as-is
-  }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug, communityuuid, discussionuuid, access_token])
 
-  return content
-}
-
-type MetadataProps = {
-  params: Promise<{ orgslug: string; communityuuid: string; discussionuuid: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-const DiscussionPage = async (params: any) => {
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
-  const { orgslug, communityuuid, discussionuuid } = await params.params
-  const communityUuid = `community_${communityuuid}`
-  const discussionUuid = `discussion_${discussionuuid}`
-
-  const org = await getOrganizationContextInfo(orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
-
-  let community = null
-  let discussion = null
-  let fetchErrored = false
-
-  try {
-    community = await getCommunity(
-      communityUuid,
-      { revalidate: 120, tags: ['communities'] },
-      access_token ? access_token : undefined
-    )
-  } catch (error) {
-    fetchErrored = true
-    console.error('Failed to fetch community:', error)
-  }
-
-  try {
-    discussion = await getDiscussion(
-      discussionUuid,
-      { revalidate: 120, tags: ['discussions'] },
-      access_token ? access_token : undefined
-    )
-  } catch (error) {
-    fetchErrored = true
-    console.error('Failed to fetch discussion:', error)
+  if (!loaded) {
+    return <PageLoading />
   }
 
   // Missing or denied-to-anon: 404 so non-public discussions aren't enumerable.
   if ((!community || !discussion) && (!fetchErrored || !access_token)) {
-    notFound()
+    return <NotFound />
   }
 
   if (!community || !discussion) {
@@ -94,7 +83,7 @@ const DiscussionPage = async (params: any) => {
     <DiscussionPageClient
       discussion={discussion}
       community={community}
-      orgslug={orgslug}
+      orgslug={orgslug ?? ''}
     />
   )
 }

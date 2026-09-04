@@ -23,7 +23,7 @@ const CommunitiesDashClient = ({
   communities,
 }: CommunitiesDashClientProps) => {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const org = useOrg() as any
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)

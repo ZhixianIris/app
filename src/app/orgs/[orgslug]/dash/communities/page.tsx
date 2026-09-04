@@ -1,41 +1,68 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import React from 'react'
-import { getServerSession } from '@/lib/auth/server'
 import { getCommunities } from '@services/communities/communities'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import CommunitiesDashClient from './client'
+import PageLoading from '@components/Objects/Loaders/PageLoading'
 
-type MetadataProps = {
-  params: Promise<{ orgslug: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
+function CommunitiesDashPage() {
+  const { orgslug } = useParams() as { orgslug: string }
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-async function CommunitiesDashPage(params: any) {
-  const orgslug = (await params.params).orgslug
-  const org = await getOrganizationContextInfo(orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
+  const [orgId, setOrgId] = useState<number | null>(null)
+  const [communities, setCommunities] = useState<any[]>([])
+  const [loaded, setLoaded] = useState(false)
 
-  let communities = []
-  try {
-    communities = await getCommunities(
-      org.id,
-      1,
-      100,
-      { revalidate: 0, tags: ['communities'] },
-      access_token ? access_token : undefined
-    )
-  } catch (error) {
-    console.error('Failed to fetch communities:', error)
-    communities = []
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!orgslug) return
+      let nextOrgId: number | null = null
+      try {
+        const org = await getOrganizationContextInfo(orgslug, {
+          revalidate: 120,
+          tags: ['organizations'],
+        })
+        nextOrgId = org.id
+      } catch (error) {
+        console.error('Failed to fetch organization:', error)
+      }
+      let nextCommunities: any[] = []
+      if (nextOrgId) {
+        try {
+          nextCommunities = await getCommunities(
+            nextOrgId,
+            1,
+            100,
+            { revalidate: 0, tags: ['communities'] },
+            access_token ? access_token : undefined
+          )
+        } catch (error) {
+          console.error('Failed to fetch communities:', error)
+          nextCommunities = []
+        }
+      }
+      if (cancelled) return
+      setOrgId(nextOrgId)
+      setCommunities(nextCommunities || [])
+      setLoaded(true)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug, access_token])
+
+  if (!loaded) {
+    return <PageLoading />
   }
 
   return (
     <CommunitiesDashClient
-      org_id={org.id}
-      orgslug={orgslug}
+      org_id={orgId || 0}
+      orgslug={orgslug ?? ''}
       communities={communities || []}
     />
   )

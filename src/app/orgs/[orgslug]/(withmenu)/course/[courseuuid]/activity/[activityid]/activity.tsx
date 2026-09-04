@@ -252,7 +252,7 @@ function ActivityClient(props: ActivityClientProps) {
   const [isFocusMode, setIsFocusMode] = React.useState(false);
   const isInitialRender = useRef(true);
   const { contributorStatus } = useContributorStatus(courseuuid);
-  const router = useNavigate();
+  const navigate = useNavigate();
 
   const { track } = useLHAnalytics('learner')
   const activityStartTime = useRef(Date.now())
@@ -1066,7 +1066,7 @@ export function MarkStatus(props: {
   trailData: any
 }) {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any;
   const org = useOrg() as any;
   const { isUserPartOfTheOrg } = useOrgMembership();
@@ -1359,7 +1359,7 @@ export function MarkStatus(props: {
 
 function NextActivityButton({ course, currentActivityId, orgslug }: { course: any, currentActivityId: string, orgslug: string }) {
   const { t } = useTranslation();
-  const router = useNavigate();
+  const navigate = useNavigate();
   const _isMobile = useMediaQuery('(max-width: 768px)');
 
   const findNextActivity = () => {
@@ -1423,7 +1423,7 @@ function NextActivityButton({ course, currentActivityId, orgslug }: { course: an
 
 function PreviousActivityButton({ course, currentActivityId, orgslug }: { course: any, currentActivityId: string, orgslug: string }) {
   const { t } = useTranslation();
-  const router = useNavigate();
+  const navigate = useNavigate();
   const _isMobile = useMediaQuery('(max-width: 768px)');
 
   const findPreviousActivity = () => {

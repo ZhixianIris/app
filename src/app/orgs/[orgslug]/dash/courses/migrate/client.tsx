@@ -35,7 +35,7 @@ interface MigrationClientProps {
 
 export default function MigrationClient({ orgslug }: MigrationClientProps) {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const org = useOrg() as any
   const access_token = session?.data?.tokens?.access_token

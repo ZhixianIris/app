@@ -17,18 +17,16 @@ import { PlanLevel } from '@services/plans/plans';
 import FeatureGate from '@components/Dashboard/Shared/FeatureGate/FeatureGate';
 import CourseAnalyticsTab from '@components/Dashboard/Analytics/Course/CourseAnalyticsTab';
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export type CourseOverviewParams = {
-  orgslug: string
-  courseuuid: string
-  subpage: string
+  orgslug: string; courseuuid: string; subpage: string
 }
 
 function CourseOverviewPage(props: { params: Promise<CourseOverviewParams> }) {
   const { t } = useTranslation()
-  const params = use(props.params);
-  const router = useNavigate();
+  const params = useParams() as { orgslug: string; courseuuid: string; subpage: string };
+  const navigate = useNavigate();
 
   function getEntireCourseUUID(courseuuid: string) {
     // add course_ to uuid
@@ -107,7 +105,7 @@ function CourseOverviewPage(props: { params: Promise<CourseOverviewParams> }) {
       const firstAvailableTab = visibleTabs[0]
       navigate(getUriWithOrg(params.orgslug, '') + firstAvailableTab.href, { replace: true })
     }
-  }, [rightsLoading, hasAccessToCurrentPage, visibleTabs, router, params.orgslug])
+  }, [rightsLoading, hasAccessToCurrentPage, visibleTabs, navigate, params.orgslug])
 
   // Access denied (rights loaded but no tabs visible)
   if (!rightsLoading && visibleTabs.length === 0) {

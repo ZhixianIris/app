@@ -114,7 +114,7 @@ const CourseInfo = memo(({ course, org }: { course: any, org: any }) => {
 CourseInfo.displayName = 'CourseInfo';
 
 export default function FixedActivitySecondaryBar(props: FixedActivitySecondaryBarProps): React.ReactNode {
-  const router = useNavigate();
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [shouldShow, setShouldShow] = useState(false);
   const mainActivityInfoRef = useRef<HTMLDivElement | null>(null);

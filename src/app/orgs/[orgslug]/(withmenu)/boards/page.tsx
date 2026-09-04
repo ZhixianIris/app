@@ -1,56 +1,71 @@
+import { useEffect, useState } from 'react'
+import { Navigate, useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getOrgThumbnailMediaDirectory, getOrgOgImageMediaDirectory } from '@services/media/media'
-import { getServerSession } from '@/lib/auth/server'
-import { getOrgSeoConfig, buildPageTitle, buildBreadcrumbJsonLd } from '@/lib/seo/utils'
-import { getServerCanonicalUrl } from '@/lib/seo/utils.server'
-import { JsonLd } from '@components/SEO/JsonLd'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import { getBoards } from '@services/boards/boards'
 import BoardsPublicClient from './boards'
-import { redirect } from "react-router-dom";
+import PageLoading from '@components/Objects/Loaders/PageLoading'
 
-type PageParams = Promise<{
-  orgslug: string
-}>
+export default function BoardsPage() {
+  const { orgslug } = useParams() as { orgslug: string }
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-export default async function BoardsPage({ params }: { params: PageParams }) {
-  const { orgslug } = await params
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
+  const [org, setOrg] = useState<any>(null)
+  const [initialBoards, setInitialBoards] = useState<any[]>([])
+  const [loaded, setLoaded] = useState(false)
 
-  // Require authentication to view boards. Browser-relative path only — the
-  // proxy adds /orgs/{slug} and rewrites /login → /auth/login; an org-prefixed
-  // path would be double-prefixed → 404.
-  if (!access_token) {
-    redirect('/login?redirect=/boards')
-  }
-
-  const org = await getOrganizationContextInfo(orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
-
-  let initialBoards: any[] = []
-  try {
-    if (access_token) {
-      initialBoards = await getBoards(org?.id || 0, access_token)
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!access_token || !orgslug) return
+      try {
+        const orgData = await getOrganizationContextInfo(orgslug, {
+          revalidate: 120,
+          tags: ['organizations'],
+        })
+        let boards: any[] = []
+        try {
+          if (access_token) {
+            boards = await getBoards(orgData?.id || 0, access_token)
+          }
+        } catch (error) {
+          console.error('Error fetching boards:', error)
+        }
+        if (!cancelled) {
+          setOrg(orgData)
+          setInitialBoards(boards || [])
+          setLoaded(true)
+        }
+      } catch (error) {
+        console.error('Error fetching organization:', error)
+        if (!cancelled) setLoaded(true)
+      }
     }
-  } catch (error) {
-    console.error('Error fetching boards:', error)
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug, access_token])
+
+  if (session?.status === 'loading') {
+    return <PageLoading />
   }
 
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: 'Home', url: await getServerCanonicalUrl(orgslug, '/') },
-    { name: 'Boards', url: await getServerCanonicalUrl(orgslug, '/boards') },
-  ])
+  // Require authentication to view boards.
+  if (!access_token) {
+    return <Navigate to="/login?redirect=/boards" replace />
+  }
+
+  if (!loaded) {
+    return <PageLoading />
+  }
 
   return (
-    <>
-      <JsonLd data={breadcrumbJsonLd} />
-      <BoardsPublicClient
-        orgslug={orgslug}
-        org_id={org?.id || 0}
-        initialBoards={initialBoards || []}
-      />
-    </>
+    <BoardsPublicClient
+      orgslug={orgslug ?? ''}
+      org_id={org?.id || 0}
+      initialBoards={initialBoards || []}
+    />
   )
 }

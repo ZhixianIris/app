@@ -20,7 +20,7 @@ const AdminAuthorization: React.FC<AuthorizationProps> = ({ children, authorizat
   const session = useLHSession() as any;
   const org = useOrg() as any;
   const pathname = useLocation().pathname;
-  const router = useNavigate();
+  const navigate = useNavigate();
   const { isAdmin, loading } = useAdminStatus() as any
   // `null` is "not decided yet", distinct from a decided `false`. The decision
   // is made in an effect, which runs after the commit — so a `false` initial
@@ -63,7 +63,7 @@ const AdminAuthorization: React.FC<AuthorizationProps> = ({ children, authorizat
     } else if (authorizationMode === 'component') {
       setIsAuthorized(isAdmin === true);
     }
-  }, [loading, isUserAuthenticated, isAdmin, isAdminPath, authorizationMode, router]);
+  }, [loading, isUserAuthenticated, isAdmin, isAdminPath, authorizationMode, navigate]);
 
   useEffect(() => {
     authorizeUser();

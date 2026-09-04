@@ -72,7 +72,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
   // of joined to the invited org. Mirrors OpenSignup.
   const contextOrg = useOrg() as any
   const org = (contextOrg && (contextOrg.id || contextOrg.slug)) ? contextOrg : props.org
-  const _router = useNavigate()
+  const navigate = useNavigate()
   const [error, setError] = React.useState('')
   const [message, setMessage] = React.useState<{ email_verified: boolean } | null>(null)
   const turnstileRef = React.useRef<TurnstileWidgetHandle>(null)

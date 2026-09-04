@@ -202,7 +202,7 @@ export function DiscussionEditor({
         style={{ minHeight: editable ? minHeight : 'auto' }}
       />
 
-      <style jsx global>{`
+      <style  >{`
         .discussion-editor-content {
           border: 1px solid #e5e7eb;
           border-top: ${editable ? 'none' : '1px solid #e5e7eb'};

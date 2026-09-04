@@ -1,25 +1,52 @@
+import { useEffect, useState } from 'react'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getAuthOrgSlug } from '@services/org/orgResolution'
 import LoginClient from './login'
 import OrgNotFound from '@components/Objects/StyledElements/Error/OrgNotFound'
-const Login = async () => {
-  const orgslug = await getAuthOrgSlug()
+import PageLoading from '@components/Objects/Loaders/PageLoading'
 
-  // No org slug → bare apex (learn.io) → generic, org-less login.
-  let org: any = null
-  if (orgslug) {
-    try {
-      org = await getOrganizationContextInfo(orgslug, {
-        revalidate: 60,
-        tags: ['organizations'],
-      })
-    } catch {
-      org = null
+function getAuthOrgSlug(): string | null {
+  try {
+    const match = document.cookie.match(/(?:^|; )app_org=([^;]*)/)
+    return match ? decodeURIComponent(match[1]) : null
+  } catch {
+    return null
+  }
+}
+
+const Login = () => {
+  const [org, setOrg] = useState<any>(null)
+  const [orgMissing, setOrgMissing] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      const orgslug = getAuthOrgSlug()
+      if (!orgslug) return
+      let nextOrg: any = null
+      try {
+        nextOrg = await getOrganizationContextInfo(orgslug, {
+          revalidate: 60,
+          tags: ['organizations'],
+        })
+      } catch {
+        nextOrg = null
+      }
+      if (cancelled) return
+      // A subdomain (or single-tenancy) slug that can't be resolved is a real error.
+      if (!nextOrg) {
+        setOrgMissing(true)
+        return
+      }
+      setOrg(nextOrg)
     }
-    // A subdomain (or single-tenancy) slug that can't be resolved is a real error.
-    if (!org) {
-      return <OrgNotFound />
+    load()
+    return () => {
+      cancelled = true
     }
+  }, [])
+
+  if (orgMissing) {
+    return <OrgNotFound />
   }
 
   return (

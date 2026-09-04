@@ -129,7 +129,7 @@ const MultipleAuthors = ({ authors }: { authors: Author[] }) => {
 }
 
 const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseActionsMobileProps) => {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const { isUserPartOfTheOrg } = useOrgMembership()
   const org = useOrg() as any

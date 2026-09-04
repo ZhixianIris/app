@@ -39,9 +39,9 @@ export const FormRoot = React.forwardRef<HTMLFormElement, React.ComponentPropsWi
 )
 FormRoot.displayName = 'FormRoot'
 
-export const FormField = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof Field>>(
+export const FormField = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof Field.Root>>(
   ({ className, ...props }, ref) => (
-    <Field ref={ref} className={`grid mb-2.5 ${className || ''}`} {...props} />
+    <Field.Root ref={ref} className={`grid mb-2.5 ${className || ''}`} {...props} />
   )
 )
 FormField.displayName = 'FormField'
@@ -53,7 +53,7 @@ export const FormLabel = React.forwardRef<HTMLLabelElement, React.ComponentProps
 )
 FormLabel.displayName = 'FormLabel'
 
-export const FormMessage = React.forwardRef<HTMLSpanElement, React.ComponentPropsWithoutRef<typeof Field.Error>>(
+export const FormMessage = React.forwardRef<HTMLDivElement, React.ComponentPropsWithoutRef<typeof Field.Error>>(
   ({ className, ...props }, ref) => (
     <Field.Error ref={ref} className={`text-[13px] text-white opacity-80 ${className || ''}`} {...props} />
   )

@@ -1,18 +1,52 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getOrgThumbnailMediaDirectory, getOrgOgImageMediaDirectory } from '@services/media/media'
-import { getOrgSeoConfig, buildPageTitle, buildBreadcrumbJsonLd } from '@/lib/seo/utils'
-import { getServerCanonicalUrl } from '@/lib/seo/utils.server'
-import { JsonLd } from '@components/SEO/JsonLd'
 import { getPublicOffers } from '@services/payments/offers'
 import Store from './store'
+import PageLoading from '@components/Objects/Loaders/PageLoading'
 
-type PageParams = Promise<{ orgslug: string }>
+export default function StorePage() {
+  const { orgslug } = useParams() as { orgslug: string }
 
-export default async function StorePage({ params }: { params: PageParams }) {
-  const { orgslug } = await params
-  const org = await getOrganizationContextInfo(orgslug, { revalidate: 120, tags: ['organizations'] })
+  const [org, setOrg] = useState<any>(null)
+  const [offers, setOffers] = useState<any[]>([])
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!orgslug) return
+      let nextOrg: any = null
+      try {
+        nextOrg = await getOrganizationContextInfo(orgslug, { revalidate: 120, tags: ['organizations'] })
+      } catch (error) {
+        console.error('Error fetching organization:', error)
+      }
+      let nextOffers: any[] = []
+      if (nextOrg?.id) {
+        try {
+          const result = await getPublicOffers(nextOrg.id)
+          nextOffers = result?.success && Array.isArray(result.data) ? result.data : []
+        } catch {
+          nextOffers = []
+        }
+      }
+      if (cancelled) return
+      setOrg(nextOrg)
+      setOffers(nextOffers)
+      setLoaded(true)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug])
 
   const paymentsEnabled = org?.config?.config?.resolved_features?.payments?.enabled ?? org?.config?.config?.features?.payments?.enabled !== false
+
+  if (!loaded) {
+    return <PageLoading />
+  }
 
   if (!paymentsEnabled) {
     return (
@@ -28,23 +62,7 @@ export default async function StorePage({ params }: { params: PageParams }) {
     )
   }
 
-  let offers: any[] = []
-  try {
-    const result = await getPublicOffers(org.id)
-    offers = result?.success && Array.isArray(result.data) ? result.data : []
-  } catch {
-    offers = []
-  }
-
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: 'Home', url: await getServerCanonicalUrl(orgslug, '/') },
-    { name: 'Store', url: await getServerCanonicalUrl(orgslug, '/store') },
-  ])
-
   return (
-    <>
-      <JsonLd data={breadcrumbJsonLd} />
-      <Store orgslug={orgslug} offers={offers} />
-    </>
+    <Store orgslug={orgslug ?? ''} offers={offers} />
   )
 }

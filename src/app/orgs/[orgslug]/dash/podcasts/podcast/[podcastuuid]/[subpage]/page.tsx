@@ -1,6 +1,6 @@
 import React, { use } from 'react'
 import { PodcastProvider, usePodcast } from '@components/Contexts/PodcastContext'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { Info, ListMusic, Headphones, ArrowLeft, Rss } from 'lucide-react'
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar'
@@ -12,14 +12,12 @@ import { useTranslation } from 'react-i18next'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 
 export type PodcastOverviewParams = {
-  orgslug: string
-  podcastuuid: string
-  subpage: string
+  orgslug: string; podcastuuid: string; subpage: string
 }
 
 function PodcastOverviewPage(props: { params: Promise<PodcastOverviewParams> }) {
   const { t } = useTranslation()
-  const params = use(props.params)
+  const params = useParams() as { orgslug: string; podcastuuid: string; subpage: string }
 
   function getEntirePodcastUUID(podcastuuid: string) {
     return `podcast_${podcastuuid}`

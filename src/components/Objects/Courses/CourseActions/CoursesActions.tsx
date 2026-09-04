@@ -55,7 +55,7 @@ interface CourseActionsProps {
 
 function CoursesActions({ courseuuid, orgslug, course, trailData }: CourseActionsProps) {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const [isActionLoading, setIsActionLoading] = useState(false)
   const [isContributeLoading, setIsContributeLoading] = useState(false)

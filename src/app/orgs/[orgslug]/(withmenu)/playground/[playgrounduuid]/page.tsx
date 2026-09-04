@@ -1,29 +1,57 @@
-import { getServerSession } from '@/lib/auth/server'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getPlayground } from '@services/playgrounds/playgrounds'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import PlaygroundViewClient from './view'
+import PageLoading from '@components/Objects/Loaders/PageLoading'
+import NotFound from '@app/not-found'
 
-type PageParams = Promise<{ orgslug: string; playgrounduuid: string }>
+export default function PlaygroundViewPage() {
+  const { orgslug, playgrounduuid } = useParams() as { orgslug: string; playgrounduuid: string }
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-export default async function PlaygroundViewPage({ params }: { params: PageParams }) {
-  const { orgslug, playgrounduuid } = await params
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
+  const [playground, setPlayground] = useState<any>(null)
+  const [missing, setMissing] = useState(false)
+  const [loaded, setLoaded] = useState(false)
 
-  let playground
-  try {
-    playground = await getPlayground(playgrounduuid, access_token ?? undefined)
-  } catch {
-    notFound()
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!playgrounduuid) return
+      let next: any = null
+      let isMissing = false
+      try {
+        next = await getPlayground(playgrounduuid, access_token ?? undefined)
+      } catch {
+        isMissing = true
+      }
+      if (!isMissing && next && !next.published && !access_token) {
+        isMissing = true
+      }
+      if (cancelled) return
+      setPlayground(next)
+      setMissing(isMissing)
+      setLoaded(true)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [playgrounduuid, access_token])
+
+  if (!loaded) {
+    return <PageLoading />
   }
 
-  if (!playground.published && !access_token) {
-    notFound()
+  if (missing) {
+    return <NotFound />
   }
 
   return (
     <PlaygroundViewClient
       playground={playground}
-      orgslug={orgslug}
+      orgslug={orgslug ?? ''}
       canEdit={!!access_token}
     />
   )

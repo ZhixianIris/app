@@ -100,7 +100,7 @@ export default function OfferDetailClient({ orgslug, orgId, offerUuid, offer, ac
   const { i18n } = useTranslation()
   const session = useLHSession() as any
   const token = session?.data?.tokens?.access_token ?? access_token
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const { track } = useLHAnalytics('learner')
 

@@ -53,7 +53,7 @@ function ScormCourseImport({ orgId, orgslug, closeModal }: ScormCourseImportProp
   const { t } = useTranslation()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   // Step state: 'upload' | 'configure'
   const [step, setStep] = useState<'upload' | 'configure'>('upload')

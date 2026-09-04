@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { useTranslation } from 'react-i18next'
 import toast from 'react-hot-toast'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
-import lrnaiIcon from 'public/lrnai_icon.png'
+const lrnaiIcon = '/lrnai_icon.png'
 import AICoursePreview from './AICoursePreview'
 import AICourseChat from './AICourseChat'
 import type { CoursePlan, CoursePlanningMessage, CreatedChapter, Attachment } from '@services/ai/courseplanning'
@@ -38,7 +38,7 @@ function AICourseCreationModal({
 }: AICourseCreationModalProps) {
   const { t, i18n } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   const [sessionUuid, setSessionUuid] = React.useState<string | null>(null)
   const [messages, setMessages] = React.useState<CoursePlanningMessage[]>([])

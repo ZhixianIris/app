@@ -94,7 +94,6 @@ export function AssignmentTaskGeneralEdit() {
 
             {/* Submit button */}
                         <button type="submit"
-                    type="submit"
                     className="flex items-center justify-center w-full px-4 py-2 mt-4 font-semibold text-white bg-green-500 rounded-md hover:bg-green-600"
                 >
                     {t('dashboard.assignments.editor.task_editor.general.submit')}

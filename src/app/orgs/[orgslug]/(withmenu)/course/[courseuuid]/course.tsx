@@ -37,7 +37,7 @@ const CourseClient = (props: any) => {
   const initialCourse = props.course
   const serverError = props.serverError
   const org = useOrg() as any
-  const _router = useNavigate()
+  const navigate = useNavigate()
   const isMobile = useMediaQuery('(max-width: 768px)')
   const session = useLHSession() as any;
   const access_token = session?.data?.tokens?.access_token;

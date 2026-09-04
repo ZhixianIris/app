@@ -72,7 +72,7 @@ interface ModifiedActivityInterface {
 
 function ActivityElement(props: ActivitiyElementProps) {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const [modifiedActivity, setModifiedActivity] = React.useState<

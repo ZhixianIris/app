@@ -1,54 +1,70 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getServerSession } from '@/lib/auth/server'
 import { getCommunities } from '@services/communities/communities'
-import { getOrgThumbnailMediaDirectory, getOrgOgImageMediaDirectory } from '@services/media/media'
-import { getOrgSeoConfig, buildPageTitle, buildBreadcrumbJsonLd } from '@/lib/seo/utils'
-import { getServerCanonicalUrl } from '@/lib/seo/utils.server'
-import { JsonLd } from '@components/SEO/JsonLd'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import CommunitiesClient from './communities'
+import PageLoading from '@components/Objects/Loaders/PageLoading'
 
-type MetadataProps = {
-  params: Promise<{ orgslug: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-const CommunitiesPage = async (params: any) => {
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
-  const orgslug = (await params.params).orgslug
-  const org = await getOrganizationContextInfo(orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
-  const org_id = org.id
+const CommunitiesPage = () => {
+  const { orgslug } = useParams() as { orgslug: string }
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-  let communities = []
-  try {
-    communities = await getCommunities(
-      org_id,
-      1,
-      100,
-      { revalidate: 120, tags: ['communities'] },
-      access_token ? access_token : undefined
-    )
-  } catch (error) {
-    console.error('Failed to fetch communities:', error)
-    communities = []
+  const [orgId, setOrgId] = useState<number | null>(null)
+  const [communities, setCommunities] = useState<any[]>([])
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!orgslug) return
+      let nextOrgId: number | null = null
+      try {
+        const org = await getOrganizationContextInfo(orgslug, {
+          revalidate: 120,
+          tags: ['organizations'],
+        })
+        nextOrgId = org.id
+      } catch (error) {
+        console.error('Failed to fetch organization:', error)
+      }
+      let nextCommunities: any[] = []
+      if (nextOrgId) {
+        try {
+          nextCommunities = await getCommunities(
+            nextOrgId,
+            1,
+            100,
+            { revalidate: 120, tags: ['communities'] },
+            access_token ? access_token : undefined
+          )
+        } catch (error) {
+          console.error('Failed to fetch communities:', error)
+          nextCommunities = []
+        }
+      }
+      if (cancelled) return
+      setOrgId(nextOrgId)
+      setCommunities(nextCommunities || [])
+      setLoaded(true)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug, access_token])
+
+  if (!loaded) {
+    return <PageLoading />
   }
 
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: 'Home', url: await getServerCanonicalUrl(orgslug, '/') },
-    { name: 'Communities', url: await getServerCanonicalUrl(orgslug, '/communities') },
-  ])
-
   return (
-    <>
-      <JsonLd data={breadcrumbJsonLd} />
-      <CommunitiesClient
-        communities={communities || []}
-        orgslug={orgslug}
-        org_id={org_id}
-      />
-    </>
+    <CommunitiesClient
+      communities={communities || []}
+      orgslug={orgslug ?? ''}
+      org_id={orgId || 0}
+    />
   )
 }
 

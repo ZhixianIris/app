@@ -3,7 +3,7 @@ import { Loader2, BookOpen, FileText, Sparkles, Check, ChevronDown, ChevronRight
 import { useTranslation } from 'react-i18next'
 import { cn } from '@/lib/utils'
 import toast from 'react-hot-toast'
-import lrnaiIcon from 'public/lrnai_icon.png'
+const lrnaiIcon = '/lrnai_icon.png'
 import type { CreatedChapter } from '@services/ai/courseplanning'
 import {
   generateActivityContent,

@@ -1,21 +1,16 @@
-
 import { default as React } from 'react'
+import { useParams } from 'react-router-dom'
 import EditorOptionsProvider from '@components/Contexts/Editor/EditorContext'
 import AIEditorProvider from '@components/Contexts/AI/AIEditorContext'
 import EditorLoader from '@components/Objects/Editor/EditorLoader'
 
-type MetadataProps = {
-  params: Promise<{ orgslug: string; courseid: string; activityuuid: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-const EditActivity = async (params: any) => {
-  const activityuuid = (await params.params).activityuuid
-  const courseid = (await params.params).courseid
+const EditActivity = () => {
+  const { activityuuid, courseid } = useParams() as { activityuuid: string; courseid: string }
 
   return (
     <EditorOptionsProvider options={{ isEditable: true }}>
       <AIEditorProvider>
-        <EditorLoader courseid={courseid} activityuuid={activityuuid} />
+        <EditorLoader courseid={courseid ?? ''} activityuuid={activityuuid ?? ''} />
       </AIEditorProvider>
     </EditorOptionsProvider>
   )

@@ -1,22 +1,18 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import ClientAdminLayout from './ClientAdminLayout'
 
-async function DashboardLayout(
-  props: {
-    children: React.ReactNode
-    params: Promise<any>
-  }
-) {
-  const params = await props.params;
-
-  const {
-    children
-  } = props;
+function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const params = useParams() as { orgslug: string }
 
   return (
     <>
       <ClientAdminLayout
-        params={params}>
+        params={{ orgslug: params.orgslug ?? '' }}>
         {children}
       </ClientAdminLayout>
     </>

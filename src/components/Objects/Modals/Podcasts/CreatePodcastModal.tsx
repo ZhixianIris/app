@@ -30,7 +30,7 @@ export function CreatePodcastModal({
 }: CreatePodcastModalProps) {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const { track } = useLHAnalytics('learner')
   const { handlePlanLimit } = useUpgradeModal()

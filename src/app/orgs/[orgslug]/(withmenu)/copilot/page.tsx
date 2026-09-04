@@ -1,18 +1,13 @@
 import React from 'react'
-import { getOrganizationContextInfo } from '@services/organizations/orgs'
+import { useParams } from 'react-router-dom'
 import Copilot from './copilot'
-import { getServerSession } from '@/lib/auth/server'
 
-type MetadataProps = {
-  params: Promise<{ orgslug: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-const CopilotPage = async (params: any) => {
-  const orgslug = (await params.params).orgslug
+const CopilotPage = () => {
+  const { orgslug } = useParams() as { orgslug: string }
 
   return (
     <div>
-      <Copilot orgslug={orgslug} />
+      <Copilot orgslug={orgslug ?? ''} />
     </div>
   )
 }

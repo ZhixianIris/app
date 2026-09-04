@@ -122,7 +122,7 @@ function CommunityCard(props: PropsType) {
 
 const CommunityAdminEditsArea = (props: any) => {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const queryClient = useQueryClient()
 

@@ -52,7 +52,7 @@ export default function ActivitySwitcher({
   isDirty,
   onSave,
 }: ActivitySwitcherProps) {
-  const router = useNavigate()
+  const navigate = useNavigate()
   const { accessToken } = useAuth()
   const [open, setOpen] = React.useState(false)
   const closeTimerRef = React.useRef<number | null>(null)

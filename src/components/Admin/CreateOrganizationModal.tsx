@@ -25,7 +25,7 @@ export default function CreateOrganizationModal({
   const session = useLHSession() as any
   const accessToken = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const isSaaS = getDeploymentMode() === 'saas'
 
   const [name, setName] = useState('')

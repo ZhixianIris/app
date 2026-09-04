@@ -1,51 +1,63 @@
+import { useEffect, useState } from 'react'
+import { Navigate, useParams } from 'react-router-dom'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getServerSession } from '@/lib/auth/server'
-import { getOrgThumbnailMediaDirectory } from '@services/media/media'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import AccountClient from '@components/Objects/Account/AccountClient'
-import { redirect } from "react-router-dom";
-
-type MetadataProps = {
-  params: Promise<{ orgslug: string; subpage: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
+import PageLoading from '@components/Objects/Loaders/PageLoading'
 
 const VALID_SUBPAGES = ['general', 'profile', 'security', 'purchases']
 
-const getSubpageTitle = (subpage: string): string => {
-  const titles: Record<string, string> = {
-    'general': 'General Settings',
-    'profile': 'Profile Builder',
-    'security': 'Security',
-    'purchases': 'Purchases',
-  }
-  return titles[subpage] || 'Account'
-}
-const AccountSubPage = async (props: { params: Promise<{ orgslug: string; subpage: string }> }) => {
-  const params = await props.params
-  const session = await getServerSession()
+const AccountSubPage = () => {
+  const params = useParams() as { orgslug: string; subpage: string }
+  const orgslug = params.orgslug ?? ''
+  const subpage = params.subpage ?? ''
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-  // Browser-relative redirects only: the org slug is NEVER a URL path segment
-  // (the proxy adds the /orgs/{slug} prefix). A slug-prefixed path would be
-  // double-prefixed by the proxy → 404.
-  if (!session) {
-    redirect(`/login?redirect=/account/${params.subpage}`)
+  const [org, setOrg] = useState<any>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!access_token || !orgslug) return
+      try {
+        const orgData = await getOrganizationContextInfo(orgslug, {
+          revalidate: 120,
+          tags: ['organizations'],
+        })
+        if (!cancelled) setOrg(orgData)
+      } catch (error) {
+        console.error('Error fetching organization:', error)
+      }
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug, access_token])
+
+  if (session?.status === 'loading') {
+    return <PageLoading />
+  }
+
+  if (!access_token) {
+    return <Navigate to={`/login?redirect=/account/${subpage}`} replace />
   }
 
   // Redirect to general if invalid subpage
-  if (!VALID_SUBPAGES.includes(params.subpage)) {
-    redirect('/account/general')
+  if (!VALID_SUBPAGES.includes(subpage)) {
+    return <Navigate to="/account/general" replace />
   }
 
-  const org = await getOrganizationContextInfo(params.orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
+  if (!org) {
+    return <PageLoading />
+  }
 
   return (
     <AccountClient
-      orgslug={params.orgslug}
+      orgslug={orgslug}
       org_id={org.id}
-      subpage={params.subpage}
+      subpage={subpage}
     />
   )
 }

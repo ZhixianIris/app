@@ -181,8 +181,7 @@ export default function BoardToolbar({
                   </div>
                   <Popover.Arrow
                     className="fill-white"
-                    width={10}
-                    height={5}
+                    style={{ width: 10, height: 5 }}
                   />
                 </Popover.Popup>
                 </Popover.Positioner>

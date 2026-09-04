@@ -1,5 +1,5 @@
-import { redirect } from "react-router-dom";
+import { Navigate } from 'react-router-dom'
 
 export default function AdminPage() {
-  redirect('/admin/organizations')
+  return <Navigate to="/admin/organizations" replace />
 }

@@ -40,7 +40,7 @@ const getValidationSchema = (t: any) => Yup.object().shape({
 
 const OrgEditOther: React.FC = () => {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any

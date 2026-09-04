@@ -5,13 +5,13 @@ import { motion } from 'motion/react'
 import toast from 'react-hot-toast'
 import { verifyStripeConnection } from '@services/payments/providers/stripe'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
-import learnhouseIcon from 'public/learnhouse_bigicon_1.png'
+const learnhouseIcon = '/learnhouse_bigicon_1.png'
 import { useTranslation } from 'react-i18next'
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 function StripeConnectCallbackInner() {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const session = useLHSession() as any
   const [status, setStatus] = useState<'processing' | 'success' | 'error'>('processing')
@@ -61,7 +61,7 @@ function StripeConnectCallbackInner() {
     if (session) {
       verifyConnection()
     }
-  }, [session, router, searchParams])
+  }, [session, navigate, searchParams])
 
   return (
     <div className="h-screen w-full bg-[#f8f8f8] flex items-center justify-center">

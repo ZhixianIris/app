@@ -48,7 +48,7 @@ function DocumentPdfModal({ submitFileActivity, chapterId, course }: any) {
       </div>
 
       <div className="rounded-xl nice-shadow p-4 space-y-4">
-        <Field name="documentpdf-activity-name" className="space-y-1.5">
+        <Field.Root name="documentpdf-activity-name" className="space-y-1.5">
           <Field.Label className="text-sm font-medium text-gray-700">
             Document name
           </Field.Label>
@@ -62,9 +62,9 @@ function DocumentPdfModal({ submitFileActivity, chapterId, course }: any) {
               placeholder="Enter a name..."
               className="w-full h-9 px-3 text-sm rounded-lg bg-gray-50 border border-gray-200 outline-none focus:border-gray-300 focus:ring-1 focus:ring-gray-200 transition-colors"
             />} />
-        </Field>
+        </Field.Root>
 
-        <Field name="documentpdf-activity-file" className="space-y-1.5">
+        <Field.Root name="documentpdf-activity-file" className="space-y-1.5">
           <Field.Label className="text-sm font-medium text-gray-700">
             PDF file
           </Field.Label>
@@ -78,12 +78,11 @@ function DocumentPdfModal({ submitFileActivity, chapterId, course }: any) {
               required
               className="w-full text-sm text-gray-500 file:me-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-medium file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 transition-colors"
             />} />
-        </Field>
+        </Field.Root>
       </div>
 
       <div className="flex justify-end">
                     <button type="submit"
-            type="submit"
             disabled={isSubmitting}
             className="inline-flex items-center justify-center h-9 px-5 text-sm font-medium text-white bg-black rounded-lg hover:bg-gray-800 transition-colors disabled:opacity-50"
           >

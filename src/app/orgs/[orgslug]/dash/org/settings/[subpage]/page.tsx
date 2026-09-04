@@ -14,7 +14,7 @@ import OrgEditDangerZone from '@components/Dashboard/Pages/Org/OrgEditDangerZone
 import { useTranslation } from 'react-i18next'
 import { PlanLevel } from '@services/plans/plans'
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from 'react-router-dom';
 
 // Security now lives with the people it governs, under Users, split across a
 // two-factor tab and a sign-in-methods tab. The old single URL keeps working.
@@ -34,13 +34,11 @@ const MOVED_TO_DEVELOPERS: Record<string, string> = {
 }
 
 export type OrgParams = {
-  subpage: string
-  orgslug: string
+  subpage: string; orgslug: string
 }
 
 interface TabConfig {
-  id: string
-  label: string
+  id: string; label: string
   icon?: LucideIcon
   customIcon?: string
   requiredPlan?: PlanLevel
@@ -59,8 +57,8 @@ const getSettingTabs = (t: any): TabConfig[] => [
 
 function OrgPage(props: { params: Promise<OrgParams> }) {
   const { t } = useTranslation()
-  const router = useNavigate()
-  const params = use(props.params);
+  const navigate = useNavigate()
+  const params = useParams() as { subpage: string; orgslug: string };
   const [H1Label, setH1Label] = React.useState('')
   const [H2Label, setH2Label] = React.useState('')
   const SETTING_TABS = getSettingTabs(t)
@@ -71,7 +69,7 @@ function OrgPage(props: { params: Promise<OrgParams> }) {
   useEffect(() => {
     if (movedTo) navigate(`/dash/developers/${movedTo}`, { replace: true })
     else if (movedToUsers) navigate(`/dash/users/settings/${movedToUsers}`, { replace: true })
-  }, [movedTo, movedToUsers, router])
+  }, [movedTo, movedToUsers, navigate])
 
   function handleLabels() {
     if (params.subpage == 'general') {

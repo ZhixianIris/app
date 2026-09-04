@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 
 const CommunityEditGeneral: React.FC = () => {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const org = useOrg() as any
   const communityState = useCommunity()

@@ -51,7 +51,7 @@ function LearnHouseCourseImport({
   const { t } = useTranslation()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   // Step state: 'upload' | 'configure' | 'importing' | 'complete'
   const [step, setStep] = useState<'upload' | 'configure' | 'importing' | 'complete'>('upload')

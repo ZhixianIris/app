@@ -41,7 +41,7 @@ import { SiYoutube } from '@icons-pack/react-simple-icons'
 import ToolTip from '@components/Objects/StyledElements/Tooltip/Tooltip'
 import React from 'react'
 import LinkInputTooltip from './LinkInputTooltip'
-import lrnaiIcon from 'public/lrnai_icon.png'
+const lrnaiIcon = '/lrnai_icon.png'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useTranslation } from 'react-i18next'
 import { SeparatorVertical } from "lucide-react";

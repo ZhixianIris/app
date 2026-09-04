@@ -30,7 +30,7 @@ function resolveOrgActive(org: any): boolean {
 function BillingClient() {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const queryClient = useQueryClient()
 
@@ -56,7 +56,7 @@ function BillingClient() {
     if (!isLoading && !isAuthenticated) {
       navigate('/login', { replace: true })
     }
-  }, [isLoading, isAuthenticated, router])
+  }, [isLoading, isAuthenticated, navigate])
 
   // Load the user's orgs to resolve ?org= / ?orgId=.
   const { data: orgs, isLoading: orgsLoading, isError: orgsError, refetch: refetchOrgs } = useQuery({
@@ -78,7 +78,7 @@ function BillingClient() {
     if (isAuthenticated && Array.isArray(orgs) && !org) {
       navigate('/organizations', { replace: true })
     }
-  }, [isAuthenticated, orgs, org, router])
+  }, [isAuthenticated, orgs, org, navigate])
 
   const orgId = org?.id
 
@@ -233,7 +233,7 @@ function BillingClient() {
     ;['checkout', 'session_id', 'pack_purchased', 'pack'].forEach((k) => sp.delete(k))
     const qs = sp.toString()
     navigate(qs ? `/billing?${qs}` : '/billing', { replace: true })
-  }, [orgId, checkoutParam, packPurchased, checkoutSessionId, orgSlug, queryClient, router, searchParams, t])
+  }, [orgId, checkoutParam, packPurchased, checkoutSessionId, orgSlug, queryClient, navigate, searchParams, t])
 
   const currentPlanId = resolvePlanIdFromOrg(org)
   const isOrgActive = resolveOrgActive(org)

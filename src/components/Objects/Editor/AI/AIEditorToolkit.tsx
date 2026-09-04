@@ -1,5 +1,5 @@
 import React from 'react'
-import learnhouseAI_icon from 'public/learnhouse_ai_simple.png'
+const learnhouseAI_icon = '/learnhouse_ai_simple.png'
 import { motion, AnimatePresence } from 'motion/react'
 import {
   AlertTriangle,

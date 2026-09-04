@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import learnhouseIcon from 'public/learnhouse_bigicon_1.png'
+const learnhouseIcon = '/learnhouse_bigicon_1.png'
 import { getOrgLogoMediaDirectory, getOrgAuthBackgroundMediaDirectory } from '@services/media/media'
 import { getUriWithOrg } from '@services/config/config'
 import { cn } from '@/lib/utils'

@@ -1,5 +1,5 @@
 import React, { use, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useTranslation } from 'react-i18next'
 import { getUriWithOrg } from '@services/config/config'
@@ -17,9 +17,9 @@ const RANGES = [
   { key: 'y1', value: 365 },
 ]
 
-export default function UserAnalyticsDetailPage(props: { params: Promise<PageParams> }) {
+export default function UserAnalyticsDetailPage() {
   const { t } = useTranslation()
-  const params = use(props.params)
+  const params = useParams() as { orgslug: string; userId: string }
   const userId = Number(params.userId)
   const [days, setDays] = useState(365)
   const { data, isLoading, isError } = useUserDossier(userId, days)

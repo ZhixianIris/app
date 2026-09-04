@@ -1,3 +1,4 @@
+import { useParams } from 'react-router-dom'
 import { Breadcrumbs } from '@components/Objects/Breadcrumbs/Breadcrumbs'
 import { getUriWithOrg } from '@services/config/config'
 import { Terminal, KeyIcon, Zap, Globe, Search, Shield, LucideIcon } from 'lucide-react'
@@ -13,14 +14,11 @@ import { PlanLevel, isFeatureAvailable } from '@services/plans/plans'
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar'
 
 export type DevParams = {
-  subpage: string
-  orgslug: string
+  subpage: string; orgslug: string
 }
 
 interface TabConfig {
-  id: string
-  label: string
-  icon: LucideIcon
+  id: string; label: string; icon: LucideIcon
   requiredPlan?: PlanLevel
 }
 
@@ -34,7 +32,7 @@ const getDevTabs = (t: any): TabConfig[] => [
 
 function DevelopersPage(props: { params: Promise<DevParams> }) {
   const { t } = useTranslation()
-  const params = use(props.params)
+  const params = useParams() as { subpage: string; orgslug: string }
   const [H1Label, setH1Label] = React.useState('')
   const [H2Label, setH2Label] = React.useState('')
   // Hide tabs whose feature is unavailable in the current deployment mode — in

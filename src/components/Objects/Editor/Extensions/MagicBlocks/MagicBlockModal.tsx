@@ -11,7 +11,7 @@ import {
   startMagicBlockSession,
   iterateMagicBlock,
 } from '@services/ai/magicblocks'
-import lrnaiIcon from 'public/lrnai_icon.png'
+const lrnaiIcon = '/lrnai_icon.png'
 import { useTranslation } from 'react-i18next'
 import { useLHAnalytics, AnalyticsEvent } from '@services/analytics'
 

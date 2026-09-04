@@ -1,23 +1,13 @@
 import React from 'react'
+import { useParams } from 'react-router-dom'
 import CourseClient from './course'
-import { getCourseMetadata } from '@services/courses/courses'
-import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getCourseThumbnailMediaDirectory, getOrgOgImageMediaDirectory } from '@services/media/media'
-import { getServerSession } from '@/lib/auth/server'
-import { getOrgSeoConfig, buildPageTitle } from '@/lib/seo/utils'
-import { getServerCanonicalUrl } from '@/lib/seo/utils.server'
 
-
-type MetadataProps = {
-  params: Promise<{ orgslug: string; courseuuid: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-const CoursePage = async (params: any) => {
-  const { courseuuid, orgslug } = await params.params
+const CoursePage = () => {
+  const { courseuuid, orgslug } = useParams() as { courseuuid: string; orgslug: string }
   return (
     <CourseClient
-      courseuuid={courseuuid}
-      orgslug={orgslug}
+      courseuuid={courseuuid ?? ''}
+      orgslug={orgslug ?? ''}
       course={null}
       serverError={null}
     />

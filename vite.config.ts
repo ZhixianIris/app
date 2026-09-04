@@ -17,6 +17,7 @@ export default defineConfig({
       '@lib': r('src/lib'),
       '@ee': r('src/ee'),
       '@': r('src'),
+      '@app': r('src/app'),
       app: r('src/app'),
     },
   },

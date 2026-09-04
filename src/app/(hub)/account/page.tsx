@@ -23,7 +23,7 @@ import { AnalyticsEvent } from '@services/analytics/events'
 function AccountClient() {
   const { t } = useTranslation()
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   const access_token = session?.data?.tokens?.access_token
   const user = session?.data?.user
@@ -35,7 +35,7 @@ function AccountClient() {
     if (!isLoading && !isAuthenticated) {
       navigate('/login', { replace: true })
     }
-  }, [isLoading, isAuthenticated, router])
+  }, [isLoading, isAuthenticated, navigate])
 
   const showLoader = isLoading || !isAuthenticated
 

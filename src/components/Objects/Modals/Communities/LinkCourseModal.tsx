@@ -32,7 +32,7 @@ export function LinkCourseModal({
 }: LinkCourseModalProps) {
   const session = useLHSession() as any
   const org = useOrg() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [courses, setCourses] = useState<Course[]>([])
   const [isLoadingCourses, setIsLoadingCourses] = useState(true)

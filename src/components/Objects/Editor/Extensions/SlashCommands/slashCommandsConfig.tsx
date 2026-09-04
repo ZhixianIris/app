@@ -30,7 +30,7 @@ import {
   User,
   Video,
 } from 'lucide-react'
-import lrnaiIcon from 'public/lrnai_icon.png'
+const lrnaiIcon = '/lrnai_icon.png'
 import { SiYoutube } from '@icons-pack/react-simple-icons'
 import { SlashCommandItem, SlashCommandCategory } from './types'
 import React from 'react'

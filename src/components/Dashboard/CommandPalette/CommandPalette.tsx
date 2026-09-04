@@ -83,7 +83,7 @@ function groupContentResults(results: ContentResult[]): Record<ContentResultType
 export default function CommandPalette() {
   const { t } = useTranslation()
   const { open, setOpen } = useCommandPalette()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const { track } = useLHAnalytics('dashboard')
   const [query, setQuery] = useState('')
 

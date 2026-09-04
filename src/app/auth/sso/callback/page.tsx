@@ -17,7 +17,7 @@ export default function SSOCallbackPage() {
   const { t } = useTranslation()
   const { signIn } = useAuth()
   const [searchParams] = useSearchParams()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const [error, setError] = useState<ErrorDetails | null>(null)
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [showTechnicalDetails, setShowTechnicalDetails] = useState(false)
@@ -123,7 +123,7 @@ export default function SSOCallbackPage() {
     }
 
     handleCallback()
-  }, [searchParams, router, t, signIn])
+  }, [searchParams, navigate, t, signIn])
 
   if (status === 'loading') {
     return (

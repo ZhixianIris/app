@@ -41,7 +41,7 @@ import { AVAILABLE_LANGUAGES } from '@/lib/languages'
 function HomeClient() {
   const { t, i18n } = useTranslation()
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = session?.status === 'authenticated'
   const isLoading = session?.status === 'loading'
@@ -58,7 +58,7 @@ function HomeClient() {
     if (!isLoading && !isAuthenticated) {
       navigate('/login', { replace: true })
     }
-  }, [isLoading, isAuthenticated, router])
+  }, [isLoading, isAuthenticated, navigate])
 
   // A brand-new (org-less) user has no orgs yet — send them straight to create
   // their first org rather than a confusing empty hub. Mirrors the platform's
@@ -67,7 +67,7 @@ function HomeClient() {
     if (isAuthenticated && Array.isArray(orgs) && orgs.length === 0) {
       navigate('/new', { replace: true })
     }
-  }, [isAuthenticated, orgs, router])
+  }, [isAuthenticated, orgs, navigate])
 
   return (
     <div className="fixed inset-0 z-[100] bg-white overflow-y-auto">

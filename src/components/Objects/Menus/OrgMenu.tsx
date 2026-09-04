@@ -243,7 +243,8 @@ export const OrgMenu = (props: any) => {
                             aria-label={t('common.dashboard')}
                           >
                             <SquaresFour size={20} weight="fill" />
-                          </button>} />} />ontent side="bottom" className="text-xs">
+                          </button>} />} />
+                      <TooltipContent side="bottom" className="text-xs">
                         {t('common.dashboard')}
                       </TooltipContent>
                     </Tooltip>
@@ -278,12 +279,13 @@ export const OrgMenu = (props: any) => {
                 <DropdownMenu>
                   <TooltipProvider delayDuration={0}>
                     <Tooltip>
-                                                              <TooltipTrigger render={                                    <DropdownMenuTrigger render={<button
+                                                              <TooltipTrigger render={                                        <DropdownMenuTrigger render={<button
                             className={`p-2 rounded-lg transition-colors ${colors.iconBtn}`}
                             aria-label={t('common.help')}
                           >
                             <Question size={20} weight="fill" />
-                          </button>} />} />ontent side="bottom" className="text-xs">
+                          </button>} />} />
+                      <TooltipContent side="bottom" className="text-xs">
                         {t('common.help')}
                       </TooltipContent>
                     </Tooltip>
@@ -440,7 +442,8 @@ const CopilotMenuButton = ({
                 {isBubbleMode && bubbleOpen && (
                   <span className="absolute top-1.5 end-1.5 w-2 h-2 rounded-full bg-violet-500 ring-2 ring-white dark:ring-neutral-900" />
                 )}
-              </button>} />} />tom" className="text-xs">
+              </button>} />} />
+          <TooltipContent side="bottom" className="text-xs">
             Copilot
           </TooltipContent>
         </Tooltip>

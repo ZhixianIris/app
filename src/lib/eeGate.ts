@@ -1,4 +1,3 @@
-import 'server-only'
 import { getServerAPIUrl } from '@services/config/config'
 
 export type InstanceMode = 'saas' | 'oss' | 'ee'

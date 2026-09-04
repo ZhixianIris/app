@@ -37,7 +37,7 @@ export function CommunityThumbnailModal({
   orgSlug,
 }: CommunityThumbnailModalProps) {
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const org = useOrg() as any
   const queryClient = useQueryClient()
   const accessToken = session?.data?.tokens?.access_token

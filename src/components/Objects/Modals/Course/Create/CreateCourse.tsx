@@ -43,7 +43,7 @@ const _validationSchema = Yup.object().shape({
 function CreateCourseModal({ closeModal, orgslug }: any) {
   const { t } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const queryClient = useQueryClient()
   const [orgId, setOrgId] = React.useState(null) as any

@@ -433,7 +433,7 @@ export default function BoardTopRight({ provider, ydoc }: BoardTopRightProps) {
       </div>
 
       {/* Timer banner — slides down from top center when active */}
-      <style jsx>{`
+      <style >{`
         @keyframes timer-slide-down {
           from { transform: translateX(-50%) translateY(-100%); }
           to { transform: translateX(-50%) translateY(0); }

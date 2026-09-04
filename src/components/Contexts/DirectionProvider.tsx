@@ -13,5 +13,5 @@ import { useDirection } from '@hooks/useDirection'
 export default function DirectionProvider({ children }: { children: React.ReactNode }) {
   const { dir } = useDirection()
 
-  return <BaseDirectionProvider dir={dir}>{children}</BaseDirectionProvider>
+  return <BaseDirectionProvider direction={dir}>{children}</BaseDirectionProvider>
 }

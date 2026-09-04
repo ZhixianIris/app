@@ -1,43 +1,66 @@
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { getPodcastMeta, PodcastMeta } from '@services/podcasts/podcasts'
 import { getOrganizationContextInfo } from '@services/organizations/orgs'
-import { getPodcastThumbnailMediaDirectory, getOrgOgImageMediaDirectory } from '@services/media/media'
-import { getServerSession } from '@/lib/auth/server'
-import { getOrgSeoConfig, buildPageTitle, buildBreadcrumbJsonLd } from '@/lib/seo/utils'
-import { getServerCanonicalUrl } from '@/lib/seo/utils.server'
-import { JsonLd } from '@components/SEO/JsonLd'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import PodcastClient from './podcast'
+import PageLoading from '@components/Objects/Loaders/PageLoading'
+import NotFound from '@app/not-found'
 
-type PageParams = Promise<{
-  orgslug: string
-  podcastuuid: string
-}>
+export default function PodcastPage() {
+  const { orgslug, podcastuuid } = useParams() as { orgslug: string; podcastuuid: string }
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-export default async function PodcastPage({ params }: { params: PageParams }) {
-  const { orgslug, podcastuuid } = await params
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
+  const [org, setOrg] = useState<any>(null)
+  const [podcastMeta, setPodcastMeta] = useState<PodcastMeta | null>(null)
+  const [fetchError, setFetchError] = useState<{ status?: number } | null>(null)
+  const [loaded, setLoaded] = useState(false)
 
-  const org = await getOrganizationContextInfo(orgslug, {
-    revalidate: 120,
-    tags: ['organizations'],
-  })
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!orgslug || !podcastuuid) return
+      let nextOrg: any = null
+      try {
+        nextOrg = await getOrganizationContextInfo(orgslug, {
+          revalidate: 120,
+          tags: ['organizations'],
+        })
+      } catch (error) {
+        console.error('Error fetching organization:', error)
+      }
+      let nextMeta: PodcastMeta | null = null
+      let nextError: { status?: number } | null = null
+      try {
+        nextMeta = await getPodcastMeta(
+          `podcast_${podcastuuid}`,
+          { revalidate: 120, tags: ['podcasts'] },
+          access_token
+        )
+      } catch (error: any) {
+        nextError = { status: error?.status }
+        console.error('Error fetching podcast:', error)
+      }
+      if (cancelled) return
+      setOrg(nextOrg)
+      setPodcastMeta(nextMeta)
+      setFetchError(nextError)
+      setLoaded(true)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [orgslug, podcastuuid, access_token])
 
-  let podcastMeta: PodcastMeta | null = null
-  let fetchError: { status?: number } | null = null
-  try {
-    podcastMeta = await getPodcastMeta(
-      `podcast_${podcastuuid}`,
-      { revalidate: 120, tags: ['podcasts'] },
-      access_token
-    )
-  } catch (error: any) {
-    fetchError = { status: error?.status }
-    console.error('Error fetching podcast:', error)
+  if (!loaded) {
+    return <PageLoading />
   }
 
   // Missing, or denied-to-anon: 404 so non-public podcasts aren't enumerable.
   if (!podcastMeta && (!fetchError || !access_token)) {
-    notFound()
+    return <NotFound />
   }
 
   if (!podcastMeta) {
@@ -48,40 +71,13 @@ export default async function PodcastPage({ params }: { params: PageParams }) {
     )
   }
 
-  const podcastJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'PodcastSeries',
-    name: podcastMeta.podcast.name,
-    description: podcastMeta.podcast.description,
-    url: await getServerCanonicalUrl(orgslug, `/podcast/${podcastuuid}`),
-    provider: {
-      '@type': 'Organization',
-      name: org?.name,
-    },
-    episode: (podcastMeta.episodes || []).map((ep: any) => ({
-      '@type': 'PodcastEpisode',
-      name: ep.name,
-      description: ep.description,
-    })),
-  }
-
-  const breadcrumbJsonLd = buildBreadcrumbJsonLd([
-    { name: 'Home', url: await getServerCanonicalUrl(orgslug, '/') },
-    { name: 'Podcasts', url: await getServerCanonicalUrl(orgslug, '/podcasts') },
-    { name: podcastMeta.podcast.name, url: await getServerCanonicalUrl(orgslug, `/podcast/${podcastuuid}`) },
-  ])
-
   return (
-    <>
-      <JsonLd data={breadcrumbJsonLd} />
-      <JsonLd data={podcastJsonLd} />
-      <PodcastClient
-        orgslug={orgslug}
-        org_id={org?.id || 0}
-        podcastUuid={`podcast_${podcastuuid}`}
-        initialPodcast={podcastMeta.podcast}
-        initialEpisodes={podcastMeta.episodes}
-      />
-    </>
+    <PodcastClient
+      orgslug={orgslug ?? ''}
+      org_id={org?.id || 0}
+      podcastUuid={`podcast_${podcastuuid}`}
+      initialPodcast={podcastMeta.podcast}
+      initialEpisodes={podcastMeta.episodes}
+    />
   )
 }

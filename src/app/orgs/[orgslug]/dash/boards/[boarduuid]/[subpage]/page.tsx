@@ -1,5 +1,5 @@
 import React, { use } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { Info, Globe, Users, Image as ImageIcon, Eye } from 'lucide-react'
 import { ChalkboardSimple } from '@phosphor-icons/react'
@@ -18,13 +18,11 @@ import BoardMembersTab from '@components/Dashboard/Boards/Tabs/BoardMembersTab'
 import { DashTabBar, DashTabItem } from '@components/Dashboard/Shared/DashTabBar/DashTabBar'
 
 export type BoardSettingsParams = {
-  orgslug: string
-  boarduuid: string
-  subpage: string
+  orgslug: string; boarduuid: string; subpage: string
 }
 
 function BoardSettingsPage(props: { params: Promise<BoardSettingsParams> }) {
-  const params = use(props.params)
+  const params = useParams() as { orgslug: string; boarduuid: string; subpage: string }
   const org = useOrg() as any
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token

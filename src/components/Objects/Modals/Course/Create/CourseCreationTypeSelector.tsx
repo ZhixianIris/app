@@ -3,7 +3,7 @@ import { PenLine, Sparkles, Lock, Upload } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 import PlanBadge from '@components/Dashboard/Shared/PlanRestricted/PlanBadge'
 import { PlanLevel } from '@services/plans/plans'
-import lrnaiIcon from 'public/lrnai_icon.png'
+const lrnaiIcon = '/lrnai_icon.png'
 import { useOrg } from '@components/Contexts/OrgContext'
 
 interface CourseCreationTypeSelectorProps {

@@ -16,8 +16,6 @@ import { BarLoader } from 'react-spinners'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { queryKeys } from '@/lib/query/keys'
 import { useUpgradeModal } from '@components/Dashboard/Shared/PlanRestricted/UpgradeModalContext'
-import { Form } from "@base-ui/react/form";
-import { Field } from "@base-ui/react/field";
 
 interface Props {
   user: any

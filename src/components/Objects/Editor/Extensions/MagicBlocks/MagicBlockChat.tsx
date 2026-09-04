@@ -2,7 +2,7 @@ import React from 'react'
 import { Send, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { MagicBlockMessage } from './types'
-import lrnaiIcon from 'public/lrnai_icon.png'
+const lrnaiIcon = '/lrnai_icon.png'
 import { useTranslation } from 'react-i18next'
 
 interface MagicBlockChatProps {

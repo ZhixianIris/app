@@ -478,10 +478,7 @@ function CourseCard({
           </div>
         </div>
         <Link
-          to={{
-            pathname: getUriWithOrg(org.slug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`),
-            query: { subpage: 'editor' },
-          }}
+          to={`${getUriWithOrg(org.slug, `/dash/courses/course/${removeCoursePrefix(course.course_uuid)}/content`)}?subpage=editor`}
           className='bg-black font-semibold text-xs text-zinc-100 rounded-lg flex space-x-1.5 nice-shadow items-center px-3 py-1.5 flex-none hover:bg-gray-800 transition-colors'
         >
           <GalleryVerticalEnd size={14} />

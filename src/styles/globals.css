@@ -5,6 +5,14 @@
 
 @import 'tailwindcss';
 
+/* Font families — set by the Fontsource imports loaded in src/app/providers.tsx
+   (originally next/font/google variables in the app-router root layout). */
+:root {
+  --font-default: 'Wix Madefor Text';
+  --font-arabic: 'Tajawal';
+}
+
+
 
 @custom-variant dark (&:is(.dark *));
 

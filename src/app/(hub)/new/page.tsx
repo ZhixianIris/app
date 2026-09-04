@@ -554,7 +554,7 @@ function CreateOrgForm({
           </div>
         )}
         <Form onSubmit={formik.handleSubmit} className="space-y-5">
-          <Field name="name">
+          <Field.Root name="name">
             <FormLabelAndMessage
               label={t('hub_new.createOrg.fields.name', { defaultValue: 'Organization name' })}
               message={formik.errors.name === 'test_hint' ? undefined : (formik.errors.name as string)}
@@ -568,9 +568,9 @@ function CreateOrgForm({
                 required
               />} />
             {formik.errors.name === 'test_hint' && <TestHint t={t} />}
-          </Field>
+          </Field.Root>
 
-          <Field name="description">
+          <Field.Root name="description">
             <FormLabelAndMessage
               label={t('hub_new.createOrg.fields.description', { defaultValue: 'Description (optional)' })}
             />
@@ -583,9 +583,9 @@ function CreateOrgForm({
                   defaultValue: 'What is your organization about?',
                 })}
               />} />
-          </Field>
+          </Field.Root>
 
-          <Field name="slug">
+          <Field.Root name="slug">
             <FormLabelAndMessage
               label={t('hub_new.createOrg.fields.slug', { defaultValue: 'Address' })}
               message={formik.errors.slug === 'test_hint' ? undefined : (formik.errors.slug as string)}
@@ -604,7 +604,7 @@ function CreateOrgForm({
               </span>
             </div>
             {formik.errors.slug === 'test_hint' && <TestHint t={t} />}
-          </Field>
+          </Field.Root>
 
                           <motion.button type="submit"
               disabled={hasErrors || submitting}
@@ -714,7 +714,7 @@ function CreateOrgSuccess({ slug, t }: { slug: string; t: any }) {
 
 export default function CreateNewOrgPage() {
   const { t, i18n } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
@@ -746,7 +746,7 @@ export default function CreateNewOrgPage() {
     if (!isLoading && !isAuthenticated) {
       navigate('/login', { replace: true })
     }
-  }, [isLoading, isAuthenticated, router])
+  }, [isLoading, isAuthenticated, navigate])
 
   // Load the user's existing orgs to detect whether they already have a free org
   // (which makes the free plan unavailable, mirroring the platform's 1-free-org cap).

@@ -72,7 +72,7 @@ function ScormActivityModal({ course, closeModal, onImportComplete, chapterId }:
   const access_token = session?.data?.tokens?.access_token
   const queryClient = useQueryClient()
   const cleanCourseUuid = (id: string) => id?.replace(/^course_/, '') ?? id
-  const router = useNavigate()
+  const navigate = useNavigate()
 
   // Step state: 'upload' | 'assign'
   const [step, setStep] = useState<'upload' | 'assign'>('upload')

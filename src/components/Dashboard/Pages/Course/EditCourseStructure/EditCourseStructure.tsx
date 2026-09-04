@@ -41,7 +41,7 @@ export type OrderPayload =
 const EditCourseStructure = (props: EditCourseStructureProps) => {
   const { t } = useTranslation()
   const { track } = useLHAnalytics('dashboard')
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any;
   const access_token = session?.data?.tokens?.access_token;
   const queryClient = useQueryClient()

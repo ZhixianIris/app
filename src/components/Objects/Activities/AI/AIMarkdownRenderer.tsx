@@ -11,7 +11,7 @@ type AIMarkdownRendererProps = {
 function AIMarkdownRenderer({ content, isStreaming = false }: AIMarkdownRendererProps) {
   return (
     <div className="ai-markdown-content prose prose-invert prose-sm max-w-none">
-      <style jsx global>{`
+      <style  >{`
         @keyframes cursor-blink {
           0%, 100% { opacity: 1; }
           50% { opacity: 0; }

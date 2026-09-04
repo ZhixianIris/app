@@ -43,7 +43,7 @@ const DIALOG_ICON_SIZE = 'w-16 h-16'
 
 export default function OrgEditImages() {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const access_token = session?.data?.tokens?.access_token
   const org = useOrg() as any

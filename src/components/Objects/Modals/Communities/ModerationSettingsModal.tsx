@@ -26,7 +26,7 @@ export function ModerationSettingsModal({
   orgSlug,
 }: ModerationSettingsModalProps) {
   const session = useLHSession() as any
-  const router = useNavigate()
+  const navigate = useNavigate()
   const accessToken = session?.data?.tokens?.access_token
   const inputRef = useRef<HTMLInputElement>(null)
 

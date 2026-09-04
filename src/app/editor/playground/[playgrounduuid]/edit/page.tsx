@@ -1,38 +1,71 @@
-import { getServerSession } from '@/lib/auth/server'
+import { useEffect, useState } from 'react'
+import { Navigate, useParams } from 'react-router-dom'
 import { getPlayground } from '@services/playgrounds/playgrounds'
 import { getOrgCourses } from '@services/courses/courses'
+import { useLHSession } from '@components/Contexts/LHSessionContext'
 import PlaygroundEditor from '@components/Playground/PlaygroundEditor'
-import { redirect } from "react-router-dom";
+import PageLoading from '@components/Objects/Loaders/PageLoading'
+import NotFound from '@app/not-found'
 
-type PageParams = Promise<{ playgrounduuid: string }>
+export default function EditPlaygroundPage() {
+  const { playgrounduuid } = useParams() as { playgrounduuid: string }
+  const session = useLHSession() as any
+  const access_token = session?.data?.tokens?.access_token
 
-export default async function EditPlaygroundPage({ params }: { params: PageParams }) {
-  const { playgrounduuid } = await params
-  const session = await getServerSession()
-  const access_token = session?.tokens?.access_token
+  const [playground, setPlayground] = useState<any>(null)
+  const [orgCourses, setOrgCourses] = useState<{ course_uuid: string; name: string }[]>([])
+  const [missing, setMissing] = useState(false)
+  const [loaded, setLoaded] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      if (!access_token || !playgrounduuid) return
+      let next: any = null
+      let isMissing = false
+      try {
+        next = await getPlayground(playgrounduuid, access_token)
+      } catch {
+        isMissing = true
+      }
+      let nextCourses: { course_uuid: string; name: string }[] = []
+      if (next?.org_slug) {
+        try {
+          const coursesRes = await getOrgCourses(next.org_slug, null, access_token, true)
+          nextCourses = (Array.isArray(coursesRes) ? coursesRes : []).map((c: any) => ({
+            course_uuid: c.course_uuid,
+            name: c.name,
+          }))
+        } catch {
+          // Non-fatal — proceed without course context
+        }
+      }
+      if (cancelled) return
+      setPlayground(next)
+      setMissing(isMissing)
+      setOrgCourses(nextCourses)
+      setLoaded(true)
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [playgrounduuid, access_token])
+
+  if (session?.status === 'loading') {
+    return <PageLoading />
+  }
 
   if (!access_token) {
-    redirect('/auth/login')
+    return <Navigate to="/auth/login" replace />
   }
 
-  let playground
-  try {
-    playground = await getPlayground(playgrounduuid, access_token)
-  } catch {
-    notFound()
+  if (missing) {
+    return <NotFound />
   }
 
-  let orgCourses: { course_uuid: string; name: string }[] = []
-  if (playground.org_slug) {
-    try {
-      const coursesRes = await getOrgCourses(playground.org_slug, null, access_token, true)
-      orgCourses = (Array.isArray(coursesRes) ? coursesRes : []).map((c: any) => ({
-        course_uuid: c.course_uuid,
-        name: c.name,
-      }))
-    } catch {
-      // Non-fatal — proceed without course context
-    }
+  if (!loaded || !playground) {
+    return <PageLoading />
   }
 
   return (

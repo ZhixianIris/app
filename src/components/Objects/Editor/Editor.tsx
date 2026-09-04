@@ -4,10 +4,10 @@ import StarterKit from '@tiptap/starter-kit'
 // ToolbarButtons pulls in @phosphor-icons/react (~360KB) and only renders
 // after the editor is interactive — defer it so it doesn't block first paint.
 const ToolbarButtons = lazy(
-  () => import('./Toolbar/ToolbarButtons').then((m) => m.ToolbarButtons)
+  () => import('./Toolbar/ToolbarButtons').then((m) => ({ default: m.ToolbarButtons }))
 )
 import { motion } from 'motion/react'
-import learnhouseAI_icon from 'public/learnhouse_ai_simple.png'
+const learnhouseAI_icon = '/learnhouse_ai_simple.png'
 import {
   AIEditorStateTypes,
   useAIEditor,

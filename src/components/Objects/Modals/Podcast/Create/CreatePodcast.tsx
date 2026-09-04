@@ -29,7 +29,7 @@ import { Field } from "@base-ui/react/field";
 
 function CreatePodcastModal({ closeModal, orgslug }: any) {
   const { t } = useTranslation()
-  const router = useNavigate()
+  const navigate = useNavigate()
   const session = useLHSession() as any
   const queryClient = useQueryClient()
   const { track } = useLHAnalytics('learner')
