@@ -744,7 +744,7 @@ export default function CreateNewOrgPage() {
   // Redirect unauthenticated users (same effect as app/home/home.tsx).
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      navigate('/login', { replace: true })
+      navigate('/auth/login', { replace: true })
     }
   }, [isLoading, isAuthenticated, navigate])
 
@@ -987,7 +987,7 @@ export default function CreateNewOrgPage() {
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
-                      onClick={() => signOut({ redirect: true, callbackUrl: '/login' })}
+                      onClick={() => signOut({ redirect: true, callbackUrl: '/auth/login' })}
                       className="flex items-center space-x-2 text-red-600 focus:text-red-600"
                     >
                       <LogOut size={16} />

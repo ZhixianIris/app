@@ -1,3 +1,4 @@
+import { getUriWithOrg } from '@services/config/config'
 import { Input } from "@components/ui/input"
 import { Textarea } from "@components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/ui/select"
@@ -88,7 +89,7 @@ function CreatePodcastModal({ closeModal, orgslug }: any) {
           closeModal()
           // Redirect to the podcast dashboard
           const podcastId = res.data.podcast_uuid?.replace('podcast_', '') || res.data.podcast_uuid
-          navigate(`/dash/podcasts/podcast/${podcastId}/general`)
+          navigate(getUriWithOrg(orgslug, `/dash/podcasts/podcast/${podcastId}/general`))
         } else {
           toast.dismiss(toast_loading)
           // Podcasts are gated on the free plan → offer an upgrade at the

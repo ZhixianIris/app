@@ -1,11 +1,7 @@
 // Plan / pack type primitives + Stripe price-id configuration.
 //
-// server-only: this reads process.env.STRIPE_PRICE_* at module load, so it must
-// never reach the browser. The guard turns an accidental client VALUE import
-// into a hard build failure instead of silently shipping empty price-id
-// constants. Type-only imports (`import type`) are elided at compile time and
-// remain fine for client components; client UIs otherwise use the pure
-// app/(hub)/_billing/plans.ts.
+// Reads VITE_* price ids at module load (see subscriptionUtils); unset ids
+// resolve to empty strings so a misconfigured deployment fails loudly.
 
 export type Billing = "monthly" | "annual";
 export type PlanId = "free" | "standard" | "pro" | "enterprise" | "personal" | "personal-family";

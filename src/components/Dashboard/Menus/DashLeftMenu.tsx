@@ -105,6 +105,7 @@ const UPGRADE_STARS: {
 
 function DashLeftMenu() {
   const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
   const session = useAppSession() as any
   const { t, i18n } = useTranslation()
   const { track } = useAppAnalytics('dashboard')
@@ -184,7 +185,7 @@ function DashLeftMenu() {
 
 
   async function logOutUI() {
-    await signOut({ redirect: true, callbackUrl: getUriWithOrg(org.slug, '/login') })
+    await signOut({ redirect: true, callbackUrl: '/auth/login' })
   }
 
 
@@ -338,7 +339,7 @@ function DashLeftMenu() {
                 <HoverMenuContent className="w-64">
                   <HoverMenuLabel className="text-white/70 font-medium">{t('courses.courses')}</HoverMenuLabel>
                   <HoverMenuSeparator />
-                                                      <HoverMenuItem render={<Link to="/dash/courses" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/courses`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <BookOpen size={16} weight="fill" />
                       <span>{t('common.all_courses')}</span>
                     </Link>} />
@@ -348,7 +349,7 @@ function DashLeftMenu() {
                       <HoverMenuLabel className="text-white/40">{t('common.recent')}</HoverMenuLabel>
                       {recentCourses.map((course: any) => (
                                                 <HoverMenuItem render={<Link
-                            to={`/dash/courses/course/${course.course_uuid.replace('course_', '')}/settings`}
+                            to={getUriWithOrg(orgslug, `/dash/courses/course/${course.course_uuid.replace('course_', '')}/settings`)}
                             className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors"
                           >
                             <PencilSimple size={14} className="text-white/40" />
@@ -364,7 +365,7 @@ function DashLeftMenu() {
                 const active = isActivePath('/dash/courses')
                 return (
                   <Link
-                    to="/dash/courses"
+                    to={getUriWithOrg(orgslug, `/dash/courses`)}
                     aria-label={t('dashboard.nav.open_courses_menu')}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
@@ -405,7 +406,7 @@ function DashLeftMenu() {
                 <HoverMenuContent className="w-72">
                   <HoverMenuLabel className="text-white/70 font-medium">{t('common.assignments')}</HoverMenuLabel>
                   <HoverMenuSeparator />
-                                                          <HoverMenuItem render={<Link to="/dash/assignments" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                          <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/assignments`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Files size={16} weight="fill" />
                       <span>{t('common.all_assignments')}</span>
                     </Link>} />
@@ -415,7 +416,7 @@ function DashLeftMenu() {
                       <HoverMenuLabel className="text-white/40">{t('common.recent')}</HoverMenuLabel>
                       {recentAssignments.map((assignment: any) => (
                                                 <HoverMenuItem render={<Link
-                            to={`/dash/assignments/${assignment.assignment_uuid.replace('assignment_', '')}?subpage=editor`}
+                            to={getUriWithOrg(orgslug, `/dash/assignments/${assignment.assignment_uuid.replace('assignment_', '')}?subpage=editor`)}
                             className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors"
                           >
                             <PencilSimple size={14} className="text-white/40" />
@@ -434,7 +435,7 @@ function DashLeftMenu() {
                 const active = isActivePath('/dash/assignments')
                 return (
                   <Link
-                    to="/dash/assignments"
+                    to={getUriWithOrg(orgslug, `/dash/assignments`)}
                     aria-label={t('dashboard.nav.open_assignments_menu')}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
@@ -519,23 +520,23 @@ function DashLeftMenu() {
                 <HoverMenuContent className="w-64">
                   <HoverMenuLabel className="text-white/70 font-medium">{t('common.users')}</HoverMenuLabel>
                   <HoverMenuSeparator />
-                                                      <HoverMenuItem render={<Link to="/dash/users/settings/users" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/users/settings/users`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Users size={16} weight="fill" />
                       <span>{t('dashboard.users.settings.tabs.users')}</span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/users/settings/usergroups" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/users/settings/usergroups`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <UsersThree size={16} weight="fill" />
                       <span className="flex items-center">{t('dashboard.users.settings.tabs.usergroups')}<PlanBadge currentPlan={plan} requiredPlan="standard" variant="dark" /></span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/users/settings/roles" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/users/settings/roles`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Shield size={16} weight="fill" />
                       <span className="flex items-center">{t('dashboard.users.settings.tabs.roles')}<PlanBadge currentPlan={plan} requiredPlan="pro" variant="dark" /></span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/users/settings/signups" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/users/settings/signups`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <ClipboardText size={16} weight="fill" />
                       <span>{t('dashboard.users.settings.tabs.signups')}</span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/users/settings/add" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/users/settings/add`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <UserPlus size={16} weight="fill" />
                       <span>{t('dashboard.users.settings.tabs.add')}</span>
                     </Link>} />
@@ -546,7 +547,7 @@ function DashLeftMenu() {
                 const active = isActivePath('/dash/users')
                 return (
                   <Link
-                    to="/dash/users/settings/users"
+                    to={getUriWithOrg(orgslug, `/dash/users/settings/users`)}
                     aria-label={t('dashboard.nav.open_users_menu')}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
@@ -596,29 +597,29 @@ function DashLeftMenu() {
                 <HoverMenuContent className="w-64">
                   <HoverMenuLabel className="text-white/70 font-medium">{t('common.organization')}</HoverMenuLabel>
                   <HoverMenuSeparator />
-                                                      <HoverMenuItem render={<Link to="/dash/org/settings/general" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/org/settings/general`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Gear size={16} weight="fill" />
                       <span>{t('dashboard.organization.settings.tabs.general')}</span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/org/settings/branding" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/org/settings/branding`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Palette size={16} weight="fill" />
                       <span>{t('dashboard.organization.settings.tabs.branding')}</span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/org/settings/landing" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/org/settings/landing`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Rocket size={16} weight="fill" />
                       <span>{t('dashboard.organization.settings.tabs.landing')}</span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/org/settings/ai" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/org/settings/ai`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Robot size={16} weight="fill" />
                       <span className="flex items-center">{t('dashboard.organization.settings.tabs.ai')}<PlanBadge currentPlan={plan} requiredPlan="standard" variant="dark" /></span>
                     </Link>} />
                   {canManageOrg && (
-                                                            <HoverMenuItem render={<Link to="/dash/org/settings/usage" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                            <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/org/settings/usage`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                         <ChartBar size={16} weight="fill" />
                         <span>{t('dashboard.organization.settings.tabs.usage') || 'Usage'}</span>
                       </Link>} />
                   )}
-                                                      <HoverMenuItem render={<Link to="/dash/org/settings/other" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/org/settings/other`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Wrench size={16} weight="fill" />
                       <span>{t('dashboard.organization.settings.tabs.other')}</span>
                     </Link>} />
@@ -629,7 +630,7 @@ function DashLeftMenu() {
                 const active = isActivePath('/dash/org')
                 return (
                   <Link
-                    to="/dash/org/settings/general"
+                    to={getUriWithOrg(orgslug, `/dash/org/settings/general`)}
                     aria-label={t('dashboard.nav.open_organization_menu')}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
@@ -669,23 +670,23 @@ function DashLeftMenu() {
                 <HoverMenuContent className="w-64">
                   <HoverMenuLabel className="text-white/70 font-medium">{t('dashboard.developers.breadcrumb', { defaultValue: 'Developers' })}</HoverMenuLabel>
                   <HoverMenuSeparator />
-                                                      <HoverMenuItem render={<Link to="/dash/developers/api" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/developers/api`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Key size={16} weight="fill" />
                       <span className="flex items-center">{t('dashboard.organization.settings.tabs.api', { defaultValue: 'API Access' })}<PlanBadge currentPlan={plan} requiredPlan="pro" variant="dark" /></span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/developers/automations" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/developers/automations`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Lightning size={16} weight="fill" />
                       <span className="flex items-center">{t('dashboard.organization.settings.tabs.automations', { defaultValue: 'Automations' })}<PlanBadge currentPlan={plan} requiredPlan="pro" variant="dark" /></span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/developers/domains" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/developers/domains`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <LinkSimple size={16} weight="fill" />
                       <span className="flex items-center">{t('dashboard.organization.settings.tabs.domains', { defaultValue: 'Domains' })}<PlanBadge currentPlan={plan} requiredPlan="standard" variant="dark" /></span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/developers/seo" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/developers/seo`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <MagnifyingGlass size={16} weight="fill" />
                       <span>SEO</span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/developers/sso" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/developers/sso`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <Lock size={16} weight="fill" />
                       <span className="flex items-center">{t('dashboard.organization.settings.tabs.sso', { defaultValue: 'SSO' })}<PlanBadge currentPlan={plan} requiredPlan="enterprise" variant="dark" /></span>
                     </Link>} />
@@ -696,7 +697,7 @@ function DashLeftMenu() {
                 const active = isActivePath('/dash/developers')
                 return (
                   <Link
-                    to="/dash/developers/api"
+                    to={getUriWithOrg(orgslug, `/dash/developers/api`)}
                     aria-label={t('dashboard.nav.open_developers_menu')}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
@@ -736,11 +737,11 @@ function DashLeftMenu() {
                 <HoverMenuContent className="w-64">
                   <HoverMenuLabel className="text-white/70 font-medium">Analytics</HoverMenuLabel>
                   <HoverMenuSeparator />
-                                                      <HoverMenuItem render={<Link to="/dash/analytics" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/analytics`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <ChartBar size={16} weight="fill" />
                       <span>{t('analytics.tabs.overview')}</span>
                     </Link>} />
-                                                      <HoverMenuItem render={<Link to="/dash/analytics" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                                      <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/analytics`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                       <ChartLine size={16} weight="fill" />
                       <span className="flex items-center">{t('analytics.tabs.advanced')}<PlanBadge currentPlan={plan} requiredPlan="enterprise" variant="dark" /></span>
                     </Link>} />
@@ -751,7 +752,7 @@ function DashLeftMenu() {
                 const active = isActivePath('/dash/analytics')
                 return (
                   <Link
-                    to="/dash/analytics"
+                    to={getUriWithOrg(orgslug, `/dash/analytics`)}
                     aria-label={t('common.analytics')}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
@@ -798,31 +799,31 @@ function DashLeftMenu() {
                     </HoverMenuLabel>
                     <HoverMenuSeparator />
                     {!showCommunities && (
-                                                                  <HoverMenuItem render={<Link to="/dash/communities" className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
+                                                                  <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/communities`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
                           <ChatsCircle size={16} weight="fill" />
                           <span>{t('communities.title')}</span>
                         </Link>} />
                     )}
                     {!showPodcasts && (
-                                                                  <HoverMenuItem render={<Link to="/dash/podcasts" className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
+                                                                  <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/podcasts`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
                           <Headphones size={16} weight="fill" />
                           <span>{t('podcasts.podcasts')}</span>
                         </Link>} />
                     )}
                     {!showBoards && (
-                                                                  <HoverMenuItem render={<Link to="/dash/boards" className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
+                                                                  <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/boards`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
                           <ChalkboardSimple size={16} weight="fill" />
                           <span>{t('common.boards')}</span>
                         </Link>} />
                     )}
                     {!showPlaygrounds && (
-                                                                  <HoverMenuItem render={<Link to="/dash/playgrounds" className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
+                                                                  <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/playgrounds`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
                           <Cube size={16} weight="fill" />
                           <span>{t('common.playgrounds')}</span>
                         </Link>} />
                     )}
                     {!showPayments && (
-                                                                  <HoverMenuItem render={<Link to="/dash/payments/overview" className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
+                                                                  <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash/payments/overview`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/30 hover:text-white/50 hover:bg-white/[0.05] cursor-pointer transition-colors">
                           <CurrencyCircleDollar size={16} weight="fill" />
                           <span>{t('common.payments')}</span>
                         </Link>} />
@@ -1159,7 +1160,7 @@ function DashLeftMenu() {
                   <p className="text-xs text-white/40">{session?.data?.user?.email}</p>
                 </div>
                 <HoverMenuSeparator />
-                                    <HoverMenuItem render={<Link to="/account/general" className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
+                                    <HoverMenuItem render={<Link to={getUriWithOrg(orgslug, `/account/general`)} className="flex items-center gap-2 px-3 py-2 text-sm text-white/70 hover:text-white hover:bg-white/[0.08] cursor-pointer transition-colors">
                     <Gear size={16} weight="fill" />
                     <span>{t('common.settings')}</span>
                   </Link>} />

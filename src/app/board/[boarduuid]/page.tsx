@@ -31,7 +31,7 @@ function BoardEditorPage() {
   // people out just for coming back after their 8-hour access token lapsed.
   // The client picks up the real token from the session context instead.
   if (!session) {
-    return <Navigate to={`/login?redirect=/board/${boarduuid}`} replace />
+    return <Navigate to={`/auth/login?redirect=/board/${boarduuid}`} replace />
   }
 
   // Ensure board_uuid has the board_ prefix for the API

@@ -220,7 +220,7 @@ function OpenSignUpComponent({ org: propOrg }: OpenSignUpComponentProps = {}) {
               <p className="text-xs text-red-500">{t('auth.resend_verification_failed', { defaultValue: 'Could not resend. Please try again shortly.' })}</p>
             )}
             <hr className="border-green-100" />
-            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/login">
+            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/auth/login">
               <User size={14} />
               <span>{t('auth.login')}</span>
             </Link>
@@ -234,7 +234,7 @@ function OpenSignUpComponent({ org: propOrg }: OpenSignUpComponentProps = {}) {
               <div className="font-semibold text-sm">{t('auth.account_created_success')}</div>
             </div>
             <hr className="border-green-100" />
-            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/login">
+            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/auth/login">
               <User size={14} />
               <span>{t('auth.login')}</span>
             </Link>
@@ -420,7 +420,7 @@ function OpenSignUpComponent({ org: propOrg }: OpenSignUpComponentProps = {}) {
         {/* Login Link */}
         <p className="text-center text-sm text-black/35 mt-6">
           {t('auth.already_have_account')}{' '}
-          <Link to="/login" className="text-black font-semibold hover:underline">
+          <Link to="/auth/login" className="text-black font-semibold hover:underline">
             {t('auth.login')}
           </Link>
         </p>

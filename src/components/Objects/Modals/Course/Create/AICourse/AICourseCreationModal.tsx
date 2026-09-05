@@ -1,3 +1,4 @@
+import { getUriWithOrg } from '@services/config/config'
 import React from 'react'
 import { createPortal } from 'react-dom'
 import { X, Loader2, ArrowUpRight } from 'lucide-react'
@@ -33,7 +34,7 @@ function AICourseCreationModal({
   isOpen,
   onClose,
   orgId,
-  orgslug: _orgslug,
+  orgslug,
   accessToken,
 }: AICourseCreationModalProps) {
   const { t, i18n } = useTranslation()
@@ -178,7 +179,7 @@ function AICourseCreationModal({
     if (!courseUuid) return
     onClose()
     const courseId = courseUuid.replace('course_', '')
-    navigate(`/dash/courses/course/${courseId}/content`)
+    navigate(getUriWithOrg(orgslug, `/dash/courses/course/${courseId}/content`))
   }
 
   if (typeof document === 'undefined') return null

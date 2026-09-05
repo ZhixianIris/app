@@ -1,3 +1,5 @@
+import { useOrg } from '@components/Contexts/OrgContext'
+import { getUriWithOrg } from '@services/config/config'
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, type Transition, type TargetAndTransition } from 'motion/react'
@@ -55,6 +57,8 @@ const logoAnimations: { initial: TargetAndTransition; animate: TargetAndTransiti
 ]
 
 const EditorAppLogo = () => {
+  const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
   const [animation] = useState(
     () => logoAnimations[Math.floor(Math.random() * logoAnimations.length)]
   )
@@ -289,7 +293,7 @@ export default function PlaygroundEditor({
 
         {/* Back */}
         <Link
-          to="/playgrounds"
+          to={getUriWithOrg(orgslug, `/playgrounds`)}
           className="flex items-center gap-1.5 text-sm text-neutral-400 hover:text-neutral-700 transition-colors flex-shrink-0 font-medium"
         >
           <ArrowLeft size={14} weight="bold" data-dir-flip />
@@ -390,7 +394,7 @@ export default function PlaygroundEditor({
 
           {/* Preview */}
           <Link
-            to={`/playground/${playground.playground_uuid}`}
+            to={getUriWithOrg(orgslug, `/playground/${playground.playground_uuid}`)}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-1.5 h-9 px-3 py-2 font-black text-sm nice-shadow rounded-lg transition-all ease-linear bg-neutral-100 hover:bg-neutral-200 text-neutral-600"

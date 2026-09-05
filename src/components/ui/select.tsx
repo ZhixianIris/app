@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Select as SelectPrimitive } from "@base-ui/react/select"
+import type { SelectRootChangeEventDetails } from "@base-ui/react/select"
 import { Check, ChevronsUpDown, ChevronDown, ChevronUp } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -8,18 +9,13 @@ const Select = function Select({
   onValueChange,
   ...props
 }: Omit<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>, 'onValueChange' | 'ref'> & {
-  onValueChange?: (value: any, eventDetails?: any) => void
+  // Base UI semantics: value is null when the selection is cleared. Callers
+  // must handle the null case themselves.
+  onValueChange?: (value: string | null, eventDetails: SelectRootChangeEventDetails) => void
 }) {
   return (
   <SelectPrimitive.Root
-    onValueChange={
-      onValueChange
-        ? (value: any, eventDetails: any) => {
-            // Deselecting (null) is not representable in the app's handlers.
-            if (value !== null && value !== undefined) onValueChange(value as never, eventDetails as never)
-          }
-        : undefined
-    }
+    onValueChange={onValueChange as never}
     {...props}
   />
   )
@@ -87,14 +83,13 @@ SelectScrollDownButton.displayName = "SelectScrollDownButton"
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Popup>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Popup> & {
-    position?: "popper" | "item-aligned"
     sideOffset?: number
   }
->(({ className, children, position = "popper", sideOffset = 4, ...props }, ref) => (
+>(({ className, children, sideOffset = 4, ...props }, ref) => (
   <SelectPrimitive.Portal>
     <SelectPrimitive.Positioner
-      alignItemWithTrigger={position !== "popper"}
-      sideOffset={position === "popper" ? sideOffset : undefined}
+      alignItemWithTrigger={false}
+      sideOffset={sideOffset}
       style={{ zIndex: 'var(--z-modal-content)' }}
     >
       <SelectPrimitive.Popup
@@ -110,11 +105,7 @@ const SelectContent = React.forwardRef<
       >
         <SelectScrollUpButton />
         <SelectPrimitive.List
-          className={cn(
-            "p-1",
-            position === "popper" &&
-              "w-full min-w-[var(--anchor-width)]"
-          )}
+          className={cn("p-1", "w-full min-w-[var(--anchor-width)]")}
         >
           {children}
         </SelectPrimitive.List>

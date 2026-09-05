@@ -86,7 +86,7 @@ function TokenExchangeInner() {
           <h1 className="text-xl font-semibold text-gray-800 mb-2">Authentication Failed</h1>
           <p className="text-gray-600 mb-6">{error}</p>
           <a
-            href="/login"
+            href="/auth/login"
             className="inline-block px-6 py-2.5 bg-black text-white rounded-lg hover:bg-black/90 transition-colors text-sm font-semibold"
           >
             Go to Login

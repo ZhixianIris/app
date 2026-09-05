@@ -286,7 +286,7 @@ const OrgEditGeneral: React.FC = () => {
                       </Label>
                       <Select
                         value={defaultLanguage}
-                        onValueChange={setDefaultLanguage}
+                        onValueChange={(value) => { if (value !== null) setDefaultLanguage(value) }}
                       >
                         <SelectTrigger>
                           <SelectValue />

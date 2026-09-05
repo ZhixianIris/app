@@ -39,7 +39,7 @@ const AssignmentAnalyticsSubPage = lazy(() => import('./subpages/AssignmentAnaly
 
 function AssignmentEdit() {
     const { t } = useTranslation()
-    const params = useParams() as { assignmentuuid: string; }
+    const params = useParams() as { orgslug: string; assignmentuuid: string; }
     const [searchParams] = useSearchParams()
     const [selectedSubPage, setSelectedSubPage] = React.useState(searchParams.get('subpage') || 'editor')
     const isMobile = useMediaQuery('(max-width: 767px)')
@@ -154,6 +154,7 @@ function BrdCmpx() {
 }
 
 function PublishingState() {
+    const params = useParams() as { orgslug: string; assignmentuuid: string; }
     const { t } = useTranslation()
     const assignment = useAssignments() as any;
     const session = useAppSession() as any;
@@ -223,7 +224,7 @@ function PublishingState() {
                     content={t('dashboard.assignments.detail.publishing.preview_tooltip')} >
                     <Link
                         target='_blank'
-                        to={`/course/${assignment?.course_object?.course_uuid.replace('course_', '')}/activity/${assignment?.activity_object?.activity_uuid.replace('activity_', '')}`}
+                        to={`/orgs/${params.orgslug}/course/${assignment?.course_object?.course_uuid.replace('course_', '')}/activity/${assignment?.activity_object?.activity_uuid.replace('activity_', '')}`}
                         className='flex px-3 py-2 cursor-pointer rounded-md space-x-2 items-center bg-linear-to-bl text-cyan-800 font-medium from-sky-400/50 to-cyan-200/80  border border-cyan-600/10 shadow-cyan-900/10 shadow-lg'>
                         <Eye size={18} />
                         <p className=' text-sm font-bold'>{t('dashboard.assignments.detail.publishing.preview')}</p>

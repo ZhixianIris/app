@@ -147,7 +147,7 @@ function SubscriptionsClient() {
   // Redirect unauthenticated users to login (mirror app/home/home.tsx).
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      navigate('/login', { replace: true })
+      navigate('/auth/login', { replace: true })
     }
   }, [isLoading, isAuthenticated, navigate])
 

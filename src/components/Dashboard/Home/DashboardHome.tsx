@@ -12,7 +12,7 @@ import { queryKeys } from '@/lib/query/keys'
 import { useTranslation } from 'react-i18next'
 import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { getAPIUrl } from '@services/config/config'
+import { getAPIUrl, getUriWithOrg } from '@services/config/config'
 import { OrgUsageResponse, orgUsageFetcher } from '@services/orgs/usage'
 import AdminAuthorization from '@components/Security/AdminAuthorization'
 import { usePlan } from '@components/Hooks/usePlan'
@@ -34,6 +34,7 @@ export default function DashboardHome() {
   const { t } = useTranslation()
   const session = useAppSession() as any
   const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
 
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
@@ -73,28 +74,28 @@ export default function DashboardHome() {
             </div>
             <div className="flex items-center gap-2 flex-wrap">
               <Link
-                to="/dash/courses?new=true"
+                to={getUriWithOrg(orgslug, `/dash/courses?new=true`)}
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg hover:bg-gray-800 transition-colors"
               >
                 <PlusCircle size={14} weight="bold" />
                 {t('dashboard.home.create_course')}
               </Link>
               <Link
-                to="/dash/analytics"
+                to={getUriWithOrg(orgslug, `/dash/analytics`)}
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-gray-600 bg-white rounded-lg nice-shadow hover:bg-gray-50 transition-colors"
               >
                 <ChartBar size={14} weight="bold" />
                 {t('dashboard.home.analytics')}
               </Link>
               <Link
-                to="/dash/users/settings/users"
+                to={getUriWithOrg(orgslug, `/dash/users/settings/users`)}
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-gray-600 bg-white rounded-lg nice-shadow hover:bg-gray-50 transition-colors"
               >
                 <Users size={14} weight="bold" />
                 {t('dashboard.home.members')}
               </Link>
               <Link
-                to="/dash/org/settings/general"
+                to={getUriWithOrg(orgslug, `/dash/org/settings/general`)}
                 className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-gray-600 bg-white rounded-lg nice-shadow hover:bg-gray-50 transition-colors"
               >
                 <GearSix size={14} weight="bold" />

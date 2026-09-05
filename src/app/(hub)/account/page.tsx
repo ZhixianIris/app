@@ -33,7 +33,7 @@ function AccountClient() {
   // Redirect unauthenticated users to login (mirror app/home/home.tsx).
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      navigate('/login', { replace: true })
+      navigate('/auth/login', { replace: true })
     }
   }, [isLoading, isAuthenticated, navigate])
 
@@ -161,7 +161,7 @@ function DangerZone({ user, access_token }: { user: any; access_token: string })
       setConfirmOpen(false)
       setConfirmText('')
       // Tear down the session and send the (now anonymous) user to login.
-      signOut({ redirect: true, callbackUrl: '/login' })
+      signOut({ redirect: true, callbackUrl: '/auth/login' })
     } catch (e: any) {
       setError(
         e?.data?.detail ||

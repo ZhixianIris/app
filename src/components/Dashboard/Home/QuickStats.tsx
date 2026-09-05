@@ -1,3 +1,5 @@
+import { getUriWithOrg } from '@services/config/config'
+import { useOrg } from '@components/Contexts/OrgContext'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import {
@@ -15,6 +17,8 @@ import {
 import { AnimatedNumber } from '@components/Dashboard/Analytics/Course/CourseWidgetCard'
 
 export default function QuickStats() {
+  const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
   const { t } = useTranslation()
   const { data: statusData, isLoading: statusLoading } = useAnalyticsStatus()
   const isConfigured = statusData?.configured === true
@@ -55,7 +59,7 @@ export default function QuickStats() {
             {t('dashboard.home.enable_analytics_description')}
           </p>
           <Link
-            to="/dash/analytics"
+            to={getUriWithOrg(orgslug, `/dash/analytics`)}
             className="text-[11px] font-medium text-blue-600 hover:text-blue-700"
           >
             {t('dashboard.home.enable')} &rarr;
@@ -70,6 +74,8 @@ export default function QuickStats() {
 
 function QuickStatsContent() {
   const { t } = useTranslation()
+  const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
   const { data: eventData, isLoading: eventsLoading } = useAnalyticsPipe(
     'event_counts',
     { days: '30' }
@@ -130,7 +136,7 @@ function QuickStatsContent() {
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold text-gray-700">{t('dashboard.home.quick_stats')}</h3>
         <Link
-          to="/dash/analytics"
+          to={getUriWithOrg(orgslug, `/dash/analytics`)}
           className="text-[11px] font-medium text-gray-400 hover:text-gray-600 transition-colors"
         >
           {t('dashboard.home.full_analytics')} &rarr;

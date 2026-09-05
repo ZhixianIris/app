@@ -208,7 +208,7 @@ const OrgAuditLogs = () => {
                <div className="flex items-center gap-0 border border-gray-200 rounded-md overflow-hidden bg-white">
                 <Select
                   value={searchField}
-                  onValueChange={(val) => setSearchField(val)}
+                  onValueChange={(val) => { if (val !== null) setSearchField(val) }}
                 >
                   <SelectTrigger className="w-[110px] h-9 text-[10px] border-none bg-gray-50 rounded-none focus:ring-0">
                     <SelectValue placeholder={t('dashboard.organization.audit_logs.search_by')} />
@@ -239,7 +239,7 @@ const OrgAuditLogs = () => {
               <Select
                 value={filters.resource}
                 onValueChange={(val) => {
-                    setFilters({ ...filters, resource: val })
+                    if (val !== null) setFilters({ ...filters, resource: val })
                     setOffset(0)
                 }}
               >
@@ -257,7 +257,7 @@ const OrgAuditLogs = () => {
               <Select
                 value={filters.status_code}
                 onValueChange={(val) => {
-                    setFilters({ ...filters, status_code: val })
+                    if (val !== null) setFilters({ ...filters, status_code: val })
                     setOffset(0)
                 }}
               >
@@ -276,7 +276,7 @@ const OrgAuditLogs = () => {
               <Select
                 value={filters.date_range}
                 onValueChange={(val) => {
-                    setFilters({ ...filters, date_range: val, start_date: '', end_date: '' })
+                    if (val !== null) setFilters({ ...filters, date_range: val, start_date: '', end_date: '' })
                     setOffset(0)
                 }}
               >

@@ -514,7 +514,7 @@ function ActivityClient(props: ActivityClientProps) {
           <div className="flex flex-col sm:flex-row gap-2 justify-center">
             {!isAuthenticated && (
               <Link
-                to={getUriWithOrg(orgslug, '/login')}
+                to={'/auth/login'}
                 className="inline-flex items-center justify-center px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors"
               >
                 {t('auth.sign_in', 'Sign in')}

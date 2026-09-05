@@ -187,7 +187,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
               {t('auth.verification_email_sent_message')}
             </p>
             <hr className="border-green-100" />
-            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/login">
+            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/auth/login">
               <User size={14} />
               <span>{t('auth.login')}</span>
             </Link>
@@ -201,7 +201,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
               <div className="font-semibold text-sm">{t('auth.account_created_success')}</div>
             </div>
             <hr className="border-green-100" />
-            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/login">
+            <Link className="flex items-center gap-2 text-sm font-medium hover:underline" to="/auth/login">
               <User size={14} />
               <span>{t('auth.login')}</span>
             </Link>
@@ -369,7 +369,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
         {/* Login Link */}
         <p className="text-center text-sm text-black/35 mt-6">
           {t('auth.already_have_account')}{' '}
-          <Link to="/login" className="text-black font-semibold hover:underline">
+          <Link to="/auth/login" className="text-black font-semibold hover:underline">
             {t('auth.login')}
           </Link>
         </p>

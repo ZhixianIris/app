@@ -150,7 +150,7 @@ function VerifyEmailClient({ org }: VerifyEmailClientProps) {
                                     {t('auth.verification_trouble')}
                                 </p>
                                 <Link
-                                    to="/login"
+                                    to="/auth/login"
                                     className="box-border w-full inline-flex h-[44px] rounded-lg items-center justify-center bg-black hover:bg-black/85 text-white px-[15px] font-bold text-[14px] leading-none transition-all"
                                 >
                                     {t('auth.back_to_login')}

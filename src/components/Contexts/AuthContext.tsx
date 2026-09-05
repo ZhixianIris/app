@@ -1080,7 +1080,7 @@ export function SessionProvider({
 
       const detail = (event as CustomEvent<{ callbackUrl?: string }>).detail
       const callbackUrl = detail?.callbackUrl
-        || (window.location.pathname.startsWith('/admin') ? '/admin/login' : '/login')
+        || (window.location.pathname.startsWith('/admin') ? '/admin/login' : '/auth/login')
 
       handleSignOut({ callbackUrl, redirect: true }).catch((error) => {
         console.error('Forced sign-out failed:', error)

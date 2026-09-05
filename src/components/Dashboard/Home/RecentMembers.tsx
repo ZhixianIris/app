@@ -6,13 +6,14 @@ import { useTranslation } from 'react-i18next'
 import { formatDate } from '@/lib/format'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { useAppSession } from '@components/Contexts/AppSessionContext'
-import { getAPIUrl } from '@services/config/config'
+import { getAPIUrl, getUriWithOrg } from '@services/config/config'
 import { apiFetch } from '@services/utils/ts/requests'
 import { Users, ShieldCheck, Clock, EnvelopeSimple } from '@phosphor-icons/react'
 
 export default function RecentMembers() {
   const { t, i18n } = useTranslation()
   const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
   const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
   const orgId = org?.id
@@ -41,7 +42,7 @@ export default function RecentMembers() {
           )}
         </div>
         <Link
-          to="/dash/users/settings/users"
+          to={getUriWithOrg(orgslug, `/dash/users/settings/users`)}
           className="text-[11px] font-medium text-gray-400 hover:text-gray-600 transition-colors"
         >
           {t('dashboard.home.view_all')} &rarr;

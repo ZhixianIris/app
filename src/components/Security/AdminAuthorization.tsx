@@ -48,7 +48,7 @@ const AdminAuthorization: React.FC<AuthorizationProps> = ({ children, authorizat
       //
       // org can still be null here (its fetch is client-side and may not have
       // landed); getUriWithOrg tolerates an empty slug, dereferencing does not.
-      navigate(getUriWithOrg(org?.slug ?? '', '/login'));
+      navigate('/auth/login');
       return;
     }
 

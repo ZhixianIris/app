@@ -46,6 +46,7 @@ export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string 
   const session = useAppSession() as any
   const { userRoles, rights } = useAdminStatus()
   const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
   const { t, i18n } = useTranslation()
   const { track } = useAppAnalytics()
   const colors = getMenuColorClasses(primaryColor)
@@ -172,10 +173,10 @@ export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string 
             <li>
               <Link
                 className={`px-3 py-2 rounded-lg transition-colors text-sm font-bold ${colors.hoverBg} ${colors.text}`}
-                to={getUriWithOrg(org?.slug, '/login')} >{t('auth.login')}</Link>
+                to={'/auth/login'} >{t('auth.login')}</Link>
             </li>
             <li className={`rounded-lg shadow-sm transition-colors px-4 py-2 text-xs sm:text-sm font-bold ms-1 sm:ms-2 ${colors.signUpBtn}`}>
-              <Link to={getUriWithOrg(org?.slug, '/signup')}>{t('auth.sign_up')}</Link>
+              <Link to={'/auth/signup'}>{t('auth.sign_up')}</Link>
             </li>
           </ul>
         </div>
@@ -232,12 +233,12 @@ export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string 
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {rights?.dashboard?.action_access && (
-                                                  <DropdownMenuItem render={<Link to="/dash" className="flex items-center space-x-2">
+                                                  <DropdownMenuItem render={<Link to={getUriWithOrg(orgslug, `/dash`)} className="flex items-center space-x-2">
                       <Shield size={16} weight="fill" />
                       <span>{t('common.dashboard')}</span>
                     </Link>} />
                 )}
-                                            <DropdownMenuItem render={<Link to="/account/general" className="flex items-center space-x-2">
+                                            <DropdownMenuItem render={<Link to={getUriWithOrg(orgslug, `/account/general`)} className="flex items-center space-x-2">
                     <User size={16} weight="fill" />
                     <span>{t('user.user_settings')}</span>
                   </Link>} />

@@ -163,13 +163,13 @@ const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseA
         reason: 'unauthenticated',
         intended_action: isStarted ? 'leave_course' : 'start_course',
       })
-      navigate(getUriWithOrg(orgslug, '/signup'))
+      navigate('/auth/signup')
       return
     }
 
     // Check if user is part of the organization
     if (!isUserPartOfTheOrg) {
-      navigate(getUriWithOrg(orgslug, '/signup'))
+      navigate('/auth/signup')
       return
     }
 
@@ -233,7 +233,7 @@ const CourseActionsMobile = ({ courseuuid, orgslug, course, trailData }: CourseA
             </p>
           </div>
           <a
-            href={getUriWithOrg(orgslug, '/signup')}
+            href={'/auth/signup'}
             className="w-full py-2 px-4 rounded-lg bg-neutral-900 text-white font-semibold text-sm hover:bg-neutral-800 transition-colors flex items-center justify-center gap-2"
           >
             <UserPlus className="w-4 h-4" />

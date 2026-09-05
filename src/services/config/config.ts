@@ -2,70 +2,30 @@ import { stripPort, isSubdomainOf, isSameHost, isLocalhost as isLocalhostCheck }
 
 // Runtime configuration cache
 let runtimeConfig: Record<string, string> | null = null;
-let serverConfigLoaded = false;
 
-// Lazy load runtime configuration
+// Lazy load runtime configuration.
+// The SPA is browser-only. Values arrive either baked in at build time
+// (import.meta.env.*) or injected before boot through the runtime-config.js
+// <head> script into window.__RUNTIME_CONFIG__. There is deliberately no
+// Node/filesystem fallback: this module must never reference process/fs.
 function loadRuntimeConfig(): Record<string, string> {
-  if (typeof window !== 'undefined') {
-    // Client-side: always read from window.__RUNTIME_CONFIG__ (may be injected after first call)
-    if ((window as any).__RUNTIME_CONFIG__) {
-      runtimeConfig = (window as any).__RUNTIME_CONFIG__;
-    }
-    return runtimeConfig || {};
+  if (typeof window !== 'undefined' && (window as any).__RUNTIME_CONFIG__) {
+    runtimeConfig = (window as any).__RUNTIME_CONFIG__;
   }
-
-  // Server-side: cache after first successful load
-  if (serverConfigLoaded && runtimeConfig) {
-    return runtimeConfig;
-  }
-
-  runtimeConfig = {};
-
-  if (typeof window === 'undefined') {
-    // Server-side: try to read from runtime-config.json
-    // Try multiple possible paths for standalone mode
-    try {
-      const fs = require('fs');
-      const path = require('path');
-      
-      // In standalone mode, runtime-config.json is in the same directory as server.js
-      // Try common possible locations relative to the current working directory and module
-      const possiblePaths = [
-        path.join(process.cwd(), 'runtime-config.json'),
-        path.join(__dirname || process.cwd(), 'runtime-config.json'),
-        path.join(__dirname || process.cwd(), '..', 'runtime-config.json'),
-      ];
-      
-      for (const configPath of possiblePaths) {
-        try {
-          if (fs.existsSync(configPath)) {
-            runtimeConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-            break;
-          }
-        } catch {
-          // Continue to next path
-        }
-      }
-    } catch {
-      // fs/path not available (client-side bundle), skip
-    }
-    serverConfigLoaded = true;
-  }
-
   return runtimeConfig || {};
 }
 
-// Helper function to get config value with fallback
+// Helper function to get config value with fallback:
+// runtime config (window.__RUNTIME_CONFIG__) → import.meta.env → default.
 export const getConfig = (key: string, defaultValue: string = ''): string => {
   const config = loadRuntimeConfig();
-  
-  // 1. Check runtime config (from runtime-config.json or the generated runtime-config.js)
+
   if (config && config[key]) {
     return config[key];
   }
 
-  // 2. Fallback to process.env (Server-side only)
-  return process.env[key] || defaultValue;
+  const env = import.meta.env as unknown as Record<string, string | undefined>;
+  return env[key] ?? defaultValue;
 };
 
 // Helper to read a cookie value by name (client-side only)
@@ -161,10 +121,17 @@ export const getAPIUrl = () => {
   return deriveAPIUrl()
 }
 
-// Server-side only - always returns full URL (never relative path)
-// Use this in Server Components, API routes, and server-side data fetching
-export const getServerAPIUrl = () => {
+// Always returns the full absolute API URL (never the same-origin relative
+// path used for custom-domain cookie isolation).
+export const getAbsoluteAPIUrl = () => {
   return deriveAPIUrl()
+}
+
+// Current org slug from the app_org cookie. For components rendered outside
+// an /orgs/* route (editor surfaces) where neither OrgProvider nor route
+// params are available.
+export const getCurrentOrgSlug = (): string | null => {
+  return getCookieValue('app_org')
 }
 
 export const getBackendUrl = () => getAPP_BACKEND_URL()
@@ -279,78 +246,20 @@ export const getCustomDomainFromContext = (): string | null => {
  * the menu to forge a non-existent subdomain like `default.localhost:3000`.
  */
 export const getUriWithOrg = (orgslug: string, path: string) => {
-  const tenancy = getTenancy()
-
-  // Client-side
-  if (typeof window !== 'undefined') {
-    // Single tenancy → always relative. The browser keeps us on the same host.
-    // Custom domain → relative (we're already on the org's host).
-    // Missing slug → relative (caller wants a generic intra-app URL).
-    if (tenancy === 'single' || getCustomDomainFromContext() || !orgslug) {
-      return path
-    }
-
-    // Multi tenancy: relative if we're already on the correct subdomain.
-    const baseDomain = stripPort(getAPP_DOMAIN())
-    const currentHostname = window.location.hostname
-    const expectedHostname = `${orgslug}.${baseDomain}`
-    if (currentHostname === expectedHostname) {
-      return path
-    }
-
-    // Safety net: only synthesize an absolute subdomain URL when the user is
-    // on the apex base domain itself (e.g. the org-selection screen) or on
-    // some subdomain of it. On any other host — localhost, a host that
-    // doesn't end in `.{baseDomain}` — building `${slug}.${baseDomain}` would
-    // land them on a hostname that may not resolve (e.g. `default.localhost`),
-    // so we return a relative path and keep navigation on the current origin.
-    //
-    // The apex case is essential: the org-selection screen lives on the apex
-    // (`{baseDomain}`), and from there every org link must cross to its
-    // `${slug}.${baseDomain}` subdomain. `isSubdomainOf` is false for the apex
-    // (a host is not a subdomain of itself), so without the `isSameHost` check
-    // org links would collapse to the apex path and loop back to the selector.
-    if (!isSubdomainOf(currentHostname, baseDomain) && !isSameHost(currentHostname, baseDomain)) {
-      return path
-    }
-
-    // Crossing subdomains — build an absolute URL with current scheme/port.
-    const protocol = window.location.protocol + '//'
-    const port = window.location.port
-    const portSuffix = port && port !== '80' && port !== '443' ? `:${port}` : ''
-    return `${protocol}${orgslug}.${baseDomain}${portSuffix}${path}`
-  }
-
-  // Server-side
-  // Single tenancy → relative. The page will render on whatever host the
-  // request came in on; relative URLs resolve correctly at the client.
-  if (tenancy === 'single') {
+  // Final SPA semantics: every org-scoped URL lives under /orgs/{slug}.
+  // There is no host-based tenancy in a single-page app, so the URL always
+  // carries the org segment.
+  if (!orgslug) {
     return path
   }
-
-  // Multi tenancy server-side: build the subdomain URL because we can't
-  // assume server components know the user's current host.
-  if (orgslug) {
-    const protocol = getAPP_HTTP_PROTOCOL()
-    const domain = getAPP_DOMAIN()
-    return `${protocol}${orgslug}.${domain}${path}`
-  }
-  const explicitDomain = getConfig('VITE_APP_DOMAIN')
-  if (explicitDomain) {
-    const protocol = getAPP_HTTP_PROTOCOL()
-    return `${protocol}${explicitDomain}${path}`
-  }
-  return path
+  return `/orgs/${orgslug}${path}`
 }
 
 /**
- * Same as `getUriWithOrg`, but always returns an absolute URL.
- *
- * `getUriWithOrg` intentionally returns a relative path when navigation stays
- * on the current origin. That is right for in-app links, but wrong for links
- * meant to be shared outside the app (invite/signup links copied to the
- * clipboard, emails, ...) where the host must be part of the URL.
+ * Same as `getUriWithOrg`, but always returns an absolute URL for links that
+ * are shared outside the app (invites, emails, ...).
  */
+
 export const getAbsoluteUriWithOrg = (orgslug: string, path: string) => {
   const uri = getUriWithOrg(orgslug, path)
 

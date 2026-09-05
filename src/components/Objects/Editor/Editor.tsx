@@ -463,14 +463,14 @@ function Editor(props: EditorProps) {
                 <Link to="/">
                   <EditorAppLogo />
                 </Link>
-                <Link target="_blank" to={`/course/${course_uuid}`}>
+                <Link target="_blank" to={getUriWithOrg(props.org?.slug, `/course/${course_uuid}`)}>
                   <img
                     className="activity-editor-info-thumbnail"
                     src={`${props.course.thumbnail_image ? getCourseThumbnailMediaDirectory(
                       props.org?.org_uuid,
                       props.course.course_uuid,
                       props.course.thumbnail_image
-                    ) : getUriWithOrg(props.org?.slug, '/empty_thumbnail.png')}`}
+                    ) : '/empty_thumbnail.png'}`}
                     alt={props.course.name}
                   />
                 </Link>
@@ -626,7 +626,7 @@ function Editor(props: EditorProps) {
                 <ToolTip content={t('editor.preview')}>
                   <Link
                     target="_blank"
-                    to={`/course/${course_uuid}/activity/${activity_uuid}`}
+                    to={getUriWithOrg(props.org?.slug, `/course/${course_uuid}/activity/${activity_uuid}`)}
                   >
                     <div className="flex bg-neutral-600 hover:bg-neutral-700 transition-all ease-linear h-9 px-3 py-2 font-black justify-center items-center text-sm shadow-sm text-neutral-100 rounded-lg hover:cursor-pointer">
                       <Eye className="mx-auto items-center" size={15} />

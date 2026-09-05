@@ -45,6 +45,7 @@ import { useCommandPalette } from '@components/Dashboard/CommandPalette/CommandP
 
 function DashMobileMenu() {
   const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
   const session = useAppSession() as any
   const { t, i18n } = useTranslation()
   const pathname = useLocation().pathname || ''
@@ -74,7 +75,7 @@ function DashMobileMenu() {
   }
 
   async function logOutUI() {
-    await signOut({ redirect: true, callbackUrl: getUriWithOrg(org.slug, '/login') })
+    await signOut({ redirect: true, callbackUrl: '/auth/login' })
   }
 
   const close = () => { setMenuOpen(false); setLangExpanded(false) }
@@ -93,7 +94,7 @@ function DashMobileMenu() {
         >
           {/* Learning Web logo — links to home */}
           <Link
-            to="/dash"
+            to={getUriWithOrg(orgslug, `/dash`)}
             className="flex items-center justify-center px-2.5 py-2.5 rounded-full transition-all duration-200"
             aria-label={t('common.home')}
           >

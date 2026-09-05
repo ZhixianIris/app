@@ -1,3 +1,4 @@
+import { getCurrentOrgSlug, getUriWithOrg } from '@services/config/config'
 import { NodeViewWrapper } from '@tiptap/react'
 import React, { useEffect, useState } from 'react'
 import { useAppSession } from '@components/Contexts/AppSessionContext'
@@ -260,7 +261,7 @@ function UserBlockComponent(props: any) {
                     variant="ghost"
                     size="icon"
                     className="h-7 w-7 text-neutral-500 hover:text-neutral-700 flex-shrink-0"
-                    onClick={() => userData.username && navigate(`/user/${userData.username}`)}
+                    onClick={() => userData.username && navigate(getUriWithOrg(getCurrentOrgSlug() ?? '', `/user/${userData.username}`))}
                   >
                     <ArrowSquareOut weight="duotone" className="w-4 h-4" />
                   </Button>
@@ -339,7 +340,7 @@ function UserBlockComponent(props: any) {
                     variant="ghost"
                     size="icon"
                     className="h-7 w-7 text-neutral-500 hover:text-neutral-700 flex-shrink-0"
-                    onClick={() => userData.username && navigate(`/user/${userData.username}`)}
+                    onClick={() => userData.username && navigate(getUriWithOrg(getCurrentOrgSlug() ?? '', `/user/${userData.username}`))}
                   >
                     <ArrowSquareOut weight="duotone" className="w-4 h-4" />
                   </Button>

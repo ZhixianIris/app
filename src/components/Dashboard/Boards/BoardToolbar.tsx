@@ -1,3 +1,5 @@
+import { getUriWithOrg } from '@services/config/config'
+import { useOrg } from '@components/Contexts/OrgContext'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
@@ -74,6 +76,8 @@ export default function BoardToolbar({
   onDrawColorChange,
   onDrawWidthChange,
 }: BoardToolbarProps) {
+  const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
   const { t } = useTranslation()
   const [drawPopoverOpen, setDrawPopoverOpen] = useState(false)
 
@@ -87,7 +91,7 @@ export default function BoardToolbar({
       }}
     >
       {/* Logo */}
-      <Link to="/dash/boards">
+      <Link to={getUriWithOrg(orgslug, `/dash/boards`)}>
         <div className="bg-black rounded-md w-[25px] h-[25px] flex items-center justify-center hover:opacity-80 transition-opacity">
           <img
             src="/lrn.svg"

@@ -1,6 +1,7 @@
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 // Bare /dash/developers → the first section.
 export default function DevelopersIndex() {
-  return <Navigate to="/dash/developers/api" replace />
+  const { orgslug } = useParams<{ orgslug: string }>()
+  return <Navigate to={`/orgs/${orgslug}/dash/developers/api`} replace />
 }

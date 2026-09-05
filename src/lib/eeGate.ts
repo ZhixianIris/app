@@ -1,4 +1,4 @@
-import { getServerAPIUrl } from '@services/config/config'
+import { getAbsoluteAPIUrl } from '@services/config/config'
 
 export type InstanceMode = 'saas' | 'oss' | 'ee'
 
@@ -24,7 +24,7 @@ export function isSuperadminSurfaceBlocked(mode: InstanceMode | null): boolean {
  */
 export async function fetchInstanceMode(): Promise<InstanceMode | null> {
   try {
-    const res = await fetch(`${getServerAPIUrl()}instance/info`, {
+    const res = await fetch(`${getAbsoluteAPIUrl()}instance/info`, {
       cache: 'no-store',
       signal: AbortSignal.timeout(4000),
     })

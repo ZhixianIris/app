@@ -90,15 +90,15 @@ export default function ErrorActions({ resolutions, reset, eventId, loginNext }:
   const doSignOut = async () => {
     setSigningOut(true)
     try {
-      await signOut({ callbackUrl: '/login', redirect: true })
+      await signOut({ callbackUrl: '/auth/login', redirect: true })
     } catch {
-      window.location.href = '/login'
+      window.location.href = '/auth/login'
     }
   }
 
   const loginHref = loginNext
-    ? `/login?next=${encodeURIComponent(loginNext)}`
-    : '/login'
+    ? `/auth/login?next=${encodeURIComponent(loginNext)}`
+    : '/auth/login'
   const supportHref = getPlatformUrl('/contact') || 'mailto:support@example.com'
 
   return (

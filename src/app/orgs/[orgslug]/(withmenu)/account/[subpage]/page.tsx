@@ -41,12 +41,12 @@ const AccountSubPage = () => {
   }
 
   if (!access_token) {
-    return <Navigate to={`/login?redirect=/account/${subpage}`} replace />
+    return <Navigate to={`/auth/login?redirect=/orgs/${orgslug}/account/${subpage}`} replace />
   }
 
   // Redirect to general if invalid subpage
   if (!VALID_SUBPAGES.includes(subpage)) {
-    return <Navigate to="/account/general" replace />
+    return <Navigate to={`/orgs/${orgslug}/account/general`} replace />
   }
 
   if (!org) {

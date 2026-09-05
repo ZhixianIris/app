@@ -1,6 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Command } from 'cmdk'
 import { Dialog as DialogPrimitive } from '@base-ui/react/dialog'
 import {
   BookOpen,
@@ -90,12 +89,58 @@ export default function CommandPalette() {
   const pages = usePagesFiltered()
   const { results, isLoading, isWaiting } = useContentSearch(query)
   const grouped = useMemo(() => groupContentResults(results), [results])
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  // Mirror of cmdk's scorer: same token/substring semantics over the item's
+  // search text. 0 hides the item; higher ranks first.
+  const matchScore = useCallback((value: string, search: string): number => {
+    const haystack = normalizeForSearch(value)
+    const needle = normalizeForSearch(search)
+    if (!needle) return 1
+    if (haystack.includes(needle)) return 1
+    const tokens = needle.split(/\s+/u).filter(Boolean)
+    if (tokens.length === 0) return 1
+    return tokens.every((tok: string) => haystack.includes(tok)) ? 0.8 : 0
+  }, [])
+
+  const filteredPages = useMemo(() => {
+    if (!query.trim()) return pages.map((p, index) => ({ item: p, index, score: 1 }))
+    return pages
+      .map((p, index) => {
+        const title = t(p.titleKey)
+        const description = p.descriptionKey ? t(p.descriptionKey) : undefined
+        const keywords = p.keywordsKey ? t(p.keywordsKey) : ''
+        return { item: p, index, score: matchScore(`${title} ${description ?? ''} ${keywords}`, query) }
+      })
+      .filter((e) => e.score > 0)
+      .sort((a, b) => b.score - a.score)
+  }, [pages, query, t, matchScore])
+
+  const filteredContentGroups = useMemo(() => {
+    return CONTENT_TYPE_ORDER.map((type) => {
+      const items = grouped[type]
+      if (!query.trim()) return { type, entries: items.map((r, index) => ({ item: r, index, score: 1 })) }
+      return {
+        type,
+        entries: items
+          .map((r, index) => ({ item: r, index, score: matchScore(`${r.title} ${r.subtitle ?? ''}`, query) }))
+          .filter((e) => e.score > 0)
+          .sort((a, b) => b.score - a.score),
+      }
+    }).filter((g) => g.entries.length > 0)
+  }, [grouped, query, matchScore])
+
+  const contentGroupHeading = (type: ContentResultType) => t(CONTENT_TYPE_GROUP_KEY[type])
 
   // Reset state when palette closes.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!open) setQuery('')
   }, [open])
+
+  useEffect(() => {
+    setActiveIndex(0)
+  }, [query])
 
   // Fire an open impression each time the palette opens.
   useEffect(() => {
@@ -114,24 +159,26 @@ export default function CommandPalette() {
 
   const openSelectedInNewTab = (rootEl: HTMLElement | null) => {
     const selected = rootEl?.querySelector(
-      '[cmdk-item][aria-selected="true"]',
+      '[data-command-item][aria-selected="true"]',
     ) as HTMLElement | null
     const href = selected?.getAttribute('data-href')
     if (!href) return
     window.open(href, '_blank', 'noopener,noreferrer')
   }
 
-  const renderPageItem = (p: SearchMeta, index: number) => {
+  const renderPageItem = (p: SearchMeta, index: number, selected: boolean) => {
     const title = t(p.titleKey)
     const description = p.descriptionKey ? t(p.descriptionKey) : undefined
-    const keywords = p.keywordsKey ? t(p.keywordsKey) : ''
     const Icon = p.icon
     return (
-      <Command.Item
+      <div
         key={p.id}
-        value={`${title} ${description ?? ''} ${keywords}`}
-        onSelect={() => onSelect(p.href, 'page', index)}
+        role="option"
+        aria-selected={selected}
+        onMouseEnter={() => setActiveIndex(index)}
+        onClick={() => onSelect(p.href, 'page', index)}
         className="group/item flex cursor-pointer items-center gap-3.5 rounded-lg px-3 py-2.5 text-white/70 transition-colors aria-selected:bg-white/[0.06] aria-selected:text-white"
+        data-command-item
         data-href={p.href}
       >
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/[0.04] text-white/60 group-aria-selected/item:bg-white/[0.08] group-aria-selected/item:text-white">
@@ -146,18 +193,21 @@ export default function CommandPalette() {
           ) : null}
         </span>
         <span className="hidden text-white/40 group-aria-selected/item:inline">↵</span>
-      </Command.Item>
+      </div>
     )
   }
 
-  const renderContentItem = (r: ContentResult, index: number) => {
+  const renderContentItem = (r: ContentResult, index: number, selected: boolean) => {
     const Icon = CONTENT_TYPE_ICON[r.type]
     return (
-      <Command.Item
+      <div
         key={`${r.type}-${r.id}`}
-        value={`${r.title} ${r.subtitle ?? ''}`}
-        onSelect={() => onSelect(r.href, r.type, index)}
+        role="option"
+        aria-selected={selected}
+        onMouseEnter={() => setActiveIndex(index)}
+        onClick={() => onSelect(r.href, r.type, index)}
         className="group/item flex cursor-pointer items-center gap-3.5 rounded-lg px-3 py-2.5 text-white/70 transition-colors aria-selected:bg-white/[0.06] aria-selected:text-white"
+        data-command-item
         data-href={r.href}
       >
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/[0.04] text-white/60 group-aria-selected/item:bg-white/[0.08] group-aria-selected/item:text-white">
@@ -172,9 +222,27 @@ export default function CommandPalette() {
           ) : null}
         </span>
         <span className="hidden text-white/40 group-aria-selected/item:inline">↵</span>
-      </Command.Item>
+      </div>
     )
   }
+
+  // Flat, keyboard-navigable model of the rendered entries. The index order
+  // must match the rendered order: pages first, then content groups in order.
+  type FlatEntry = { run: () => void }
+  const flatItems: FlatEntry[] = useMemo(() => {
+    const items: FlatEntry[] = []
+    filteredPages.forEach((entry, position) => {
+      items.push({ run: () => onSelect(entry.item.href, 'page', entry.index) })
+      void position
+    })
+    filteredContentGroups.forEach((group) => {
+      group.entries.forEach((entry) => {
+        items.push({ run: () => onSelect(entry.item.href, group.type, entry.index) })
+      })
+    })
+    return items
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredPages, filteredContentGroups])
 
   const searchInputRef = React.useRef<HTMLInputElement>(null)
 
@@ -207,18 +275,11 @@ export default function CommandPalette() {
             {t('dashboard.search.placeholder')}
           </DialogPrimitive.Title>
 
-          <Command
-            label={t('dashboard.search.placeholder')}
-            shouldFilter={true}
-            filter={(value: string, search: string) => {
-              const haystack = normalizeForSearch(value)
-              const needle = normalizeForSearch(search)
-              if (!needle) return 1
-              if (haystack.includes(needle)) return 1
-              const tokens = needle.split(/\s+/u).filter(Boolean)
-              return tokens.every((tok: string) => haystack.includes(tok)) ? 0.8 : 0
-            }}
-            className="flex flex-col [&_[cmdk-group-heading]]:px-3 [&_[cmdk-group-heading]]:pt-3 [&_[cmdk-group-heading]]:pb-1.5 [&_[cmdk-group-heading]]:text-[10.5px] [&_[cmdk-group-heading]]:font-semibold [&_[cmdk-group-heading]]:uppercase [&_[cmdk-group-heading]]:tracking-[0.08em] [&_[cmdk-group-heading]]:text-white/35"
+          <div
+            role="combobox"
+            aria-expanded="true"
+            aria-label={t('dashboard.search.placeholder')}
+            className="flex flex-col [&_[data-command-group-heading]]:px-3 [&_[data-command-group-heading]]:pt-3 [&_[data-command-group-heading]]:pb-1.5 [&_[data-command-group-heading]]:text-[10.5px] [&_[data-command-group-heading]]:font-semibold [&_[data-command-group-heading]]:uppercase [&_[data-command-group-heading]]:tracking-[0.08em] [&_[data-command-group-heading]]:text-white/35"
           >
             {/* Header */}
             <div className="flex items-start gap-4 px-4 sm:px-7 pt-5 sm:pt-6 pb-4 sm:pb-5">
@@ -233,21 +294,38 @@ export default function CommandPalette() {
                     </span>
                   )}
                 </div>
-                <Command.Input
+                <input
                   ref={searchInputRef}
                   value={query}
-                  onValueChange={setQuery}
+                  onChange={(e) => setQuery(e.target.value)}
                   placeholder={t('dashboard.search.placeholder')}
                   onKeyDown={(e) => {
                     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
                       e.preventDefault()
                       e.stopPropagation()
                       const root = (e.currentTarget as HTMLElement).closest(
-                        '[cmdk-root]',
+                        '[role="combobox"]',
                       ) as HTMLElement | null
                       openSelectedInNewTab(root)
+                      return
+                    }
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault()
+                      setActiveIndex((i) => (flatItems.length ? (i + 1) % flatItems.length : 0))
+                    } else if (e.key === 'ArrowUp') {
+                      e.preventDefault()
+                      setActiveIndex((i) => (flatItems.length ? (i - 1 + flatItems.length) % flatItems.length : 0))
+                    } else if (e.key === 'Enter') {
+                      e.preventDefault()
+                      const active = flatItems[activeIndex]
+                      if (active) active.run()
                     }
                   }}
+                  type="text"
+                  role="textbox"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck={false}
                   className="w-full bg-transparent text-[18px] sm:text-[22px] font-medium leading-tight tracking-tight text-white outline-none placeholder:font-medium placeholder:text-white/35"
                 />
               </div>
@@ -264,30 +342,42 @@ export default function CommandPalette() {
             <div className="border-t border-white/[0.06]" />
 
             {/* List */}
-            <Command.List
+            <div
+              role="listbox"
+              aria-label={t('dashboard.search.placeholder')}
               className="min-h-[260px] max-h-[55vh] overflow-y-auto px-2 pt-1 pb-2 scroll-py-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-white/10 hover:[&::-webkit-scrollbar-thumb]:bg-white/20"
               style={{ scrollbarColor: 'rgba(255,255,255,0.15) transparent', scrollbarWidth: 'thin' }}
             >
-              <Command.Empty className="px-4 py-14 text-center text-sm text-white/45">
-                {isLoading || isWaiting
-                  ? t('dashboard.search.loading')
-                  : t('dashboard.search.no_results')}
-              </Command.Empty>
+              {flatItems.length === 0 && (
+                <div className="px-4 py-14 text-center text-sm text-white/45">
+                  {isLoading || isWaiting
+                    ? t('dashboard.search.loading')
+                    : t('dashboard.search.no_results')}
+                </div>
+              )}
 
-              <Command.Group heading={t('dashboard.search.groups.pages')}>
-                {pages.map(renderPageItem)}
-              </Command.Group>
+              {filteredPages.length > 0 && (
+                <div>
+                  <div data-command-group-heading>{t('dashboard.search.groups.pages')}</div>
+                  {filteredPages.map((entry, position) =>
+                    renderPageItem(entry.item, entry.index, activeIndex === position),
+                  )}
+                </div>
+              )}
 
-              {CONTENT_TYPE_ORDER.map((type) => {
-                const items = grouped[type]
-                if (items.length === 0) return null
-                return (
-                  <Command.Group key={type} heading={t(CONTENT_TYPE_GROUP_KEY[type])}>
-                    {items.map(renderContentItem)}
-                  </Command.Group>
-                )
-              })}
-            </Command.List>
+              {filteredContentGroups.map((group) => (
+                <div key={group.type}>
+                  <div data-command-group-heading>{contentGroupHeading(group.type)}</div>
+                  {group.entries.map((entry, position) =>
+                    renderContentItem(
+                      entry.item,
+                      entry.index,
+                      activeIndex === filteredPages.length + position,
+                    ),
+                  )}
+                </div>
+              ))}
+            </div>
 
             {/* Footer */}
             <div className="flex items-center gap-3 sm:gap-5 border-t border-white/[0.06] bg-black/20 px-4 sm:px-7 py-3 text-[12px] text-white/40">
@@ -298,7 +388,7 @@ export default function CommandPalette() {
                 <FooterHint label="Close" keys={['esc']} />
               </span>
             </div>
-          </Command>
+          </div>
         </DialogPrimitive.Popup>
         </DialogPrimitive.Viewport>
       </DialogPrimitive.Portal>

@@ -1,9 +1,8 @@
-import { Navigate } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 const AccountPage = () => {
-  // Browser-relative path (no org slug / no /orgs prefix): the SPA keeps every
-  // route on the current origin, so a plain relative redirect is correct.
-  return <Navigate to="/account/general" replace />
+  const { orgslug } = useParams<{ orgslug: string }>()
+  return <Navigate to={`/orgs/${orgslug}/account/general`} replace />
 }
 
 export default AccountPage

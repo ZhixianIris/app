@@ -118,14 +118,22 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
 
   if (!key) return <>{children}</>
 
+  return <PHProvider client={posthog}>{children}</PHProvider>
+}
+
+/**
+ * Router-side observers (admin opt-out, pageviews, identity). Must be rendered
+ * INSIDE the RouterProvider — they read useLocation/useSearchParams — and
+ * inside PostHogProvider so usePostHog() resolves. Renders nothing.
+ */
+export function PostHogRouteObservers() {
+  const key = getPOSTHOG_KEY_VAL()
+  if (!key) return null
   return (
-    <PHProvider client={posthog}>
+    <>
       <PostHogAdminGuard />
-      <Suspense fallback={null}>
-        <PostHogPageView />
-      </Suspense>
+      <PostHogPageView />
       <PostHogIdentify />
-      {children}
-    </PHProvider>
+    </>
   )
 }

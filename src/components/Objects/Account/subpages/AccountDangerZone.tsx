@@ -46,7 +46,7 @@ export default function AccountDangerZone() {
       setConfirmOpen(false)
       setConfirmText('')
       // Tear down the session and send the (now anonymous) user to login.
-      signOut({ redirect: true, callbackUrl: getUriWithoutOrg('/login') })
+      signOut({ redirect: true, callbackUrl: '/auth/login' })
     } catch (e: any) {
       setError(
         getErrorMessage(

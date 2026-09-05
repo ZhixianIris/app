@@ -327,7 +327,7 @@ function Courses(props: CourseProps) {
                     empty. */}
                 {!isAuthenticated && (
                   <Link
-                    to={getUriWithOrg(orgslug, '/login')}
+                    to={'/auth/login'}
                     className="inline-flex items-center gap-2 justify-center px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-semibold hover:bg-gray-800 transition-colors"
                   >
                     <LogIn size={16} />

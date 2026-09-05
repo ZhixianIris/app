@@ -219,7 +219,8 @@ function OrgUsers() {
     setSelectedUserIds(new Set())
   }
 
-  const handleFilterChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (value: string) => {
+  const handleFilterChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (value: string | null) => {
+    if (value === null) return
     setter(value === 'all' ? '' : value)
     setPage(1)
     setSelectedUserIds(new Set())
@@ -681,7 +682,7 @@ function OrgUsers() {
                         <td className="px-6 py-4">
                           <Select
                             value={user.role.role_uuid}
-                            onValueChange={(newRoleUuid) => handleRoleChange(user.user.id, newRoleUuid)}
+                            onValueChange={(newRoleUuid) => { if (newRoleUuid !== null) handleRoleChange(user.user.id, newRoleUuid) }}
                             disabled={!roles || !canManageOrg}
                           >
                             <SelectTrigger className={`h-8 w-fit px-3 text-xs font-semibold rounded-md nice-shadow transition-all border-0 ${

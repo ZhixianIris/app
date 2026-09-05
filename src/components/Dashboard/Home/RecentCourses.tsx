@@ -1,3 +1,4 @@
+import { getUriWithOrg } from '@services/config/config'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
@@ -14,9 +15,9 @@ import { BookOpen, PlusCircle, Clock } from '@phosphor-icons/react'
 export default function RecentCourses() {
   const { t, i18n } = useTranslation()
   const org = useOrg() as any
+  const orgslug: string = org?.slug ?? '';
   const session = useAppSession() as any
   const token = session?.data?.tokens?.access_token
-  const orgslug = org?.slug
 
   const { data: coursesData, isLoading } = useQuery({
     queryKey: [...queryKeys.courses.list(orgslug), 'recent', 8],
@@ -50,7 +51,7 @@ export default function RecentCourses() {
           )}
         </div>
         <Link
-          to="/dash/courses"
+          to={getUriWithOrg(orgslug, `/dash/courses`)}
           className="text-[11px] font-medium text-gray-400 hover:text-gray-600 transition-colors"
         >
           {t('dashboard.home.view_all')} &rarr;
@@ -81,7 +82,7 @@ export default function RecentCourses() {
             </div>
             <p className="text-xs text-gray-400 mb-3">{t('dashboard.home.no_courses_yet')}</p>
             <Link
-              to="/dash/courses?new=true"
+              to={getUriWithOrg(orgslug, `/dash/courses?new=true`)}
               className="inline-flex items-center gap-1.5 text-xs font-medium text-blue-600 hover:text-blue-700"
             >
               <PlusCircle size={14} weight="bold" />
@@ -111,7 +112,7 @@ export default function RecentCourses() {
             return (
               <Link
                 key={course.course_uuid}
-                to={`/dash/courses/course/${courseId}/general`}
+                to={getUriWithOrg(orgslug, `/dash/courses/course/${courseId}/general`)}
                 className="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group"
               >
                 <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden shrink-0 flex items-center justify-center">

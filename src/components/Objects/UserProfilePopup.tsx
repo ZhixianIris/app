@@ -6,6 +6,8 @@ import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useNavigate } from "react-router-dom";
+import { useOrg } from '@components/Contexts/OrgContext'
+import { getUriWithOrg } from '@services/config/config'
 
 type UserProfilePopupProps = {
   children: React.ReactNode
@@ -41,6 +43,7 @@ const ICON_MAP = {
 } as const
 
 const UserProfilePopup = ({ children, userId }: UserProfilePopupProps) => {
+  const org = useOrg() as any
   const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = Boolean(access_token)
@@ -84,7 +87,7 @@ const UserProfilePopup = ({ children, userId }: UserProfilePopupProps) => {
 
   const handleViewProfile = () => {
     if (!userData?.username) return
-    navigate(`/user/${userData.username}`)
+    navigate(getUriWithOrg(org?.slug, `/user/${userData.username}`))
   }
 
   return (

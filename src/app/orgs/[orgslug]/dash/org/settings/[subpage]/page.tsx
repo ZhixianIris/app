@@ -67,8 +67,8 @@ function OrgPage(props: { params: Promise<OrgParams> }) {
   const movedTo = MOVED_TO_DEVELOPERS[params.subpage]
   const movedToUsers = MOVED_TO_USERS[params.subpage]
   useEffect(() => {
-    if (movedTo) navigate(`/dash/developers/${movedTo}`, { replace: true })
-    else if (movedToUsers) navigate(`/dash/users/settings/${movedToUsers}`, { replace: true })
+    if (movedTo) navigate(`/orgs/${params.orgslug}/dash/developers/${movedTo}`, { replace: true })
+    else if (movedToUsers) navigate(`/orgs/${params.orgslug}/dash/users/settings/${movedToUsers}`, { replace: true })
   }, [movedTo, movedToUsers, navigate])
 
   function handleLabels() {

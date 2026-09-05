@@ -53,7 +53,7 @@ export default function MagicLinkConsumePage() {
       if (res.mfa_required && res.mfa_token) {
         const raw =
           params.get('next') ?? params.get('redirect') ?? params.get('redirect_to')
-        const loginUrl = new URL('/login', window.location.origin)
+        const loginUrl = new URL('/auth/login', window.location.origin)
         loginUrl.searchParams.set('mfa_token', res.mfa_token)
         if (raw && /^\/(?!\/)/.test(raw)) loginUrl.searchParams.set('next', raw)
         window.location.href = loginUrl.toString()
@@ -95,7 +95,7 @@ export default function MagicLinkConsumePage() {
           <p className="text-gray-600 mb-6">{error}</p>
           <div className="space-y-3">
             <Link
-              to="/login"
+              to="/auth/login"
               className="block w-full py-2 px-4 bg-black text-white rounded-md hover:bg-gray-800 transition-colors"
             >
               Request a new link

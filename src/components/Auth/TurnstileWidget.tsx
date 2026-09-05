@@ -3,7 +3,7 @@ import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile'
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
 // Client-side Cloudflare Turnstile widget. Reads the PUBLIC site key from the
-// runtime config (getConfig — this is a prebuilt image, so process.env.NEXT_PUBLIC_*
+// runtime config (getConfig — build-time values come from import.meta.env.*
 // isn't reliable at runtime). Turnstile is active ONLY when BOTH the site key is
 // set AND the deployment is SaaS (app_mode cookie) — never on OSS/self-hosted.
 // When inactive the widget renders NOTHING and forms treat a null token as

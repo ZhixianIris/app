@@ -830,10 +830,13 @@ const HeroSectionEditor: React.FC<{
                   <Label>{t('dashboard.organization.landing.hero_editor.gradient_direction')}</Label>
                   <Select
                     value={section.background.direction || '45deg'}
-                    onValueChange={(value) => onChange({
-                      ...section,
-                      background: { ...section.background, direction: value }
-                    })}
+                    onValueChange={(value) => {
+                      if (value === null) return
+                      onChange({
+                        ...section,
+                        background: { ...section.background, direction: value }
+                      })
+                    }}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder={t('dashboard.organization.landing.hero_editor.gradient_direction_placeholder')} />
@@ -1053,7 +1056,9 @@ const HeroSectionEditor: React.FC<{
                   <Label>{t('dashboard.organization.landing.hero_editor.position')}</Label>
                   <Select
                     value={section.illustration?.position || 'left'}
-                    onValueChange={(value: 'left' | 'right') => onChange({
+                    onValueChange={(value) => {
+                      if (value !== 'left' && value !== 'right') return
+                      onChange({
                       ...section,
                       illustration: {
                         ...section.illustration,
@@ -1062,7 +1067,8 @@ const HeroSectionEditor: React.FC<{
                         size: section.illustration?.size || 'medium',
                         verticalAlign: section.illustration?.verticalAlign || 'center'
                       }
-                    })}
+                      })
+                    }}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder={t('dashboard.organization.landing.hero_editor.position_placeholder')} />
@@ -1078,7 +1084,9 @@ const HeroSectionEditor: React.FC<{
                   <Label>{t('dashboard.organization.landing.hero_editor.size')}</Label>
                   <Select
                     value={section.illustration?.size || 'medium'}
-                    onValueChange={(value: 'small' | 'medium' | 'large') => onChange({
+                    onValueChange={(value) => {
+                      if (value !== 'small' && value !== 'medium' && value !== 'large') return
+                      onChange({
                       ...section,
                       illustration: {
                         ...section.illustration,
@@ -1087,7 +1095,8 @@ const HeroSectionEditor: React.FC<{
                         position: (section.illustration?.position || 'left') as 'left' | 'right',
                         verticalAlign: section.illustration?.verticalAlign || 'center'
                       }
-                    })}
+                      })
+                    }}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder={t('dashboard.organization.landing.hero_editor.size_placeholder')} />

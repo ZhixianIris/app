@@ -54,7 +54,7 @@ export default function BoardsPage() {
 
   // Require authentication to view boards.
   if (!access_token) {
-    return <Navigate to="/login?redirect=/boards" replace />
+    return <Navigate to={`/auth/login?redirect=/orgs/${orgslug}/boards`} replace />
   }
 
   if (!loaded) {

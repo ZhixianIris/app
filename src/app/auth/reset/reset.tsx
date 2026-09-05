@@ -125,7 +125,7 @@ function ResetPasswordClient({ org }: ResetPasswordClientProps) {
                                 <span className="text-sm font-medium">{error || message}</span>
                                 {message && (
                                     <span className="text-sm ms-2">
-                                        · <Link to="/login" className="underline hover:no-underline">{t('auth.proceed_to_login')}</Link>
+                                        · <Link to="/auth/login" className="underline hover:no-underline">{t('auth.proceed_to_login')}</Link>
                                     </span>
                                 )}
                             </div>
@@ -248,7 +248,7 @@ function ResetPasswordClient({ org }: ResetPasswordClientProps) {
                         {/* Back to Login */}
                         <p className="text-center text-sm text-black/35 mt-6">
                             {t('auth.remember_password')}{' '}
-                            <Link to="/login" className="text-black font-semibold hover:underline">
+                            <Link to="/auth/login" className="text-black font-semibold hover:underline">
                                 {t('auth.login')}
                             </Link>
                         </p>

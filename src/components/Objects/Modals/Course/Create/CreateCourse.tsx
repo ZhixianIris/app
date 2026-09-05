@@ -1,3 +1,4 @@
+import { getUriWithOrg } from '@services/config/config'
 import { Input } from "@components/ui/input"
 import { Textarea } from "@components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@components/ui/select"
@@ -131,7 +132,7 @@ function CreateCourseModal({ closeModal, orgslug }: any) {
           // popup so a brand-new course lands the teacher on the core creation
           // action (their first activity) instead of an empty settings page.
           const courseId = res.data.course_uuid?.replace('course_', '') || res.data.course_uuid
-          navigate(`/dash/courses/course/${courseId}/content?new_activity=1`)
+          navigate(getUriWithOrg(orgslug, `/dash/courses/course/${courseId}/content?new_activity=1`))
         } else {
           toast.dismiss(toast_loading)
           const detail = typeof res.data?.detail === 'string' ? res.data.detail : ''

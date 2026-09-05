@@ -60,7 +60,7 @@ describe("denial explains itself instead of bouncing", () => {
   });
 
   test("an unauthenticated visitor is still redirected to login", () => {
-    expect(SOURCE).toContain("'/login'");
+    expect(SOURCE).toContain("'/auth/login'");
   });
 
   test("renders the shared error surface, not a bare heading", () => {

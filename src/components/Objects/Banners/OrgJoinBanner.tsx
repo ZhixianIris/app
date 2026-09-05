@@ -49,7 +49,7 @@ export function OrgJoinBanner() {
           <p className="text-sm font-medium">
             {t('banner.viewing_as_guest', { name: org?.name })}{' '}
             <a
-              href={getUriWithOrg(orgslug, '/signup')}
+              href={'/auth/signup'}
               className="underline hover:no-underline font-bold"
             >
               {t('banner.join_organization')}

@@ -324,7 +324,7 @@ function OrgAuthMethodBanner({
         <ShieldAlert size={20} className="flex-shrink-0" />
         <p className="text-sm font-medium flex-1">{message}</p>
         <a
-          href={getUriWithOrg(orgslug, '/login')}
+          href={'/auth/login'}
           className="flex items-center gap-1 text-sm font-bold bg-white/20 hover:bg-white/30 transition-colors rounded-lg px-3 py-1.5 whitespace-nowrap"
         >
           <LogIn size={14} />

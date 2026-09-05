@@ -278,20 +278,20 @@
      proportions mid-sentence.
 
      `!important` is required, not defensive: the org's custom font is applied
-     as an inline style on .lh-org-font-root, and an inline declaration beats
+     as an inline style on .app-org-font-root, and an inline declaration beats
      any normal rule regardless of specificity. Monospace is unaffected —
      code, pre and the editors set font-family on their own elements, and
      cascade contests only happen element by element. */
   [dir='rtl'],
   [dir='rtl'] body,
-  [dir='rtl'] .lh-org-font-root,
+  [dir='rtl'] .app-org-font-root,
   [dir='rtl'] input,
   [dir='rtl'] textarea,
   [dir='rtl'] select,
   [dir='rtl'] button,
   :lang(ar),
   :lang(ar) body,
-  :lang(ar) .lh-org-font-root {
+  :lang(ar) .app-org-font-root {
     font-family: var(--font-arabic), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   }
 
@@ -497,20 +497,20 @@
      proportions mid-sentence.
 
      `!important` is required, not defensive: the org's custom font is applied
-     as an inline style on .lh-org-font-root, and an inline declaration beats
+     as an inline style on .app-org-font-root, and an inline declaration beats
      any normal rule regardless of specificity. Monospace is unaffected —
      code, pre and the editors set font-family on their own elements, and
      cascade contests only happen element by element. */
   [dir='rtl'],
   [dir='rtl'] body,
-  [dir='rtl'] .lh-org-font-root,
+  [dir='rtl'] .app-org-font-root,
   [dir='rtl'] input,
   [dir='rtl'] textarea,
   [dir='rtl'] select,
   [dir='rtl'] button,
   :lang(ar),
   :lang(ar) body,
-  :lang(ar) .lh-org-font-root {
+  :lang(ar) .app-org-font-root {
     font-family: var(--font-arabic), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   }
 
@@ -645,7 +645,7 @@
 
   /* Toasts carry a mix of translated copy and raw English API errors — see
      components/Objects/StyledElements/Toast/Toast.tsx. */
-  .lh-toast {
+  .app-toast {
     unicode-bidi: plaintext;
     text-align: start;
   }
@@ -662,77 +662,6 @@
     unicode-bidi: isolate;
     text-align: initial;
   }
-}
-
-    /* Confirmation Modal Animations */
-@keyframes overlayShow {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes overlayClose {
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-@keyframes contentShow {
-  from { opacity: 0; transform: translate(-50%, -50%) scale(.96); }
-  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-}
-
-@keyframes contentClose {
-  from { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-  to { opacity: 0; transform: translate(-50%, -52%) scale(.96); }
-}
-
-/*
-  Shared <Modal> (components/ui/dialog.tsx) animations.
-  Centering uses the standalone `translate` CSS property (set inline) instead
-  of `transform` — that way the keyframes can animate `translate` + `scale`
-  + `opacity` cleanly, and on exit the modal slides DOWN as it fades.
-*/
-@keyframes modalEnter {
-  from { opacity: 0; scale: 0.94; }
-  to   { opacity: 1; scale: 1; }
-}
-
-@keyframes modalExit {
-  from { opacity: 1; scale: 1; }
-  to   { opacity: 0; scale: 0.96; }
-}
-
-/*
-  Plain CSS classes so Radix's <Presence> reliably detects the animation
-  via getComputedStyle(node).animationName on each state flip.
-
-  Easing: out-expo on enter for a natural spring settle (fast start, soft
-  landing) — feels modern without the cartoonish overshoot of a back-out.
-  Exit uses a sharp ease-in so the close feels instant, not draggy.
-*/
-.lh-modal-content[data-state="open"] {
-  animation: modalEnter 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.lh-modal-content[data-state="closed"] {
-  animation: modalExit 120ms cubic-bezier(0.4, 0, 1, 1) forwards;
-}
-
-@keyframes modalOverlayEnter {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes modalOverlayExit {
-  from { opacity: 1; }
-  to   { opacity: 0; }
-}
-
-.lh-modal-overlay[data-state="open"] {
-  animation: modalOverlayEnter 160ms ease-out forwards;
-}
-
-.lh-modal-overlay[data-state="closed"] {
-  animation: modalOverlayExit 130ms ease-in forwards;
 }
 
 /* Flipcard 3D Animation Styles */

@@ -456,7 +456,7 @@ const CertificatePreview: React.FC<CertificatePreviewProps> = ({
         <div className="absolute top-4 left-4 sm:top-6 sm:left-6 z-20">
           <div className="flex items-center space-x-1">
             <Hash className={`w-3 h-3 sm:w-4 sm:h-4 ${theme.icon}`} />
-            <span className={`text-xs sm:text-sm ${theme.secondary} font-medium`}>ID: {certificateId || 'LH-2024-001'}</span>
+            <span className={`text-xs sm:text-sm ${theme.secondary} font-medium`}>ID: {certificateId || 'APP-2024-001'}</span>
           </div>
         </div>
 

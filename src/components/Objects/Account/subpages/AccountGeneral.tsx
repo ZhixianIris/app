@@ -148,7 +148,8 @@ const DetailCard = React.memo(({
     debouncedLabelChange(newLabel);
   }, [debouncedLabelChange]);
 
-  const handleIconChange = useCallback((value: string) => {
+  const handleIconChange = useCallback((value: string | null) => {
+    if (value === null) return
     onUpdate(id, 'icon', value);
   }, [id, onUpdate]);
 

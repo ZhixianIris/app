@@ -19,7 +19,7 @@ const DialogOverlay = React.forwardRef<
   <Dialog.Backdrop
     ref={ref}
     className={cn(
-      "lh-modal-overlay fixed inset-0 bg-black/40",
+      "app-modal-overlay fixed inset-0 bg-black/40",
       "transition-opacity duration-200 data-[starting-style]:opacity-0 data-[ending-style]:opacity-0",
       className
     )}
@@ -53,7 +53,7 @@ const DialogContent = React.forwardRef<
           }
         }}
         className={cn(
-          "lh-modal-content grid w-full max-w-lg gap-0 border border-gray-200/80 bg-white shadow-2xl shadow-black/10 rounded-2xl",
+          "app-modal-content grid w-full max-w-lg gap-0 border border-gray-200/80 bg-white shadow-2xl shadow-black/10 rounded-2xl",
           "transition-[opacity,transform] duration-200 will-change-[transform,opacity] [backface-visibility:hidden]",
           "data-[starting-style]:scale-95 data-[starting-style]:opacity-0",
           "data-[ending-style]:scale-95 data-[ending-style]:opacity-0",

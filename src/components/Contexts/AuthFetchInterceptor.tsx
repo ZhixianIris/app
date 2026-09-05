@@ -3,7 +3,7 @@ import { getAPIUrl } from '@services/config/config'
 import { dispatchAuthExpired, dispatchAuthRefreshed } from '@/lib/auth/events'
 import { hasSessionMarker } from '@services/auth/sessionMarker'
 
-const AUTH_RETRY_HEADER = 'X-LH-Auth-Retry'
+const AUTH_RETRY_HEADER = 'X-App-Auth-Retry'
 
 function getRequestUrl(input: RequestInfo | URL): string | null {
   if (typeof input === 'string') return input
@@ -26,7 +26,7 @@ function isAuthRoute(url: string): boolean {
 }
 
 function getLoginCallbackUrl(): string {
-  if (typeof window === 'undefined') return '/login'
+  if (typeof window === 'undefined') return '/auth/login'
   return window.location.pathname.startsWith('/admin') ? '/admin/login' : '/login'
 }
 

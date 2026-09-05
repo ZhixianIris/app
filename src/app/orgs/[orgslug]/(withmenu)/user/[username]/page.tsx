@@ -6,7 +6,7 @@ import UserProfileClient from './UserProfileClient'
 import PageLoading from '@components/Objects/Loaders/PageLoading'
 
 const UserPage = () => {
-  const { username } = useParams() as { username: string }
+  const { orgslug, username } = useParams() as { orgslug: string; username: string }
   const session = useAppSession() as any
   const access_token = session?.data?.tokens?.access_token
 
@@ -45,7 +45,7 @@ const UserPage = () => {
 
   // Require authentication to view user profiles.
   if (!access_token) {
-    return <Navigate to={`/login?redirect=/user/${username}`} replace />
+    return <Navigate to={`/auth/login?redirect=/orgs/${orgslug}/user/${username}`} replace />
   }
 
   if (!loaded) {

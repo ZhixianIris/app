@@ -1,4 +1,5 @@
 import React from 'react'
+import getYouTubeID from 'get-youtube-id'
 import YouTube from 'react-youtube'
 import { useOrg } from '@components/Contexts/OrgContext'
 import MediaPlayer from './MediaPlayer'
@@ -56,8 +57,7 @@ function VideoActivity({ activity, course, orgUuid }: VideoActivityProps) {
 
   React.useEffect(() => {
     if (activity?.content?.uri) {
-      var getYouTubeID = require('get-youtube-id')
-      setVideoId(getYouTubeID(activity.content.uri))
+      setVideoId(getYouTubeID(activity.content.uri) ?? '')
     }
   }, [activity, org])
 
