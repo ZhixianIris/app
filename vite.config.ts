@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -7,6 +8,10 @@ const r = (...segments: string[]) => path.resolve(import.meta.dirname, ...segmen
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  // e2e/ belongs to Playwright, not vitest
+  test: {
+    exclude: ['**/node_modules/**', 'e2e/**'],
+  },
   resolve: {
     alias: {
       '@components': r('src/components'),

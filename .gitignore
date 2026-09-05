@@ -7,3 +7,6 @@ tsconfig.tsbuildinfo
 .vite
 coverage
 visual-regression/
+e2e-artifacts/
+playwright-report/
+test-results/
