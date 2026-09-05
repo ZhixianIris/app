@@ -2,7 +2,9 @@ import React, { Suspense, lazy } from 'react'
 import {
   createBrowserRouter,
   isRouteErrorResponse,
+  Navigate,
   Outlet,
+  useLocation,
   useRouteError,
 } from 'react-router-dom'
 
@@ -80,6 +82,16 @@ const DashCoursesLoading = lazy(() => import('./orgs/[orgslug]/dash/courses/load
 const DashCourseSubpageLoading = lazy(() => import('./orgs/[orgslug]/dash/courses/course/[courseuuid]/[subpage]/loading'))
 
 
+
+// Auth redirect bridge — the login surfaces return here with ?next=<dest>
+// instead of navigating cross-component, so the full page reload the session
+// establishment needs happens in one hop.
+function AuthNextBridge() {
+  const next = new URLSearchParams(useLocation().search).get('next')
+  const dest = next && /^\/(?!\/)/.test(next) ? next : '/home'
+  return <Navigate to={dest} replace />
+}
+
 function RootLayout() {
   return (
     <>
@@ -98,6 +110,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: page(() => import('./home/page')) },
       { path: 'home', element: page(() => import('./home/page')) },
+      { path: 'redirect_from_auth', element: <AuthNextBridge /> },
       { path: 'payments/stripe/connect/oauth', element: page(() => import('./payments/stripe/connect/oauth/page')) },
 
       // ------- auth -------

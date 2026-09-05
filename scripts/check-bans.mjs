@@ -46,6 +46,11 @@ const sourceRules = [
   { re: R(J('--'), J('radix-')), label: 'Radix CSS variable' },
   { re: R(J('@'), J('radix-ui'), J('/')), label: 'Radix import' },
   { re: /from\s+["']next\//, label: 'Next.js import' },
+]
+
+// Node-side rules only make sense for browser code (src/); Node utility
+// scripts legitimately use process.env/require.
+const srcOnlyRules = [
   { re: /\bprocess\.env\b/, label: 'Node env access in browser code' },
   { re: /\brequire\(/, label: 'CommonJS require in browser code' },
 ]
@@ -118,7 +123,11 @@ for (const root of roots) {
       process.exit(2)
     }
 
-    const rules = distMode ? distRules : sourceRules
+    const rules = distMode
+      ? distRules
+      : file.includes(`${path.sep}src${path.sep}`)
+        ? [...sourceRules, ...srcOnlyRules]
+        : sourceRules
     const lines = content.split('\n')
     for (let i = 0; i < lines.length; i++) {
       for (const rule of rules) {
