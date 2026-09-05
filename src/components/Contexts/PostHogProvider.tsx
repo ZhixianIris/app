@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect, useRef } from 'react'
 import posthog from 'posthog-js'
 import { PostHogProvider as PHProvider, usePostHog } from 'posthog-js/react'
-import { getPOSTHOG_KEY_VAL } from '@services/config/config'
+import { getPOSTHOG_KEY } from '@services/config/config'
 import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useLocation, useSearchParams } from "react-router-dom";
 
@@ -110,7 +110,7 @@ function PostHogIdentify() {
  * untouched and never loads PostHog (true off-switch / opt-in).
  */
 export default function PostHogProvider({ children }: { children: React.ReactNode }) {
-  const key = getPOSTHOG_KEY_VAL()
+  const key = getPOSTHOG_KEY()
 
   useEffect(() => {
     if (key) initPostHog(key)
@@ -127,7 +127,7 @@ export default function PostHogProvider({ children }: { children: React.ReactNod
  * inside PostHogProvider so usePostHog() resolves. Renders nothing.
  */
 export function PostHogRouteObservers() {
-  const key = getPOSTHOG_KEY_VAL()
+  const key = getPOSTHOG_KEY()
   if (!key) return null
   return (
     <>

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Brand scan (source tree + build output)
+        run: |
+          if rg -n -i 'learn[ _-]?house|learnhouse\.(app|io)|LEARNHOUSE|LH_' src public tests scripts package.json index.html vite.config.ts dist; then
+            echo "Brand residue found"; exit 1
+          fi
+          if rg -n '@radix-ui/' src package.json; then
+            echo "Radix dependency found"; exit 1
+          fi
+          if rg -n 'asChild|data-\[state=|--radix-' src; then
+            echo "Radix-style API residue found"; exit 1
+          fi

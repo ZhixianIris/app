@@ -8,8 +8,8 @@ import React, {
 } from 'react'
 import {
   getAPIUrl,
-  getAPP_TOP_DOMAIN_VAL,
-  getAPP_DOMAIN_VAL,
+  getAPP_TOP_DOMAIN,
+  getAPP_DOMAIN,
 } from '@services/config/config'
 import { isSubdomainOf, isSameHost, isLocalhost as isLocalhostCheck } from '@services/utils/ts/hostUtils'
 import { safeRedirectUrl } from '@services/auth/redirects'
@@ -142,7 +142,7 @@ function generateSecureToken(length: number = 32): string {
 function isCustomDomain(): boolean {
   if (typeof window === 'undefined') return false
   const hostname = window.location.hostname
-  const domain = getAPP_DOMAIN_VAL()
+  const domain = getAPP_DOMAIN()
   return !isSubdomainOf(hostname, domain) && !isSameHost(hostname, domain) && !isLocalhostCheck(hostname)
 }
 
@@ -150,7 +150,7 @@ function isCustomDomain(): boolean {
 function getCookieAttributes(): { secureAttr: string; domainAttr: string; sameSiteAttr: string } {
   const isSecure = typeof window !== 'undefined' && window.location.protocol === 'https:'
   const secureAttr = isSecure ? '; Secure' : ''
-  const topDomain = getAPP_TOP_DOMAIN_VAL()
+  const topDomain = getAPP_TOP_DOMAIN()
 
   // For custom domains, don't set domain attribute (host-only cookie)
   // For localhost, don't set domain attribute
@@ -968,7 +968,7 @@ export function SessionProvider({
           setOAuthStateCookie(csrfToken)
 
           // Always use main domain for redirect URI — only one URI registered with Google
-          const redirectUri = `${window.location.protocol}//${getAPP_DOMAIN_VAL()}/auth/callback/google`
+          const redirectUri = `${window.location.protocol}//${getAPP_DOMAIN()}/auth/callback/google`
 
           // Get Google OAuth URL from server (client ID lives server-side only)
           const authResponse = await fetch('/api/auth/google/authorize', {
@@ -1224,7 +1224,7 @@ export async function signIn(
     setOAuthStateCookie(csrfToken)
 
     // Always use main domain for redirect URI — only one URI registered with Google
-    const redirectUri = `${window.location.protocol}//${getAPP_DOMAIN_VAL()}/auth/callback/google`
+    const redirectUri = `${window.location.protocol}//${getAPP_DOMAIN()}/auth/callback/google`
 
     // Get Google OAuth URL from server (client ID lives server-side only)
     const authResponse = await fetch('/api/auth/google/authorize', {

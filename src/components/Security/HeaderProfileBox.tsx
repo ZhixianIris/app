@@ -6,7 +6,7 @@ import UserAvatar from '@components/Objects/UserAvatar'
 import useAdminStatus from '@components/Hooks/useAdminStatus'
 import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useOrg } from '@components/Contexts/OrgContext'
-import { getUriWithOrg, getMainDomainUri, isMultiOrgModeEnabled } from '@services/config/config'
+import { getUriWithOrg, getMainDomainUri, getTenancy } from '@services/config/config'
 import { getOrgLogoMediaDirectory } from '@services/media/media'
 import Tooltip from '@components/Objects/StyledElements/Tooltip/Tooltip'
 import {
@@ -54,7 +54,7 @@ export const HeaderProfileBox = ({ primaryColor = '' }: { primaryColor?: string 
   // The user's organizations (deduped) from the session roles — used by the
   // "My Organizations" submenu. Only relevant in multi-org (SaaS) mode, where
   // the apex hub (/home, /new, /billing) exists.
-  const multiOrg = isMultiOrgModeEnabled()
+  const multiOrg = getTenancy() === 'multi'
   const myOrgs = useMemo(() => {
     const roles = session?.data?.roles || []
     const seen = new Set<number>()

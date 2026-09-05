@@ -29,3 +29,15 @@ export const dashboardPages: SearchMeta[] = [
   ...payments,
   ...account,
 ]
+
+/**
+ * Resolve a search-result href to its final URL. Results carry org-relative
+ * paths; external links pass through untouched and already-final /orgs/ paths
+ * are guarded against double prefixing.
+ */
+export function resolveSearchHref(href: string, orgslug: string | undefined | null): string {
+  if (/^https?:\/\//i.test(href)) return href
+  if (href.startsWith('/orgs/')) return href
+  if (!orgslug) return href
+  return `/orgs/${orgslug}${href}`
+}

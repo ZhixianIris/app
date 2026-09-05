@@ -40,11 +40,11 @@ const getCookieValue = (name: string): string | null => {
 }
 
 // Dynamic config getters - these are functions to ensure runtime values are used
-const getAPP_HTTP_PROTOCOL = () =>
+export const getAPP_HTTP_PROTOCOL = () =>
   (getConfig('VITE_APP_HTTPS') === 'true') ? 'https://' : 'http://'
-const getAPP_BACKEND_URL = () => getConfig('VITE_BACKEND_URL', 'http://localhost/')
-const getAPP_DOMAIN = () => {
-  // 1. Env var (backward compat for existing deploys)
+export const getAPP_BACKEND_URL = () => getConfig('VITE_BACKEND_URL', 'http://localhost/')
+export const getAPP_DOMAIN = () => {
+  // 1. Build-time env var
   const envVal = getConfig('VITE_APP_DOMAIN')
   if (envVal) return envVal
   // 2. Cookie set by middleware from backend instance info
@@ -53,8 +53,8 @@ const getAPP_DOMAIN = () => {
   // 3. Default
   return 'localhost'
 }
-const getAPP_TOP_DOMAIN = () => {
-  // 1. Env var (backward compat for existing deploys)
+export const getAPP_TOP_DOMAIN = () => {
+  // 1. Build-time env var
   const envVal = getConfig('VITE_APP_TOP_DOMAIN')
   if (envVal) return envVal
   // 2. Cookie set by middleware from backend instance info
@@ -66,33 +66,14 @@ const getAPP_TOP_DOMAIN = () => {
 }
 // PostHog product analytics — opt-in. Telemetry is OFF unless this key is set
 // in the deployment env. No separate enable flag: presence of the key IS the switch.
-const getPOSTHOG_KEY = () => getConfig('VITE_POSTHOG_KEY', '');
-const getAPP_PLATFORM_URL = (): string | null => {
-  // NEXT_PUBLIC_ variant (available client-side via runtime config)
+export const getPOSTHOG_KEY = () => getConfig('VITE_POSTHOG_KEY', '');
+export const getAPP_PLATFORM_URL = (): string | null => {
   const pubVal = getConfig('VITE_PLATFORM_URL')
   if (pubVal) return pubVal.replace(/\/+$/, '')
-  // Non-prefixed variant (server-side only, backward compat)
-  const val = getConfig('APP_PLATFORM_URL')
-  if (val) return val.replace(/\/+$/, '')
   return null
 }
 
-// Export getter functions for dynamic runtime configuration
-export const getAPP_HTTP_PROTOCOL_VAL = getAPP_HTTP_PROTOCOL
-export const getAPP_BACKEND_URL_VAL = getAPP_BACKEND_URL
-export const getAPP_DOMAIN_VAL = getAPP_DOMAIN
-export const getAPP_TOP_DOMAIN_VAL = getAPP_TOP_DOMAIN
-export const getPOSTHOG_KEY_VAL = getPOSTHOG_KEY
-export const getAPP_PLATFORM_URL_VAL = getAPP_PLATFORM_URL
-
-// Export constants for backward compatibility
-// These are computed once at module load, but getConfig uses runtime values
-// For middleware/proxy (where runtime is critical), use the getter functions instead
-export const APP_HTTP_PROTOCOL = getAPP_HTTP_PROTOCOL()
-export const APP_BACKEND_URL = getAPP_BACKEND_URL()
-export const APP_DOMAIN = getAPP_DOMAIN()
-export const APP_TOP_DOMAIN = getAPP_TOP_DOMAIN()
-
+// Dynamic runtime configuration getters — the single supported surface.
 // Helper to check if we're on a custom domain (for API URL selection)
 export const isOnCustomDomain = (): boolean => {
   if (typeof window === 'undefined') return false
@@ -101,9 +82,9 @@ export const isOnCustomDomain = (): boolean => {
   return !isSubdomainOf(hostname, domain) && !isSameHost(hostname, domain) && !isLocalhostCheck(hostname)
 }
 
-// Derive API URL from backend URL (with backward compat for NEXT_PUBLIC_APP_API_URL)
+// Derive API URL from backend URL
 const deriveAPIUrl = (): string => {
-  // Backward compat: if explicit API URL is set, use it
+  // Explicit API base override wins
   const explicitApiUrl = getConfig('VITE_API_URL')
   if (explicitApiUrl) return explicitApiUrl
   // Derive from backend URL
@@ -187,9 +168,6 @@ export const getTenancy = (): TenancyMode => {
   if (cookieVal === 'multi' || cookieVal === 'single') return cookieVal
   return 'single'
 }
-
-// Backward-compat shim — prefer getTenancy() in new code.
-export const isMultiOrgModeEnabled = () => getTenancy() === 'multi'
 
 /**
  * Get custom domain from context (client-side only)
@@ -322,14 +300,14 @@ export const getDeploymentMode = (): DeploymentMode => {
 }
 
 /**
- * OSS mode — thin wrapper over getDeploymentMode() for backward compatibility.
+ * OSS mode.
  */
 export const isOSSMode = (): boolean => {
   return getDeploymentMode() === 'oss'
 }
 
 /**
- * EE (Enterprise Edition) availability — thin wrapper over getDeploymentMode() for backward compatibility.
+ * EE (Enterprise Edition) availability.
  */
 export const isEEAvailable = (): boolean => {
   return getDeploymentMode() === 'ee'
@@ -339,7 +317,7 @@ export const isEEAvailable = (): boolean => {
 export const getCollabUrl = () => getConfig('VITE_COLLAB_URL', 'ws://localhost:4000')
 
 export const getDefaultOrg = () => {
-  // 1. Env var (backward compat)
+  // 1. Build-time env var
   const envVal = getConfig('VITE_APP_DEFAULT_ORG')
   if (envVal) return envVal
   // 2. Client-side: read cookie set by middleware

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Sparkle } from '@phosphor-icons/react'
 
 import { useOrg } from '@components/Contexts/OrgContext'
-import { isMultiOrgModeEnabled } from '@services/config/config'
+import { getTenancy } from '@services/config/config'
 import { DemoStatus, getDemoStatus } from '@services/demo/demo'
 
 function formatCountdown(
@@ -104,7 +104,7 @@ export default function DemoBanner() {
       </span>
       {/* The hub only exists in multi-tenancy; on a single-org install /new is
           a 404, so the call to action is simply not offered there. */}
-      {isMultiOrgModeEnabled() && (
+      {getTenancy() === 'multi' && (
         <Link
           to="/new"
           className="ms-auto shrink-0 rounded-lg bg-amber-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-amber-800"

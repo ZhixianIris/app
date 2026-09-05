@@ -11,7 +11,7 @@ import {
 } from '@phosphor-icons/react'
 
 import { useCommandPalette } from './CommandPaletteContext'
-import { dashboardPages } from '@/lib/dashboard-search/registry'
+import { dashboardPages, resolveSearchHref } from '@/lib/dashboard-search/registry'
 import type { SearchMeta } from '@/lib/dashboard-search/types'
 import {
   useContentSearch,
@@ -22,7 +22,7 @@ import { useOrgMembership } from '@components/Contexts/OrgContext'
 import { isFeatureAvailable } from '@services/plans/plans'
 import { normalizeForSearch } from '@/lib/search/normalize'
 import { useAppAnalytics, AnalyticsEvent } from '@services/analytics'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CONTENT_TYPE_ICON: Record<ContentResultType, SearchMeta['icon']> = {
   course: BookOpen,
@@ -80,6 +80,7 @@ function groupContentResults(results: ContentResult[]): Record<ContentResultType
 }
 
 export default function CommandPalette() {
+  const { orgslug } = useParams<{ orgslug: string }>()
   const { t } = useTranslation()
   const { open, setOpen } = useCommandPalette()
   const navigate = useNavigate()
@@ -148,6 +149,11 @@ export default function CommandPalette() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
+  // Search results carry org-relative hrefs from the registry and content
+  // search. Every consumer — click, Enter, and new-tab — resolves them to the
+  // final /orgs/{slug} URL through this one function.
+  const resolveHref = (href: string): string => resolveSearchHref(href, orgslug)
+
   const onSelect = (href: string, resultType: string, resultIndex: number) => {
     track(AnalyticsEvent.CommandPaletteResultSelected, {
       result_type: resultType,
@@ -176,10 +182,10 @@ export default function CommandPalette() {
         role="option"
         aria-selected={selected}
         onMouseEnter={() => setActiveIndex(index)}
-        onClick={() => onSelect(p.href, 'page', index)}
+        onClick={() => onSelect(resolveHref(p.href), 'page', index)}
         className="group/item flex cursor-pointer items-center gap-3.5 rounded-lg px-3 py-2.5 text-white/70 transition-colors aria-selected:bg-white/[0.06] aria-selected:text-white"
         data-command-item
-        data-href={p.href}
+        data-href={resolveHref(p.href)}
       >
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/[0.04] text-white/60 group-aria-selected/item:bg-white/[0.08] group-aria-selected/item:text-white">
           <Icon size={15} />
@@ -205,10 +211,10 @@ export default function CommandPalette() {
         role="option"
         aria-selected={selected}
         onMouseEnter={() => setActiveIndex(index)}
-        onClick={() => onSelect(r.href, r.type, index)}
+        onClick={() => onSelect(resolveHref(r.href), r.type, index)}
         className="group/item flex cursor-pointer items-center gap-3.5 rounded-lg px-3 py-2.5 text-white/70 transition-colors aria-selected:bg-white/[0.06] aria-selected:text-white"
         data-command-item
-        data-href={r.href}
+        data-href={resolveHref(r.href)}
       >
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-white/[0.04] text-white/60 group-aria-selected/item:bg-white/[0.08] group-aria-selected/item:text-white">
           <Icon size={15} />
@@ -232,12 +238,12 @@ export default function CommandPalette() {
   const flatItems: FlatEntry[] = useMemo(() => {
     const items: FlatEntry[] = []
     filteredPages.forEach((entry, position) => {
-      items.push({ run: () => onSelect(entry.item.href, 'page', entry.index) })
+      items.push({ run: () => onSelect(resolveHref(entry.item.href), 'page', entry.index) })
       void position
     })
     filteredContentGroups.forEach((group) => {
       group.entries.forEach((entry) => {
-        items.push({ run: () => onSelect(entry.item.href, group.type, entry.index) })
+        items.push({ run: () => onSelect(resolveHref(entry.item.href), group.type, entry.index) })
       })
     })
     return items

@@ -1,23 +1,26 @@
 import * as React from "react"
 import { Select as SelectPrimitive } from "@base-ui/react/select"
-import type { SelectRootChangeEventDetails } from "@base-ui/react/select"
+import type { SelectRootChangeEventDetails, SelectRootProps } from "@base-ui/react/select"
 import { Check, ChevronsUpDown, ChevronDown, ChevronUp } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-const Select = function Select({
-  onValueChange,
-  ...props
-}: Omit<React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>, 'onValueChange' | 'ref'> & {
-  // Base UI semantics: value is null when the selection is cleared. Callers
-  // must handle the null case themselves.
+// This app only uses single string selects, so the wrapper instantiates
+// Base UI's generic Root at `string` / single-select. With `multiple` removed
+// from the surface, Base UI's callback signature for this instantiation is
+// exactly `(value: string | null, eventDetails) => void` — identical to the
+// handler declared below, so no type escape is needed anywhere.
+export type SelectProps = Omit<
+  SelectRootProps<string>,
+  'onValueChange' | 'ref' | 'multiple'
+> & {
+  multiple?: undefined
   onValueChange?: (value: string | null, eventDetails: SelectRootChangeEventDetails) => void
-}) {
+}
+
+const Select = function Select({ onValueChange, ...props }: SelectProps) {
   return (
-  <SelectPrimitive.Root
-    onValueChange={onValueChange as never}
-    {...props}
-  />
+    <SelectPrimitive.Root onValueChange={onValueChange} {...props} />
   )
 }
 Select.displayName = 'Select'

@@ -7,7 +7,7 @@ import { AlertTriangle, Info, Lock, Mail, Shield, X, Clock, Send, CheckCircle2 }
 import { checkSSOEnabled, redirectToSSOLogin } from '@services/auth/sso'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@components/Contexts/AuthContext'
-import { getAPP_TOP_DOMAIN_VAL, getDeploymentMode, isOnCustomDomain } from '@services/config/config'
+import { getAPP_TOP_DOMAIN, getDeploymentMode, isOnCustomDomain } from '@services/config/config'
 import { useAppSession } from '@components/Contexts/AppSessionContext'
 import { useTranslation } from 'react-i18next'
 import { resendVerificationEmail } from '@services/auth/auth'
@@ -205,7 +205,7 @@ const LoginClient = (props: LoginClientProps) => {
     track(AnalyticsEvent.LoginGoogleClicked)
     // Store org context in cookies before OAuth redirect
     if (props.org?.slug) {
-      const topDomain = getAPP_TOP_DOMAIN_VAL();
+      const topDomain = getAPP_TOP_DOMAIN();
       const isSecure = window.location.protocol === 'https:';
       const secureAttr = isSecure ? '; secure' : '';
       const baseAttributes = `; path=/; SameSite=Lax${secureAttr}`;

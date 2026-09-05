@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { signUpWithInviteCode } from '@services/auth/auth'
 import { useOrg } from '@components/Contexts/OrgContext'
 import { signIn } from '@components/Contexts/AuthContext'
-import { getAPP_TOP_DOMAIN_VAL, isOnCustomDomain } from '@services/config/config'
+import { getAPP_TOP_DOMAIN, isOnCustomDomain } from '@services/config/config'
 import { getErrorMessage } from '@services/utils/ts/errorMessage'
 import { useTranslation } from 'react-i18next'
 import { PasswordStrengthIndicator, validatePasswordStrength } from '@components/Auth/PasswordStrengthIndicator'
@@ -141,7 +141,7 @@ function InviteOnlySignUpComponent(props: InviteOnlySignUpProps) {
   const handleGoogleSignIn = () => {
     // Store org context in cookies before OAuth redirect
     if (org?.slug) {
-      const topDomain = getAPP_TOP_DOMAIN_VAL();
+      const topDomain = getAPP_TOP_DOMAIN();
       const isSecure = window.location.protocol === 'https:';
       const secureAttr = isSecure ? '; secure' : '';
       const baseAttributes = `; path=/; SameSite=Lax${secureAttr}`;

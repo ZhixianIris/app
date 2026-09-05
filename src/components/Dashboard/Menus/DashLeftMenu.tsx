@@ -50,7 +50,7 @@ import React, { useEffect, useState } from 'react'
 import UserAvatar from '../../Objects/UserAvatar'
 import AdminAuthorization from '@components/Security/AdminAuthorization'
 import { useAppSession } from '@components/Contexts/AppSessionContext'
-import { getUriWithOrg, getAPIUrl, getMainDomainUri, isMultiOrgModeEnabled } from '@services/config/config'
+import { getUriWithOrg, getAPIUrl, getMainDomainUri, getTenancy } from '@services/config/config'
 import { useTranslation } from 'react-i18next'
 import { changeLanguage } from '@/lib/i18n'
 import {
@@ -203,7 +203,7 @@ function DashLeftMenu() {
 
   // Multi-org (SaaS) hub: the apex /home, /new, /billing routes only exist in
   // multi tenancy. The user's organizations (deduped) come from the session.
-  const multiOrg = isMultiOrgModeEnabled()
+  const multiOrg = getTenancy() === 'multi'
   const myOrgs: any[] = (() => {
     const roles = session?.data?.roles || []
     const seen = new Set<number>()

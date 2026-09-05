@@ -4,7 +4,7 @@ import { useAppAnalytics } from '@services/analytics/useAppAnalytics'
 import { AnalyticsEvent } from '@services/analytics/events'
 import DemoEntryCard from '@components/Objects/Demo/DemoEntryCard'
 import UserAvatar from '@components/Objects/UserAvatar'
-import { getAPIUrl, getUriWithOrg, getAPP_PLATFORM_URL_VAL } from '@services/config/config'
+import { getAPIUrl, getUriWithOrg, getAPP_PLATFORM_URL } from '@services/config/config'
 import { apiFetch } from '@services/utils/ts/requests'
 import { signOut } from '@components/Contexts/AuthContext'
 import { getOrgLogoMediaDirectory } from '@services/media/media'
@@ -45,7 +45,7 @@ function HomeClient() {
   const access_token = session?.data?.tokens?.access_token
   const isAuthenticated = session?.status === 'authenticated'
   const isLoading = session?.status === 'loading'
-  const platformUrl = getAPP_PLATFORM_URL_VAL()
+  const platformUrl = getAPP_PLATFORM_URL()
 
   const { data: orgs, isLoading: orgsLoading } = useQuery({
     queryKey: ['orgs', 'user'],

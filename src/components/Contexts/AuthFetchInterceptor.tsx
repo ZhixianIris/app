@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { getAPIUrl } from '@services/config/config'
-import { dispatchAuthExpired, dispatchAuthRefreshed } from '@/lib/auth/events'
+import { dispatchAuthExpired, dispatchAuthRefreshed, getLoginCallbackUrl } from '@/lib/auth/events'
 import { hasSessionMarker } from '@services/auth/sessionMarker'
 
 const AUTH_RETRY_HEADER = 'X-App-Auth-Retry'
@@ -23,11 +23,6 @@ function isApiRequest(url: string): boolean {
 
 function isAuthRoute(url: string): boolean {
   return url.includes('/api/auth/')
-}
-
-function getLoginCallbackUrl(): string {
-  if (typeof window === 'undefined') return '/auth/login'
-  return window.location.pathname.startsWith('/admin') ? '/admin/login' : '/login'
 }
 
 export default function AuthFetchInterceptor() {
@@ -103,7 +98,7 @@ export default function AuthFetchInterceptor() {
         // be bounced off public content).
         if (hasSessionMarker()) {
           dispatchAuthExpired({
-            callbackUrl: getLoginCallbackUrl(),
+            callbackUrl: getLoginCallbackUrl(window.location.pathname),
             reason: 'refresh_failed',
           })
         }
@@ -121,7 +116,7 @@ export default function AuthFetchInterceptor() {
 
       if (retryResponse.status === 401 && hasSessionMarker()) {
         dispatchAuthExpired({
-          callbackUrl: getLoginCallbackUrl(),
+          callbackUrl: getLoginCallbackUrl(window.location.pathname),
           reason: 'retry_failed',
         })
       }

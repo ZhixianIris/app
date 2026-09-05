@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Loader2, AlertTriangle, ShieldAlert } from 'lucide-react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth, validateOAuthState } from '@components/Contexts/AuthContext'
-import { getAPP_DOMAIN_VAL, getAPP_TOP_DOMAIN_VAL, getAPIUrl } from '@services/config/config'
+import { getAPP_DOMAIN, getAPP_TOP_DOMAIN, getAPIUrl } from '@services/config/config'
 import { getErrorMessage } from '@services/utils/ts/errorMessage'
 
 export default function GoogleCallbackPage() {
@@ -62,7 +62,7 @@ export default function GoogleCallbackPage() {
             const u = new URL(stateData.returnOrigin)
             if (u.protocol === 'http:' || u.protocol === 'https:') {
               const host = u.hostname
-              const topDomain = getAPP_TOP_DOMAIN_VAL()
+              const topDomain = getAPP_TOP_DOMAIN()
               const isPlatformHost = !!topDomain && (host === topDomain || host.endsWith(`.${topDomain}`))
               if (isPlatformHost) {
                 bounceOrigin = u.origin
@@ -129,7 +129,7 @@ export default function GoogleCallbackPage() {
       // Consume the OAuth org-context cookies once read, so a stale org id can't
       // bleed into a later OAuth attempt (both domain-scoped and host-only).
       try {
-        const topDomain = getAPP_TOP_DOMAIN_VAL()
+        const topDomain = getAPP_TOP_DOMAIN()
         const domainAttr = topDomain && topDomain !== 'localhost' ? `; domain=.${topDomain}` : ''
         for (const n of ['app_oauth_org_id', 'app_oauth_orgslug', 'app_oauth_invite_code']) {
           document.cookie = `${n}=; path=/; max-age=0`
@@ -141,7 +141,7 @@ export default function GoogleCallbackPage() {
 
       try {
         // redirect_uri must always match what was sent during authorization (main domain)
-        const domain = getAPP_DOMAIN_VAL()
+        const domain = getAPP_DOMAIN()
         const oauthRedirectUri = `${window.location.protocol}//${domain}/auth/callback/google`
 
         // Exchange code for tokens with our backend

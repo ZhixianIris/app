@@ -30,3 +30,12 @@ export function dispatchAuthRefreshed(detail: AuthRefreshedDetail = {}) {
   if (typeof window === 'undefined') return
   window.dispatchEvent(new CustomEvent<AuthRefreshedDetail>(AUTH_REFRESHED_EVENT, { detail }))
 }
+
+/**
+ * The login URL a session-expiry event should send the user to. Admin-area
+ * pages keep their own login surface; everyone else lands on /auth/login.
+ * Pure so the producer is unit-testable.
+ */
+export function getLoginCallbackUrl(pathname: string): string {
+  return pathname.startsWith('/admin') ? '/admin/login' : '/auth/login'
+}

@@ -1,6 +1,6 @@
 import React, { Suspense, lazy, useState, useEffect, useRef, useCallback } from 'react'
 import { useTranslation } from 'react-i18next'
-import { getAPP_DOMAIN_VAL, getAPP_HTTP_PROTOCOL_VAL } from '@services/config/config'
+import { getAPP_DOMAIN, getAPP_HTTP_PROTOCOL } from '@services/config/config'
 import { CourseContext, CourseDispatchContext } from '@components/Contexts/CourseContext'
 import { useActivity } from '@/hooks/queries/useActivity'
 import { useCourseMeta } from '@/hooks/queries/useCourses'
@@ -136,8 +136,8 @@ function EmbedActivityClient({ activityId, courseuuid, orgslug, bgcolor }: Embed
     // Always build an absolute org URL — the embed may be served from the main app domain
     // (e.g. app.example.com), so a relative path would resolve to the wrong host.
     if (typeof window !== 'undefined' && orgslug) {
-      const domain = getAPP_DOMAIN_VAL()
-      const protocol = getAPP_HTTP_PROTOCOL_VAL()
+      const domain = getAPP_DOMAIN()
+      const protocol = getAPP_HTTP_PROTOCOL()
       if (domain && domain !== 'localhost') {
         return `${protocol}${orgslug}.${domain}${path}`
       }
